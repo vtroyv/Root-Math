@@ -50,7 +50,7 @@ const NATIVE_SYMPY_OPERATORS= {
 
     //
     // Is it a symbol?
-    //
+    ////
 
     const f = expr.re
   }
