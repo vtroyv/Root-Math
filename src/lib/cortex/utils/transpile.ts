@@ -1,6 +1,9 @@
 //This object contains the the key value pairs of the mathjson operators (keys) with their value set to their corresponding
 //python/sympy representation 
 //It also includes there precedence levels, 
+
+
+
 //operators with higher precedence levels are evaluated first
 const NATIVE_SYMPY_OPERATORS= {
     Add: ['+', 10],           // Similar precedence to addition
@@ -36,12 +39,27 @@ const NATIVE_SYMPY_OPERATORS= {
     Add: (args, compile) => {
         if (args.length === 1) return compile(args[0]);
         return `(${args.map((x)=> compile(x)).join(' + ')})`;
-    }
+    }, 
+    Arccos: 'acos', 
+    Arcosh: 'acosh', 
+    Arccot: ([x], compile) => {
+      if (x === null) throw new Error('Arccot: no argument');
+      return `atan(1/ (${compile(x)}))`;
+    }, 
+    Arccoth: ([x], compile) => {
+      if (x === null) throw new Error('Arccoth: no argument');
+      return `atanh(1/ (${compile(x)}))`;
+    }, 
+    // Arccsc: 
+
 
   }
 
 
   export function compile(expr, target, prec) {
+    //expr is a boxed expression, note when we parse latex a box expression is returned, 
+    // before we call the .json propoerty which gives mathjson
+    //
     if (expr === undefined) return '';
 
     if (!expr.isValid) {
@@ -51,8 +69,19 @@ const NATIVE_SYMPY_OPERATORS= {
     //
     // Is it a symbol?
     ////
+    const s = expr.symbol; 
+    
 
     const f = expr.re
   }
 
   //testing this change that i wast to push to github
+
+
+  //------- TYPE DEFINITIONS --------//
+  export type CompileTarget ={
+    operators?: (op: MathJsonIdentifier) => [op: string, prec: number]
+  }
+
+  type MathJsonIdentifier = string; 
+  

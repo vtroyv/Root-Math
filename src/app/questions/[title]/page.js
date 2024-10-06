@@ -87,6 +87,7 @@ export default function QuestionDisplay({ params }) {
     
             if (ceRef.current) {
                 ceRef.current.ce = ce; // Safely assign ce to ceRef.current
+                
             } else {
                 ceRef.current = { ce }; // Initialize ceRef.current if it's null
             }
@@ -103,11 +104,22 @@ export default function QuestionDisplay({ params }) {
         console.log('the latex is given by', latex)
         const preprocessedArray = preprocessLatex(latex);
         console.log(preprocessedArray)
-        const mathjsonArray =  preprocessedArray.map(latex => ceRef.current.ce.parse(latex).json)
+        const mathjsonArray =  preprocessedArray.map(latex => ceRef.current.ce.parse(latex).symbol)
+        /*
+
+        ce.parse returns a boxed expression, we are getting the mathjson by using .json, however we could also get different things by using .head etc. 
+        Therefore when parsing to sympy perhaps we shouldn't convert it to mathjson directly but instead parse from the boxed expression to sympy, as the current 
+        compiler code on the github seems to convert from a boxed expression to javascript, not mathjson to javascript. Double checkl though!
+        */
        
        console.log('the mathjson is given below')
        console.log(mathjsonArray)
-       
+
+       const boxed_expressions = mathjsonArray.map(line => ceRef.current.ce.box(line))
+       console.log('the boxed expressions are', boxed_expressions)
+
+
+
     }
 
 
