@@ -1,0 +1,49 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  // Make sure ESLint runs on target files.
+  "eslint.validate": ["javascript", "typescript"],
+  // Check JavaScript by default (using the Typescript engine)
+  "js/ts.implicitProjectConfig.checkJs": true,
+
+  // ESM requires extensions on import paths to work,
+  // these options tell VSCode to prefer adding extensions
+  // on auto-import.
+  "typescript.preferences.importModuleSpecifierEnding": "auto",
+  "javascript.preferences.importModuleSpecifierEnding": "auto",
+
+  // Let VSCode auto-update import paths when you move files around
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  "cSpell.words": [
+    "BIGNUM",
+    "bignums",
+    "bivariant",
+    "canonicalization",
+    "canonicalize",
+    "coef",
+    "infty",
+    "Iverson",
+    "lanczos",
+    "lbrack",
+    "lngamma",
+    "macsyma",
+    "mathbb",
+    "Mathematica",
+    "mathrm",
+    "multiplicativity",
+    "nops",
+    "pmatrix",
+    "quantile",
+    "rbrack",
+    "reboxing",
+    "relop",
+    "significand",
+    "sympy",
+    "syms",
+    "upconverted"
+  ],
+  "prettier.configPath": "./node_modules/@cortex-js/prettier-config/index.json"
+}

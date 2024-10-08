@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    // "allowJs": true,
+    "declaration": true,
+    "emitDecoratorMetadata": false,
+    "esModuleInterop": true,
+    "experimentalDecorators": false,
+    "incremental": true,
+    "lib": ["es2020", "dom", "dom.iterable", "scripthost"],
+    "module": "es2020",
+    "target": "es2020",
+    "moduleResolution": "node",
+    // "newLine": "lf",
+    "noImplicitAny": false,
+    "noLib": false,
+    "removeComments": false,
+    "sourceMap": true,
+    "strictNullChecks": true
+    // "isolatedDeclarations": true
+  },
+  "include": ["src/**/*"]
+}

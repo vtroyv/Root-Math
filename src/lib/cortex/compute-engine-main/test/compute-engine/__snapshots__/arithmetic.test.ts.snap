@@ -1,0 +1,1233 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ADD Add  1`] = `
+box       = [
+  "Add",
+  2,
+  4,
+  1.5,
+  1.7,
+  ["Divide", 5, 7],
+  ["Divide", 3, 11],
+  ["Sqrt", 5],
+  "Pi",
+  ["Sqrt", 5],
+  ["Sqrt", 4]
+]
+canonical = [
+  "Add",
+  2,
+  2,
+  4,
+  ["Rational", 3, 11],
+  ["Rational", 5, 7],
+  ["Sqrt", 5],
+  ["Sqrt", 5],
+  1.5,
+  1.7,
+  "Pi"
+]
+simplify  = 16.6591489420125664058 + pi
+eval-auto = 16.6591489420125664058 + pi
+eval-mach = 16.659148942012564 + pi
+N-auto    = 19.8007415956023596443
+N-mach    = 19.800741595602357
+`;
+
+exports[`ADD Add '\\frac{2}{3}+\\frac{12345678912345678}{987654321987654321}+\\frac{987654321987654321}{12345678912345678}' 1`] = `
+box       = [
+  "Add",
+  ["Divide", 2, 3],
+  ["Divide", 12345678912345678, {num: "987654321987654321"}],
+  ["Divide", {num: "987654321987654321"}, 12345678912345678]
+]
+canonical = [
+  "Add",
+  ["Rational", 1371742101371742, {num: "109739369109739369"}],
+  ["Rational", 2, 3],
+  ["Rational", {num: "109739369109739369"}, 1371742101371742]
+]
+simplify  = 12144966884186830401015120518973257/150534112785803114146067001510798
+eval-auto = 12144966884186830401015120518973257/150534112785803114146067001510798
+eval-mach = 12144966884186830401015120518973257/150534112785803114146067001510798
+N-auto    = 80.6791673955527728817
+N-mach    = 80.6791673955528
+`;
+
+exports[`ADD Add ['Add', 2.5, -1.1, 18.4] 1`] = `19.8`;
+
+exports[`ADD Add ['Add', 2.5, -1.1] 1`] = `1.4`;
+
+exports[`ADD Add ['Add', 2.5] 1`] = `2.5`;
+
+exports[`ADD Add ['Add', 4, -1.1] 1`] = `2.9`;
+
+exports[`ADD Add ['Add'] 1`] = `0`;
+
+exports[`ADD Add \\frac{2}{-3222233}+\\frac{1}{3} 1`] = `
+box       = ["Add", ["Divide", 2, ["Negate", 3222233]], ["Divide", 1, 3]]
+canonical = ["Subtract", ["Rational", 1, 3], ["Rational", 2, 3222233]]
+simplify  = 3222227/9666699
+eval-auto = 3222227/9666699
+eval-mach = 3222227/9666699
+N-auto    = 0.333332712645754253856
+N-mach    = 0.333332712645754
+`;
+
+exports[`ADD Add \\sqrt{3}+2\\sqrt{3} 1`] = `["Multiply", 3, ["Sqrt", 3]]`;
+
+exports[`ADD Add 8+\\sqrt{3} 1`] = `["Add", 8, ["Sqrt", 3]]`;
+
+exports[`ADD Add 8.1+\\sqrt{3} 1`] = `9.832050807568877293527446341505872366942805253810380628055806979451933016908800037081146186757248576`;
+
+exports[`CONSTANTS CatalanConstant 1`] = `
+box       = CatalanConstant
+eval-auto = "CatalanConstant"
+eval-mach = "CatalanConstant"
+N-auto    = 0.9159655941772190150546035149323841107741493742816721342664981196217630197762547694793565129261151062485744226191961995790358988033258590594315947374811584069953320287733194605190387274781640878659090247064841521630002287276409423882599577415088163974702524820115607076448838078733704899008647751132259971343407485407553230768565335768095835260219382323950800720680355761048235733942319149829836189977069036404180862179411019175327431499782339761055122477953032487537187866582808236057022559419481809753509711315712615804242723636439850017382875977976530683700929808738874956108936597719409687268444416680462162433986483891628044828150627302274207388431172218272190472255870531908685735423498539498309919115967388464508615152499624237043745177737235177544070853846440132174839299994757244619975496197587064007474870701490937678873045869979860644874974643872062385137123927363049985035392239287879790633644032354784535851927777787270906083031994301332316712476158709792455479119092126201854803963934243
+N-mach    = 0.915965594177219
+`;
+
+exports[`CONSTANTS EulerGamma 1`] = `
+box       = EulerGamma
+eval-auto = "EulerGamma"
+eval-mach = "EulerGamma"
+N-auto    = 0.57721566490153286060651209008240243104215933593992359880576723488486772677766467093694706329174674951463144724980708248096050401448654283622417399764492353625350033374293733773767394279259525824709491600873520394816567085323315177661152862119950150798479374508570574002992135478614669402960432542151905877553526733139925401296742051375413954911168510280798423487758720503843109399736137255306088933126760017247953783675927135157722610273492913940798430103417771778088154957066107501016191663340152278935867965497252036212879226555953669628176388792726801324310104765059637039473949576389065729679296010090151251959509222435014093498712282479497471956469763185066761290638110518241974448678363808617494551698927923018773910729457815543160050021828440960537724342032854783670151773943987003023703395183286900015581939880427074115422278197165230110735658339673
+N-mach    = 0.5772156649015329
+`;
+
+exports[`CONSTANTS ExponentialE 1`] = `
+box       = ExponentialE
+eval-auto = e
+eval-mach = e
+N-auto    = 2.71828182845904523536
+N-mach    = 2.718281828459045
+`;
+
+exports[`CONSTANTS GoldenRatio 1`] = `
+box       = GoldenRatio
+simplify  = 1/2 + sqrt(5)/2
+eval-auto = "GoldenRatio"
+eval-mach = "GoldenRatio"
+N-auto    = 1.61803398874989484821
+N-mach    = 1.618033988749895
+`;
+
+exports[`CONSTANTS ImaginaryUnit 1`] = `ImaginaryUnit`;
+
+exports[`CONSTANTS MachineEpsilon 1`] = `
+box       = MachineEpsilon
+eval-auto = "MachineEpsilon"
+eval-mach = "MachineEpsilon"
+N-auto    = 2.220446049250313e-16
+N-mach    = 2.220446049250313e-16
+`;
+
+exports[`DIVIDE Divide (1/5)/7 1`] = `["Rational", 1, 35]`;
+
+exports[`DIVIDE Divide 2.5/1.1 1`] = `2.(27)`;
+
+exports[`DIVIDE Divide 6/3 1`] = `2`;
+
+exports[`DIVIDE Divide with many arguments 1`] = `-0.1235177865612648221343873517786561264822134387351778656126482213438735177865612648221343873517786561`;
+
+exports[`DIVIDE Divide with single argument 1`] = `["Divide", 2.5, ["Error", "'missing'"]]`;
+
+exports[`EXACT EVALUATION Add: All exact 1`] = `
+box       = ["Add", 6, ["Divide", 10, 14], ["Sqrt", ["Divide", 18, 9]]]
+canonical = ["Add", 6, ["Rational", 5, 7], ["Sqrt", 2]]
+simplify  = 47/7 + sqrt(2)
+eval-auto = 47/7 + sqrt(2)
+eval-mach = 47/7 + sqrt(2)
+N-auto    = 8.12849927665880933451
+N-mach    = 8.128499276658815
+`;
+
+exports[`EXACT EVALUATION Add: All exact 2`] = `
+box       = ["Add", 6, ["Sqrt", 2], ["Sqrt", 5]]
+eval-auto = 6 + sqrt(2) + sqrt(5)
+eval-mach = 6 + sqrt(2) + sqrt(5)
+N-auto    = 9.65028153987288474521
+N-mach    = 9.65028153987289
+`;
+
+exports[`EXACT EVALUATION Add: All exact 3`] = `
+box       = ["Add", 2, 5, ["Divide", 5, 7], ["Divide", 7, 9], ["Sqrt", 2], "Pi"]
+canonical = [
+  "Add",
+  2,
+  5,
+  ["Rational", 5, 7],
+  ["Rational", 7, 9],
+  ["Sqrt", 2],
+  "Pi"
+]
+simplify  = 535/63 + sqrt(2) + pi
+eval-auto = 535/63 + sqrt(2) + pi
+eval-mach = 535/63 + sqrt(2) + pi
+N-auto    = 13.0478697080263803508
+N-mach    = 13.047869708026381
+`;
+
+exports[`EXACT EVALUATION Add: one inexact 1`] = `
+box       = [
+  "Add",
+  1.1,
+  2,
+  5,
+  ["Divide", 5, 7],
+  ["Divide", 7, 9],
+  ["Sqrt", 2],
+  "Pi"
+]
+canonical = [
+  "Add",
+  2,
+  5,
+  ["Rational", 5, 7],
+  ["Rational", 7, 9],
+  ["Sqrt", 2],
+  1.1,
+  "Pi"
+]
+simplify  = 11.0062770544365871123 + pi
+eval-auto = 11.0062770544365871123 + pi
+eval-mach = 11.006277054436588 + pi
+N-auto    = 14.1478697080263803508
+N-mach    = 14.14786970802638
+`;
+
+exports[`EXACT EVALUATION Canceled inexact values are ignored 1`] = `
+box       = [
+  "Add",
+  2.12,
+  ["Negate", 2.12],
+  ["Divide", 1, 4],
+  ["Divide", 1, 4],
+  ["Sqrt", 5],
+  ["Sqrt", 7]
+]
+canonical = [
+  "Add",
+  ["Rational", 1, 4],
+  ["Rational", 1, 4],
+  ["Sqrt", 5],
+  ["Sqrt", 7],
+  -2.12,
+  2.12
+]
+simplify  = 5.38181928856438028691
+eval-auto = 5.38181928856438028691
+eval-mach = 5.3818192885643805
+`;
+
+exports[`EXACT EVALUATION Cos: Exact integer 1`] = `
+box       = ["Cos", 5]
+eval-auto = 0.283662185463226264467
+eval-mach = 0.28366218546322625
+`;
+
+exports[`EXACT EVALUATION Cos: Exact rational 1`] = `
+box       = ["Cos", ["Divide", 5, 7]]
+canonical = ["Cos", ["Rational", 5, 7]]
+eval-auto = 0.755561346700696598469
+eval-mach = 0.7555613467006967
+`;
+
+exports[`EXACT EVALUATION Cos: Inexact Fractional part 1`] = `
+box       = ["Cos", 5.1]
+eval-auto = 0.377977742712980563321
+eval-mach = 0.37797774271298024
+`;
+
+exports[`EXACT EVALUATION Cos: Pi (simplify constructible value) 1`] = `
+box       = ["Cos", "Pi"]
+simplify  = -1
+`;
+
+exports[`EXACT EVALUATION Exact values are grouped together 1`] = `
+box       = [
+  "Add",
+  2,
+  ["Divide", 1, 4],
+  ["Divide", 1, 4],
+  ["Sqrt", 5],
+  ["Sqrt", 7]
+]
+canonical = [
+  "Add",
+  2,
+  ["Rational", 1, 4],
+  ["Rational", 1, 4],
+  ["Sqrt", 5],
+  ["Sqrt", 7]
+]
+simplify  = 5/2 + sqrt(5) + sqrt(7)
+eval-auto = 5/2 + sqrt(5) + sqrt(7)
+eval-mach = 5/2 + sqrt(5) + sqrt(7)
+N-auto    = 7.38181928856438028691
+N-mach    = 7.3818192885643805
+`;
+
+exports[`EXACT EVALUATION Inexact values propagate 1`] = `
+box       = ["Add", 0.1, 2, ["Divide", 1, 4]]
+canonical = ["Add", 2, ["Rational", 1, 4], 0.1]
+simplify  = 2.35
+`;
+
+exports[`EXACT EVALUATION Sqrt: Exact integer 1`] = `
+box       = ["Sqrt", 5]
+eval-auto = sqrt(5)
+eval-mach = sqrt(5)
+N-auto    = 2.23606797749978969641
+N-mach    = 2.23606797749979
+`;
+
+exports[`EXACT EVALUATION Sqrt: Exact rational 1`] = `
+box       = ["Sqrt", ["Divide", 5, 7]]
+canonical = ["Multiply", ["Rational", 1, 7], ["Sqrt", 35]]
+eval-auto = sqrt(35)/7
+eval-mach = sqrt(35)/7
+N-auto    = 0.845154254728516577511
+N-mach    = 0.845154254728518
+`;
+
+exports[`EXACT EVALUATION Sqrt: Inexact Fractional part 1`] = `
+box       = ["Sqrt", 5.1]
+simplify  = 2.25831795812724298497
+eval-auto = 2.25831795812724298497
+eval-mach = 2.25831795812724
+`;
+
+exports[`EXACT EVALUATION Square rationals are grouped together 1`] = `
+box       = ["Add", ["Sqrt", 5], ["Sqrt", 5]]
+simplify  = 2sqrt(5)
+eval-auto = 2sqrt(5)
+eval-mach = 2sqrt(5)
+N-auto    = 4.47213595499957939282
+N-mach    = 4.47213595499958
+`;
+
+exports[`EXP Exp 'Pi' 1`] = `
+box       = ["Exp", "Pi"]
+eval-auto = e^(pi)
+eval-mach = e^(pi)
+N-auto    = 23.1406926327792690057
+N-mach    = 23.140692632779263
+`;
+
+exports[`EXP Exp ['Complex', 1.1, 1.1] 1`] = `
+box       = ["Exp", ["Complex", 1.1, 1.1]]
+eval-auto = e^(1.1 + 1.1i)
+eval-mach = e^(1.1 + 1.1i)
+N-auto    = (1.3626780565806003 + 2.67733487138756i)
+N-mach    = (1.3626780565806003 + 2.67733487138756i)
+`;
+
+exports[`EXP Exp ['List', 1.1, 2, 4] 1`] = `
+box       = ["Exp", ["List", 1.1, 2, 4]]
+eval-auto = [e^(1.1),e^2,e^4]
+eval-mach = [e^(1.1),e^2,e^4]
+N-auto    = [3.00416602394643311206,7.38905609893065022723,54.5981500331442390781]
+N-mach    = [3.00416602394643,7.3890560989306495,54.59815003314423]
+`;
+
+exports[`EXP Exp -1 1`] = `
+box       = ["Exp", -1]
+eval-auto = 1 / e
+eval-mach = 1 / e
+N-auto    = 0.367879441171442321596
+N-mach    = 0.36787944117144233
+`;
+
+exports[`EXP Exp 0 1`] = `
+box       = ["Exp", 0]
+canonical = 1
+`;
+
+exports[`EXP Exp 1 1`] = `
+box       = ["Exp", 1]
+canonical = ExponentialE
+eval-auto = e
+eval-mach = e
+N-auto    = 2.71828182845904523536
+N-mach    = 2.718281828459045
+`;
+
+exports[`EXP Exp 1.1 1`] = `
+box       = ["Exp", 1.1]
+eval-auto = e^(1.1)
+eval-mach = e^(1.1)
+N-auto    = 3.00416602394643311206
+N-mach    = 3.00416602394643
+`;
+
+exports[`INVALID LOG Ln 1`] = `invalid   =["Ln", ["Error", "'missing'"]]`;
+
+exports[`INVALID LOG Ln with string argument 1`] = `
+invalid   =[
+  "Ln",
+  [
+    "Error",
+    ["ErrorCode", "'incompatible-type'", "'number'", "'string'"]
+  ]
+]
+`;
+
+exports[`INVALID LOG Ln with two numeric arguments 1`] = `
+box       = ["Ln", 3, 4]
+canonical = ["Log", 3, 4]
+simplify  = 0.792481250360578
+eval-auto = 0.792481250360578
+eval-mach = 0.792481250360578
+N-auto    = 0.792481250360578090727
+`;
+
+exports[`INVALID NEGATE INVALID Negate 1`] = `["Negate", 2.5, ["Error", "'unexpected-argument'", "'1.1'"]]`;
+
+exports[`INVALID NEGATE INVALID Negate 2`] = `
+[
+  "Negate",
+  2.5,
+  ["Error", "'unexpected-argument'", "'-1.1'"],
+  ["Error", "'unexpected-argument'", "'18.4'"]
+]
+`;
+
+exports[`INVALID ROOT Too few args 1`] = `["Root", 2.5, ["Error", "'missing'"]]`;
+
+exports[`INVALID ROOT Too many args 1`] = `["Root", 2.5, -1.1, ["Error", "'unexpected-argument'", "'18.4'"]]`;
+
+exports[`LB Lb 'Pi' 1`] = `
+box       = ["Lb", "Pi"]
+canonical = ["Log", "Pi", 2]
+eval-auto = log(pi, 2)
+eval-mach = log(pi, 2)
+N-auto    = 1.65149612947231879804
+N-mach    = 1.651496129472319
+`;
+
+exports[`LB Lb ['Complex', 1.1, 1.1] 1`] = `
+box       = ["Lb", ["Complex", 1.1, 1.1]]
+canonical = ["Log", ["Complex", 1.1, 1.1], 2]
+simplify  = (0.637503523749934967941 + 0.7853981633974483i)
+eval-auto = (0.637503523749934967941 + 0.7853981633974483i)
+eval-mach = (0.637503523749931 + 0.7853981633974483i)
+N-auto    = (0.637503523749935 + 1.1330900354567985i)
+N-mach    = (0.637503523749935 + 1.1330900354567985i)
+`;
+
+exports[`LB Lb -1 1`] = `
+box       = ["Lb", -1]
+canonical = ["Log", -1, 2]
+simplify  = NaN
+`;
+
+exports[`LB Lb -2 1`] = `
+box       = ["Lb", -2]
+canonical = ["Log", -2, 2]
+simplify  = NaN
+`;
+
+exports[`LB Lb 0 1`] = `
+box       = ["Lb", 0]
+canonical = ["Log", 0, 2]
+simplify  = -oo
+`;
+
+exports[`LB Lb 1 1`] = `
+box       = ["Lb", 1]
+canonical = ["Log", 1, 2]
+simplify  = 0
+`;
+
+exports[`LB Lb 1.1 1`] = `
+box       = ["Lb", 1.1]
+canonical = ["Log", 1.1, 2]
+simplify  = 0.137503523749934908329
+eval-auto = 0.137503523749934908329
+eval-mach = 0.137503523749935
+`;
+
+exports[`LG LG 'Pi' 1`] = `
+box       = ["Lg", "Pi"]
+canonical = ["Log", "Pi"]
+eval-auto = log(pi)
+eval-mach = log(pi)
+N-auto    = 0.49714987269413385435
+N-mach    = 0.4971498726941338
+`;
+
+exports[`LG LG ['Complex', 1.1, 1.1] 1`] = `
+box       = ["Lg", ["Complex", 1.1, 1.1]]
+canonical = ["Log", ["Complex", 1.1, 1.1]]
+simplify  = (0.191907682990215656302 + 0.7853981633974483i)
+eval-auto = (0.191907682990215656302 + 0.7853981633974483i)
+eval-mach = (0.191907682990214 + 0.7853981633974483i)
+N-auto    = (0.19190768299021566 + 0.3410940884604603i)
+N-mach    = (0.19190768299021566 + 0.3410940884604603i)
+`;
+
+exports[`LG LG -1 1`] = `
+box       = ["Lg", -1]
+canonical = ["Log", -1]
+simplify  = NaN
+eval-auto = NaN
+eval-mach = NaN
+N-auto    = 1.3643763538418412i
+N-mach    = 1.3643763538418412i
+`;
+
+exports[`LG LG 0 1`] = `
+box       = ["Lg", 0]
+canonical = ["Log", 0]
+simplify  = -oo
+`;
+
+exports[`LG LG 1 1`] = `
+box       = ["Lg", 1]
+canonical = ["Log", 1]
+simplify  = 0
+`;
+
+exports[`LG LG 1.1 1`] = `
+box       = ["Lg", 1.1]
+canonical = ["Log", 1.1]
+simplify  = 0.0413926851582250407502
+eval-auto = 0.0413926851582250407502
+eval-mach = 0.041392685158225
+N-auto    = 0.04139268515822504075
+N-mach    = 0.04139268515822507
+`;
+
+exports[`LN Ln 'Pi' 1`] = `
+box       = ["Ln", "Pi"]
+eval-auto = ln(pi)
+eval-mach = ln(pi)
+N-auto    = 1.14472988584940017414
+N-mach    = 1.1447298858494002
+`;
+
+exports[`LN Ln ['Complex', 1.1, 1.1] 1`] = `
+box       = ["Ln", ["Complex", 1.1, 1.1]]
+simplify  = (0.441883770084297556072 + 0.7853981633974483i)
+eval-auto = (0.441883770084297556072 + 0.7853981633974483i)
+eval-mach = (0.441883770084295 + 0.7853981633974483i)
+N-auto    = (0.4418837700842976 + 0.7853981633974483i)
+N-mach    = (0.4418837700842976 + 0.7853981633974483i)
+`;
+
+exports[`LN Ln -1 1`] = `
+box       = ["Ln", -1]
+simplify  = NaN
+eval-auto = NaN
+eval-mach = NaN
+N-auto    = 3.141592653589793i
+N-mach    = 3.141592653589793i
+`;
+
+exports[`LN Ln -2 1`] = `
+box       = ["Ln", -2]
+simplify  = NaN
+eval-auto = NaN
+eval-mach = NaN
+N-auto    = (0.6931471805599453 + 3.141592653589793i)
+N-mach    = (0.6931471805599453 + 3.141592653589793i)
+`;
+
+exports[`LN Ln 0 1`] = `
+box       = ["Ln", 0]
+simplify  = -oo
+`;
+
+exports[`LN Ln 1 1`] = `
+box       = ["Ln", 1]
+canonical = 0
+`;
+
+exports[`LN Ln 1.1 1`] = `
+box       = ["Ln", 1.1]
+simplify  = 0.095310179804324860044
+eval-auto = 0.095310179804324860044
+eval-mach = 0.0953101798043249
+N-mach    = 0.09531017980432493
+`;
+
+exports[`LOG(a,b) LOG(a,b) Log 'Pi', 5 1`] = `
+box       = ["Log", "Pi", 5]
+eval-auto = log(pi, 5)
+eval-mach = log(pi, 5)
+N-auto    = 0.711260668712668955331
+N-mach    = 0.711260668712669
+`;
+
+exports[`LOG(a,b) LOG(a,b) Log ['Complex', 1.1, 1.1], 5 1`] = `
+box       = ["Log", ["Complex", 1.1, 1.1], 5]
+simplify  = (0.274557823368281573137 + 0.7853981633974483i)
+eval-auto = (0.274557823368281573137 + 0.7853981633974483i)
+eval-mach = (0.27455782336828 + 0.7853981633974483i)
+N-auto    = (0.2745578233682816 + 0.48799531645779287i)
+N-mach    = (0.2745578233682816 + 0.48799531645779287i)
+`;
+
+exports[`LOG(a,b) LOG(a,b) Log -1, 5 1`] = `
+box       = ["Log", -1, 5]
+simplify  = NaN
+`;
+
+exports[`LOG(a,b) LOG(a,b) Log 0, 5 1`] = `
+box       = ["Log", 0, 5]
+simplify  = -oo
+`;
+
+exports[`LOG(a,b) LOG(a,b) Log 1, 5 1`] = `
+box       = ["Log", 1, 5]
+canonical = 0
+`;
+
+exports[`LOG(a,b) LOG(a,b) Log 1.1, 5 1`] = `
+box       = ["Log", 1.1, 5]
+simplify  = 0.0592195443315850221291
+eval-auto = 0.0592195443315850221291
+eval-mach = 0.059219544331585
+`;
+
+exports[`Log Log 'Pi' 1`] = `
+box       = ["Log", "Pi"]
+eval-auto = log(pi)
+eval-mach = log(pi)
+N-auto    = 0.49714987269413385435
+N-mach    = 0.4971498726941338
+`;
+
+exports[`Log Log ['Complex', 1.1, 1.1] 1`] = `
+box       = ["Log", ["Complex", 1.1, 1.1]]
+simplify  = (0.191907682990215656302 + 0.7853981633974483i)
+eval-auto = (0.191907682990215656302 + 0.7853981633974483i)
+eval-mach = (0.191907682990214 + 0.7853981633974483i)
+N-auto    = (0.19190768299021566 + 0.3410940884604603i)
+N-mach    = (0.19190768299021566 + 0.3410940884604603i)
+`;
+
+exports[`Log Log -1 1`] = `
+box       = ["Log", -1]
+simplify  = NaN
+eval-auto = NaN
+eval-mach = NaN
+N-auto    = 1.3643763538418412i
+N-mach    = 1.3643763538418412i
+`;
+
+exports[`Log Log -2 1`] = `
+box       = ["Log", -2]
+simplify  = NaN
+eval-auto = NaN
+eval-mach = NaN
+N-auto    = (0.30102999566398114 + 1.3643763538418412i)
+N-mach    = (0.30102999566398114 + 1.3643763538418412i)
+`;
+
+exports[`Log Log 0 1`] = `
+box       = ["Log", 0]
+simplify  = -oo
+`;
+
+exports[`Log Log 1 1`] = `
+box       = ["Log", 1]
+canonical = 0
+`;
+
+exports[`Log Log 1.1 1`] = `
+box       = ["Log", 1.1]
+simplify  = 0.0413926851582250407502
+eval-auto = 0.0413926851582250407502
+eval-mach = 0.041392685158225
+N-auto    = 0.04139268515822504075
+N-mach    = 0.04139268515822507
+`;
+
+exports[`MULTIPLY 2x(-2/3) 1`] = `
+box       = ["Multiply", 2, ["Rational", -2, 3]]
+canonical = ["Multiply", -2, ["Rational", 2, 3]]
+simplify  = -4/3
+eval-auto = -4/3
+eval-mach = -4/3
+N-auto    = -1.33333333333333333333
+N-mach    = -1.33333333333333
+`;
+
+exports[`MULTIPLY 2x(1+1.1i) 1`] = `
+box       = ["Multiply", 2, ["Complex", 1, 1.1]]
+simplify  = (2 + 2.2i)
+`;
+
+exports[`MULTIPLY 2x(1+i) 1`] = `
+box       = ["Multiply", 2, ["Complex", 1, 1]]
+canonical = ["Complex", 0, 2]
+`;
+
+exports[`MULTIPLY 2x(1.1+1.1i) 1`] = `
+box       = ["Multiply", 2, ["Complex", 1.1, 1.1]]
+simplify  = (2.2 + 2.2i)
+`;
+
+exports[`MULTIPLY 2x(1.1+i) 1`] = `
+box       = ["Multiply", 2, ["Complex", 1.1, 1]]
+canonical = ["Complex", 0, 2]
+`;
+
+exports[`MULTIPLY 2x(1.1i) 1`] = `
+box       = ["Multiply", 2, ["Complex", 0, 1.1]]
+simplify  = 2.2i
+`;
+
+exports[`MULTIPLY 2x(2/3) 1`] = `
+box       = ["Multiply", 2, ["Rational", 2, 3]]
+simplify  = 4/3
+eval-auto = 4/3
+eval-mach = 4/3
+N-auto    = 1.33333333333333333333
+N-mach    = 1.33333333333333
+`;
+
+exports[`MULTIPLY 2x(1234567890987654321/3) 1`] = `
+box       = ["Multiply", 2, ["Rational", {num: "1234567890987654321"}, 3]]
+canonical = ["Multiply", 2, {num: "411522630329218107"}]
+simplify  = 823045260658436214
+`;
+
+exports[`MULTIPLY 2x-1234567890987654321.123456789 1`] = `
+box       = ["Multiply", 2, "1234567890987654321.123456789"]
+simplify  = 2469135781975308642.25
+eval-auto = 2469135781975308642.25
+eval-mach = 2469135781975310000
+`;
+
+exports[`MULTIPLY 2x1234567890987654321 1`] = `
+box       = ["Multiply", 2, {num: "1234567890987654321"}]
+simplify  = 2469135781975308642
+`;
+
+exports[`MULTIPLY 5x(-2.1) 1`] = `
+box       = ["Multiply", 5, -2.1]
+canonical = ["Multiply", -5, 2.1]
+simplify  = -10.5
+`;
+
+exports[`MULTIPLY 5x2 1`] = `
+box       = ["Multiply", 5, 2]
+canonical = ["Multiply", 2, 5]
+simplify  = 10
+`;
+
+exports[`MULTIPLY Multiply 1`] = `
+box       = ["Multiply", 2.5]
+canonical = 2.5
+`;
+
+exports[`MULTIPLY Multiply 2`] = `
+box       = ["Multiply", 2.5, 1.1]
+canonical = ["Multiply", 1.1, 2.5]
+simplify  = 2.75
+`;
+
+exports[`MULTIPLY Multiply 3`] = `
+box       = ["Multiply", 2.5, -1.1, 18.4]
+canonical = ["Multiply", -2.5, 1.1, 18.4]
+simplify  = -50.6
+`;
+
+exports[`MULTIPLY Multiply: All exact 1`] = `
+box       = [
+  "InvisibleOperator",
+  2,
+  ["Multiply", ["Divide", 5, 7], ["Divide", 7, 9]]
+]
+canonical = ["Multiply", 2, ["Rational", 5, 7], ["Rational", 7, 9]]
+simplify  = 10/9
+eval-auto = 10/9
+eval-mach = 10/9
+N-auto    = 1.11111111111111111111
+N-mach    = 1.11111111111111
+`;
+
+exports[`MULTIPLY Multiply: All exact with symbol 1`] = `
+box       = [
+  "Multiply",
+  2,
+  5,
+  ["Divide", 5, 7],
+  ["Divide", 7, 9],
+  ["Sqrt", 2],
+  "Pi"
+]
+canonical = [
+  "Multiply",
+  2,
+  5,
+  ["Rational", 5, 7],
+  ["Rational", 7, 9],
+  ["Sqrt", 2],
+  "Pi"
+]
+simplify  = 50/9sqrt(2) * pi
+eval-auto = 50/9sqrt(2) * pi
+eval-mach = 50/9sqrt(2) * pi
+N-auto    = 24.6826829897687013722
+N-mach    = 24.6826829897688
+`;
+
+exports[`MULTIPLY Multiply: One inexact 1`] = `
+box       = [
+  "Multiply",
+  1.1,
+  2,
+  5,
+  ["Divide", 5, 7],
+  ["Divide", 7, 9],
+  ["Sqrt", 2],
+  "Pi"
+]
+canonical = [
+  "Multiply",
+  2,
+  5,
+  ["Rational", 5, 7],
+  ["Rational", 7, 9],
+  ["Sqrt", 2],
+  1.1,
+  "Pi"
+]
+simplify  = 8.64241621450224752044 * pi
+eval-auto = 8.64241621450224752044 * pi
+eval-mach = 8.64241621450222 * pi
+N-auto    = 27.1509512887455715096
+N-mach    = 27.1509512887456
+`;
+
+exports[`MULTIPLY with +Infinity 1`] = `
+box       = ["Multiply", "x", -2, 3.1, "PositiveInfinity"]
+canonical = ["Multiply", -2, 3.1, "PositiveInfinity", "x"]
+simplify  = +oo
+`;
+
+exports[`MULTIPLY with <0 1`] = `
+box       = ["Multiply", "x", -2, 3.1, -5.2]
+canonical = ["Multiply", 2, 3.1, 5.2, "x"]
+simplify  = 32.24 * x
+`;
+
+exports[`MULTIPLY with -Infinity 1`] = `
+box       = ["Multiply", "x", -2, 3.1, "NegativeInfinity", "NegativeInfinity"]
+canonical = ["Multiply", -2, 3.1, "PositiveInfinity", "PositiveInfinity", "x"]
+simplify  = +oo
+`;
+
+exports[`MULTIPLY with -Infinity and +Infinity 1`] = `
+box       = [
+  "Multiply",
+  "x",
+  -2,
+  3.1,
+  "PositiveInfinity",
+  "NegativeInfinity",
+  "PositiveInfinity"
+]
+canonical = [
+  "Multiply",
+  2,
+  3.1,
+  "PositiveInfinity",
+  "PositiveInfinity",
+  "PositiveInfinity",
+  "x"
+]
+simplify  = +oo
+`;
+
+exports[`MULTIPLY with NaN 1`] = `
+box       = ["Multiply", "x", 2, 3.1, "NaN"]
+canonical = ["Multiply", 2, 3.1, "NaN", "x"]
+simplify  = NaN
+`;
+
+exports[`MULTIPLY with Nan, -Infinity and +Infinity 1`] = `
+box       = [
+  "Multiply",
+  "x",
+  -2,
+  3.1,
+  "NaN",
+  "NegativeInfinity",
+  "PositiveInfinity"
+]
+canonical = [
+  "Multiply",
+  2,
+  3.1,
+  "NaN",
+  "PositiveInfinity",
+  "PositiveInfinity",
+  "x"
+]
+simplify  = NaN
+`;
+
+exports[`MULTIPLY with zero 1`] = `
+box       = ["Multiply", "x", 2, 3.1, 0]
+canonical = ["Multiply", 0, 2, 3.1, "x"]
+simplify  = 0
+`;
+
+exports[`Max Max 1`] = `
+box       = ["Max", 2.5]
+simplify  = 2.5
+`;
+
+exports[`Max Max 2`] = `
+box       = ["Max", 2.5, 1.1]
+eval-auto = 2.5
+`;
+
+exports[`Max Max 3`] = `
+box       = ["Max", 2.5, -1.1, 18.4]
+eval-auto = 18.4
+`;
+
+exports[`Max Max 4`] = `
+box       = ["Max", 2.5, -1.1, "NaN", 18.4]
+eval-auto = 18.4
+`;
+
+exports[`Max Max 5`] = `
+box       = ["Max", 2.5, -1.1, "foo", 18.4]
+eval-auto = max(18.4, "foo")
+`;
+
+exports[`Max Max 6`] = `["Max", "foo", "bar"]`;
+
+exports[`NEGATE -(+Infinity) 1`] = `NegativeInfinity`;
+
+exports[`NEGATE -(-2.1) 1`] = `2`;
+
+exports[`NEGATE -(-2/3) 1`] = `
+box       = ["Negate", ["Rational", -2, 3]]
+canonical = ["Rational", 2, 3]
+eval-auto = 2/3
+eval-mach = 2/3
+N-auto    = 0.666666666666666666667
+N-mach    = 0.666666666666667
+`;
+
+exports[`NEGATE -(-Infinity) 1`] = `PositiveInfinity`;
+
+exports[`NEGATE -(1+1.1i) 1`] = `
+box       = ["Negate", ["Complex", 1, 1.1]]
+canonical = ["Complex", -1, -1.1]
+`;
+
+exports[`NEGATE -(1+i) 1`] = `
+box       = ["Negate", ["Complex", 1, 1]]
+canonical = ["Complex", -1, -1]
+`;
+
+exports[`NEGATE -(1.1+1.1i) 1`] = `
+box       = ["Negate", ["Complex", 1.1, 1.1]]
+canonical = ["Complex", -1.1, -1.1]
+`;
+
+exports[`NEGATE -(1.1+i) 1`] = `
+box       = ["Negate", ["Complex", 1.1, 1]]
+canonical = ["Complex", -1.1, -1]
+`;
+
+exports[`NEGATE -(1.1i) 1`] = `
+box       = ["Negate", ["Complex", 0, 1.1]]
+canonical = ["Complex", 0, -1.1]
+`;
+
+exports[`NEGATE -(2/3) 1`] = `
+box       = ["Negate", ["Rational", 2, 3]]
+canonical = ["Rational", -2, 3]
+eval-auto = -2/3
+eval-mach = -2/3
+N-auto    = -0.666666666666666666667
+N-mach    = -0.666666666666667
+`;
+
+exports[`NEGATE -(1234567890987654321/3) 1`] = `
+box       = ["Negate", ["Rational", {num: "1234567890987654321"}, 3]]
+canonical = {num: "-411522630329218107"}
+`;
+
+exports[`NEGATE -0 1`] = `0`;
+
+exports[`NEGATE -2 1`] = `-2`;
+
+exports[`NEGATE -2.5 1`] = `
+box       = ["Negate", 2.5]
+canonical = -2.5
+`;
+
+exports[`NEGATE -1234567890987654321 1`] = `
+box       = ["Negate", {num: "1234567890987654321"}]
+canonical = {num: "-1234567890987654321"}
+`;
+
+exports[`NEGATE -1234567890987654321.123456789 1`] = `
+box       = ["Negate", "1234567890987654321.123456789"]
+canonical = -1234567890987654321.123456789
+`;
+
+exports[`NEGATE -NaN 1`] = `NaN`;
+
+exports[`POWER INVALID Power 1`] = `["Power", 2.5, ["Error", "'missing'"]]`;
+
+exports[`POWER INVALID Power 2`] = `["Power", 2.5, -1.1, ["Error", "'unexpected-argument'", "'18.4'"]]`;
+
+exports[`POWER Power 1`] = `["Power", 2.5, 1.1]`;
+
+exports[`POWER Power 2`] = `["Divide", 1, ["Power", 2.5, 3]]`;
+
+exports[`POWER Power 3`] = `["Power", 2.5, -3.2]`;
+
+exports[`RATIONAL Bignum rational 1`] = `
+box       = [
+  "Rational",
+  {num: "12345678901234567890"},
+  {num: "23456789012345678901"}
+]
+canonical = ["Rational", 137174210, 260630989]
+eval-auto = 137174210/260630989
+eval-mach = 137174210/260630989
+N-auto    = 0.526315809667590986274
+N-mach    = 0.526315809667591
+`;
+
+exports[`RATIONAL INVALID Rational 1`] = `
+invalid   =[
+  "Rational",
+  [
+    "Error",
+    ["ErrorCode", "'incompatible-type'", "'integer'", "'finite_real'"]
+  ],
+  [
+    "Error",
+    ["ErrorCode", "'incompatible-type'", "'integer'", "'finite_real'"]
+  ],
+  ["Error", "'unexpected-argument'", "'18.4'"]
+]
+`;
+
+exports[`RATIONAL INVALID Rational 2`] = `invalid   =["Rational", 2, 3, ["Error", "'unexpected-argument'", "'5'"]]`;
+
+exports[`RATIONAL Rational 1`] = `
+box       = ["Rational", 3, 4]
+eval-auto = 3/4
+eval-mach = 3/4
+N-auto    = 0.75
+N-mach    = 0.75
+`;
+
+exports[`RATIONAL Rational approximation 1`] = `
+box       = ["Rational", 2.5]
+eval-auto = 5/2
+`;
+
+exports[`RATIONAL Rational approximation 2`] = `
+invalid   =[
+  "Rational",
+  [
+    "Error",
+    ["ErrorCode", "'incompatible-type'", "'real'", "'unknown'"]
+  ]
+]
+`;
+
+exports[`RATIONAL Rational as Divide 1`] = `
+box       = ["Rational", 3.1, 2.8]
+canonical = ["Divide", 3.1, 2.8]
+simplify  = 1.10714285714285714286
+eval-auto = 1.10714285714285714286
+eval-mach = 1.10714285714286
+`;
+
+exports[`RELATIONAL OPERATOR Equal 1`] = `True`;
+
+exports[`RELATIONAL OPERATOR Equal 2`] = `False`;
+
+exports[`RELATIONAL OPERATOR Greater 1`] = `False`;
+
+exports[`RELATIONAL OPERATOR Greater 2`] = `True`;
+
+exports[`RELATIONAL OPERATOR GreaterEqual 1`] = `True`;
+
+exports[`RELATIONAL OPERATOR GreaterEqual 2`] = `False`;
+
+exports[`RELATIONAL OPERATOR GreaterEqual 3`] = `True`;
+
+exports[`RELATIONAL OPERATOR Less 1`] = `True`;
+
+exports[`RELATIONAL OPERATOR Less 2`] = `False`;
+
+exports[`RELATIONAL OPERATOR LessEqual 1`] = `True`;
+
+exports[`RELATIONAL OPERATOR LessEqual 2`] = `True`;
+
+exports[`RELATIONAL OPERATOR LessEqual 3`] = `False`;
+
+exports[`RELATIONAL OPERATOR NotEqual 1`] = `False`;
+
+exports[`RELATIONAL OPERATOR NotEqual 2`] = `True`;
+
+exports[`ROOT Root 2.5 1`] = `["Root", 2.5, 3]`;
+
+exports[`ROOT Root 5/7 1`] = `["Root", ["Rational", 5, 7], 3]`;
+
+exports[`ROOT Root 1234567890987654321 1`] = `["Root", {num: "1234567890987654321"}, 3]`;
+
+exports[`ROOT Root 1234567890987654321.123456789 1`] = `["Root", "1234567890987654321.123456789", 3]`;
+
+exports[`SQRT INVALID  Sqrt 1`] = `
+invalid   =[
+  "Sqrt",
+  2.5,
+  ["Error", "'unexpected-argument'", "'-1.1'"],
+  ["Error", "'unexpected-argument'", "'18.4'"]
+]
+`;
+
+exports[`SQRT INVALID Sqrt 1`] = `invalid   =["Sqrt", 2.5, ["Error", "'unexpected-argument'", "'1.1'"]]`;
+
+exports[`SQRT √ of list 1`] = `[2,1,7.483314773547882771167497464633098603512039615557453892607490934640070312613878055953619790388759144,4.242640687119285146405066172629094235709015626130844219530039213972197435386321116551162602982924719]`;
+
+exports[`SQRT √(3+4i) 1`] = `
+box       = ["Sqrt", ["Complex", 3, 4]]
+simplify  = (2 + i)
+`;
+
+exports[`SQRT √(3^2) 1`] = `
+box       = ["Sqrt", ["Square", 3]]
+simplify  = 3
+`;
+
+exports[`SQRT √(4x) 1`] = `
+box       = ["Sqrt", ["Multiply", 4, "x"]]
+eval-auto = sqrt(4x)
+eval-mach = sqrt(4x)
+N-auto    = 2x
+N-mach    = 2x
+`;
+
+exports[`SQRT √(5/7) 1`] = `
+box       = ["Sqrt", ["Rational", 5, 7]]
+canonical = ["Multiply", ["Rational", 1, 7], ["Sqrt", 35]]
+eval-auto = sqrt(35)/7
+eval-mach = sqrt(35)/7
+N-auto    = 0.845154254728516577511
+N-mach    = 0.845154254728518
+`;
+
+exports[`SQRT √(5x(3+2)) 1`] = `
+box       = ["Sqrt", ["Multiply", 5, ["Add", 3, 2]]]
+canonical = ["Sqrt", ["Multiply", 5, ["Add", 2, 3]]]
+simplify  = 5
+`;
+
+exports[`SQRT √(175) 1`] = `
+box       = ["Sqrt", 175]
+canonical = ["Multiply", 5, ["Sqrt", 7]]
+eval-auto = 5sqrt(7)
+eval-mach = 5sqrt(7)
+N-auto    = 13.2287565553229529525
+N-mach    = 13.228756555323
+`;
+
+exports[`SQRT √(1000000/49) 1`] = `
+box       = ["Sqrt", ["Rational", 1000000, 49]]
+simplify  = 142.857142857142857143
+eval-auto = 142.857142857142857143
+eval-mach = 142.857142857143
+`;
+
+exports[`SQRT √(1000001/7) 1`] = `
+box       = ["Sqrt", ["Rational", 1000001, 7]]
+simplify  = 377.964661991416486293
+eval-auto = 377.964661991416486293
+eval-mach = 377.964661991417
+`;
+
+exports[`SQRT √(12345678901234567890/23456789012345678901) 1`] = `
+box       = [
+  "Sqrt",
+  [
+    "Rational",
+    {num: "12345678901234567890"},
+    {num: "23456789012345678901"}
+  ]
+]
+canonical = ["Sqrt", ["Rational", 137174210, 260630989]]
+simplify  = 0.725476264027701313101
+eval-auto = 0.725476264027701313101
+eval-mach = 0.725476264027701
+`;
+
+exports[`SQRT √(12345670000000000000000000) 1`] = `
+box       = ["Sqrt", {num: "1234567e+19"}]
+simplify  = 3513640562152.02524805
+eval-auto = 3513640562152.02524805
+eval-mach = 3513640562152.03
+`;
+
+exports[`SQRT √0 1`] = `
+box       = ["Sqrt", 0]
+canonical = 0
+`;
+
+exports[`SQRT √2.5 1`] = `
+box       = ["Sqrt", 2.5]
+simplify  = 1.581138830084189666
+eval-auto = 1.581138830084189666
+eval-mach = 1.58113883008419
+`;
+
+exports[`SQRT √123456789.01234567890 1`] = `
+box       = ["Sqrt", "123456789.0123456789"]
+simplify  = 11111.1110611111109936
+eval-auto = 11111.1110611111109936
+eval-mach = 11111.1110611111
+`;
+
+exports[`SQRT √12345678901234567890 1`] = `
+box       = ["Sqrt", {num: "12345678901234567890"}]
+simplify  = 3513641828.82014425309
+eval-auto = 3513641828.82014425309
+eval-mach = 3513641828.82015
+`;
+
+exports[`SUBTRACT Subtract 1`] = `2.5`;
+
+exports[`SUBTRACT Subtract 2`] = `1.4`;
+
+exports[`SUBTRACT Subtract with multiple arguments 1`] = `-14.8`;
+
+exports[`SUBTRACT Subtract with single argument 1`] = `2.5`;
+
+exports[`Square INVALID Square 1`] = `invalid   =["Square", 2.5, ["Error", "'unexpected-argument'", "'1.1'"]]`;
+
+exports[`Square INVALID Square 2`] = `
+invalid   =[
+  "Square",
+  2.5,
+  ["Error", "'unexpected-argument'", "'-1.1'"],
+  ["Error", "'unexpected-argument'", "'18.4'"]
+]
+`;
+
+exports[`Square Square 1`] = `
+box       = ["Square", 2.5]
+eval-auto = 2.5^2
+eval-mach = 2.5^2
+N-auto    = 6.25
+N-mach    = 6.25
+`;
