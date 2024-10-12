@@ -29,7 +29,7 @@ import type { NumericValue } from '../numeric-value/public';
 
 import type { SmallInteger } from '../numerics/numeric';
 
-import { compileToJavascript } from '../compile';
+import { compileToJavascript, compileToSympy } from '../compile';
 
 import {
   getApplyFunctionStyle,
@@ -694,22 +694,42 @@ export abstract class _BoxedExpression implements BoxedExpression {
   N(): BoxedExpression {
     return this.evaluate({ numericApproximation: true });
   }
+  /*
+      This is the function where we will be calling compileToSympy. 
+      Originally, this function simply takes in two default paramters:
+      The one we are interested in is to: which specifies the language we wish to compile our expression to, 
+      it currently has a default value of 'javascript' however we will now modify this, 
+      so that 'sympy' is also a valid target. 
+    */
 
-  compile(
-    to = 'javascript',
-    options?: { optimize: ('simplify' | 'evaluate')[] }
-  ): ((args: Record<string, any>) => any | undefined) | undefined {
-    if (to !== 'javascript') return undefined;
-    options ??= { optimize: ['simplify'] };
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    let expr = this as BoxedExpression;
-    if (options.optimize.includes('simplify')) expr = expr.simplify();
-    if (options.optimize.includes('evaluate')) expr = expr.evaluate();
-    // try {
-    return compileToJavascript(expr);
-    // } catch (e) {}
-    // return undefined;
-  }
+      compile(
+        to: string | undefined,
+        options?: { optimize: ('simplify' | 'evaluate')[] }
+      ): ((args: Record<string, any>) => any | undefined) | undefined {
+        // Ensure 'to' is either 'javascript' or 'sympy'
+        if (to !== 'javascript' && to !== 'sympy') return undefined;
+      
+        options ??= { optimize: ['simplify'] };
+        
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        let expr = this as BoxedExpression;
+        
+        // Apply optimizations if requested
+        if (options.optimize.includes('simplify')) expr = expr.simplify();
+        if (options.optimize.includes('evaluate')) expr = expr.evaluate();
+      
+        // Try to compile to the requested target
+        try {
+          if (to === 'javascript') return compileToJavascript(expr);
+          if (to === 'sympy') return compileToSympy(expr);
+        } catch (e) {
+          console.error('Error during compilation:', e);
+        }
+        
+        return undefined;
+      }
+      
+    
 
   get isCollection(): boolean {
     return false;

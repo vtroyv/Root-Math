@@ -1155,7 +1155,7 @@ export interface BoxedExpression {
    * ```
    */
   compile(
-    to?: 'javascript',
+    to?: 'javascript' ,
     options?: { optimize: ('simplify' | 'evaluate')[] }
   ): ((args: Record<string, any>) => any | undefined) | undefined;
 

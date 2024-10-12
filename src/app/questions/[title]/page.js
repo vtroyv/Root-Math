@@ -100,28 +100,48 @@ export default function QuestionDisplay({ params }) {
 
 
     const handleSubmit = () => {
-        const latex= mfe.current.value
-        console.log('the latex is given by', latex)
+        const latex = mfe.current.value;
+        console.log('The latex is given by', latex);
+    
+        // Preprocess the LaTeX
         const preprocessedArray = preprocessLatex(latex);
-        console.log(preprocessedArray)
-        const mathjsonArray =  preprocessedArray.map(latex => ceRef.current.ce.parse(latex).symbol)
-        /*
+        console.log(preprocessedArray);
+    
+        // Parse the latex into boxed expressions
+        const boxedExpressionArray = preprocessedArray.map(latex => ceRef.current.ce.parse(latex));
 
-        ce.parse returns a boxed expression, we are getting the mathjson by using .json, however we could also get different things by using .head etc. 
-        Therefore when parsing to sympy perhaps we shouldn't convert it to mathjson directly but instead parse from the boxed expression to sympy, as the current 
-        compiler code on the github seems to convert from a boxed expression to javascript, not mathjson to javascript. Double checkl though!
-        */
-       
-       console.log('the mathjson is given below')
-       console.log(mathjsonArray)
+        console.log(`The boxedExpression Array is ${boxedExpressionArray}`)
 
-       const boxed_expressions = mathjsonArray.map(line => ceRef.current.ce.box(line))
-       console.log('the boxed expressions are', boxed_expressions)
+        const compiled = boxedExpressionArray.map((bE)=> bE.compile('sympy'))
 
+        console.log(`The compiled latex is  ${compiled}`)
+        
+  
+    
+        // console.log('The boxedExpressionArray is given below');
+        // console.log(boxedExpressionArray);
+    
+        // // Map over the boxed expressions to extract the operands (ops)
+        // const opsArray = boxedExpressionArray.map((bE) => bE.ops);
+        // console.log('The operator of the boxedExpression are');
+        // console.log(opsArray);
+    
+        // // Check if the first expression has operands and log them
+        // if (opsArray[0]) {
+        //     console.log(`The operands of the first boxed expression are:`);
+        //     console.log(opsArray[0]);
+        // }
+    
+        // // Check if the second operand exists
+        // if (opsArray[1]) {
+        //     console.log(`The second operand in the expression is: ${opsArray[1]}`);
+        // } else {
+        //     console.log('The second operand is undefined or does not exist.');
+        // }
 
-
-    }
-
+        
+    };
+    
 
 
 

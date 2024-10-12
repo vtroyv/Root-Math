@@ -276,6 +276,91 @@ const NATIVE_JS_FUNCTIONS: CompiledFunctions = {
   // LahL: 'Math.lahL',
 };
 
+const NATIVE_SYMPY_OPERATORS: CompiledOperators= {
+  Add: ['+', 10],           // Similar precedence to addition
+  Subtract: ['-', 10],      // Similar precedence to subtraction
+  Negate: ['-', 15],        // Unary negation has higher precedence
+  Multiply: ['*', 20],      // Higher precedence for multiplication
+  Divide: ['/', 20],        // Same as multiplication
+  FloorDivide: ['//', 20],  // Same precedence as other multiplication operators
+  Modulus: ['%', 20],       // Same precedence as multiplication
+  Power: ['**', 30],        // Exponentiation has the highest precedence
+  
+  BitwiseAnd: ['&', 8],     // Lower precedence than arithmetic
+  BitwiseOr: ['|', 6],      // Lower precedence than XOR
+  BitwiseXor: ['^', 7],     // Between AND and OR
+
+  Less: ['<', 5],           // Comparison operators
+  LessEqual: ['<=', 5],
+  Greater: ['>', 5],
+  GreaterEqual: ['>=', 5],
+  Equal: ['==', 5],         // Same precedence for all comparisons
+  NotEqual: ['!=', 5],
+
+  Not: ['not', 40],         // Logical NOT has a high precedence
+  And: ['and', 3],          // Logical AND has lower precedence
+  Or: ['or', 2],            // Logical OR has the lowest precedence
+};
+
+const NATIVE_SYMPY_FUNCTIONS: CompiledFunctions = {
+      Abs: 'Abs', 
+      Add: (args, compile) => {
+          if (args.length === 1) return compile(args[0]);
+          return `(${args.map((x)=> compile(x)).join(' + ')})`;
+      }, 
+      Arccos: 'acos', 
+      Arcosh: 'acosh', 
+      Arccot: ([x], compile) => {
+        if (x === null) throw new Error('Arccot: no argument');
+        return `acot(${compile(x)})`;
+      }, 
+      Arccoth: ([x], compile) => {
+        if (x === null) throw new Error('Arccoth: no argument');
+        return `acoth(${compile(x)})`;
+      }, 
+      Arccsc: ([x], compile) => {
+        if (x === null) throw new Error('Arccsc: no argument');
+        return `acsc(${compile(x)})`;
+      }, 
+      Arccsch: ([x], compile)=>{
+        if (x === null) throw new Error('Arccsch: no argument');
+        return `acsch(${compile})`
+      }, 
+      Arcsec: ([x], compile)=> {
+        if (x === null) throw new Error('Arcsec: no argument');
+        return `asec(${compile})`;
+      },
+      Arcsech: ([x], compile) => {
+        if (x === null) throw new Error('Arcsech: no argument');
+        return `asech(${compile})`
+      }, 
+      
+      Arsin:  'asin', 
+      Arsinh: 'asinh', 
+      Arctan: 'atan',
+      Artanh: 'atanh',
+  
+      // Math.cbrt
+  
+      Ceiling: 'ceiling', 
+      Chop: '_SYS.chop', // use sympy utility functions like evalf()
+      Cos: 'cos', 
+      Cosh: 'cosh', 
+      
+  
+    }
+
+
+  const NATIVE_SYMPY_NUMERICS = {
+    Pi : 'pi', 
+    ExponentialE: 'exp', 
+    NaN: 'nan', 
+    ImaginaryUnit: 'I', 
+    half: 'S.half', 
+
+    
+}
+
 export type CompileTarget = {
   operators?: (op: MathJsonIdentifier) => [op: string, prec: number];
   functions?: (
@@ -338,8 +423,11 @@ export function compileToTarget(
 export function compileToJavascript(
   expr: BoxedExpression
 ): ((_: Record<string, CompiledType>) => CompiledType) | undefined {
+  
   const unknowns = expr.unknowns;
-  return compileToTarget(expr, {
+
+  return compileToTarget(expr,
+     {
     operators: (op) => NATIVE_JS_OPERATORS[op],
     functions: (id) => NATIVE_JS_FUNCTIONS[id],
     var: (id) => {
@@ -363,6 +451,27 @@ export function compileToJavascript(
     indent: 0,
     ws: (s?: string) => s ?? '',
   });
+}
+
+//This function is different
+export function compileToSympy(expr: BoxedExpression) :((_: Record<string, CompiledType>) => CompiledType) | undefined{
+  const unknowns = expr.unknowns; 
+  return compileToTarget(expr,{
+      operators: (op) => NATIVE_SYMPY_OPERATORS[op],
+      functions: (id) => NATIVE_SYMPY_FUNCTIONS[id], 
+      var:(id) => {
+          const result =  NATIVE_SYMPY_NUMERICS[id];
+          if (result !== undefined) return result;
+          if (unknowns.includes(id)) return `_.${id}`;
+          return undefined; 
+
+      }, 
+      string: (str) => JSON.stringify(str), 
+      number: (n) => n.toString(), 
+      indent: 0, 
+      ws: (s?: string) => s ?? ''
+
+  })
 }
 
 function compileExpr(
@@ -473,6 +582,7 @@ function compileExpr(
   }
 
   const fn = target.functions?.(h);
+  console.log(`the function is ${fn}`)
   if (!fn) throw new Error(`Unknown function ${h}`);
   if (typeof fn === 'function') {
     if (args.length === 1 && isFiniteIndexableCollection(args[0])) {
@@ -512,7 +622,10 @@ export function compile(
   //
   // Is it a symbol?
   //
+  
   const s = expr.symbol;
+
+  console.log(`The symbol is ${s}`)
   if (s !== null) return target.var?.(s) ?? s;
 
   //
