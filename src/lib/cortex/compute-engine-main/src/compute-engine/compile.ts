@@ -347,6 +347,7 @@ const NATIVE_SYMPY_FUNCTIONS: CompiledFunctions = {
       Cos: 'cos', 
       Cosh: 'cosh', 
       
+      
   
     }
 
@@ -639,7 +640,8 @@ export function compile(
 
   // Is it a string?
   const str = expr.string;
-  if (str !== null) return target.string(s!);
+  console.log(`The string is ${str}`)
+  if (str !== null) return target.string(str!);
 
   // It must be a function expression...
   return compileExpr(expr.operator, expr.ops!, prec, target);
@@ -720,7 +722,7 @@ function inlineExpression(body: string, x: string): string {
   const isSimple = /^[\p{L}_][\p{L}\p{N}_]*$/u.test(x) || /^[0-9]+$/.test(x);
 
   if (isSimple) {
-    // Inline the body if `x` is simple
+    // Inline the body if `x` is     fe
     return new Function('x', `return \`${body}\`;`)(x);
   } else {
     // Generate an IIFE if `x` is a complex expression

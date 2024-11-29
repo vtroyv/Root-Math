@@ -99,22 +99,23 @@ export default function QuestionDisplay({ params }) {
 
 
 
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
         const latex = mfe.current.value;
         console.log('The latex is given by', latex);
     
         // Preprocess the LaTeX
         const preprocessedArray = preprocessLatex(latex);
-        console.log(preprocessedArray);
+        console.log(`The preprocessedArray is ${preprocessedArray}`);
     
         // Parse the latex into boxed expressions
         const boxedExpressionArray = preprocessedArray.map(latex => ceRef.current.ce.parse(latex));
 
         console.log(`The boxedExpression Array is ${boxedExpressionArray}`)
 
-        const compiled = boxedExpressionArray.map((bE)=> bE.compile('sympy'))
+        const compiled = boxedExpressionArray.map((bE)=> bE.compile('javascript'))
 
         console.log(`The compiled latex is  ${compiled}`)
+        
         
   
     
