@@ -1,4 +1,4 @@
-import { ComputeEngine } from "../compute-engine-main/src/compute-engine";
+import { ComputeEngine } from "../cortex/compute-engine-main/src/compute-engine";
 
 class ComputeEngineConfig {
     constructor(questionType) {

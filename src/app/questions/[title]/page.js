@@ -2,10 +2,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { MathfieldElement } from 'mathlive';
 import { useGetQuestionsQuery, useGradeQuestionMutation } from '@/lib/redux/slices/apiSlice';
-import ComputeEngineConfig from '@/lib/cortex/utils/ceConfig';
+import ComputeEngineConfig from '../../../lib/utils/ceConfig';
 import { Button } from 'primereact/button';
 import { prettyPrintJson } from 'pretty-print-json';
-import preprocessLatex from '@/lib/cortex/utils/preprocess-latex';
+import preprocessLatex from '../../../lib/utils/preprocess-latex';
 
 
 
