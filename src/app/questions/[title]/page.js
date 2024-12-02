@@ -1,11 +1,12 @@
 'use client'
 import { useEffect, useRef, useState } from 'react';
 import { MathfieldElement } from 'mathlive';
-import { useGetQuestionsQuery } from '@/lib/redux/slices/apiSlice';
+import { useGetQuestionsQuery, useGradeQuestionMutation } from '@/lib/redux/slices/apiSlice';
 import ComputeEngineConfig from '@/lib/cortex/utils/ceConfig';
 import { Button } from 'primereact/button';
 import { prettyPrintJson } from 'pretty-print-json';
 import preprocessLatex from '@/lib/cortex/utils/preprocess-latex';
+
 
 
 /* 
@@ -31,12 +32,14 @@ export default function QuestionDisplay({ params }) {
     // Fetch data and ensure caching
     const { data, isLoading, isSuccess } = useGetQuestionsQuery(); // You could use `isLoading` to add some UI feedback
 
+    
+
     const title = params.title;
-    console.log('the title of the question in quiz displah is', title);
+    // console.log('the title of the question in quiz displah is', title);
 
     // Check if `data` exists before trying to find a question
     const question = data ? data.find((obj) => obj.title === title) : null;
-    console.log('the question in the quiz display is ', question)
+    // console.log('the question in the quiz display is ', question)
 
 
     useEffect(() => {
@@ -54,7 +57,7 @@ export default function QuestionDisplay({ params }) {
                     questionRef.current.appendChild(questionView.current);
                 }
     
-                mfe.current.mathModeSpace = '\\';
+                mfe.current.mathModeSpace = '\\,';
                 mfe.current.virtualKeyboardMode = 'manual';
                 mfe.current.style.display = 'block';
                 mfe.current.style.width = '700px';
@@ -69,6 +72,8 @@ export default function QuestionDisplay({ params }) {
                         
                         event.preventDefault();
                     }
+                //you need to add an event listener for adding a space, regardless of in mathmode or text 
+
                 });
                
                 
@@ -95,6 +100,8 @@ export default function QuestionDisplay({ params }) {
     }, [question]);
     
 
+    const [gradeQuestion, mutationState] = useGradeQuestionMutation()
+
 
 
 
@@ -102,22 +109,42 @@ export default function QuestionDisplay({ params }) {
     const handleSubmit = async() => {
         const latex = mfe.current.value;
         console.log('The latex is given by', latex);
+
+        const test = [1,2,3,5]
+        console.log(test)
     
         // Preprocess the LaTeX
         const preprocessedArray = preprocessLatex(latex);
         console.log(`The preprocessedArray is ${preprocessedArray}`);
-    
+        const boxedExpression = ceRef.current.ce.parse(latex)
+
+        console.log(`The boxed expression before array is, ${boxedExpression}`)
         // Parse the latex into boxed expressions
-        const boxedExpressionArray = preprocessedArray.map(latex => ceRef.current.ce.parse(latex));
+        const boxedExpressionArray = preprocessedArray.map(latex => ceRef.current.ce.parse(latex, {canonical: false}));
 
         console.log(`The boxedExpression Array is ${boxedExpressionArray}`)
 
         const compiled = boxedExpressionArray.map((bE)=> bE.compile('javascript'))
 
-        console.log(`The compiled latex is  ${compiled}`)
-        
-        
+        console.log(`the type compiled printed out is ${typeof compiled} and it is ${compiled}`)
+
+
+        console.log(`The compiled latex is  ${JSON.stringify(compiled)}`)
+
+      try {
+        //compiled is returning javascript functions i beleive 
+        const compiledStrings = compiled.map((fn) => fn.toString());
+        console.log(`The compiled strings are of type ${typeof compiledStrings}, and there values are: ${compiledStrings}`)
+        const data = await gradeQuestion(compiledStrings).unwrap()
+        console.log(`The response from the route handler is ${JSON.stringify(data, null, 2)}`);
+
+      } catch(error){
+        console.log(`The error when trying to access the routehandler is ${error}`)
+
+      }
+      
   
+
     
         // console.log('The boxedExpressionArray is given below');
         // console.log(boxedExpressionArray);

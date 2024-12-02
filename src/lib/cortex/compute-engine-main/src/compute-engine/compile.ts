@@ -583,7 +583,7 @@ function compileExpr(
   }
 
   const fn = target.functions?.(h);
-  console.log(`the function is ${fn}`)
+  // console.log(`the function is ${fn}`)
   if (!fn) throw new Error(`Unknown function ${h}`);
   if (typeof fn === 'function') {
     if (args.length === 1 && isFiniteIndexableCollection(args[0])) {

@@ -13,13 +13,24 @@ export const apiSlice = createApi({
         //The `getQuestions` endpont is a "query" operation that returns data.
         getQuestions: builder.query({
             query: () => '/questions'
+        }),
+
+        //The `gradeQuestion` endpoint is a "mutation" operation that updates the DB, and returns feedback data
+        gradeQuestion: builder.mutation({
+            query: (questionData) => ({
+                url: '/feedback',
+                method: 'POST',
+                body: questionData
+
+            })
+            
         })
 
     })
 })
 
 
-export const { useGetQuestionsQuery } = apiSlice;
+export const { useGetQuestionsQuery, useGradeQuestionMutation } = apiSlice;
 
 
 
