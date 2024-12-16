@@ -425,7 +425,15 @@ export function compileToJavascript(
   expr: BoxedExpression
 ): ((_: Record<string, CompiledType>) => CompiledType) | undefined {
   
+
+  console.log(`The expr printed as a string is ${expr}`)
+  console.log(`The type of expr is ${typeof expr} and it is ${expr}`)
+  
   const unknowns = expr.unknowns;
+  console.log(`The unknowns are ${unknowns}`)
+  console.log(unknowns)
+
+  console.log(`The operator is ${expr.operator}`)
 
   return compileToTarget(expr,
      {
@@ -445,6 +453,7 @@ export function compileToJavascript(
       }[id];
       if (result !== undefined) return result;
       if (unknowns.includes(id)) return `_.${id}`;
+      
       return undefined;
     },
     string: (str) => JSON.stringify(str),
@@ -483,12 +492,17 @@ function compileExpr(
 ): JSSource {
   // No need to check for 'Rational': this has been handled as a number
 
+  console.log(`The args are ${args}`)
   if (h === 'Error') throw new Error('Error');
 
   if (h === 'Sequence') {
     if (args.length === 0) return '';
     return `(${args.map((arg) => compile(arg, target, prec)).join(', ')})`;
   }
+
+//  if (h ==='Delimiter') {
+//   return `(${args})`
+//  }
 
   // if (h === 'Negate') {
   //   const arg = args[0];
@@ -505,17 +519,24 @@ function compileExpr(
   // If they are, we'll treat it as a function call
   //
 
+  
+
   if (args.every((x) => !x.isCollection)) {
+    console.log('Read thru the code here, this is where you will beable to fix the issue with equals')
+    
     // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence
     // for operator precedence in JavaScript
     const op = target.operators?.(h);
 
     if (isRelationalOperator(h) && args.length > 2 && op) {
+      //NOTE EQUALS IS A RELATIONALOPERATOR SO IT CAUSES THIS TO RUN TRUE I.E CHECK THE ISRELATIONALOPERATOR
       // JavaScript relational operators only take two arguments
       // We need to chain them
       const result: string[] = [];
       for (let i = 0; i < args.length - 1; i++)
         result.push(compileExpr(h, [args[i], args[i + 1]], op[1], target));
+
+      console.log(`The result is ${result}`)
 
       return `(${result.join(') && (')})`;
     }
@@ -632,8 +653,8 @@ export function compile(
   //
   // Is it a number?
   //
-  const f = expr.re;
-  if (!isNaN(f)) {
+  if (expr.isNumberLiteral) {
+    const f = expr.re;
     if (expr.im !== 0) throw new Error('Complex numbers are not supported');
     return target.number(f);
   }
@@ -644,6 +665,9 @@ export function compile(
   if (str !== null) return target.string(str!);
 
   // It must be a function expression...
+  console.log(`The operator is ${expr.operator}`)
+  console.log(`The ops are ${expr.ops}`)
+  
   return compileExpr(expr.operator, expr.ops!, prec, target);
 }
 

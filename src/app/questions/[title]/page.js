@@ -6,6 +6,7 @@ import ComputeEngineConfig from '../../../lib/utils/ceConfig';
 import { Button } from 'primereact/button';
 import { prettyPrintJson } from 'pretty-print-json';
 import preprocessLatex from '../../../lib/utils/preprocess-latex';
+import { canonical } from '@/lib/cortex/compute-engine-main/src/compute-engine/private';
 
 
 
@@ -117,10 +118,13 @@ export default function QuestionDisplay({ params }) {
         const preprocessedArray = preprocessLatex(latex);
         console.log(`The preprocessedArray is ${preprocessedArray}`);
         const boxedExpression = ceRef.current.ce.parse(latex)
+        console.log(`The boxed expression is ${boxedExpression}`)
+        console.log(`and when we compile it we get ${ await boxedExpression.compile('javascript')}`)
 
         console.log(`The boxed expression before array is, ${boxedExpression}`)
+   
         // Parse the latex into boxed expressions
-        const boxedExpressionArray = preprocessedArray.map(latex => ceRef.current.ce.parse(latex, {canonical: false}));
+        const boxedExpressionArray = preprocessedArray.map(latex => ceRef.current.ce.parse(latex));
 
         console.log(`The boxedExpression Array is ${boxedExpressionArray}`)
 
@@ -195,7 +199,7 @@ export default function QuestionDisplay({ params }) {
         <div ref={mathfieldRef}></div>
 
         <div>
-            <Button label='MathJson' onClick={handleSubmit}></Button>
+            <Button label='Box Expression' onClick={handleSubmit}></Button>
         </div>
         </>
     );

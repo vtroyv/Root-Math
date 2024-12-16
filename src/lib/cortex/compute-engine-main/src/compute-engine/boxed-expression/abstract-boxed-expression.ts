@@ -557,7 +557,7 @@ export abstract class _BoxedExpression implements BoxedExpression {
   }
 
   solve(
-    _vars:
+    _vars?:
       | Iterable<string>
       | string
       | BoxedExpression
@@ -703,25 +703,39 @@ export abstract class _BoxedExpression implements BoxedExpression {
     */
 
       compile(
+        /*
+        Note that by deleting all the simplification code, which consisted of the code with the options/optimize logic,
+         we were able to get our work to compile, however, we are now considerably behind the most recent update to the github logic, 
+         before production, perhaps see if we can pull the updates or refork it and then push my contribution to arnog to get feeback
+
+         Anyways the main issue we were facing was that the boxed Expression was being simplified before being compiled which was causing errors.
+
+
+        */
         to: string | undefined,
-        options?: { optimize: ('simplify' | 'evaluate')[] }
+        // options?: { optimize: ('simplify' | 'evaluate')[] }
+
+        options?: {}
       ): ((args: Record<string, any>) => any | undefined) | undefined {
         // Ensure 'to' is either 'javascript' or 'sympy'
         if (to !== 'javascript' && to !== 'sympy') return undefined;
-      
-        options ??= { optimize: ['simplify'] };
+    
+        // options ??= { optimize: ['simplify'] };
+        options??={}
         
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         let expr = this as BoxedExpression;
+        console.log(`The expr in the abstract-BE class is `)
+        console.log(expr)
         
         // Apply optimizations if requested
-        if (options.optimize.includes('simplify')) expr = expr.simplify();
-        if (options.optimize.includes('evaluate')) expr = expr.evaluate();
+        // if (options.optimize.includes('simplify')) expr = expr.simplify();
+        // if (options.optimize.includes('evaluate')) expr = expr.evaluate();
       
         // Try to compile to the requested target
         try {
-          if (to === 'javascript') return compileToJavascript(expr);
-          if (to === 'sympy') return compileToSympy(expr);
+          if (to === 'javascript') return compileToJavascript(expr as BoxedExpression);
+          if (to === 'sympy') return compileToSympy(expr as BoxedExpression);
         } catch (e) {
           console.error('Error during compilation:', e);
         }
