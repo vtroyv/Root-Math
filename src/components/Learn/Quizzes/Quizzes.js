@@ -1,254 +1,340 @@
-import React, {useState,useEffect} from 'react'
-
+import React, { useState } from 'react';
 import { useGetQuestionsQuery } from '../../../redux/learnSlice';
-
-
-
-
-
-import { Table, Dropdown,  DropdownToggle, DropdownMenu, DropdownItem, Card, CardBody, Input, InputGroup, } from 'reactstrap';
-import "bootstrap-icons/font/bootstrap-icons.css"
-import {Link, } from 'react-router-dom';
-
+import {
+  Table,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  InputGroup,
+  Input,
+  Card,
+  CardBody,
+  Badge,
+  Button,
+  FormGroup,
+  Label,
+  Input as StrapInput
+} from 'reactstrap';
+import { Link } from 'react-router-dom';
 import Calendar from '../../Utilities/Calendar';
+import "bootstrap-icons/font/bootstrap-icons.css";
 
-
-
-
-
+/**
+ * Example array of possible topics. 
+ * In a real app, you might fetch these from the server, 
+ * or derive them from your question data.
+ */
+const ALL_TOPICS = [
+  'Proof',
+  'Algebra and Functions',
+  'Quadratic Functions',
+  'Vectors',
+  'Integration',
+  'Logarithms',
+];
 
 const Quizzes = () => {
-
-
-
-  
-
+  // Dropdown open states
   const [statusOpen, setStatusOpen] = useState(false);
-  const [difficultyOpen, setDifficultyOpen] = useState(false);
   const [topicOpen, setTopicOpen] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const [difficultyOpen, setDifficultyOpen] = useState(false);
 
-  //load and cache the data 
-  useEffect(()=>{
-    return ()=> console.log('component is unmounted')
-  },[])
+  // Filter states
+  const [statusFilter, setStatusFilter] = useState(null);
+  // Instead of a single topic, store an array of selected topics:
+  const [topicFilter, setTopicFilter] = useState([]);
+  const [difficultyFilter, setDifficultyFilter] = useState(null);
 
-  const { data, isLoading, error, } = useGetQuestionsQuery();
-  console.log('the data is:')
-  console.log(data)
+  // Search text
+  const [searchQuery, setSearchQuery] = useState('');
 
+  // Toggle dropdowns
+  const toggleStatus = () => setStatusOpen(!statusOpen);
+  const toggleTopic = () => setTopicOpen(!topicOpen);
+  const toggleDifficulty = () => setDifficultyOpen(!difficultyOpen);
 
+  // Helper: clear all filters
+  const clearAllFilters = () => {
+    setStatusFilter(null);
+    setTopicFilter([]);
+    setDifficultyFilter(null);
+    setSearchQuery('');
+  };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  /**
+   * Toggles (adds/removes) a topic in our topicFilter array.
+   * If the topic is already selected, remove it; otherwise, add it.
+   */
+  const handleTopicToggle = (topic) => {
+    if (topicFilter.includes(topic)) {
+      // Remove
+      setTopicFilter(topicFilter.filter((t) => t !== topic));
+    } else {
+      // Add
+      setTopicFilter([...topicFilter, topic]);
+    }
+  };
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // Load data from Redux RTK Query
+  const { data, isLoading, error } = useGetQuestionsQuery();
 
-  if (!data) {
-  
-  
-    return <div>No data available</div>;
-  }
+  // Handle loading / error states
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  if (!data) return <div>No data available</div>;
 
+  // 1. Filter the data
+  const filteredData = data.filter((question) => {
+    // Filter by status (single-select)
+    if (statusFilter && question.status !== statusFilter) {
+      return false;
+    }
 
+    // Filter by topics (multi-select)
+    // If user selected at least one topic, question.topic must be in that array:
+    if (topicFilter.length > 0 && !topicFilter.includes(question.topic)) {
+      return false;
+    }
 
+    // Filter by difficulty (single-select)
+    if (difficultyFilter && question.difficulty !== difficultyFilter) {
+      return false;
+    }
 
+    // Search by title/topic/difficulty
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      const title = question.title.toLowerCase();
+      const topic = question.topic.toLowerCase();
+      const difficulty = question.difficulty.toLowerCase();
 
+      if (!(title.includes(q) || topic.includes(q) || difficulty.includes(q))) {
+        return false;
+      }
+    }
+    return true;
+  });
 
-const videos = data.map((question)=>{
-  return(
+  // 2. Map over the filtered data to build table rows
+  const tableRows = filteredData.map((question) => (
     <tr key={question.title}>
-      <td><i className="bi bi-check-lg" style={{fontSize:'1.2rem'}}></i> </td>
-      <td><Link to={`${question.title.split(' ').join('-')}`} state={question} className='quiz-link'>{question.title}</Link></td>
+      <td>
+        {/* Example Status icon (Completed vs. Todo).
+            Adjust logic if your data doesn't have these exact statuses. */}
+        {question.status === 'Completed' ? (
+          <i className="bi bi-check-lg" style={{ fontSize: '1.2rem' }} />
+        ) : (
+          <i className="bi bi-dash-lg" style={{ fontSize: '1.2rem' }} />
+        )}
+      </td>
+      <td>
+        {/* The link to your question’s detail page */}
+        <Link
+          to={`${question.title.split(' ').join('-')}`}
+          state={question}
+          className="quiz-link"
+        >
+          {question.title}
+        </Link>
+      </td>
       <td>{question.topic}</td>
       <td>{question.difficulty}</td>
-
     </tr>
-    
-  )
-})
+  ));
 
-
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleClearInput = () => {
-    setInputValue('');
-  };
-
-  const searchIcon = inputValue
-    ? <i className="bi bi-x-lg" onClick={handleClearInput}></i>
-    : <i className="bi bi-search"></i>;
-  
-    const toggleTopic = () => setTopicOpen((prevState) => !prevState);
-    const toggleStatus = () => setStatusOpen((prevState) => !prevState);
-    const toggleDifficulty = () => setDifficultyOpen((prevState)=> !prevState);
-    // const containerRef = useRef(null);
-    
-    
- 
-  //  const questions = data.map((quiz)=> )
-
-  
-
-
+  // 3. Render the final layout
   return (
-    <div className='quiz-container'> 
-    
-       
-
-
-        {/*By setting teh display to false were able to display our latex inline, meaning we display text and math  like this ^^ */}
-
-        {/* <div ref={containerRef}> </div>
-
-        <Button onClick ={updateLatex}>change latex above</Button> */}
-
+    <div className="quiz-container">
+      {/* Table Section */}
+      <div className="quiz-table">
         
-        <div className='quiz-table'> 
-        <Table responsive  striped>
-          {/* This is hardcoded for now, but we wish to add connect typesense to the database to enable searching for questions as well as 
-          having buttons to enable filtering of questions based on difficulty  */}
-  <thead>
-    <tr>
-      <th>
-        <Dropdown isOpen={statusOpen} toggle={toggleStatus} direction='down' >
-          <DropdownToggle caret color='info' size='sm' style={{borderRadius:'0px', width:'fit-content',  height:'2.5rem'}} outline> Status </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem style={{display:"flex",  justifyContent:'space-between'}}><span>Completed</span> <i className="bi bi-check-lg" style={{fontSize:'1.2rem'}}></i></DropdownItem>
-            <DropdownItem style={{display:"flex",  justifyContent:'space-between'}}><span>Todo</span> <i className="bi bi-dash-lg" style={{fontSize:'1.2rem', fontWeight:'bold'}}></i></DropdownItem>
+        {/* Active Filters / Clear All */}
+        <div style={{ marginBottom: '1rem' }}>
+          {/* <h5>Filters</h5> */}
+          {/* Show a "badge" for each active filter, with an X to clear it */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+            {statusFilter && (
+              <Badge
+                color="info"
+                pill
+                style={{ cursor: 'pointer' }}
+                onClick={() => setStatusFilter(null)}
+              >
+                Status: {statusFilter} <i className="bi bi-x-lg ms-1"></i>
+              </Badge>
+            )}
 
-          </DropdownMenu>
+            {/* If multiple topics, display them all. */}
+            {topicFilter.map((topic) => (
+              <Badge
+                key={topic}
+                color="info"
+                pill
+                style={{ cursor: 'pointer' }}
+                onClick={() => handleTopicToggle(topic)}
+              >
+                Topic: {topic} <i className="bi bi-x-lg ms-1"></i>
+              </Badge>
+            ))}
 
-          
-        </Dropdown>
-      </th>
-      <th>
-        Title
-      </th>
-      <th>
-        <Dropdown isOpen={topicOpen} toggle={toggleTopic} direction='down'>
-          <DropdownToggle caret color='info' size='sm' style={{borderRadius:'0px', widht:'fit-content', height:'2.5rem'}} outline> Topic</DropdownToggle>
-          <DropdownMenu>
-          <DropdownItem style={{display:"flex",  justifyContent:'flex-start'}}><span>Proof</span> </DropdownItem>
-          <DropdownItem style={{display:"flex",  justifyContent:'flex-start'}}><span>Quadratic Functions</span> </DropdownItem>
-          <DropdownItem style={{display:"flex",  justifyContent:'flex-start'}}><span>Algebra</span> </DropdownItem>
-          <DropdownItem style={{display:"flex",  justifyContent:'flex-start'}}><span>Differentiation</span> </DropdownItem>
-          <DropdownItem style={{display:"flex",  justifyContent:'flex-start'}}><span>Integration</span> </DropdownItem>
-          <DropdownItem style={{display:"flex",  justifyContent:'flex-start'}}><span>Logarithms</span> </DropdownItem>
-          <DropdownItem style={{display:"flex",  justifyContent:'flex-start'}}><span>Vectors</span> </DropdownItem>
+            {difficultyFilter && (
+              <Badge
+                color="info"
+                pill
+                style={{ cursor: 'pointer' }}
+                onClick={() => setDifficultyFilter(null)}
+              >
+                Difficulty: {difficultyFilter} <i className="bi bi-x-lg ms-1"></i>
+              </Badge>
+            )}
 
-          </DropdownMenu>
-
-        </Dropdown>
-      </th>
-      <th>
-      <Dropdown isOpen={difficultyOpen} toggle={toggleDifficulty} direction='down' >
-          <DropdownToggle caret size='sm' color='info' style={{borderRadius:'0px',width:'fit-content',height:'2.5rem'}} outline> Difficulty </DropdownToggle>
-          
-
-          <DropdownMenu>
-            <DropdownItem style={{display:"flex",  justifyContent:'space-between'}}><span style={{color:'green'}}>Easy</span> <i className="bi bi-emoji-neutral" style={{fontSize:'1.2rem'}}></i></DropdownItem>
-            <DropdownItem style={{display:"flex",  justifyContent:'space-between'}}><span style={{color:'orange'}}>Medium</span> <i className="bi bi-emoji-smile" style={{fontSize:'1.2rem', fontWeight:'bold'}}></i></DropdownItem>
-            <DropdownItem style={{display:"flex",  justifyContent:'space-between'}}><span style={{color:'#17a2b8'}}>Exam</span> <i className="bi bi-emoji-laughing" style={{fontSize:'1.2rem', fontWeight:'bold'}}></i></DropdownItem>
-            <DropdownItem style={{display:"flex",  justifyContent:'space-between'}}><span style={{color:'red'}}>Challenge</span> <i className="bi bi-emoji-dizzy" style={{fontSize:'1.2rem', fontWeight:'bold'}}></i></DropdownItem>
-
-          </DropdownMenu>
-
-
-
-          
-        </Dropdown>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-   {videos}
-  </tbody>
-</Table>
-</div>
-<div className='quiz-sidebar'>
-
-<div className='quiz-search'>
-<div>
-      <InputGroup>
-        <Input
-          placeholder="Search by title, topic or difficulty"
-          value={inputValue}
-          onChange={handleInputChange}
-          style={{ paddingRight: '2rem', borderRadius:'10px' }} // Adjust this value based on the icon size
-        />
-        <div style={{
-          position: 'absolute',
-          right: '1rem',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          zIndex: 2,
-          cursor: 'pointer'
-        }}>
-          {searchIcon}
+            {(statusFilter || topicFilter.length > 0 || difficultyFilter || searchQuery) && (
+              <Button
+                color="secondary"
+                outline
+                size="sm"
+                onClick={clearAllFilters}
+              >
+                Clear All
+              </Button>
+            )}
+          </div>
         </div>
-      </InputGroup>
+
+        <Table responsive striped>
+          <thead>
+            <tr>
+              <th>
+                {/* Status Filter Dropdown */}
+                <Dropdown isOpen={statusOpen} toggle={toggleStatus} color='info'>
+                  <DropdownToggle caret color="info" size="sm" outline>
+                    Status
+                  </DropdownToggle>
+                  <DropdownMenu container='body'>
+                    <DropdownItem onClick={() => setStatusFilter('Completed')}>
+                      Completed
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setStatusFilter('Todo')}>
+                      Todo
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setStatusFilter(null)}>
+                      All
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </th>
+              <th>Title</th>
+              <th>
+                {/* Topic Filter Dropdown (multi-select with checkboxes) */}
+                <Dropdown isOpen={topicOpen} toggle={toggleTopic}>
+                  <DropdownToggle caret color="info" size="sm" outline>
+                    Topics
+                  </DropdownToggle>
+                  <DropdownMenu style={{ padding: '0.5rem' }} container='body'>
+                    {ALL_TOPICS.map((topic) => {
+                      const checked = topicFilter.includes(topic);
+                      return (
+                        <DropdownItem key={topic} toggle={false}>
+                          <FormGroup check>
+                            <Label check style={{ cursor: 'pointer' }}>
+                              <StrapInput
+                                type="checkbox"
+                                checked={checked}
+                                onChange={() => handleTopicToggle(topic)}
+                              />
+                              {topic}
+                            </Label>
+                          </FormGroup>
+                        </DropdownItem>
+                      );
+                    })}
+                    <DropdownItem divider />
+                    {/* Option to clear topics */}
+                    <DropdownItem onClick={() => setTopicFilter([])}>
+                      Clear Topics
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </th>
+              <th>
+                {/* Difficulty Filter Dropdown */}
+                <Dropdown isOpen={difficultyOpen} toggle={toggleDifficulty}>
+                  <DropdownToggle caret color="info" size="sm" outline>
+                    Difficulty
+                  </DropdownToggle>
+                  <DropdownMenu container='body'>
+                    <DropdownItem onClick={() => setDifficultyFilter('Easy')}>
+                      Easy
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setDifficultyFilter('Medium')}>
+                      Medium
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setDifficultyFilter('exam')}>
+                      Exam
+                    </DropdownItem>
+                    <DropdownItem
+                      onClick={() => setDifficultyFilter('Challenge')}
+                    >
+                      Challenge
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setDifficultyFilter(null)}>
+                      All
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </th>
+            </tr>
+          </thead>
+          <tbody>{tableRows}</tbody>
+        </Table>
+      </div>
+
+      {/* Sidebar Section */}
+      <div className="quiz-sidebar">
+        {/* Search Input */}
+        <div className="quiz-search">
+          <InputGroup>
+            <Input
+              placeholder="Search by title, topic or difficulty"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ paddingRight: '2rem', borderRadius: '10px' }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                right: '1rem',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 2,
+                cursor: 'pointer',
+              }}
+            >
+              {searchQuery ? (
+                <i className="bi bi-x-lg" onClick={() => setSearchQuery('')} />
+              ) : (
+                <i className="bi bi-search" />
+              )}
+            </div>
+          </InputGroup>
+        </div>
+
+        {/* Example Card to show progress or other info */}
+        <Card style={{ marginTop: '1rem' }}>
+          <CardBody>
+            <h5>Progress</h5>
+            <p>Some stats here...</p>
+          </CardBody>
+        </Card>
+
+        {/* Calendar component example */}
+        <Card style={{ marginTop: '1rem', padding: '1%' }}>
+          <Calendar />
+        </Card>
+      </div>
     </div>
-    </div>
-  
-  <div>
-  <Card style={{}}>
-    <CardBody>
-      progress
-    </CardBody>
-  </Card>
-  </div>
+  );
+};
 
-  <Card style={{marginTop:'3%', padding:'1%'}}>
-  <Calendar />
-  </Card>
-
-  
-
-</div>
-
- 
-
-
-        
-
-    </div>
-  )
-}
-
-export default Quizzes
-
- // const [latex,setLatex] = useState(String.raw` \int_0^1 x^7\ dx`)
-    // const containerRef = useRef(null);
-    // const mfe = useMemo(() => new MathfieldElement(), []);
-    // const mfe = new MathfieldElement
-
-    // useEffect(()=>{
-       
-   
-
-
-
-
-
-    //     const container = containerRef.current;
-    //     container.innerHTML = '';
-    //     container.appendChild(mfe);
-    //     mfe.value = '/sin x';
-    //     mfe.setOptions({virtualKeyboardMode: 'onfocus'})
-    // }, [])
-
-    // const updateLatex = () => {
-    //      const latex = mfe.value;
-    //      setLatex(String.raw`${latex}`);
-
-         
-    // }
-// right now the entire component is rerendering every time you update state, what I mayshoudl do is make our Mathlive calculator its own component
-//responsible for updating the state of thsi component so its no longer part of this component and hence wont re-render every update. 
+export default Quizzes;

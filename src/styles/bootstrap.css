@@ -3241,7 +3241,7 @@ textarea.form-control-lg {
   position: absolute;
   z-index: var(--bs-dropdown-zindex);
   display: none;
-  min-width: 80%;
+  min-width: 25%;
 
 
   
@@ -3458,7 +3458,8 @@ textarea.form-control-lg {
 }
 .dropdown-item:hover, .dropdown-item:focus {
   color: var(--bs-dropdown-link-hover-color);
-  background-color: var(--bs-dropdown-link-hover-bg);
+  background-color:  #17a2b8;
+  /* background-color: var(--bs-dropdown-link-hover-bg); */
 }
 .dropdown-item.active, .dropdown-item:active {
   color: var(--bs-dropdown-link-active-color);
@@ -12169,3 +12170,7 @@ position: relative;
 
 /* Quiz display end  */
 
+/* e.g. Quizzes.css */
+.custom-dropdown-menu {
+  width: 250px !important;
+}
