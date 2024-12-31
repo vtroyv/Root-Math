@@ -3680,7 +3680,8 @@ textarea.form-control-lg {
 }
 .dropdown-item:hover, .dropdown-item:focus {
   color: var(--bs-dropdown-link-hover-color);
-  background-color: var(--bs-dropdown-link-hover-bg);
+  background-color:  #17a2b8;
+  /* background-color: var(--bs-dropdown-link-hover-bg); */
 }
 .dropdown-item.active, .dropdown-item:active {
   color: var(--bs-dropdown-link-active-color);
@@ -13423,4 +13424,17 @@ position: relative;
 
 .cl-signIn-start{
   all: unset !important;
+}
+
+/* DATATABLE CSS GOES HERE */
+.p-datatable{
+  width:75%;
+  border:#000 solid 3px;
+  margin-right: 1%;
+}
+
+
+.p-column-title{
+  font-size:1.5rem;
+  font-weight: bold;
 }

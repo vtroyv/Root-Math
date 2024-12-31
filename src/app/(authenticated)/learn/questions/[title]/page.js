@@ -2,10 +2,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { MathfieldElement } from 'mathlive';
 import { useGetQuestionsQuery, useGradeQuestionMutation } from '@/lib/redux/slices/apiSlice';
-import ComputeEngineConfig from '../../../lib/utils/ceConfig';
+import ComputeEngineConfig from '../../../../../lib/utils/ceConfig';
 import { Button } from 'primereact/button';
 import { prettyPrintJson } from 'pretty-print-json';
-import preprocessLatex from '../../../lib/utils/preprocess-latex';
+import preprocessLatex from '../../../../../lib/utils/preprocess-latex';
 import { canonical } from '@/lib/cortex/compute-engine-main/src/compute-engine/private';
 
 
@@ -119,7 +119,7 @@ export default function QuestionDisplay({ params }) {
         console.log(`The preprocessedArray is ${preprocessedArray}`);
         const boxedExpression = ceRef.current.ce.parse(latex)
         console.log(`The boxed expression is ${boxedExpression}`)
-        console.log(`and when we compile it we get ${ await boxedExpression.compile('javascript')}`)
+        console.log(`and when we compile it we get ${ await boxedExpression.compile('sympy')}`)
 
         console.log(`The boxed expression before array is, ${boxedExpression}`)
    
@@ -128,7 +128,7 @@ export default function QuestionDisplay({ params }) {
 
         console.log(`The boxedExpression Array is ${boxedExpressionArray}`)
 
-        const compiled = boxedExpressionArray.map((bE)=> bE.compile('javascript'))
+        const compiled = boxedExpressionArray.map((bE)=> bE.compile('sympy'))
 
         console.log(`the type compiled printed out is ${typeof compiled} and it is ${compiled}`)
 
