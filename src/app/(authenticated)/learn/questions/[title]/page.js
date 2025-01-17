@@ -139,7 +139,15 @@ export default function QuestionDisplay({ params }) {
         //compiled is returning javascript functions i beleive 
         const compiledStrings = compiled.map((fn) => fn.toString());
         console.log(`The compiled strings are of type ${typeof compiledStrings}, and there values are: ${compiledStrings}`)
-        const data = await gradeQuestion(compiledStrings).unwrap()
+        console.log('The question data that i would like to send is ', question)
+
+        const dataForFeedback = {
+            questionData: question, 
+            sympyResponse: compiledStrings
+
+        }
+
+        const data = await gradeQuestion(dataForFeedback).unwrap()
         console.log(`The response from the route handler is ${JSON.stringify(data, null, 2)}`);
 
       } catch(error){

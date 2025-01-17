@@ -1,7 +1,12 @@
 export async function POST(request) {
     // Parse the JSON body from the incoming request
     const body = await request.json();
-    const feedback ={sympy: body}
+    console.log('The current body that i would like to send is ', body)
+    const feedback ={
+        sympy: body.sympyResponse,
+        questionData: body.questionData
+
+    }
 
 
     try {

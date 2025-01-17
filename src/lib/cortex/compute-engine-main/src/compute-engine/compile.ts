@@ -346,7 +346,7 @@ const NATIVE_SYMPY_FUNCTIONS: CompiledFunctions = {
       Chop: '_SYS.chop', // use sympy utility functions like evalf()
       Cos: 'cos', 
       Cosh: 'cosh', 
-      
+      Sqrt: 'sqrt',
       
   
     }
