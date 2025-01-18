@@ -1,7 +1,8 @@
+import LearnCourses from "@/lib/components/learn/LearnCourses";
 export default function LearnDashboard() {
     return (
         <div>
-            This is the learn dashboard
+            <LearnCourses />
         </div>
     );
 }

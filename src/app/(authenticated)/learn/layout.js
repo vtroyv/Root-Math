@@ -1,4 +1,5 @@
 import LearnNav from "@/lib/components/learn/LearnNav"
+import Breadcrumbs from "@/lib/components/learn/Breadcrumbs"
 
 
 export default function LearnLayout({ children }) {
@@ -13,7 +14,7 @@ export default function LearnLayout({ children }) {
     </div>
 
     <div className='breadcrumb-nav'>
-      {/* <Breadcrumbs /> */}
+      <Breadcrumbs />
     </div>
    
 

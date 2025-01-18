@@ -3,11 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 import { MathfieldElement } from 'mathlive';
 import { useGetQuestionsQuery, useGradeQuestionMutation } from '@/lib/redux/slices/apiSlice';
 import ComputeEngineConfig from '../../../../../lib/utils/ceConfig';
-import { Button } from 'primereact/button';
+// import { Button } from 'primereact/button';
+import {Row, Col, Card, CardBody, CardSubtitle, ListGroup, ListGroupItem, Button} from 'reactstrap'
 import { prettyPrintJson } from 'pretty-print-json';
 import preprocessLatex from '../../../../../lib/utils/preprocess-latex';
 import { canonical } from '@/lib/cortex/compute-engine-main/src/compute-engine/private';
-
+import QRCode from 'qrcode'
+import Image from 'next/image';
 
 
 /* 
@@ -28,10 +30,17 @@ export default function QuestionDisplay({ params }) {
     const mfe = useRef(new MathfieldElement());
     const questionView = useRef(new MathfieldElement());
     const ceRef = useRef(null);
+    
     //----------------------------
 
     // Fetch data and ensure caching
     const { data, isLoading, isSuccess } = useGetQuestionsQuery(); // You could use `isLoading` to add some UI feedback
+
+    const [file, setFile] = useState(null);
+    const [caption, setCaption] = useState('');
+
+    const [qrDataUrl, setQrDataUrl] = useState('');
+    const imgRef = useRef(null);
 
     
 
@@ -187,27 +196,138 @@ export default function QuestionDisplay({ params }) {
 
 
 
+    // crumb.includes('-') ? crumb.split('-').map(word=> word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
 
     return (
         <>
-        <div>
-            {isLoading ? (
-                <h1>Loading...</h1> // Add a loading indicator while fetching data
-            ) : (
-                question ? (
-                    <h1>{question.title}</h1> // Display the title of the question if it exists
-                ) : (
-                    <h1>Question not found</h1> // Fallback if question is not found
-                )
-            )}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', height: '100%' }}>
+    {isLoading ? (
+        <h1>Loading...</h1> // Add a loading indicator while fetching data
+    ) : (
+        question ? (
+            <h1>
+                {question.title.includes('-') 
+                    ? question.title
+                        .split('-')
+                        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                        .join(' ')
+                    : question.title}
+            </h1> // Display the title of the question if it exists
+        ) : (
+            <h1>Question not found</h1> // Fallback if question is not found
+        )
+    )}
+</div>
+
+
+
+        <div className='quiz-display'>
+        <Row className='quiz-display-row'>
+        <Col >
+        
+        
+        <div className='question'>
+          <div ref={questionRef} >
+
+          </div>
+       
+
+
         </div>
+       
+        <div ref={mathfieldRef}>
 
-        <div ref={questionRef}></div>
+</div>
+<br/>
+<div>
+<Button
+  block
+  color="info"
+  outline
+  onClick={handleSubmit}
+>
+  Submit
+</Button>
+</div>
 
-        <div ref={mathfieldRef}></div>
 
-        <div>
-            <Button label='Box Expression' onClick={handleSubmit}></Button>
+
+
+        
+    
+
+        </Col>
+        <Col className='QR-instructions'>
+        
+        <Card style={{borderRadius:'20px', margin:'2%'}}>
+  <div className='qr-container' style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding:'2%'}}>
+    <div>
+    {/* <h4 style={{fontWeight:'bold', textAlign:'start', color:'#17a2b8'}}>Scan the QR code, Upload your work and get feedback <i class="bi bi-arrow-right-square-fill"></i> </h4> */}
+    <br/>
+    <h4 style={{fontWeight:'bold', textAlign:'start', color:'#17a2b8'}}>Now&#39;s your chance to practice for exams! </h4>
+    <h4 style={{fontWeight:'bold', textAlign:'start', color:'#17a2b8'}}>Even partial answers can earn marks for your explanations and working, so try your best!</h4>
+   
+    </div>
+    
+   
+  </div>
+
+  <CardSubtitle>
+    <h5 style={{fontWeight:'bold', }}>Instructions</h5>
+  </CardSubtitle>
+  <CardBody style={{display:'flex', flexDirection:'column', justifyContent:'flex-start', alignContent:'flex-start'}}>
+    <ListGroup >
+      <ListGroupItem color='info' style={{borderRadius:'0px'}}>
+
+      <h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
+  1) Answer the question in the textbox to the left , just like you would in an exam
+</h6>
+<br />
+
+<h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
+  2) Once you&#39;re finished and happy with your work click submit
+</h6>
+<br />
+
+<h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
+  3) Shortly after you submit you&#39;re work, you&#39;ll recieve feedback
+</h6>
+<br />
+
+<h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
+  4) Use this feedback to correct any mistakes you may have made 
+</h6>
+<br />
+
+<h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
+  5) And make sure to ask your personal tutor bot, any question&#39;s you may have
+</h6>
+<br />
+
+<h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
+  6) Once your happy click &apos;next&apos; to move on to the next question
+</h6>
+
+    
+
+   </ListGroupItem>
+
+   </ListGroup>
+
+
+   
+
+   
+   
+   
+   
+  </CardBody>
+</Card>
+        </Col>
+        
+
+     
+        </Row>
         </div>
         </>
     );

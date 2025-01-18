@@ -12782,10 +12782,26 @@ overflow:clip;
 }
 
 /* router links */
-.router-link{
-  text-decoration: none;
-  color: var(--bs-info);
+
+/* Default link styles */
+.router-link {
+  color: var(--bs-info); /* Default color for breadcrumb links */
+  text-decoration: none; /* No underline */
 }
+
+.router-link:hover {
+  color: black; /* Color change on hover */
+
+}
+
+/* Active breadcrumb styles */
+.active-link {
+  font-weight: bold; /* Bold font for the active breadcrumb */
+  color: black; /* Black color for active breadcrumb */
+  cursor: default; /* Prevent pointer cursor for active link */
+}
+
+
 
 
 

@@ -34,7 +34,7 @@ export default function LearnNav() {
               EXAMS
              </NavLink>
 
-              <NavLink> <Link href='quizzes' style={{textDecoration:"none"}}>QUIZZES</Link></NavLink>
+              <NavLink> <Link href='learn/questions' style={{textDecoration:"none"}}>QUIZZES</Link></NavLink>
               
 
              
