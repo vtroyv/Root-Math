@@ -18,7 +18,7 @@ export default function Breadcrumbs() {
         return (<BreadcrumbItem  key={crumb} active={true}>
             <Link href={currentLink} className='router-link'>
 
-            {crumb === 'edx-maths-1'? 'Edexcel Mathematics Pure Maths year 12' : crumb === 'learn' ? 'Learn': crumb.includes('-') ? crumb.split('-').map(word=> word.charAt(0).toUpperCase() + word.slice(1)).join(' '): crumb === 'quizzes' ? 'Quizzes' : crumb }
+            {crumb === 'edx-maths-1'? 'Edexcel Mathematics Pure Maths year 12' : crumb === 'learn' ? 'Learn': crumb.includes('-') ? crumb.split('-').map(word=> word.charAt(0).toUpperCase() + word.slice(1)).join(' '): crumb === 'quizzes' ? 'Quizzes' : crumb === 'questions' ? 'Questions' :crumb}
             
             </Link>
         

@@ -147,7 +147,7 @@ export default function QuestionTable() {
           state={question}
           className="quiz-link"
         >
-          {question.title}
+          {question.title.split('-').join(' ')}
         </Link>
       </td>
       <td>{question.topic}</td>
