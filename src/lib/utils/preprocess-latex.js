@@ -1,6 +1,5 @@
 function preprocessLatex(latex) {
 
-    
     // Step 1: Add '//' around LaTeX text commands (\text{}) based on position
     // If \text{} is at the start of the string and there's something after, add `\\\\` only after
     // If \text{} is at the end of the string and there's something before, add `\\\\` only before
@@ -22,17 +21,20 @@ function preprocessLatex(latex) {
     });
 
     // Step 2: Remove all instances of '\,' (spacebar command)
-    let latexSpaceRemoved = latex.replace(/\\,/g, '');
+    latex = latex.replace(/\\,/g, '');
+
+    // Step 2.5: Remove any empty subscripts '_{}'
+    latex = latex.replace(/_\{\}/g, '');
 
     // Step 3: Remove opening and closing braces '{}' at the start and end of the string
     // Ensures this does not affect braces inside text or commands
-    let simplifiedLatex = latexSpaceRemoved.replace(/^\{|\}$/g, '');
+    latex = latex.replace(/^\{|\}$/g, '');
 
     // Step 4: Remove the `\displaylines` command
-    simplifiedLatex = simplifiedLatex.replace(/\\displaylines\s*/g, '');
+    latex = latex.replace(/\\displaylines\s*/g, '');
 
     // Step 5: Split the LaTeX string by `\\` which indicates a new line
-    const splitLatex = simplifiedLatex.split(/\\\\/);
+    const splitLatex = latex.split(/\\\\/);
 
     // Step 6: Trim whitespace around each line
     const trimmedLatex = splitLatex.map(line => line.trim());
@@ -43,5 +45,4 @@ function preprocessLatex(latex) {
     return finalLatex;
 }
 
-export default preprocessLatex
-
+export default preprocessLatex;

@@ -452,7 +452,7 @@ export function compileToJavascript(
         EulerGamma: '0.57721566490153286',
       }[id];
       if (result !== undefined) return result;
-      if (unknowns.includes(id)) return `_.${id}`;
+      if (unknowns?.includes(id)) return `_.${id}`;
       
       return undefined;
     },
@@ -466,6 +466,7 @@ export function compileToJavascript(
 //This function is different
 export function compileToSympy(expr: BoxedExpression) :((_: Record<string, CompiledType>) => CompiledType) | undefined{
   const unknowns = expr.unknowns; 
+  console.log('The unknowns are ', unknowns)
   return compileToTarget(expr,{
       operators: (op) => NATIVE_SYMPY_OPERATORS[op],
       functions: (id) => NATIVE_SYMPY_FUNCTIONS[id], 

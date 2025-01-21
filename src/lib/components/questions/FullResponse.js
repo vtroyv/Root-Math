@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import { MathfieldElement } from 'mathlive';
 import ComputeEngineConfig from '@/lib/utils/ceConfig';
 import preprocessLatex from '@/lib/utils/preprocess-latex';
+import 'katex/dist/katex.min.css';
+import Latex from 'react-latex-next';
 import {
   useGradeQuestionMutation,
   useGetQuestionsQuery
@@ -24,7 +26,10 @@ import {
   TabPane
 } from 'reactstrap';
 import classnames from 'classnames';
-import 'katex/dist/katex.min.css';
+
+import FeedbackDisplay from './FeedbackDisplay';
+
+
 
 export default function FullResponse({ question }) {
   const questionRef = useRef(null);
@@ -41,6 +46,8 @@ export default function FullResponse({ question }) {
   const [activeTab, setActiveTab] = useState('instructions');
   // Store any returned feedback from the API
   const [feedback, setFeedback] = useState('');
+
+  console.log('The question is ', question)
 
   // Toggle between the two tabs
   const toggleTab = (tab) => {
@@ -70,6 +77,13 @@ export default function FullResponse({ question }) {
     mfe.current.virtualKeyboardMode = 'manual';
     mfe.current.style.display = 'block';
     mfe.current.style.width = '700px';
+    /*
+    // mfe.current.executeCommand('applyStyle', {color:'red'})
+    /This is where we will highlight errors, in red, do note however that this changes the underlying latex and therefore must be accounted for in preprocessing latex function or our compile script
+    
+    */
+    
+    
 
     if (mathfieldRef.current && !mathfieldRef.current.contains(mfe.current)) {
       mathfieldRef.current.appendChild(mfe.current);
@@ -102,14 +116,20 @@ export default function FullResponse({ question }) {
       const latex = mfe.current.value;
       // Preprocess the LaTeX
       const preprocessedArray = preprocessLatex(latex);
+
+      console.log('The preprocessed latex is given by ', preprocessedArray)
       // Parse the latex into boxed expressions
       const boxedExpressionArray = preprocessedArray.map((item) =>
         ceRef.current.ce.parse(item)
       );
 
+      console.log('The boxedExpression Array is given by ',boxedExpressionArray )
+
       // Compile expressions to Sympy
       const compiled = boxedExpressionArray.map((bE) => bE.compile('sympy'));
       const compiledStrings = compiled.map((fn) => fn.toString());
+
+      console.log('The compiled strings are ', compiledStrings)
 
       // Build data for the server
       const dataForFeedback = {
@@ -250,16 +270,14 @@ export default function FullResponse({ question }) {
                   <h4 style={{ fontWeight: 'bold', color: '#17a2b8' }}>
                     Feedback
                   </h4>
-                  {feedback ? (
-                    <div
-                      // If your feedback contains HTML or LaTeX,
-                      // you may need to parse it or sanitize it.
-                      // This example does a quick HTML insertion for demonstration:
-                      dangerouslySetInnerHTML={{ __html: feedback }}
-                    />
-                  ) : (
-                    <p>No feedback to display yet. Submit your work!</p>
-                  )}
+                  {typeof feedback === 'object' ? (
+  <FeedbackDisplay feedback={feedback} />
+) : feedback ? (
+  <p>{feedback}</p>  // if feedback might sometimes be a plain string
+) : (
+  <p>No feedback to display yet. Submit your work!</p>
+)}
+
                 </CardBody>
               </Card>
             </TabPane>
