@@ -42,7 +42,7 @@ export default function QuestionDisplay({ params }) {
       return <Selection question={question}/>
 
     } else if (questionType === 'sketch') {
-      return <Sketch />
+      return <Sketch question={question}/>
     
     } else if (questionType ==='explain') {
       return <Explain />

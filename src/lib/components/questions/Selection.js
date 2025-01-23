@@ -58,6 +58,8 @@ export default function Selection({ question }) {
           <h1 style={{ marginBottom: '1rem' }}>
             {question.title.replace(/-/g, ' ')}
           </h1>
+
+          
           <div
             ref={questionRef}
             style={{

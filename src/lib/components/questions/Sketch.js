@@ -1,18 +1,36 @@
 'use client'; // Ensure this is a Client Component
 import React, { useRef, useEffect, useState } from 'react';
+import 'katex/dist/katex.min.css';
+import Latex from 'react-latex-next';
+import {
+  Row,
+  Button,
+  Col,
+  Card,
+  CardSubtitle,
+  ListGroup,
+  ListGroupItem,
+  CardBody,
+  Nav,
+  NavItem,
+  NavLink,
+  TabContent,
+  TabPane
+} from 'reactstrap';
 
-export default function Sketch() {
+export default function Sketch({ question }) {
   const boardContainerRef = useRef(null);
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [reducedCoordinates, setReducedCoordinates] = useState([]); // State to store reduced coordinates
 
   useEffect(() => {
-    // 1) Dynamically create the <link> for JSXGraph's CSS
+    // Dynamically create the <link> for JSXGraph's CSS
     const linkEl = document.createElement('link');
     linkEl.rel = 'stylesheet';
     linkEl.type = 'text/css';
     linkEl.href = 'https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css';
 
-    // 2) Dynamically create the <script> for JSXGraph's core
+    // Dynamically create the <script> for JSXGraph's core
     const scriptEl = document.createElement('script');
     scriptEl.type = 'text/javascript';
     scriptEl.charset = 'UTF-8';
@@ -38,7 +56,7 @@ export default function Sketch() {
     };
   }, []);
 
-  // Once the script is loaded, init the JSXGraph board
+  // Once the script is loaded, initialize the JSXGraph board
   useEffect(() => {
     if (!scriptLoaded) return;
     if (!window.JXG) {
@@ -46,27 +64,19 @@ export default function Sketch() {
       return;
     }
 
-    // Initialize the board
     const { JXG } = window;
-   const board = JXG.JSXGraph.initBoard(boardContainerRef.current, {
-  boundingbox: [-10, 10, 10, -10],
-  axis: true,
-  pan: { enabled: true, needTwoFingers: true, needShift: true },
+    const board = JXG.JSXGraph.initBoard(boardContainerRef.current, {
+      boundingbox: [-10, 10, 10, -10],
+      axis: true,
+      pan: { enabled: true, needTwoFingers: true, needShift: true },
+      showCopyright: false,
+    });
 
-  // Hide the top bar
-//   showNavigation: false,      // removes the entire top "navbar"
-  // or showFullscreen: false,
-  // or showScreenshot: false,
-
-  // If you see any extra text or links:
-  showCopyright: false,
-//   showInfobox: false,
-});
     // Example: slider for polynomial degree
     const degree = board.create('slider', [
       [1, 8],
       [7, 8],
-      [1, 3, 10],
+      [1, 2, 10],
     ], {
       name: 'degree',
       snapWidth: 1,
@@ -77,15 +87,26 @@ export default function Sketch() {
     let sketch, curve;
     let points = [];
 
+    // Function to update reduced coordinates
+    const updateReducedCoordinates = () => {
+      const coords = points.map(p => new JXG.Coords(JXG.COORDS_BY_USER, [p.X(), p.Y()], board));
+      const reduced = JXG.Math.Numerics.Visvalingam(coords, degree.Value() - 1);
+      const reducedCoords = reduced.map(r => ({
+        x: r.usrCoords[1],
+        y: r.usrCoords[2],
+      }));
+      setReducedCoordinates(reducedCoords);
+    };
+
     // On 'down': start a sketch curve
     board.on('down', () => {
       if (board.mode !== board.BOARD_MODE_NONE) return;
       board.mode = board.BOARD_MODE_SKETCH;
-
+      setReducedCoordinates([]); // Reset reduced coordinates
       sketch = board.create('curve', [[], []], {
         strokeColor: '#bbbbbb',
         lineCap: 'round',
-        strokeWidth: 10,
+        strokeWidth: 6,
       });
     });
 
@@ -107,7 +128,7 @@ export default function Sketch() {
         );
       }
 
-      // Simplify the path
+      // Simplify the path using Visvalingam algorithm
       const reduced = JXG.Math.Numerics.Visvalingam(coords, degree.Value() - 1);
 
       // Create new points
@@ -115,11 +136,20 @@ export default function Sketch() {
       for (let r of reduced) {
         const x = r.usrCoords[1];
         const y = r.usrCoords[2];
-        points.push(board.create('point', [x, y], {
+        const point = board.create('point', [x, y], {
           size: 5,
           withLabel: false,
-        }));
+        });
+        points.push(point);
+
+        // Add drag event listener to each point
+        point.on('drag', () => {
+          updateReducedCoordinates();
+        });
       }
+
+      // Update reduced coordinates for the first time
+      updateReducedCoordinates();
 
       // Build a polynomial through these points
       curve = board.create('functiongraph', [
@@ -154,9 +184,83 @@ export default function Sketch() {
   }, [scriptLoaded]);
 
   return (
-    <div
-      ref={boardContainerRef}
-      style={{ width: '600px', height: '600px', margin: 'auto' }}
-    />
+    <>
+    <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' , marginLeft:'3%'}}>
+        <h1 color='info' style={{ margin: '5px', color: '#17a2b8', marginBottom: '2%' }}>{question.title.replace(/-/g, ' ')}</h1>
+        <h3><Latex>${question.latex}$</Latex></h3>
+        
+        <div
+          ref={boardContainerRef}
+          style={{ width: '600px', height: '600px', margin: 'auto' }}
+        />
+        
+        <div style={{ marginTop: '20px' }}>
+          <h4>Reduced Coordinates:</h4>
+          <ul>
+            {reducedCoordinates.map((coord, index) => (
+              <li key={index}>({coord.x.toFixed(2)}, {coord.y.toFixed(2)})</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div>
+      <Card style={{ borderRadius: '20px', marginRight: '3%' }}>
+                <CardSubtitle>
+                  <h5 style={{ fontWeight: 'bold', margin: '1rem' }}>
+                    Instructions
+                  </h5>
+                </CardSubtitle>
+                <CardBody
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignContent: 'flex-start'
+                  }}
+                >
+                  <ListGroup>
+                    <ListGroupItem color="info" style={{ borderRadius: '0px' }}>
+                      <h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
+                        1) Answer the question in the textbox to the left, just
+                        like you would in an exam
+                      </h6>
+                      <br />
+
+                      <h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
+                        2) Once you&#39;re finished and happy with your work
+                        click submit
+                      </h6>
+                      <br />
+
+                      <h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
+                        3) Shortly after you submit your work, you&#39;ll receive
+                        feedback
+                      </h6>
+                      <br />
+
+                      <h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
+                        4) Use this feedback to correct any mistakes you may
+                        have made
+                      </h6>
+                      <br />
+
+                      <h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
+                        5) And make sure to ask your personal tutor bot any
+                        questions you may have
+                      </h6>
+                      <br />
+
+                      <h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
+                        6) Once you&#39;re happy, click &apos;next&apos; to move
+                        on to the next question
+                      </h6>
+                    </ListGroupItem>
+                  </ListGroup>
+                </CardBody>
+              </Card>
+      </div>
+      </div>
+    </>
   );
 }

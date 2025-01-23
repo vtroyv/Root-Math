@@ -64,7 +64,7 @@ export default function LearnNav() {
               <DropdownMenu right>
 
                 
-                  <Link href='/account' style={{textDecoration: 'none'}}>
+                  <Link href='/learn/account' style={{textDecoration: 'none'}}>
                   <DropdownItem>
                     Profile
                     </DropdownItem>

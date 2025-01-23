@@ -13291,7 +13291,7 @@ position: relative;
 .quiz-container{
   display:flex;
   justify-content: space-between;
- border: 3px solid blue;
+ 
  
 }
 
@@ -13299,7 +13299,9 @@ position: relative;
 .quiz-table{
  
   width:75%;
-  border:#000 solid 3px;
+  border-top:#000 solid 1px;
+  padding: 3px;
+
   margin-right: 1%;
 }
 
