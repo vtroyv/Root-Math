@@ -55,7 +55,7 @@ export default function Selection({ question }) {
       {/* Top row: question text and (optionally) an image */}
       <Row className="mb-4">
         <Col xs={12} className="text-center">
-          <h1 style={{ marginBottom: '1rem' }}>
+          <h1 style={{ marginBottom: '1rem', color: '#17a2b8' }}>
             {question.title.replace(/-/g, ' ')}
           </h1>
 

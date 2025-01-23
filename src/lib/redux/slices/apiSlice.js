@@ -24,13 +24,21 @@ export const apiSlice = createApi({
 
             })
             
-        })
+        }),
+
+        gradeSketchQuestion: builder.mutation({
+            query: (questionData) => ({
+                url: '/feedback/sketch', 
+                method:'POST', 
+                body: questionData
+            })
+        }),
 
     })
 })
 
 
-export const { useGetQuestionsQuery, useGradeQuestionMutation } = apiSlice;
+export const { useGetQuestionsQuery, useGradeQuestionMutation, useGradeSketchQuestionMutation } = apiSlice;
 
 
 

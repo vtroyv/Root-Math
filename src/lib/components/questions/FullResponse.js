@@ -158,7 +158,7 @@ export default function FullResponse({ question }) {
         {/* LEFT COLUMN: Title, question, and response textbox */}
         <Col>
           <div>
-            <h1>
+            <h1 style={{color: '#17a2b8'}}>
               {title?.includes('-')
                 ? title
                     .split('-')

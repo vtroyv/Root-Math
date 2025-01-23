@@ -17,11 +17,13 @@ import {
   TabContent,
   TabPane
 } from 'reactstrap';
+import { useGradeSketchQuestionMutation } from '@/lib/redux/slices/apiSlice';
 
 export default function Sketch({ question }) {
   const boardContainerRef = useRef(null);
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [reducedCoordinates, setReducedCoordinates] = useState([]); // State to store reduced coordinates
+  const [gradeSketchQuestion, mutationState] = useGradeSketchQuestionMutation()
 
   useEffect(() => {
     // Dynamically create the <link> for JSXGraph's CSS
@@ -73,16 +75,17 @@ export default function Sketch({ question }) {
     });
 
     // Example: slider for polynomial degree
-    const degree = board.create('slider', [
-      [1, 8],
-      [7, 8],
-      [1, 2, 10],
-    ], {
-      name: 'degree',
-      snapWidth: 1,
-      digits: 0,
-    });
+    // const degree = board.create('slider', [
+    //   [1, 8],
+    //   [7, 8],
+    //   [1, 2, 10],
+    // ], {
+    //   name: 'degree',
+    //   snapWidth: 1,
+    //   digits: 0,
+    // });
 
+    const degree = question.degree
     board.BOARD_MODE_SKETCH = 0x0100;
     let sketch, curve;
     let points = [];
@@ -90,7 +93,7 @@ export default function Sketch({ question }) {
     // Function to update reduced coordinates
     const updateReducedCoordinates = () => {
       const coords = points.map(p => new JXG.Coords(JXG.COORDS_BY_USER, [p.X(), p.Y()], board));
-      const reduced = JXG.Math.Numerics.Visvalingam(coords, degree.Value() - 1);
+      const reduced = JXG.Math.Numerics.Visvalingam(coords, degree - 1);
       const reducedCoords = reduced.map(r => ({
         x: r.usrCoords[1],
         y: r.usrCoords[2],
@@ -129,7 +132,7 @@ export default function Sketch({ question }) {
       }
 
       // Simplify the path using Visvalingam algorithm
-      const reduced = JXG.Math.Numerics.Visvalingam(coords, degree.Value() - 1);
+      const reduced = JXG.Math.Numerics.Visvalingam(coords, degree - 1);
 
       // Create new points
       points = [];
@@ -181,7 +184,24 @@ export default function Sketch({ question }) {
       board.off('move');
       JXG.JSXGraph.freeBoard(board);
     };
-  }, [scriptLoaded]);
+  }, [scriptLoaded,question.degree]);
+
+  // console.log('The intercepts are ', question.intercepts) 
+  console.log('The coordinates are ', reducedCoordinates)
+
+
+  const handleSubmit = async() => {
+    //This function will send reduced cooredinates to the routehandler and then from there to the fastapi, on the fastapi we will deterministically, 
+    console.log('The submitted coordinates are', reducedCoordinates)
+
+    const dataForFeedback = {
+      questionData: question, 
+      coordinates: reducedCoordinates
+    }
+    const resp = await gradeSketchQuestion(dataForFeedback).unwrap()
+    console.log('The response from fastpai is ', resp)
+
+  }
 
   return (
     <>
@@ -194,16 +214,21 @@ export default function Sketch({ question }) {
           ref={boardContainerRef}
           style={{ width: '600px', height: '600px', margin: 'auto' }}
         />
-        
-        <div style={{ marginTop: '20px' }}>
+        {/*Use the code below to obtain the reduced coordinates,   */}
+        {/* <div style={{ marginTop: '20px' }}>
           <h4>Reduced Coordinates:</h4>
           <ul>
             {reducedCoordinates.map((coord, index) => (
               <li key={index}>({coord.x.toFixed(2)}, {coord.y.toFixed(2)})</li>
             ))}
           </ul>
+        </div> */}
+        <div style={{marginTop:'3%', width:'100%'}}>
+        <Button color='info' outline style={{width:'100%'}} onClick={handleSubmit}>Submit</Button>
         </div>
+       
       </div>
+      
       <div>
       <Card style={{ borderRadius: '20px', marginRight: '3%' }}>
                 <CardSubtitle>
@@ -222,39 +247,24 @@ export default function Sketch({ question }) {
                   <ListGroup>
                     <ListGroupItem color="info" style={{ borderRadius: '0px' }}>
                       <h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
-                        1) Answer the question in the textbox to the left, just
-                        like you would in an exam
+                        1) Start by drawing an initial sketch of the curve given above
                       </h6>
                       <br />
 
                       <h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
-                        2) Once you&#39;re finished and happy with your work
-                        click submit
+                        2) Once you&#39;ve finished your initial sketch, drag the red points to show 
                       </h6>
+                      <h6 style={{fontWeight:'bold', fontSize:'18px'}}>where the curve intercepts the x and y axis</h6>
                       <br />
 
                       <h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
-                        3) Shortly after you submit your work, you&#39;ll receive
-                        feedback
+                        3) Once you&#39;re happy click the submit button below the curve to check your answer
                       </h6>
                       <br />
-
                       <h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
-                        4) Use this feedback to correct any mistakes you may
-                        have made
+                        4) Shortly after you click submit, you&#39;re feedback will appear in the feedback panel
                       </h6>
-                      <br />
-
-                      <h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
-                        5) And make sure to ask your personal tutor bot any
-                        questions you may have
-                      </h6>
-                      <br />
-
-                      <h6 style={{ fontWeight: 'bold', fontSize: '18px' }}>
-                        6) Once you&#39;re happy, click &apos;next&apos; to move
-                        on to the next question
-                      </h6>
+                  
                     </ListGroupItem>
                   </ListGroup>
                 </CardBody>
