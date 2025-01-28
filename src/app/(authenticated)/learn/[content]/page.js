@@ -1,4 +1,15 @@
 'use client';
+
+/*
+THIS NEEDS TO BE MORE LIKE THE questions/[title] page.js to enable conditional rendering depending on the students exam boards , 
+e.g, use the params or metadata on the student to render the correct component.
+Experiment what is faster e.g. using params or meta data about student, the question/[title] component currently uses meta data from the question object. 
+
+
+
+*/ 
+
+
 import React from 'react';
 import {
   Container,
@@ -22,6 +33,8 @@ export default function EdxPm1() {
   const navigate = (path) => {
     router.push(path);
   };
+
+  const preUrl = '/learn/edx-maths-1'
 
   return (
     <div className="Edxpm1-container" style={{ backgroundColor: '#f7f9fc', minHeight: '100vh' }}>
@@ -143,7 +156,7 @@ export default function EdxPm1() {
               <ListGroup flush style={{ borderRadius: '0 0 15px 15px' }}>
                 <ListGroupItem
                   action
-                  onClick={() => navigate('algebraic-expressions')}
+                  onClick={() => navigate(preUrl+'/algebraic-expressions')}
                   style={{ cursor: 'pointer' }}
                 >
                   Algebraic Expressions

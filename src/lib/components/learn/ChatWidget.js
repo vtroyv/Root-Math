@@ -40,7 +40,7 @@ function ChatWidget() {
           zIndex: 9999
         }}
       >
-        {isOpen ? 'X' : 'AI Tutor'}
+        {isOpen ? 'X' : 'My Tutor'}
       </Button>
 
       {/* Only render the chat card if it's open */}

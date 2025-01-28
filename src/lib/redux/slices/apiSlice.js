@@ -1,4 +1,5 @@
 //Import the RTK Query methods form the React-specific entry point
+
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 
 //Define our single API slice object
@@ -25,6 +26,11 @@ export const apiSlice = createApi({
             })
             
         }),
+        getLessonContent: builder.query({
+            query: (params)=> `/lessons/${params.collection}/${params.lessonContent}`
+        }),
+
+        
 
         gradeSketchQuestion: builder.mutation({
             query: (questionData) => ({
@@ -38,7 +44,7 @@ export const apiSlice = createApi({
 })
 
 
-export const { useGetQuestionsQuery, useGradeQuestionMutation, useGradeSketchQuestionMutation } = apiSlice;
+export const { useGetQuestionsQuery, useGradeQuestionMutation, useGradeSketchQuestionMutation, useGetLessonContentQuery } = apiSlice;
 
 
 

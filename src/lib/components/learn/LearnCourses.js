@@ -112,6 +112,7 @@ export default function LearnCourses() {
                 <CircularProgressbar value={0} text={"0%"} />
               </div>
             </CardBody>
+            {/* THINGS LIKE THIS NEED TO BE DYNAMIC FOR INSTANCE E.G IF ITS CIE it should be CIE-maths-1 */}
             <Link className="router-link" href={`/learn/edx-maths-1`}>
               <Button color="info" block>
                 Continue
