@@ -89,7 +89,7 @@ export default function LearnCourses() {
 
   return (
     <div className="learn-courses">
-      <h1>Welcome Back {firstName}!</h1>
+      <h1 style={{ fontSize: '2.5rem', margin: '0 0 0.5rem 0', }}> <strong>Welcome Back {firstName}!</strong>  </h1>
 
       {/* -- Card 1 -- */}
       <Row>

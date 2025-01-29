@@ -9,9 +9,18 @@ import {
   Card,
   CardBody
 } from 'reactstrap'
+import { useRouter, usePathname} from 'next/navigation'
 
 export default function LessonContent() {
   const { content, lessonContent } = useParams()
+  const router = useRouter()
+  const pathName = usePathname()
+
+
+  const navigation = (item) => {
+    const url = item.toLowerCase().split(' ').join('-') //Note this is due to to the topics not containing '-' to separate words which makes the url invalid
+    router.push(`${pathName}/${url}`) // Use proper string interpolation
+  }
 
   // Example: pick the correct DB collection
   const selectCollection = (collection) => {
@@ -120,7 +129,8 @@ export default function LessonContent() {
                       cursor: 'pointer'
                     }}
                     // If you need to navigate on click:
-                    onClick={() => console.log(`Clicked on: ${item}`)}
+                    onClick={()=> navigation(item)}
+                    // () => console.log(`Clicked on: ${item}`)
                   >
                     <span
                       style={{
