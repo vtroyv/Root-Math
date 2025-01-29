@@ -1,14 +1,14 @@
+// /lib/components/learn/LessonDisplay.jsx
 'use client';
 import { useEffect, useRef } from 'react';
 import { MathfieldElement } from 'mathlive';
 
-export default function LessonDisplay() {
+export default function LessonEditorDisplay({ part }) {
   const mathfieldRef = useRef(null);
   const mfe = useRef(new MathfieldElement());
 
   useEffect(() => {
     if (mathfieldRef.current && !mathfieldRef.current.contains(mfe.current)) {
-      // Make the mathfield fill 100% of the parent container
       mfe.current.style.width = '100%';
       mfe.current.style.height = '100%';
       mfe.current.style.backgroundColor = 'lightblue';
@@ -16,14 +16,11 @@ export default function LessonDisplay() {
     }
   }, []);
 
-  // Parent div also must fill its container
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-      }}
-      ref={mathfieldRef}
-    />
+    <div style={{ width: '100%', height: '100%' }} ref={mathfieldRef}>
+      {/* Optionally display something about the current part:
+          e.g., <p>Currently on {part.title}</p> 
+      */}
+    </div>
   );
 }
