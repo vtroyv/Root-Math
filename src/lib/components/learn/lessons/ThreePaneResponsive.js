@@ -150,17 +150,20 @@ export default function ThreePaneResponsive({
         >
           {/* CENTER PANE: mainContent */}
           <main
-            style={{
-              padding: '1rem',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#f8f9fa',
-              borderRight: '1px solid #ccc',
-            }}
-          >
-            {mainContent}
-          </main>
+  style={{
+    // Let it expand to fill vertical space
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#f8f9fa',
+    borderRight: '1px solid #ccc',
+    padding: '1rem'
+  }}
+>
+  {mainContent /* <LessonDisplay> */}
+</main>
+
+
 
           {/* RIGHT PANE: feedback (tabs are inside the Feedback component) */}
           <aside style={{ padding: '1rem' }}>

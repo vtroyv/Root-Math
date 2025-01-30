@@ -25,31 +25,36 @@ export default function LessonsPage() {
             {
               type: 'paragraph',
               content:
-                'Indices (also known as exponents or powers) appear in many areas of math. They are a way to reprsent the repeated multiplication of a number by itself.',
+                "Indices (also known as exponents or powers) appear in many areas of maths. They're a way to reprsent the repeated multiplication of a number by itself.",
             },
             {
               type:'paragraph', 
               content:
-              "For instance if we had the number 3 multiplied by itself 5 times, we could represent this as: $ 3 \\cdot 3 \\cdot 3 \\cdot 3 \\cdot 3 = 3^{5}$"
+              "For instance if we had the number 3 multiplied by itself 5 times, we could represent this as: $$ 3 \\cdot 3 \\cdot 3 \\cdot 3 \\cdot 3 = 3^{5}$$"
 
             },
             {
               type: 'paragraph',
               content:
-              'There are 4 index laws that we now go on to explore:'
+              'There are 4 index laws that you must know and understand, these are:'
 
             },
             
-            // {
-            //   type:'bullet-points', 
-            //   points: {
-            //     point1:'$a^{n} \\cdot a^{m} = a^{m+n}$', 
-            //     point2: '$\\frac{a^n}{a^m} = a^{n-m}$', 
-            //     point3: '$(a^m)^n = a^{m \\cdot n}$', 
-            //     point4: '$(ab)^n = a^n \\, b^n$', 
-            //   }
+            {
+              type:'bullet-points', 
+              points: [
+                '$a^{n} \\cdot a^{m} = a^{m+n}$', 
+                '$\\frac{a^n}{a^m} = a^{n-m}$', 
+                '$(a^m)^n = a^{m \\cdot n}$', 
+               '$(ab)^n = a^n \\, b^n$', 
+              ]
 
-            // }, 
+            }, 
+            {
+              type:'paragraph',
+              content:'We will now take a closer look at each of these rules one by one'
+            }
+            
           ],
         },
         {
@@ -76,6 +81,23 @@ export default function LessonsPage() {
             
             ,
           ],
+          latex: String.raw`
+\begin{aligned}
+  &\text{1) This one's nice and easy, simplify: }\\
+   &a^m \cdot a^n = ?\\
+  &\\
+  &\text{2) Now simplify: }\\
+  &x^3 \cdot x^4 \cdot x^5 = ?\\
+  &\\
+  &\text{3) Time to make things a little harder, simplify this: }\\
+  & a^3 \cdot a^{4 \cdot 5} \cdot b^5 \cdot b^6 \cdot x^4=a^? \cdot b^? \cdot x^{?} \\
+  &\\
+  &\text{Now if you can answer this you must really understand, simplify: }\\
+  & a^4 \cdot x^5 \cdot a^x \cdot x^a = a^{?} \cdot x^{?}\\ 
+  &\\
+\end{aligned}
+`,
+
         },
         {
           id: 'part3-quotient',

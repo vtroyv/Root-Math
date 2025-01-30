@@ -10,11 +10,21 @@ export default function BlockRenderer({ block }) {
       return <Tag >{block.content}</Tag>;
     }
     case 'paragraph':
-      return <p style={{fontSize:'1.25rem'}}><Latex>{block.content}</Latex></p>;
+      return <p style={{fontSize:'1.25rem', margin:'1rem'}}><Latex>{block.content}</Latex></p>;
 
-    // case 'bullet-points': {
-      //Build this case 
-    // }
+    case 'bullet-points': {
+      
+       return (
+        <>
+        <ul>
+          {block.points.map(point=>
+            <li key={point} style={{fontSize:'1.25rem', margin:'1.25rem'}}><Latex>{point}</Latex></li>
+          )}
+        </ul>
+        
+        </>
+       )
+    }
 
 
 
