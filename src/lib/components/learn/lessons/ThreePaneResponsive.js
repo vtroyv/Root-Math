@@ -121,6 +121,8 @@ export default function ThreePaneResponsive({
           flex: 1,
           display: 'flex',
           width: '100%',
+          height:'100%'
+          
         }}
       >
         {/* LEFT PANE: instructions */}
@@ -132,6 +134,7 @@ export default function ThreePaneResponsive({
             height: '100%',
             padding: '1rem',
             boxSizing: 'border-box',
+            height:'100%'
           }}
         >
           {instructions}
@@ -146,6 +149,7 @@ export default function ThreePaneResponsive({
           style={{
             display: 'flex',
             width: '100%',
+            height:'100%'
           }}
         >
           {/* CENTER PANE: mainContent */}

@@ -83,17 +83,38 @@ export default function LessonsPage() {
                 'If you multiply two expressions with the same base, you add their exponents: $$ a^m * a^n = a^{m+n}$$.',
             },
             {
+              type: 'paragraph', 
+              content:'So for example if we had $3^3 \\cdot 3^4$, this is the same as $3^7$, as given our bases are the same (i.e. 3 in this case), we can simply add the indices (i.e. $3+4 = 7$ in this case)'
+            },
+            {
+              type:'paragraph',
+              content:"Pretty straight forward right? - Now let's get some practice!"
+            }
+            ,
+            {
               type: 'task',
               title: 'Check Your Understanding',
-              instructions: 'Simplify x^3 * x^4.',
-              hint: 'Add the exponents when the bases match.',
+              instructions: 'Replace the  ? in question 1) with the correct answer',
+              hint: 'Add the exponents when the bases match!',
             },
             {
               type: 'task',
-              title: 'Testing multiple tasks',
-              instructions: 'Simplify x^2 * x^5.',
-              hint: 'Add the exponents when the bases match.',
+              title: 'Time to add',
+              instructions: "Replace the '?' in question 2) with the correct answer  ",
+              hint: 'Just like before add the indicies, all the bases are the same!',
             },
+            {
+              type:'task', 
+              title: "Let's spice things up", 
+              instructions: "Replace each of the three '?' in question 3) with the correct indice",
+              hint:"Simply add together the powers for terms with the same base"
+            },
+            {
+              type:'task',
+              title: "Time for a challenge", 
+              instructions: "Replace the each '?' in question 4) with the the correct values",
+              hint:'Same stuff as before - add those powers!:)'
+            }
             
             ,
           ],

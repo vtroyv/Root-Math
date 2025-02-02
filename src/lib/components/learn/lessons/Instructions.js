@@ -40,11 +40,12 @@ export default function Instructions({
       style={{
         display: 'flex',
         flexDirection: 'column',
-        height: '100%',
+        height: '100vh',
+        overflow:'hidden'
       }}
     >
       {/* Scrollable content */}
-      <div style={{ overflowY: 'auto', flex: 1 }}>
+      <div style={{ overflowY: 'auto', flex: 1, }}>
         <h2>{part.title}</h2>
         {part.blocks.map((block, i) => renderBlockOrTask(block, i))}
       </div>
