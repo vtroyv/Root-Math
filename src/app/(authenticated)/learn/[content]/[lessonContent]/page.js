@@ -10,6 +10,8 @@ import {
   CardBody
 } from 'reactstrap'
 import { useRouter, usePathname} from 'next/navigation'
+// YOU NEED TO CHANGE THIS CODE SO THAT THE CARD ITSELF IS A LINK, AS WE DON"T ACTUALLY NEED
+//CUSTOM LINKS FOR SUBTOPICS AT THIS POINT
 
 export default function LessonContent() {
   const { content, lessonContent } = useParams()
@@ -114,7 +116,7 @@ export default function LessonContent() {
                 }}
               >
                 <h4 className="mb-0" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.2)' }}>
-                  {sectionTitle}
+                  {sectionTitle} 
                 </h4>
               </div>
 

@@ -1,18 +1,11 @@
-// /lib/components/learn/feedback/FeedbackPane.jsx
+// /lib/components/learn/lessons/feedback/FeedbackPane.jsx
 'use client';
 
-export default function FeedbackPane({ part }) {
-  if (!part) {
-    return <p>No feedback data yet.</p>;
-  }
-
+export default function FeedbackPane({ part, extraFeedback }) {
   return (
     <div>
-      <h4>Feedback on {part?.title}</h4>
-      <p>
-        This is the feedback tab where you can show hints, instructor notes, or 
-        other info for this specific part.
-      </p>
+      <h4>Feedback for {part.title}</h4>
+      <div>{extraFeedback}</div>
     </div>
   );
 }

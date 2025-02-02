@@ -1,8 +1,8 @@
-// /lib/components/learn/Instructions.jsx
+// /lib/components/learn/lessons/Instructions.jsx
 
 'use client';
 import { Button } from 'reactstrap';
-import BlockRenderer from './BlockRenderer'; // a small helper to handle 'heading', 'paragraph', 'task', etc.
+import BlockRenderer from './BlockRenderer';
 
 export default function Instructions({
   part,
@@ -10,8 +10,30 @@ export default function Instructions({
   totalParts,
   onBack,
   onNext,
+  taskState = [],
 }) {
-  if (!part) return <div>No instructions available.</div>;
+  if (!part) return <div>No instructions found.</div>;
+
+  // We'll render tasks with the checkboxes in top-right
+  // For non-task blocks, we just render them normally
+  function renderBlockOrTask(block, i) {
+    if (block.type === 'task') {
+      // find matching taskState entry by index (the tasks appear in order)
+      const taskIndex = part.blocks.filter(b => b.type === 'task').indexOf(block);
+      const stateObj = taskState[taskIndex]; 
+      const status = stateObj?.status || 'locked';
+
+      return (
+        <TaskRenderer
+          key={i}
+          block={block}
+          status={status}
+        />
+      );
+    } else {
+      return <BlockRenderer key={i} block={block} />;
+    }
+  }
 
   return (
     <div
@@ -21,15 +43,13 @@ export default function Instructions({
         height: '100%',
       }}
     >
-      {/* Scrollable area */}
+      {/* Scrollable content */}
       <div style={{ overflowY: 'auto', flex: 1 }}>
-        <h2 style={{color: '#17a2b8'}}>{part.title}</h2>
-        {part.blocks.map((block, i) => (
-          <BlockRenderer key={i} block={block} />
-        ))}
+        <h2>{part.title}</h2>
+        {part.blocks.map((block, i) => renderBlockOrTask(block, i))}
       </div>
 
-      {/* Bottom row: Back & Next */}
+      {/* Bottom row for Back/Next buttons */}
       <div
         style={{
           marginTop: '1rem',
@@ -46,6 +66,52 @@ export default function Instructions({
           {currentPartIndex < totalParts - 1 ? 'Next' : 'Finish'}
         </Button>
       </div>
+    </div>
+  );
+}
+
+/** Renders a task with a top-right "checkbox" or X, plus instructions, hint, etc. */
+function TaskRenderer({ block, status }) {
+  const isLocked = status === 'locked';
+  const isCorrect = status === 'correct';
+  const isIncorrect = status === 'incorrect';
+
+  let icon = '';
+  if (isCorrect) icon = '✔';
+  else if (isIncorrect) icon = '✘';
+
+  return (
+    <div
+      style={{
+        position: 'relative',
+        border: '1px solid #ddd',
+        padding: '0.5rem',
+        margin: '0.5rem 0',
+        // Gray out if locked
+        opacity: isLocked ? 0.5 : 1.0,
+        pointerEvents: isLocked ? 'none' : 'auto',
+      }}
+    >
+      {/* The "checkbox" or icon in top-right */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '0.5rem',
+          right: '0.5rem',
+          fontWeight: 'bold',
+        }}
+      >
+        {isCorrect ? '✅' : isIncorrect ? '❌' : '⬜'}
+      </div>
+
+      <h4>{block.title}</h4>
+      <p>{block.instructions}</p>
+      {block.hint && (
+        <details style={{ marginTop: '0.5rem' }}>
+          <summary>Hint</summary>
+          <p>{block.hint}</p>
+        </details>
+      )}
     </div>
   );
 }

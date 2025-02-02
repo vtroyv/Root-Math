@@ -11,6 +11,12 @@ export default function LessonsPage() {
   const [lesson, setLesson] = useState(null);
   const [currentPartIndex, setCurrentPartIndex] = useState(0);
 
+  // For each part, we track an array of tasks with statuses
+  const [taskState, setTaskState]= useState([])
+  // We'll store a feedback message from the "server" to show in the right pane
+  const [feedbackMessage, setFeedbackMessage]= useState('')
+
+
   // Mock "fetch" of multi-part lesson
   useEffect(() => {
     const lessonData = {
@@ -62,9 +68,19 @@ export default function LessonsPage() {
           title: 'Law 1: Product of Powers',
           blocks: [
             {
+              type: 'paragraph', 
+              content: "Let's consider a term with the form $x^{n}$. When we see terms like this we refer to $x$ as the base and $n$ as the indice (or power), now let's take a look at our first indice law!"
+            },
+            {
+              type: 'heading', 
+              level: 4,
+              content: 'The product of powers:' 
+            }
+            ,
+            {
               type: 'paragraph',
               content:
-                'If you multiply two expressions with the same base, you add their exponents: a^m * a^n = a^(m+n).',
+                'If you multiply two expressions with the same base, you add their exponents: $$ a^m * a^n = a^{m+n}$$.',
             },
             {
               type: 'task',
@@ -92,7 +108,7 @@ export default function LessonsPage() {
   &\text{3) Time to make things a little harder, simplify this: }\\
   & a^3 \cdot a^{4 \cdot 5} \cdot b^5 \cdot b^6 \cdot x^4=a^? \cdot b^? \cdot x^{?} \\
   &\\
-  &\text{Now if you can answer this you must really understand, simplify: }\\
+  &\text{4)Now if you can answer this you must really understand, simplify: }\\
   & a^4 \cdot x^5 \cdot a^x \cdot x^a = a^{?} \cdot x^{?}\\ 
   &\\
 \end{aligned}
@@ -106,7 +122,7 @@ export default function LessonsPage() {
             {
               type: 'paragraph',
               content:
-                'If you divide two expressions with the same base, you subtract their exponents: a^m / a^n = a^(m-n).',
+                'If you divide two expressions with the same base, you subtract their exponents: $a^m / a^n = a^(m-n)$.',
             },
             {
               type: 'task',
@@ -153,30 +169,84 @@ export default function LessonsPage() {
     setLesson(lessonData);
   }, []);
 
+  // When "part" changes, re-initialize taskState
+  useEffect(() => {
+    if (!lesson) return;
+    const part = lesson.parts[currentPartIndex];
+    // We'll look for tasks in part.blocks. 
+    // The first task is "unlocked", rest "locked".
+    const tasksInPart = part.blocks.filter(b => b.type === 'task');
+
+    const newTaskState = tasksInPart.map((task, idx) => {
+      if (idx === 0) {
+        return { status: 'unlocked', task }; 
+      } else {
+        return { status: 'locked', task };
+      }
+    });
+    setTaskState(newTaskState);
+    // Clear feedback each time we load a new part
+    setFeedbackMessage('');
+  }, [lesson, currentPartIndex]);
+
+
   if (!lesson) {
     return <div>Loading lesson...</div>;
   }
 
-  // Current part
   const currentPart = lesson.parts[currentPartIndex];
 
-  // "Back" button
+  /** 
+   * Called by LessonDisplay on "submit"
+   * We'll simulate a server check. In real usage, do fetch(...)
+   */
+  function handleSubmitTask(taskIndex, latexInput) {
+    // For demonstration, we'll pretend the server always returns correct if the latexInput includes "x^7"
+    // or something. Real usage: fetch to FastAPI.
+    simulateServerCheck(latexInput).then(res => {
+      setFeedbackMessage(res.feedback); // store message
+      // Update the tasks
+      setTaskState(oldState => {
+        const newState = [...oldState];
+        // Mark current task as correct or incorrect
+        newState[taskIndex] = {
+          ...newState[taskIndex],
+          status: res.correct ? 'correct' : 'incorrect',
+        };
+        // If correct, unlock next if it exists
+        if (res.correct && newState[taskIndex + 1]) {
+          if (newState[taskIndex + 1].status === 'locked') {
+            newState[taskIndex + 1].status = 'unlocked';
+          }
+        }
+        return newState;
+      });
+    });
+  }
+
+  // Enable "Next" button only if all tasks are correct
+  const allTasksCorrect = taskState.every(t => t.status === 'correct');
+  const isLastPart = currentPartIndex === lesson.parts.length - 1;
+
   const handleBack = () => {
     if (currentPartIndex > 0) {
-      setCurrentPartIndex((i) => i - 1);
+      setCurrentPartIndex(i => i - 1);
     }
   };
 
-  // "Next" button
   const handleNext = () => {
-    if (currentPartIndex < lesson.parts.length - 1) {
-      setCurrentPartIndex((i) => i + 1);
+    if (!allTasksCorrect) {
+      alert('You must complete all tasks before moving on!');
+      return;
+    }
+    if (!isLastPart) {
+      setCurrentPartIndex(i => i + 1);
     } else {
       alert('You have reached the end of the lesson!');
     }
   };
 
-  // 1) Instructions Pane (left)
+  // ---------- 1) Instructions Pane
   const instructionsPane = (
     <Instructions
       part={currentPart}
@@ -184,37 +254,60 @@ export default function LessonsPage() {
       totalParts={lesson.parts.length}
       onBack={handleBack}
       onNext={handleNext}
+      taskState={taskState} // pass tasks + statuses so we can show checkboxes
     />
   );
 
-  // 2) LessonDisplay (center)
+  // ---------- 2) LessonDisplay (center)
   const mainPane = (
     <LessonDisplay
       part={currentPart}
-      // pass any additional props if needed
+      onSubmitTask={handleSubmitTask}
+      taskState={taskState}
     />
   );
 
-  // 3) Feedback Pane (right) — includes its own tabs
+  // ---------- 3) Feedback Pane (right)
   const feedbackPane = (
     <Feedback
+      // You can store "feedbackMessage" here
       part={currentPart}
-      // pass more props if the feedback depends on user progress
+      extraFeedback={feedbackMessage}
     />
   );
 
-  // The layout container
   return (
     <ThreePaneResponsive
       instructions={instructionsPane}
       mainContent={mainPane}
-      // We pass an object with .feedback, .notes, .comments if desired
       feedbackData={{
         feedback: feedbackPane,
-        // optional placeholders if you want separate tab content
-        // notes: <NotesPane ... />,
-        // comments: <CommentsPane ... />,
       }}
     />
   );
+}
+
+/** 
+ * Simulate a server check. 
+ * In real usage, you'd do:
+ *   const res = await fetch('/api/validate', { method: 'POST', body: ... })
+ *   return await res.json();
+ */
+function simulateServerCheck(userLatex) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      // just a silly check: if user latex includes 'x^7', it's correct
+      if (userLatex.includes('x^7')) {
+        resolve({
+          correct: true,
+          feedback: '✔ Correct! Good job!',
+        });
+      } else {
+        resolve({
+          correct: false,
+          feedback: '✘ Incorrect, please try again.',
+        });
+      }
+    }, 800);
+  });
 }

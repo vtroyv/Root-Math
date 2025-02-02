@@ -7,10 +7,10 @@ export default function BlockRenderer({ block }) {
   switch (block.type) {
     case 'heading': {
       const Tag = `h${block.level || 2}`;
-      return <Tag >{block.content}</Tag>;
+      return <Tag style={{margin:'0.5rem'}}>{block.content}</Tag>;
     }
     case 'paragraph':
-      return <p style={{fontSize:'1.25rem', margin:'1rem'}}><Latex>{block.content}</Latex></p>;
+      return <p style={{fontSize:'1.25rem', margin:'0.5rem'}}><Latex>{block.content}</Latex></p>;
 
     case 'bullet-points': {
       
@@ -25,6 +25,7 @@ export default function BlockRenderer({ block }) {
         </>
        )
     }
+   
 
 
 
