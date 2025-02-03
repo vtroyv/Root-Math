@@ -16,6 +16,7 @@ export default function LessonEditorDisplay({ part, onSubmitTask, taskState }) {
       mfe.current.style.backgroundColor = 'lightblue';
       mfe.current.mathModeSpace = '\\,';
       mfe.current.mathVirtualKeyboardMode = 'manual';
+     
 
       mfe.current.addEventListener('input', () => {
         const latexValue = mfe.current.getValue();
@@ -24,6 +25,12 @@ export default function LessonEditorDisplay({ part, onSubmitTask, taskState }) {
       });
 
       mathfieldRef.current.appendChild(mfe.current);
+      mfe.current.addEventListener('input', function (event) {
+        if (event.inputType === 'insertLineBreak') {
+          mfe.current.executeCommand('addRowAfter');
+          event.preventDefault();
+        }
+      })
     }
   }, []);
 
@@ -65,7 +72,7 @@ export default function LessonEditorDisplay({ part, onSubmitTask, taskState }) {
       <Button
         block
         outline
-        color='success'
+        color='primary'
         style={{ margin: '0.5rem' }}
         onClick={handleSubmit}
       >

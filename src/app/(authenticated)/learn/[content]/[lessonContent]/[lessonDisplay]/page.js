@@ -69,7 +69,7 @@ export default function LessonsPage() {
           blocks: [
             {
               type: 'paragraph', 
-              content: "Let's consider a term with the form $x^{n}$. When we see terms like this we refer to $x$ as the base and $n$ as the indice (or power), now let's take a look at our first indice law!"
+              content: "Let's consider a term with the form $x^{n}$ When we see terms like this we refer to $x$ as the base and $n$ as the indice (or power), now let's take a look at our first indice law!"
             },
             {
               type: 'heading', 
@@ -80,7 +80,7 @@ export default function LessonsPage() {
             {
               type: 'paragraph',
               content:
-                'If you multiply two expressions with the same base, you add their exponents: $$ a^m * a^n = a^{m+n}$$.',
+                'If you multiply two expressions with the same base, you add their exponents: $$ a^m * a^n = a^{m+n}$$',
             },
             {
               type: 'paragraph', 
@@ -142,16 +142,54 @@ export default function LessonsPage() {
           blocks: [
             {
               type: 'paragraph',
-              content:
-                'If you divide two expressions with the same base, you subtract their exponents: $a^m / a^n = a^(m-n)$.',
+              content:"Now we've seen when we multiply two terms together with the same base that we add the powers, so what about when we divide two terms with the same base? ",
             },
             {
+              type:'paragraph', 
+              content:'Well maybe you guessed it already - we simply subtract the indices'
+            },
+            {
+                type: 'heading', 
+                level: 4,
+                content: 'The quotient of powers:' 
+            },
+            {
+              type: 'paragraph', 
+              content: 'If you divide two terms with the same base, you subtract their exponents $$ \\frac{a^n}{a^m} = a^{n-m}$$'
+
+            },
+            {
+              type:'paragraph', 
+              content:"Pretty, simple right! So if we have $\\frac{7^3}{7^2}$, this would simply be $7^{3-2} = 7^1 = 7$. All we do is apply our rule, the base's are the same and we're dividing, so we just just subtract the power of the denominator from the power of the numerator, and we're good to go! ",
+
+            },
+
+            {
+              type:'paragraph', 
+              content: "Now let's test our understanding by working through the following problems"
+
+            }
+            ,
+
+            {
               type: 'task',
-              title: 'Try It Out',
+              title: "Have you been paying attention?",
               instructions: 'Simplify y^5 / y^2.',
               hint: 'Subtract exponents when dividing with the same base.',
             },
           ],
+          latex: String.raw`
+          \begin{aligned}
+            &\text{1) Once again we'll start nice and easy, complete the following:}\\
+            &\frac{7^4}{7^2} = \,?\\[1ex]
+            &\\
+            &\text{2) Now let's make things a little harder, complete:}\\
+            &\frac{e^{7x}}{3e^3} = \,?\\[1ex]
+            &\\
+            &\text{3) Is it a trick question? Let's find out, simplify:}\\
+            &\frac{x^4}{x^3} = \,?\\
+          \end{aligned}
+          `
         },
         {
           id: 'part4-power',

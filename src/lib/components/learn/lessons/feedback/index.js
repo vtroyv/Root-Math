@@ -31,7 +31,7 @@ export default function Feedback({ part, extraFeedback }) {
             onClick={() => toggle('notes')}
             style={{ cursor: 'pointer' }}
           >
-            Your notes
+            Your Notes
           </NavLink>
         </NavItem>
         <NavItem>
@@ -49,11 +49,11 @@ export default function Feedback({ part, extraFeedback }) {
         <TabPane tabId="feedback">
           <FeedbackPane part={part} extraFeedback={extraFeedback} />
         </TabPane>
-        <TabPane tabId="notes">
-          <NotesPane />
+        <TabPane tabId="notes" >
+          <NotesPane part={part}/>
         </TabPane>
-        <TabPane tabId="comments">
-          <CommentsPane />
+        <TabPane tabId="comments" >
+          <CommentsPane part={part}/>
         </TabPane>
       </TabContent>
     </div>
