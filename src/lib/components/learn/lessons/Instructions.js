@@ -3,6 +3,8 @@
 'use client';
 import { Button } from 'reactstrap';
 import BlockRenderer from './BlockRenderer';
+import 'katex/dist/katex.min.css';
+import Latex from 'react-latex-next';
 
 export default function Instructions({
   part,
@@ -46,7 +48,7 @@ export default function Instructions({
     >
       {/* Scrollable content */}
       <div style={{ overflowY: 'auto', flex: 1, }}>
-        <h2>{part.title}</h2>
+        <h2 style={{color:'#17a2b8', fontWeight:'bold'}}>{part.title}</h2>
         {part.blocks.map((block, i) => renderBlockOrTask(block, i))}
       </div>
 
@@ -82,7 +84,7 @@ function TaskRenderer({ block, status }) {
   else if (isIncorrect) icon = '✘';
 
   return (
-    <div
+    <div 
       style={{
         position: 'relative',
         border: '1px solid #ddd',
@@ -110,7 +112,7 @@ function TaskRenderer({ block, status }) {
       {block.hint && (
         <details style={{ marginTop: '0.5rem' }}>
           <summary>Hint</summary>
-          <p>{block.hint}</p>
+          <p><Latex>{block.hint}</Latex></p>
         </details>
       )}
     </div>

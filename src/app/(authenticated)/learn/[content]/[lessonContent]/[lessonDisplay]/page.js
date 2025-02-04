@@ -168,22 +168,32 @@ export default function LessonsPage() {
               type:'paragraph', 
               content: "Now let's test our understanding by working through the following problems"
 
-            }
-            ,
-
+            },
             {
               type: 'task',
               title: "Have you been paying attention?",
-              instructions: 'Simplify y^5 / y^2.',
-              hint: 'Subtract exponents when dividing with the same base.',
+              instructions: "Replace the '?' in question 1) with the correct answer, when you're done press submit",
+              hint: "What's 4 - 2 ?",
             },
+            {
+              type:'task', 
+              title:"Put your knowledge to the test!",
+              instructions:"Replace the '?' in question 2) with the correct simplification", 
+              hint: 'Perhaps think of it as $ \\frac{1}{3} \\cdot \\frac{e^{6x}}{e^3} $, then apply our rule of subtracting indices'   
+            }, 
+            {
+              type:'task',
+              title:"It's not as hard as it looks",
+              instructions:"Replace the '?' with the correct solution", 
+              hint:'Did you know in general $a^{1} = a$'
+            }
           ],
           latex: String.raw`
           \begin{aligned}
             &\text{1) Once again we'll start nice and easy, complete the following:}\\
             &\frac{7^4}{7^2} = \,?\\[1ex]
             &\\
-            &\text{2) Now let's make things a little harder, complete:}\\
+            &\text{2) Now let's make things a little harder, simplify the following:}\\
             &\frac{e^{7x}}{3e^3} = \,?\\[1ex]
             &\\
             &\text{3) Is it a trick question? Let's find out, simplify:}\\
@@ -191,6 +201,78 @@ export default function LessonsPage() {
           \end{aligned}
           `
         },
+        {
+          id: 'part4 -power',
+          title:' Law 3: Power of a Power', 
+          blocks: [
+            {
+              type:'paragraph', 
+              content:"So we've seen two cases now! First we saw, when we multiply two terms with the same base, we add the powers, next we saw when we divide two terms with the same base, we subtract the powers."
+            }, 
+            {
+              type:'paragraph', 
+              content: 'Now our third indice rule is a little different, what do we do when we have a power to a power? - we simply multiply the powers' 
+            }, 
+            {
+              type:'paragraph',
+              content:"For example if we had $(12^3)^4$, this is simply $$(12^3)^4 = 12^{3 \\cdot 4}= 12^{12}$$ All we've done is multiply the powers. Nothing complicated. So in general we have the following:"
+            },
+            {
+              type:'heading', 
+              level:4, 
+              content:'The power of powers'
+            }, 
+            {
+              type:'paragraph', 
+              content:'If you take the power of a term which has a power you simply, multiply their exponents: $$(a^{n})^m = a^{n \\cdot m}$$' 
+            }, 
+            {
+              type:'paragraph', 
+              content:"Pretty simple right, Now let's answer some questions to make sure you understand"
+            }, 
+            {
+              type:'task', 
+              title:'Here we go', 
+              instructions:"Replace the '?' in question 1), with the simplified result", 
+              hint:'Simply, multiply the powers!'
+            }, 
+            {
+              type:'task', 
+              title:'Time to really think', 
+              instructions:"In question 2) the expression simplifies down to 4 to the power of a index, replace the '?' with the correct index", 
+              hint:"Did you know that $4^{2}= 16$"
+            }, 
+            {
+              type:'task', 
+              title:"Time to cook!",
+              instructions:"In question 3) the expression simplifies down to 6 to the power of a index, replace '?' with the correct index", 
+              hint:"Did you know that $6^{3}= 216$" 
+            }, 
+            {
+              type:'task', 
+              title:'Time to combine concepts', 
+              instructions:"The expression in question 4), simplifies down to 7 to the power of something, replace '?' with the correct index",
+              hint:"Did you know $49^{7} = (7^2)^7$?, well now you do! Use this fact and some of the power rules from the previous sections, and I'm sure you'll have the answer in no time! "
+            }
+            
+          ], 
+          latex: String.raw`
+          \begin{aligned}
+            &1)\,\text{Let's start simple, simplify the following: }\\ 
+            & \left(7^2\right)^3 = \,?\\[1ex]
+            &\\
+            &2)\,\text{Was that too easy? How about this simplify: }\\ 
+            & \left(4^2\cdot16\right)^4 = 4^{?}\\[1ex]
+            &\\
+            &3)\,\text{This should be a bit more challenging, simplify: }\\ 
+            & \left(6^3\cdot216^5\right)^2 = 6^{?}\\[1ex]
+            &\\
+            &4)\,\text{Answer this and you're good to go \!  Simplify: }\\
+            & \left(\frac{49^7}{7^2}\cdot7^3\right)^2 = 7^{?}\\
+          \end{aligned}
+          `, 
+        }
+        ,
         {
           id: 'part4-power',
           title: 'Law 3: Power of a Power',

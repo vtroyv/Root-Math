@@ -194,7 +194,7 @@ function NoteItem({ note, onEdit, onDelete }) {
               backgroundColor: 'transparent'
             }}
           >
-            &#8942;
+            
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem onClick={onEdit}>Edit</DropdownItem>
