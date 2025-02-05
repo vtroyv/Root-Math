@@ -1,10 +1,11 @@
 'use client';
 import React from 'react';
 
-export default function FeedbackPane({ part, extraFeedback, tasksCount = 4 }) {
+export default function FeedbackPane({ part, extraFeedback, tasksCount  }) {
   // Ensure extraFeedback is an array. If not, use an empty array.
   const feedbackArray = Array.isArray(extraFeedback) ? extraFeedback : [];
-
+  
+  console.log('The tasksCount is ', tasksCount )
   return (
     <div style={{
       padding: '1.5rem',

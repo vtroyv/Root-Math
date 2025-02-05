@@ -7,12 +7,13 @@ import FeedbackPane from './FeedBackPane';
 import NotesPane from './NotesPane';
 import CommentsPane from './CommentsPane';
 
-export default function Feedback({ part, extraFeedback }) {
+export default function Feedback({ part, extraFeedback , tasksCount}) {
+
   const [activeTab, setActiveTab] = useState('feedback');
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
-
+  // const tasksCount = part.blocks.filter(b => b.type = 'task').length
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Nav tabs>
@@ -47,7 +48,7 @@ export default function Feedback({ part, extraFeedback }) {
 
       <TabContent activeTab={activeTab} style={{ padding: '1rem', flex: 1 }}>
         <TabPane tabId="feedback">
-          <FeedbackPane part={part} extraFeedback={extraFeedback} />
+          <FeedbackPane part={part} extraFeedback={extraFeedback} tasksCount={tasksCount} />
         </TabPane>
         <TabPane tabId="notes" >
           <NotesPane part={part}/>

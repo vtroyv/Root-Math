@@ -1,4 +1,4 @@
-import { getLessonContent } from "@/lib/mongodb/questions";
+import { getLessonContent } from "@/lib/mongodb/utils";
 
 export async function GET(request,{params}) {
     try{
@@ -7,6 +7,7 @@ export async function GET(request,{params}) {
     console.log('The data before sending is ', data)
 
    const result = await getLessonContent(data)
+
    
    const lessons = result.lessons[0]
    console.log('The lessons are', lessons)

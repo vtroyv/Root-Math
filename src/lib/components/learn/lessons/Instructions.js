@@ -104,7 +104,7 @@ function TaskRenderer({ block, status }) {
           fontWeight: 'bold',
         }}
       >
-        {isCorrect ? '✅' : isIncorrect ? '❌' : '⬜'}
+        {isCorrect ? '✅'  : isIncorrect ? '❌' : '⬜'}
       </div>
 
       <h4>{block.title}</h4>

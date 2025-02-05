@@ -4,6 +4,7 @@ let client
 let db
 let questions 
 let lessons
+let lessonData
 
 async function init() {
     if (db) return 
@@ -53,5 +54,22 @@ export async function getLessonContent(data) {
 
     } catch(error) {
         return {error: 'Failed to fetch lessons!'}
+    }
+}
+
+export async function getLessonData(data) {
+    try{
+        console.log('The data passed to the mongo function is ', data)
+        lessonData = await db.collection('lesson-data')
+        console.log('The lessoData from the collection is ', lessonData)
+        
+        const result = await lessonData.find({}).map(lesson => ({...lesson, _id:lesson._id.toString()})).toArray()
+        console.log('The result after putting collection documents in array is ', result )
+        const selectedLessonData = result.filter(lesson => lesson.slug === data)
+        console.log('The selectedLessonData is ', selectedLessonData)
+        return {lessonData: selectedLessonData}
+        
+    } catch(error) {
+        return {error: 'Failed to fetch lesson data!'}
     }
 }

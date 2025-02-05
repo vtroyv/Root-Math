@@ -1,4 +1,4 @@
-import { getQuestions } from "@/lib/mongodb/questions";
+import { getQuestions } from "@/lib/mongodb/utils";
 
 export async function GET() {
   try {

@@ -24,11 +24,26 @@ export const apiSlice = createApi({
                 body: questionData
 
             })
-            
         }),
+        lessonQuestionFeedback: builder.mutation({
+            query: (lessonData, latex) => ({
+                url: `/lessons/questions/${lessonData.question}/${lessonData.slug}/${lessonData.partID}/${lessonData.task}`, 
+                method:'POST', 
+                body: latex
+            })
+        })
+        ,
+
         getLessonContent: builder.query({
             query: (params)=> `/lessons/${params.collection}/${params.lessonContent}`
         }),
+
+        // Note we use a place holder in the query below, simply due to the way our api routes have been nested.
+        getLessonData: builder.query({
+            query: (params) => `lessons/lesson-data/placeholder/${params.lessonData}`
+        })
+        
+        ,
 
         
 
@@ -44,7 +59,7 @@ export const apiSlice = createApi({
 })
 
 
-export const { useGetQuestionsQuery, useGradeQuestionMutation, useGradeSketchQuestionMutation, useGetLessonContentQuery } = apiSlice;
+export const { useGetQuestionsQuery, useGradeQuestionMutation, useGradeSketchQuestionMutation, useGetLessonContentQuery, useGetLessonDataQuery ,useLessonQuestionFeedbackMutation } = apiSlice;
 
 
 
