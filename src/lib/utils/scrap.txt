@@ -1,331 +1,102 @@
-{
-      slug: 'welcome-to-the-laws-of-indices',
-      title: 'The Laws of Indices',
-      next: "negative-indices"
-      ,
-      parts: [
-        {
-          id: 1,
-          title: 'Introduction to the Laws of Indices',
-          blocks: [
-            
-            {
-              type: 'paragraph',
-              content:
-                "Indices (also known as exponents or powers) appear in many areas of maths. They're a way to reprsent the repeated multiplication of a number by itself.",
-            },
-            {
-              type:'paragraph', 
-              content:
-              "For instance if we had the number 3 multiplied by itself 5 times, we could represent this as: $$ 3 \\cdot 3 \\cdot 3 \\cdot 3 \\cdot 3 = 3^{5}$$"
+First change name of simulateServerCheck function to verifyTask 
 
-            },
-            {
-              type: 'paragraph',
-              content:
-              'There are 4 index laws that you must know and understand, these are:'
+function async handleSubmitTask(taskIndex, latexInput) {
 
-            },
-            
-            {
-              type:'bullet-points', 
-              points: [
-                '$a^{n} \\cdot a^{m} = a^{m+n}$', 
-                '$\\frac{a^n}{a^m} = a^{n-m}$', 
-                '$(a^m)^n = a^{m \\cdot n}$', 
-               '$(ab)^n = a^n \\, b^n$', 
-              ]
+//create lessonData object 
+  const task = taskState[taskIndex]
+  const slug = lesson.slug
+  const partID =  lesson.parts[currentPartIndex].id
 
-            }, 
-            {
-              type:'paragraph',
-              content:'We will now take a closer look at each of these rules one by one'
-            }
-            
-          ],
-        },
-        {
-          id: 2,
-          title: 'Law 1: Product of Powers',
-          blocks: [
-            {
-              type: 'paragraph', 
-              content: "Let's consider a term with the form $x^{n}$ When we see terms like this we refer to $x$ as the base and $n$ as the indice (or power), now let's take a look at our first indice law!"
-            },
-            {
-              type: 'heading', 
-              level: 4,
-              content: 'The product of powers:' 
-            }
-            ,
-            {
-              type: 'paragraph',
-              content:
-                'If you multiply two expressions with the same base, you add their exponents: $$ a^m * a^n = a^{m+n}$$',
-            },
-            {
-              type: 'paragraph', 
-              content:'So for example if we had $3^3 \\cdot 3^4$, this is the same as $3^7$, as given our bases are the same (i.e. 3 in this case), we can simply add the indices (i.e. $3+4 = 7$ in this case)'
-            },
-            {
-              type:'paragraph',
-              content:"Pretty straight forward right? - Now let's get some practice!"
-            }
-            ,
-            {
-              type: 'task',
-              title: 'Check Your Understanding',
-              instructions: 'Replace the  ? in question 1) with the correct answer',
-              hint: 'Add the exponents when the bases match!',
-            },
-            {
-              type: 'task',
-              title: 'Time to add',
-              instructions: "Replace the '?' in question 2) with the correct answer  ",
-              hint: 'Just like before add the indicies, all the bases are the same!',
-            },
-            {
-              type:'task', 
-              title: "Let's spice things up", 
-              instructions: "Replace each of the three '?' in question 3) with the correct indice",
-              hint:"Simply add together the powers for terms with the same base"
-            },
-            {
-              type:'task',
-              title: "Time for a challenge", 
-              instructions: "Replace the each '?' in question 4) with the the correct values",
-              hint:'Same stuff as before - add those powers!:)'
-            }
-            
-            ,
-          ],
-          latex: String.raw`
-\begin{aligned}
-  &\text{1) This one's nice and easy, simplify: }\\
-   &a^m \cdot a^n = ?\\
-  &\\
-  &\text{2) Now simplify: }\\
-  &x^3 \cdot x^4 \cdot x^5 = ?\\
-  &\\
-  &\text{3) Time to make things a little harder, simplify this: }\\
-  & a^3 \cdot a^{4 \cdot 5} \cdot b^5 \cdot b^6 \cdot x^4=a^? \cdot b^? \cdot x^{?} \\
-  &\\
-  &\text{4)Now if you can answer this you must really understand, simplify: }\\
-  & a^4 \cdot x^5 \cdot a^x \cdot x^a = a^{?} \cdot x^{?}\\ 
-  &\\
-\end{aligned}
-`,
+  const lessonData = {slug, partID, task}
 
-        },
-        {
-          id: 3,
-          title: 'Law 2: Quotient of Powers',
-          blocks: [
-            {
-              type: 'paragraph',
-              content:"Now we've seen when we multiply two terms together with the same base that we add the powers, so what about when we divide two terms with the same base? ",
-            },
-            {
-              type:'paragraph', 
-              content:'Well maybe you guessed it already - we simply subtract the indices'
-            },
-            {
-                type: 'heading', 
-                level: 4,
-                content: 'The quotient of powers:' 
-            },
-            {
-              type: 'paragraph', 
-              content: 'If you divide two terms with the same base, you subtract their exponents $$ \\frac{a^n}{a^m} = a^{n-m}$$'
 
-            },
-            {
-              type:'paragraph', 
-              content:"Pretty, simple right! So if we have $\\frac{7^3}{7^2}$, this would simply be $$7^{3-2} = 7^1 = 7$$ All we do is apply our rule, the base's are the same and we're dividing, so we just just subtract the power of the denominator from the power of the numerator, and we're good to go! ",
 
-            },
 
-            {
-              type:'paragraph', 
-              content: "Now let's test our understanding by working through the following problems"
+  //You need to build up the lessonData object that's similar to redux API
 
-            },
-            {
-              type: 'task',
-              title: "Have you been paying attention?",
-              instructions: "Replace the '?' in question 1) with the correct answer, when you're done press submit",
-              hint: "What's 4 - 2 ?",
-            },
-            {
-              type:'task', 
-              title:"Put your knowledge to the test!",
-              instructions:"Replace the '?' in question 2) with the correct simplification", 
-              hint: 'Perhaps think of it as $ \\frac{1}{3} \\cdot \\frac{e^{6x}}{e^3} $, then apply our rule of subtracting indices'   
-            }, 
-            {
-              type:'task',
-              title:"It's not as hard as it looks",
-              instructions:"Replace the '?' with the correct solution", 
-              hint:'Did you know in general $a^{1} = a$'
-            }
-          ],
-          latex: String.raw`
-          \begin{aligned}
-            &\text{1) Once again we'll start nice and easy, complete the following:}\\
-            &\frac{7^4}{7^2} = \,?\\[1ex]
-            &\\
-            &\text{2) Now let's make things a little harder, simplify the following:}\\
-            &\frac{e^{7x}}{3e^3} = \,?\\[1ex]
-            &\\
-            &\text{3) Is it a trick question? Let's find out, simplify:}\\
-            &\frac{x^4}{x^3} = \,?\\
-          \end{aligned}
-          `
-        },
-        {
-          id:4,
-          title:' Law 3: Power of a Power', 
-          blocks: [
-            {
-              type:'paragraph', 
-              content:"So we've seen two cases now! First we saw, when we multiply two terms with the same base, we add the powers, next we saw when we divide two terms with the same base, we subtract the powers."
-            }, 
-            {
-              type:'paragraph', 
-              content: 'Now our third indice rule is a little different, what do we do when we have a power to a power? - we simply multiply the powers' 
-            }, 
-            {
-              type:'paragraph',
-              content:"For example if we had $(12^3)^4$, this is simply $$(12^3)^4 = 12^{3 \\cdot 4}= 12^{12}$$ All we've done is multiply the powers. Nothing complicated. So in general we have the following:"
-            },
-            {
-              type:'heading', 
-              level:4, 
-              content:'The power of powers'
-            }, 
-            {
-              type:'paragraph', 
-              content:'If you take the power of a term which has a power you simply, multiply their exponents: $$(a^{n})^m = a^{n \\cdot m}$$' 
-            }, 
-            {
-              type:'paragraph', 
-              content:"Pretty simple right, Now let's answer some questions to make sure you understand"
-            }, 
-            {
-              type:'task', 
-              title:'Here we go', 
-              instructions:"Replace the '?' in question 1), with the simplified result", 
-              hint:'Simply, multiply the powers!'
-            }, 
-            {
-              type:'task', 
-              title:'Time to really think', 
-              instructions:"In question 2) the expression simplifies down to 4 to the power of a index, replace the '?' with the correct index", 
-              hint:"Did you know that $4^{2}= 16$"
-            }, 
-            {
-              type:'task', 
-              title:"Time to cook!",
-              instructions:"In question 3) the expression simplifies down to 6 to the power of a index, replace '?' with the correct index", 
-              hint:"Did you know that $6^{3}= 216$" 
-            }, 
-            {
-              type:'task', 
-              title:'Time to combine concepts', 
-              instructions:"The expression in question 4), simplifies down to 7 to the power of something, replace '?' with the correct index",
-              hint:"Did you know $49^{7} = (7^2)^7$?, well now you do! Use this fact and some of the power rules from the previous sections, and I'm sure you'll have the answer in no time! "
-            }
-            
-          ], 
-          latex: String.raw`
-          \begin{aligned}
-            &1)\,\text{Let's start simple, simplify the following: }\\ 
-            & \left(7^2\right)^3 = \,?\\[1ex]
-            &\\
-            &2)\,\text{Was that too easy? How about this simplify: }\\ 
-            & \left(4^2\cdot16\right)^4 = 4^{?}\\[1ex]
-            &\\
-            &3)\,\text{This should be a bit more challenging, simplify: }\\ 
-            & \left(6^3\cdot216^5\right)^2 = 6^{?}\\[1ex]
-            &\\
-            &4)\,\text{Answer this and you're good to go \!  Simplify: }\\
-            & \left(\frac{49^7}{7^2}\cdot7^3\right)^2 = 7^{?}\\
-          \end{aligned}
-          `, 
-        }
-        ,
-        {
-          id: 5,
-          title: 'Law 4:The Power of a product ',
-          blocks: [
-            {
-              type: 'paragraph',
-              content: 'Now thinking back to our first law, we saw $$a^n \\cdot a^m = a^{n+m}$$ In other words, when we had the product of two bases of the different powers, we simply added the powers',
-            },
-            {
-              type:'paragraph', 
-              content:"However, what happens if we want to take the power of a product of numbers which all have different bases?, for instance what is $(ab)^5$ or $(x^{2}y^{3})^7$ ?"
-            },
-            {
-              type:'paragraph', 
-              content:"Well we do this using our final index law"
-            },
-            {
-              type:"heading", 
-              level:4, 
-              content:'The power of products'
-            },
-            {
-              type:'paragraph', 
-              content:'The power of a product of two numbers, a and b, is given by $$(a \\cdot b)^n  = a^n \\cdot b^n $$'
-            }, 
-            {
-              type:'paragraph', 
-              content:"In other words, all we do is apply the power to each one of the terms in the product, for instance if we have, $$(5 \\cdot 12)^8$$ We can write this as $5^{8} \\cdot 12^{8}$. Now there's no better way to improve your undertanding then answering questions, so attempt the following tasks:"
-            }, 
-            {
-              type:'task', 
-              title:'Just a little warm up', 
-              instructions:"Replace each '?', in question 1), which the correct value", 
-              hint:"For the second equality did you know $9=3^2$"
-            }
-            ,
-            {
-              type: 'task',
-              title: "Let's up the difficulty",
-              instructions: "Replace each '?' in question",
-              hint: 'Use the fact that $5x = 5 \\cdot x$ , then the fact that $15 = 3 \\cdot 5$, then think back to our first index law 😄',
-            },
-            {
-              type:'task', 
-              title:'Not as hard as it looks!', 
-              instructions:"Replace each the '?' in question 3) with the correct result", 
-              hint: "Don't over think things, it's simple $(3x)^3 =  (3 \\cdot x)^3$"
-            }, 
-            {
-              type:'task', 
-              title:"Apply the rule again & again!", 
-              instructions:"Replace each '?' in question 4) with the correct result", 
-              hint:"Consider $(x^2 \\cdot y^3 \\cdot z^4) = a$, then we would have $(a^2)^3 = a^6$, now replace $a^6$ with $(x^2 \\cdot y^3 \\cdot z^4)^6$ and continue"
-            }
-          ],
-          latex: String.raw`
-          \begin{aligned}
-            &1)\,\text{Let's start with a simple warm up, simplify:}\\
-            &\quad \left(5\cdot 9\right)^3 = 5^{?}\cdot 9^{?} = 5^{?}\cdot 3^{?}\\[1ex]
-            &\\
-            &2)\,\text{Time to increase the difficulty, replace the '?' with the correct values:}\\
-            &\quad \left(5x\cdot 15y\right)^3 = 3^{?}\cdot 5^{?}\cdot x^{?}\cdot y^{?}\\[1ex]
-            &\\
-            &3)\,\text{Do you really understand it now, simplify:}\\
-            &\quad \left(3x^3\right)^3 = \,?\\[1ex]
-            &\\
-            &4)\,\text{This one should be a challenge, simplify:}\\
-            &\quad \left(\left(x^2\cdot y^3\cdot z^4\right)^2\right)^3 = x^{?}\cdot y^{?}\cdot z^{?}\\
-          \end{aligned}
-          `
-        },
-        
-      
-      ],
+
+  
+
+  //Now feedback should simply be a string, and status should be correct or incorrect 
+  //this is to be sent back by gpt 
+
+  const {feedback, correct} = await verifyTask(lessonData, latexInput)
+
+  setTaskState(oldState => {
+    const newState =[...oldState];
+
+    //Mark current task as correct or incorrect
+    newState[taskIndex] ={
+      ...newState[taskIndex], 
+      status: correct ? 'correct' : 'incorrect',
+    };
+
+    // If correct, unlock next if it exists
+
+    if (correct && newState[taskIndex +1]) {
+      if (newState[taskIndex+1].status ==='locked'){
+        newState[taskIndex+1].status = 'unlocked';
+      }
     }
+
+    console.log('The new taskState is given by', newState)
+    return newState;
+  }) 
+
+  setFeedbackMessage([...feedbackMessage], feedback)
+
+}
+
+Now time to write the verifyTask function 
+
+async function verifyTask(lessonData, userLatex) {
+//First let's set up an reduxAPI mutation that connects to fastAPI, we need to start by building a lessonData object, 
+// which will enable us to identify the tasks in the dataset 
+
+const res = await lessonQuestionFeedback(lessonData, latex).unwrap()
+console.log('The response from the apiRoute is , res)
+
+
+
+
+
+
+
+}
+
+
+
+     lessonQuestionFeedback: builder.mutation({
+            query: (lessonData, latex) => ({
+                url: `/lessontasks/${lessonData.slug}/${lessonData.partID}/${lessonData.task}`, 
+                method:'POST', 
+                body: latex
+            })
+        })
+
+
+
+
+    // simulateServerCheck(latexInput).then(res => {
+      
+    //   setFeedbackMessage(['testing', 'testing again']); // store message -> this is where we will need to recursively store feedback on each submit, appending new feedback to the array 
+    //   // Update the tasks
+    //   setTaskState(oldState => {
+    //     const newState = [...oldState];
+
+    //     // Mark current task as correct or incorrect
+    //     newState[taskIndex] = {
+    //       ...newState[taskIndex],
+    //       status: res.correct ? 'correct' : 'incorrect',
+    //     };
+    //     // If correct, unlock next if it exists
+    //     if (res.correct && newState[taskIndex + 1]) {
+    //       if (newState[taskIndex + 1].status === 'locked') {
+    //         newState[taskIndex + 1].status = 'unlocked';
+    //       }
+    //     }
+    //     console.log('The new taskState is given by', newState)
+    //     return newState;
+    //   });
+    // });
+  

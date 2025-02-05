@@ -45,7 +45,9 @@ export default function LessonEditorDisplay({ part, onSubmitTask, taskState }) {
   // We'll find the first task with status !== 'correct' or 'locked' 
   // Actually simpler: find the first 'unlocked' or 'incorrect' if you want them to re-try
   function getActiveTaskIndex() {
+   
     const tasks = part.blocks.filter(b => b.type === 'task');
+    
     // Find first that is 'unlocked' or 'incorrect' 
     // (meaning they can keep trying if they got it wrong)
     return tasks.findIndex((t, idx) => {
@@ -62,7 +64,8 @@ export default function LessonEditorDisplay({ part, onSubmitTask, taskState }) {
       return;
     }
     const userLatex = mfe.current.getValue();
-    // Call parent callback
+
+    // Call parent callback ->This gets the latex, and index and calls fastapi webserver to mark it 
     onSubmitTask(activeIndex, userLatex);
   }
 

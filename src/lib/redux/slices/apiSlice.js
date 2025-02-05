@@ -26,10 +26,10 @@ export const apiSlice = createApi({
             })
         }),
         lessonQuestionFeedback: builder.mutation({
-            query: (lessonData, latex) => ({
-                url: `/lessons/questions/${lessonData.question}/${lessonData.slug}/${lessonData.partID}/${lessonData.task}`, 
+            query: (lessonData) => ({
+                url: `/lessontasks/${lessonData.slug}/${lessonData.partID}/${lessonData.task}`, 
                 method:'POST', 
-                body: latex
+                body: lessonData
             })
         })
         ,
@@ -42,11 +42,7 @@ export const apiSlice = createApi({
         getLessonData: builder.query({
             query: (params) => `lessons/lesson-data/placeholder/${params.lessonData}`
         })
-        
         ,
-
-        
-
         gradeSketchQuestion: builder.mutation({
             query: (questionData) => ({
                 url: '/feedback/sketch', 

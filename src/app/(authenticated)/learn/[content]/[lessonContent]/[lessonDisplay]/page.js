@@ -45,6 +45,7 @@ export default function LessonsPage() {
   useEffect(() => {
     if (!lesson) return;
     const part = lesson.parts[currentPartIndex];
+    console.log('The current part is ', part)
     // We'll look for tasks in part.blocks. 
     // The first task is "unlocked", rest "locked".
     const tasksInPart = part.blocks.filter(b => b.type === 'task');
@@ -75,31 +76,63 @@ export default function LessonsPage() {
    * Called by LessonDisplay on "submit"
    * We'll simulate a server check. In real usage, do fetch(...)
    */
-  function handleSubmitTask(taskIndex, latexInput) {
-    // For demonstration, we'll pretend the server always returns correct if the latexInput includes "x^7"
-    // or something. Real usage: fetch to FastAPI.
-    console.log('Just testing the taskIndex is ', taskIndex)
-    console.log('And the taskState is ', taskState[taskIndex])
-    simulateServerCheck(latexInput).then(res => {
-      setFeedbackMessage(['testing', 'testing again']); // store message
-      // Update the tasks
-      setTaskState(oldState => {
-        const newState = [...oldState];
-        // Mark current task as correct or incorrect
-        newState[taskIndex] = {
-          ...newState[taskIndex],
-          status: res.correct ? 'correct' : 'incorrect',
+  async function handleSubmitTask(taskIndex, latexInput) {
+    const task = taskState[taskIndex]
+    console.log('The task that i would like to send is ', task)
+    const slug = lesson.slug
+    const partID = lesson.parts[currentPartIndex].id
+
+    const lessonData ={slug, partID, task, latexInput}
+
+    const {feedback, correct} = await verifyTask(lessonData)
+    console.log('The feedback from the apiRoute is ', feedback)
+    console.log('The correct status from the apiRoute is ', correct)
+
+    setTaskState(oldState => {
+      const newState =[...oldState];
+
+      //Mark current tasks as correct or incorrect
+      newState[taskIndex] ={
+        ...newState[taskIndex],
+          status: correct ? 'correct' : 'incorrect',
         };
-        // If correct, unlock next if it exists
-        if (res.correct && newState[taskIndex + 1]) {
-          if (newState[taskIndex + 1].status === 'locked') {
-            newState[taskIndex + 1].status = 'unlocked';
+
+        //If correct, unlock next if it exists
+
+        if (correct && newState[taskIndex +1]) {
+          if (newState[taskIndex+1].status === 'locked') {
+            newState[taskIndex +1].status = 'unlocked'
           }
         }
-        return newState;
+        console.log('The new taskState is given by ', newState)
+        return newState
+
+      })
+      setFeedbackMessage(prevFeedback => {
+        const updated = [...prevFeedback];
+        updated[taskIndex] = feedback;
+        return updated;
       });
-    });
-  }
+      
+      /*
+      Currently the feedback is constantly being updated, however we need to add some form of logic 
+      to only update the feedback for the next task if the current task has progressed 
+      
+      */
+    }
+    
+  
+    async function verifyTask(lessonData) {
+      // console.log('The lessonData that we wish to send  in the verifyTask function is  ', lessonData)
+      // console.log('The useLatex taht we wish to send in the verifyTask function is ',userLatex )
+      const res = await lessonQuestionFeedback(lessonData).unwrap()
+     
+      console.log('The response from the apiRoute is , ', res)
+      return res;
+    }
+    
+
+    
 
   // Enable "Next" button only if all tasks are correct
   const allTasksCorrect = taskState.every(t => t.status === 'correct');
@@ -166,27 +199,5 @@ export default function LessonsPage() {
   );
 }
 
-/** 
- * Simulate a server check. 
- * In real usage, you'd do:
- *   const res = await fetch('/api/validate', { method: 'POST', body: ... })
- *   return await res.json();
- */
-function simulateServerCheck(userLatex) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      // just a silly check: if user latex includes 'x^7', it's correct
-      if (userLatex.includes('x^7')) {
-        resolve({
-          correct: true,
-          feedback: '✔ Correct! Good job!',
-        });
-      } else {
-        resolve({
-          correct: false,
-          feedback: '✘ Incorrect, please try again.',
-        });
-      }
-    }, 800);
-  });
-}
+
+
