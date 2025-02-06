@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { MathfieldElement } from 'mathlive';
 import { Button } from 'reactstrap';
 
+
 export default function LessonEditorDisplay({ part, onSubmitTask, taskState }) {
   const mathfieldRef = useRef(null);
   const mfe = useRef(new MathfieldElement());
@@ -64,6 +65,9 @@ export default function LessonEditorDisplay({ part, onSubmitTask, taskState }) {
       return;
     }
     const userLatex = mfe.current.getValue();
+    //In this file your gonna what to add in logic for converting the latex into sympy 
+    // to enable easier rigourous checks to be made
+    
 
     // Call parent callback ->This gets the latex, and index and calls fastapi webserver to mark it 
     onSubmitTask(activeIndex, userLatex);
