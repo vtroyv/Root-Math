@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
-
+import Latex from 'react-latex-next';
+import 'katex/dist/katex.min.css';
 export default function FeedbackPane({ part, extraFeedback, tasksCount  }) {
   // Ensure extraFeedback is an array. If not, use an empty array.
   const feedbackArray = Array.isArray(extraFeedback) ? extraFeedback : [];
@@ -36,11 +37,11 @@ export default function FeedbackPane({ part, extraFeedback, tasksCount  }) {
             marginBottom: '0.75rem',
             background: '#fff'
           }}>
-            <h4 style={{ margin: '0 0 0.5rem 0' }}>Task {i + 1}</h4>
-            <p style={{ margin: 0 }}>
+            <h4 style={{ margin: '0 0 0.5rem 0' , color:'#17a2b8', fontWeight:'bold'}}>Task {i + 1}</h4>
+            <p style={{ margin: 0 }}><Latex>
               {feedbackArray[i] !== undefined && feedbackArray[i] !== null 
                 ? feedbackArray[i] 
-                : "No feedback yet for this task."}
+                : "No feedback yet for this task."}</Latex>
             </p>
           </div>
         ))}

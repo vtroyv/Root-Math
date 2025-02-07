@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Button, Alert} from 'reactstrap';
+import { Button, Alert } from 'reactstrap';
 import { useGetLessonDataQuery, useLessonQuestionFeedbackMutation } from '@/lib/redux/slices/apiSlice';
 import { useParams } from 'next/navigation';
 
@@ -14,30 +14,35 @@ export default function LessonsPage() {
   const [currentPartIndex, setCurrentPartIndex] = useState(0);
 
   // For each part, we track an array of tasks with statuses
-  const [taskState, setTaskState]= useState([])
+  const [taskState, setTaskState] = useState([]);
   // We'll store a feedback message from the "server" to show in the right pane
-  const [feedbackMessage, setFeedbackMessage]= useState([])
+  const [feedbackMessage, setFeedbackMessage] = useState([]);
   const [tasksCount, setTasksCount] = useState(0);
+  // Alert message state for displaying Reactstrap alerts
+  const [alertMessage, setAlertMessage] = useState('');
 
-  //Set up reduxAPI hook to connect with nextjs API route handler 
-  const [lessonQuestionFeedback, mutationState] = useLessonQuestionFeedbackMutation()
-  const params = useParams()
-  console.log('The params are ', params)
+  // Auto-dismiss alert after 3 seconds if one is shown.
+  useEffect(() => {
+    if (alertMessage) {
+      const timer = setTimeout(() => {
+        setAlertMessage('');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alertMessage]);
 
-  const apiParams = {lessonData: params.lessonDisplay}
- 
+  // Set up reduxAPI hook to connect with nextjs API route handler 
+  const [lessonQuestionFeedback, mutationState] = useLessonQuestionFeedbackMutation();
+  const params = useParams();
+  console.log('The params are ', params);
 
-  const {data, isLoading} = useGetLessonDataQuery(apiParams)
- 
+  const apiParams = { lessonData: params.lessonDisplay };
 
+  const { data, isLoading } = useGetLessonDataQuery(apiParams);
 
   // Mock "fetch" of multi-part lesson
   useEffect(() => {
-
-    const lessonData = data
-   
-
-  
+    const lessonData = data;
     setLesson(lessonData);
   }, [data]);
 
@@ -45,13 +50,13 @@ export default function LessonsPage() {
   useEffect(() => {
     if (!lesson) return;
     const part = lesson.parts[currentPartIndex];
-    console.log('The current part is ', part)
+    console.log('The current part is ', part);
     // We'll look for tasks in part.blocks. 
     // The first task is "unlocked", rest "locked".
     const tasksInPart = part.blocks.filter(b => b.type === 'task');
-    const count = part.blocks.filter(b => b.type =='task').length;
-    console.log('The count is ', count )
-    setTasksCount(count)
+    const count = tasksInPart.length;
+    console.log('The count is ', count);
+    setTasksCount(count);
 
     const newTaskState = tasksInPart.map((task, idx) => {
       if (idx === 0) {
@@ -65,7 +70,6 @@ export default function LessonsPage() {
     setFeedbackMessage('');
   }, [lesson, currentPartIndex]);
 
-
   if (!lesson) {
     return <div>Loading lesson...</div>;
   }
@@ -77,64 +81,49 @@ export default function LessonsPage() {
    * We'll simulate a server check. In real usage, do fetch(...)
    */
   async function handleSubmitTask(taskIndex, latexInput) {
-    const task = taskState[taskIndex]
-    console.log('The task that i would like to send is ', task)
-    const slug = lesson.slug
-    const partID = lesson.parts[currentPartIndex].id
+    const task = taskState[taskIndex];
+    console.log('The task that i would like to send is ', task);
+    const slug = lesson.slug;
+    const partID = lesson.parts[currentPartIndex].id;
 
-    const lessonData ={slug, partID, task, latexInput}
+    const lessonData = { slug, partID, task, latexInput };
 
-    const {feedback, correct} = await verifyTask(lessonData)
-    console.log('The feedback from the apiRoute is ', feedback)
-    console.log('The correct status from the apiRoute is ', correct)
+    const { feedback, correct } = await verifyTask(lessonData);
+    console.log('The feedback from the apiRoute is ', feedback);
+    console.log('The correct status from the apiRoute is ', correct);
 
     setTaskState(oldState => {
-      const newState =[...oldState];
+      const newState = [...oldState];
 
-      //Mark current tasks as correct or incorrect
-      newState[taskIndex] ={
+      // Mark current task as correct or incorrect.
+      newState[taskIndex] = {
         ...newState[taskIndex],
-          status: correct ? 'correct' : 'incorrect',
-        };
+        status: correct ? 'correct' : 'incorrect',
+      };
 
-        //If correct, unlock next if it exists
-
-        if (correct && newState[taskIndex +1]) {
-          if (newState[taskIndex+1].status === 'locked') {
-            newState[taskIndex +1].status = 'unlocked'
-          }
+      // If correct, unlock next if it exists.
+      if (correct && newState[taskIndex + 1]) {
+        if (newState[taskIndex + 1].status === 'locked') {
+          newState[taskIndex + 1].status = 'unlocked';
         }
-        console.log('The new taskState is given by ', newState)
-        return newState
-
-      })
-      setFeedbackMessage(prevFeedback => {
-        const updated = [...prevFeedback];
-        updated[taskIndex] = feedback;
-        return updated;
-      });
-      
-      /*
-      Currently the feedback is constantly being updated, however we need to add some form of logic 
-      to only update the feedback for the next task if the current task has progressed 
-      
-      */
-    }
+      }
+      console.log('The new taskState is given by ', newState);
+      return newState;
+    });
+    setFeedbackMessage(prevFeedback => {
+      const updated = [...prevFeedback];
+      updated[taskIndex] = feedback;
+      return updated;
+    });
+  }
     
-  
-    async function verifyTask(lessonData) {
-      // console.log('The lessonData that we wish to send  in the verifyTask function is  ', lessonData)
-      // console.log('The useLatex taht we wish to send in the verifyTask function is ',userLatex )
-      const res = await lessonQuestionFeedback(lessonData).unwrap()
-     
-      console.log('The response from the apiRoute is , ', res)
-      return res;
-    }
+  async function verifyTask(lessonData) {
+    const res = await lessonQuestionFeedback(lessonData).unwrap();
+    console.log('The response from the apiRoute is , ', res);
+    return res;
+  }
     
-
-    
-
-  // Enable "Next" button only if all tasks are correct
+  // Enable "Next" button only if all tasks are correct.
   const allTasksCorrect = taskState.every(t => t.status === 'correct');
   const isLastPart = currentPartIndex === lesson.parts.length - 1;
 
@@ -146,14 +135,13 @@ export default function LessonsPage() {
 
   const handleNext = () => {
     if (!allTasksCorrect) {
-      alert('You must complete all tasks before moving on!');
+      setAlertMessage('You must complete all tasks before moving on!');
       return;
-   
     }
     if (!isLastPart) {
       setCurrentPartIndex(i => i + 1);
     } else {
-      alert('You have reached the end of the lesson!');
+      setAlertMessage('You have reached the end of the lesson!');
     }
   };
 
@@ -189,15 +177,20 @@ export default function LessonsPage() {
   );
 
   return (
-    <ThreePaneResponsive
-      instructions={instructionsPane}
-      mainContent={mainPane}
-      feedbackData={{
-        feedback: feedbackPane,
-      }}
-    />
+    <>
+      {/* Display the Reactstrap alert if there's an alert message */}
+      {alertMessage && (
+        <Alert color="warning">
+          {alertMessage}
+        </Alert>
+      )}
+      <ThreePaneResponsive
+        instructions={instructionsPane}
+        mainContent={mainPane}
+        feedbackData={{
+          feedback: feedbackPane,
+        }}
+      />
+    </>
   );
 }
-
-
-

@@ -29,7 +29,7 @@ function ChatWidget() {
 
   return (
     <>
-      {/* Floating toggle button */}
+      {/* Floating toggle button, now styled as a round circle */}
       <Button
         color="info"
         onClick={toggleWidget}
@@ -37,13 +37,21 @@ function ChatWidget() {
           position: 'fixed',
           bottom: '20px',
           right: '20px',
-          zIndex: 9999
+          zIndex: 9999,
+
+          // Make the button round:
+          borderRadius: '50%',
+          width: '60px',
+          height: '60px',
+          padding: 0,
+          lineHeight: '60px',   // vertically center the text
+          textAlign: 'center', 
+          margin:'1%'
         }}
       >
         {isOpen ? 'X' : 'My Tutor'}
       </Button>
 
-      {/* Only render the chat card if it's open */}
       {isOpen && (
         <div
           style={{
@@ -56,12 +64,11 @@ function ChatWidget() {
           }}
         >
           <Card style={{ height: '100%' }}>
-            {/* Make the card body flex so we can pin the nav at the bottom */}
             <CardBody className="d-flex flex-column">
-              {/* Main “tab content” area fills the vertical space */}
+              {/* Main “tab content” area */}
               <div className="flex-grow-1">
                 <TabContent activeTab={activeTab}>
-                  <TabPane tabId="1" color='info'>
+                  <TabPane tabId="1" color="info">
                     <h5>Home</h5>
                     <p>Your “home” content goes here.</p>
                   </TabPane>
@@ -69,7 +76,7 @@ function ChatWidget() {
                     <h5>Messages</h5>
                     <p>Your messages or chat UI goes here.</p>
                   </TabPane>
-                  <TabPane color='info' tabId="3">
+                  <TabPane color="info" tabId="3">
                     <h5>Help</h5>
                     <p>FAQ or help info goes here.</p>
                   </TabPane>
