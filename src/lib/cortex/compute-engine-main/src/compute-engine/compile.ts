@@ -392,6 +392,7 @@ export class ComputeEngineFunction extends Function {
     lcm: lcm,
     lngamma: gammaln,
     limit: limit,
+    '?':'?'
   };
   constructor(body: string) {
     super('_SYS', '_', `return ${body}`);
@@ -413,12 +414,13 @@ export function compileToTarget(
   target: CompileTarget
 ): ((_: Record<string, CompiledType>) => CompiledType) | undefined {
   const js = compile(expr, target);
-  // try {
+  console.log('js is given by', js)
+  try {
   return new ComputeEngineFunction(js) as unknown as () => CompiledType;
-  // } catch (e) {
-  //   console.error(`${e}\n${expr.latex}\n${js}`);
-  // }
-  // return undefined;
+  } catch (e) {
+    console.error(`${e}\n${expr.latex}\n${js}`);
+  }
+  return undefined;
 }
 
 export function compileToJavascript(
@@ -471,6 +473,12 @@ export function compileToSympy(expr: BoxedExpression) :((_: Record<string, Compi
       operators: (op) => NATIVE_SYMPY_OPERATORS[op],
       functions: (id) => NATIVE_SYMPY_FUNCTIONS[id], 
       var:(id) => {
+        //we can't just retrun '_?' unfortunately because the the code 
+        //return new ComputeEngineFunction(js) as unknown as () => CompiledType;
+        //does not recognise '_?' as a valid javascript operator. 
+        //Note the main purpose of compiling to sympy has been achived, you can always use regular expressions in fastapi
+        //to map _.unknown back to ? for the sake of improving gpt 
+        if (id ==='?') return '_.unknown'
           const result =  NATIVE_SYMPY_NUMERICS[id];
           if (result !== undefined) return result;
           if (unknowns.includes(id)) return `_.${id}`;
@@ -492,6 +500,7 @@ function compileExpr(
   target: CompileTarget
 ): JSSource {
   // No need to check for 'Rational': this has been handled as a number
+  console.log('h is ', h)
 
   console.log(`The args are ${args}`)
   if (h === 'Error') throw new Error('Error');
@@ -523,11 +532,13 @@ function compileExpr(
   
 
   if (args.every((x) => !x.isCollection)) {
+    console.log('x is given by ', args)
     console.log('Read thru the code here, this is where you will beable to fix the issue with equals')
     
     // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence
     // for operator precedence in JavaScript
     const op = target.operators?.(h);
+    console.log('the op is ', op)
 
     if (isRelationalOperator(h) && args.length > 2 && op) {
       //NOTE EQUALS IS A RELATIONALOPERATOR SO IT CAUSES THIS TO RUN TRUE I.E CHECK THE ISRELATIONALOPERATOR
@@ -593,6 +604,7 @@ function compileExpr(
         ...target,
         var: (id) => {
           if (locals.includes(id)) return id;
+          
           return target.var(id);
         },
       })
@@ -645,12 +657,15 @@ export function compile(
   //
   // Is it a symbol?
   //
-  
   const s = expr.symbol;
-
-  console.log(`The symbol is ${s}`)
-  if (s !== null) return target.var?.(s) ?? s;
-
+  if (s !== null) {
+    // Lowkey this may not even be needed anymore since we ensured '?' is treated as
+    //a valid identifier in the math-json/identifiers file 
+    if (s === '?') {
+      return target.var?.('?') ?? '?';
+    }
+    return target.var?.(s) ?? s;
+  }
   //
   // Is it a number?
   //
@@ -662,7 +677,7 @@ export function compile(
 
   // Is it a string?
   const str = expr.string;
-  console.log(`The string is ${str}`)
+  // console.log(`The string is ${str}`)
   if (str !== null) return target.string(str!);
 
   // It must be a function expression...

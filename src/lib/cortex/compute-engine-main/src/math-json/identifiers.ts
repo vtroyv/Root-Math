@@ -60,6 +60,9 @@ function isRecommendedScripts(text: string): boolean {
  */
 
 export function isValidIdentifier(s: string): boolean {
+  //Make ? a valid identifier 
+  if (s === '?') return true
+
   // Quick check for simple identifiers
   if (/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(s)) return true;
 
@@ -104,11 +107,14 @@ export function validateIdentifier(
   | 'unexpected-script'
   | 'invalid-first-char'
   | 'invalid-char' {
+
+  if (s=== '?') return 'valid'
   if (typeof s !== 'string') return 'not-a-string';
 
   // console.log([...s].map((x) => x.codePointAt(0)!.toString(16)).join(' '));
 
   if (s === '') return 'empty-string';
+  
 
   // MathJSON symbols are always stored in Unicode NFC canonical order.
   // See https://unicode.org/reports/tr15/

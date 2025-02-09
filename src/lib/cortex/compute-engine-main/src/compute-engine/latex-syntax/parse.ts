@@ -802,7 +802,7 @@ export class _Parser implements Parser {
     this.skipSpace();
 
     const excluding = [
-      ...'!"#$%&(),/;:?@[]\\`|~'.split(''),
+      ...'!"#$%&(),/;:@[]\\`|~'.split(''),
       '\\left',
       '\\bigl',
     ];
@@ -1760,6 +1760,7 @@ export class _Parser implements Parser {
       return this.error(['unexpected-identifier', { str: id }], index);
 
     const command = this.peek;
+    console.log('The command is ', command)
     if (!command) return this.error('syntax-error', start);
 
     // If the command is an open or close delimiter prefix, exit

@@ -16,8 +16,8 @@ import {
 
 
 export const metadata = {
-  title: "Self Marking Prototype",
-  description: "Prototype of the self marking section of Root Math",
+  title: "Root Math",
+  description: "Say hello to the end of hefty tuition fees",
 };
 
 /*

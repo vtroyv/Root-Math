@@ -8,6 +8,7 @@ export async function POST(request, {params}) {
         task: body.task, 
         latexInput: body.latexInput
     }
+    console.log('The feedback is given by ', feedback)
     // console.log('The feedback i wish to send is ', feedback)
     try {
         const response = await fetch('http://127.0.0.1:8000/lesson-feedback', {
