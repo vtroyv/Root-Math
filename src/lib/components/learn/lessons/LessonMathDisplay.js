@@ -11,6 +11,8 @@ export default function LessonEditorDisplay({ part, onSubmitTask, taskState }) {
   const mfe = useRef(null);
   const [latex, setLatex] = useState('');
   const [alertVisible, setAlertVisible] = useState(false);
+     const tasksList = part.blocks.filter(b=>b.type === 'task')
+    console.log('The tasks are ', tasksList)
 
   // Keep a reference to the last valid LaTeX value.
   const lastValidLatexRef = useRef('');
@@ -177,6 +179,8 @@ function getTaskStrings(compiledStrings, activeIndex) {
       alert("No task currently unlocked. Maybe you're done!");
       return;
     }
+
+ 
     //Convert users work to sympy before sending to server 
     
     const userLatex = mfe.current.getValue();

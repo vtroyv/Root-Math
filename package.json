@@ -17,6 +17,7 @@
     "bootswatch": "^5.3.3",
     "complex-esm": "^2.1.1-esm1",
     "decimal.js": "^10.4.3",
+    "immer": "^10.1.1",
     "jsxgraph": "^1.10.1",
     "katex": "^0.16.11",
     "mathlive": "^0.101.0",
@@ -35,7 +36,8 @@
     "react-split": "^2.0.14",
     "reactstrap": "^9.2.2",
     "swr": "^2.2.5",
-    "wow.js": "^1.2.2"
+    "wow.js": "^1.2.2",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@types/node": "^22.7.4",

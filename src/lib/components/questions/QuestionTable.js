@@ -1,7 +1,7 @@
 'use client'
 import { useState} from "react"
 import { useDispatch } from "react-redux"
-import { selectQuestion } from "@/lib/redux/slices/questionslice"
+
 import { useRouter } from "next/navigation"
 import { useGetQuestionsQuery } from "@/lib/redux/slices/apiSlice"
 import { useSelector } from "react-redux"

@@ -4,12 +4,15 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Form, Label, Input, Button, Badge, Alert, Row, Col } from 'reactstrap';
-import { useSignUp } from '@clerk/nextjs';
+import { useSignUp , useUser} from '@clerk/nextjs';
+import { useCreateUserMutation } from '@/lib/redux/slices/apiSlice';
 
 const Signup = () => {
   // Clerk states
   const { isLoaded, signUp, setActive } = useSignUp();
+ 
   const router = useRouter();
+  const [addNewUser, mutationState] = useCreateUserMutation()
 
   // Form fields
   const [emailAddress, setEmailAddress] = useState('');
@@ -25,7 +28,7 @@ const Signup = () => {
   const [error, setError] = useState('');
   const [alertVisible, setAlertVisible] = useState(false);
   const [verifying, setVerifying] = useState(false);
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState(''); 
 
   const onDismiss = () => setAlertVisible(false);
 
@@ -80,7 +83,35 @@ const Signup = () => {
 
       if (attempt.status === 'complete') {
         // Once the user is verified, set session as active and redirect
+
+        //Also note at this point it's safe to create the the data to put in mongoDB for the user, because if the user doesn't doesn't successfully verify
+        //e.g. unless attempt.status === 'complete', this block won't run, so were safe to add the user to the DB now.
+        //Lol thinking about it shouldn't we create another if (attempt.status === 'complete'statement first above this and add to the DB here, because if mongoDB, doesn't add to the DB, 
+        //we won't want clerkJS to still create the user)
+
+        //This is the point where we will want to add a users credentials to the database: 
+
+        
+        
         await setActive({ session: attempt.createdSessionId });
+        console.log('The signUp object is now ', signUp)
+        const {id, firstName, lastName, emailAddress, unsafeMetadata}= signUp
+        const {school, year, examBoard} = unsafeMetadata
+        //Use this to populate the userDatabase in MongoDB
+        const userData = {id, firstName, lastName, emailAddress, school, year, examBoard}
+
+
+        try {
+          const result = await addNewUser(userData)
+          console.log('The result from the nextjs API is ', result )
+
+        }catch(error) {
+          console.log('Couldn\'t add user to the mongoDB database')
+        }
+        
+        
+        
+
         router.push('/learn');
       } else {
         // User may need to complete more steps

@@ -1,6 +1,11 @@
 //Import the RTK Query methods form the React-specific entry point
 
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+/* PURPOSE
+We are no longer using redux as the main UI state management, we will now be using zustand, therefore this file will simply define the RTK queries and mutations
+It will also be responsible for implementing caching.
+ 
+ */
 
 //Define our single API slice object
 
@@ -43,6 +48,14 @@ export const apiSlice = createApi({
             query: (params) => `lessons/lesson-data/placeholder/${params.lessonData}`
         })
         ,
+        dynamicLessonData: builder.mutation({
+            query: ({params, userId}) => ({
+                url: `lessons/lesson-data/placeholder/${params.lessonData}`, 
+                method:'POST', 
+                body: userId
+            })
+        })
+        ,
         gradeSketchQuestion: builder.mutation({
             query: (questionData) => ({
                 url: '/feedback/sketch', 
@@ -51,11 +64,29 @@ export const apiSlice = createApi({
             })
         }),
 
+        createUser: builder.mutation({
+            query:(userData) =>({
+                url:'/users', 
+                method:'POST',
+                body:userData
+            })
+        })
+
     })
 })
 
 
-export const { useGetQuestionsQuery, useGradeQuestionMutation, useGradeSketchQuestionMutation, useGetLessonContentQuery, useGetLessonDataQuery ,useLessonQuestionFeedbackMutation } = apiSlice;
+export const { 
+
+    useGetQuestionsQuery,
+    useGradeQuestionMutation,
+    useGradeSketchQuestionMutation,
+    useGetLessonContentQuery, 
+    useGetLessonDataQuery, 
+    useLessonQuestionFeedbackMutation, 
+    useCreateUserMutation, 
+    useDynamicLessonDataMutation
+    } = apiSlice;
 
 
 

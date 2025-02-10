@@ -34,6 +34,7 @@ export default function LearnCourses() {
   You may have to add a simple dictionary to contain different links e.g. if a CIE user logs in
   */
   const { isLoaded, isSignedIn, user } = useUser();
+  console.log('The user info is given by', user)
 
   // 1) While Clerk is still loading, show our skeleton screen
   if (!isLoaded) {
@@ -69,7 +70,7 @@ export default function LearnCourses() {
     return (
       <div style={{ padding: "2rem" }}>
         <h3>You are not signed in.</h3>
-        <Link href="/login">
+        <Link href="/sign-in">
           <Button color="info" style={{ marginTop: "1rem" }}>
             Go to Login
           </Button>
@@ -81,6 +82,7 @@ export default function LearnCourses() {
   // 3) If Clerk is loaded and the user is signed in, render your normal component
   const firstName = user?.firstName;
   let examBoard = user?.unsafeMetadata?.examBoard;
+  console.log('the user object is given by ',user)
 
   // Safely uppercase the exam board if it exists
   if (typeof examBoard === "string") {

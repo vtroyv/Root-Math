@@ -1,8 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Button, Alert } from 'reactstrap';
-import { useGetLessonDataQuery, useLessonQuestionFeedbackMutation } from '@/lib/redux/slices/apiSlice';
+import { useGetLessonDataQuery, useDynamicLessonDataMutation,useLessonQuestionFeedbackMutation } from '@/lib/redux/slices/apiSlice';
 import { useParams } from 'next/navigation';
+import { useUser } from '@clerk/nextjs';
 
 import ThreePaneResponsive from '@/lib/components/learn/lessons/ThreePaneResponsive';
 import Instructions from '@/lib/components/learn/lessons/Instructions';
@@ -21,6 +22,9 @@ export default function LessonsPage() {
   // Alert message state for displaying Reactstrap alerts
   const [alertMessage, setAlertMessage] = useState('');
 
+  //Access userData from clerkJS
+  const { isLoaded, isSignedIn, user } = useUser();
+  
   // Auto-dismiss alert after 3 seconds if one is shown.
   useEffect(() => {
     if (alertMessage) {
@@ -32,21 +36,45 @@ export default function LessonsPage() {
   }, [alertMessage]);
 
   // Set up reduxAPI hook to connect with nextjs API route handler 
-  const [lessonQuestionFeedback, mutationState] = useLessonQuestionFeedbackMutation();
+  const [lessonQuestionFeedback, mutationStateA] = useLessonQuestionFeedbackMutation();
+  const [dynamicLessonData, mutationStateB]= useDynamicLessonDataMutation();
   const params = useParams();
   console.log('The params are ', params);
 
   const apiParams = { lessonData: params.lessonDisplay };
 
-  const { data, isLoading } = useGetLessonDataQuery(apiParams);
-
-  // Mock "fetch" of multi-part lesson
+  //Update this function so that when it fetches it returns the static lesson data in data.content and the dynamic lesson data in data.userProgress
+  const { data, isLoading } = useGetLessonDataQuery(apiParams); //This query returns the lesson content - so we may want to join the data or also fetch the user data from here. 
+  
+  // fetch multi-part lesson
   useEffect(() => {
+
+    const getLessonData = async () => {
+      try {
+        // first build the params and userID
+        if (isSignedIn) {
+          const {id} = user
+          const data = {params: apiParams, userId: id} 
+        
+        //This function should return a staticLessonData and dynamicLessonData as keys in obj
+        const result = await dynamicLessonData(data)
+
+        const staticLessonData = result.staticLessonData
+        setLesson(staticLessonData)}
+      } catch(error) {
+        // handle error appropriately
+        console.log('Mutation error: ', err);
+      }
+    }
+
+
     const lessonData = data;
     setLesson(lessonData);
   }, [data]);
 
   // When "part" changes, re-initialize taskState
+  //currently from this line and below the code is responsible for fetching the taskstate and feedback.
+  //Now although this probably not the best practice, i would like to avoid as much as possible from rewriting all this code from scratch. 
   useEffect(() => {
     if (!lesson) return;
     const part = lesson.parts[currentPartIndex];

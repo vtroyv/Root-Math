@@ -5,6 +5,7 @@ let db
 let questions 
 let lessons
 let lessonData
+let users 
 
 async function init() {
     if (db) return 
@@ -72,4 +73,20 @@ export async function getLessonData(data) {
     } catch(error) {
         return {error: 'Failed to fetch lesson data!'}
     }
+}
+
+export async function createUser(data) {
+    try {
+        users = await db.collection('users')
+        const result = await users.insertOne(data)
+        console.log('the result from adding the user to the DB is ', result)
+        return result 
+
+    } catch(error) {
+        return {error:'Failed to fetch the data'}
+    }
+}
+
+export async function UserLessonProgress(data){
+    //This function should take in data in particular the usersID, and create a progress for the user if it doesn't exist for that particular lesson, or if it exists simply return it. 
 }
