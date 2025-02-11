@@ -1,102 +1,23 @@
-First change name of simulateServerCheck function to verifyTask 
-
-function async handleSubmitTask(taskIndex, latexInput) {
-
-//create lessonData object 
-  const task = taskState[taskIndex]
-  const slug = lesson.slug
-  const partID =  lesson.parts[currentPartIndex].id
-
-  const lessonData = {slug, partID, task}
-
-
-
-
-  //You need to build up the lessonData object that's similar to redux API
-
-
-  
-
-  //Now feedback should simply be a string, and status should be correct or incorrect 
-  //this is to be sent back by gpt 
-
-  const {feedback, correct} = await verifyTask(lessonData, latexInput)
-
-  setTaskState(oldState => {
-    const newState =[...oldState];
-
-    //Mark current task as correct or incorrect
-    newState[taskIndex] ={
-      ...newState[taskIndex], 
-      status: correct ? 'correct' : 'incorrect',
-    };
-
-    // If correct, unlock next if it exists
-
-    if (correct && newState[taskIndex +1]) {
-      if (newState[taskIndex+1].status ==='locked'){
-        newState[taskIndex+1].status = 'unlocked';
-      }
+{
+  "_id": { "$oid": "uniqueSubmissionId" },
+  "userId": userId,         // Identifier for the user (could be a Clerk ID or similar)
+  "questionId": { "$oid": "67a2c8cb897214f38d7c38df" },  // Reference to the question/lesson document
+  "lessonSlug": "welcome-to-the-laws-of-indices", // Optional, for easier queries
+  "responses": [
+    {
+      "taskId": "task1",                  // Identifier for the task within the question
+      "answer": "a^(m+n)",                // The user's answer
+      "correct": true,                    // Boolean indicating correctness
+      "feedback": "Correct! Remember to add the exponents." // Feedback text
+    },
+    {
+      "taskId": "task2",
+      "answer": "x^(12)",
+      "correct": true,
+      "feedback": "Well done!"
     }
-
-    console.log('The new taskState is given by', newState)
-    return newState;
-  }) 
-
-  setFeedbackMessage([...feedbackMessage], feedback)
-
+    // Additional tasks as necessary...
+  ],
+  "completed": true,                      // Indicates whether the user finished the submission
+  "submittedAt": "2025-02-09T12:34:56Z"     // Timestamp for when the submission was made
 }
-
-Now time to write the verifyTask function 
-
-async function verifyTask(lessonData, userLatex) {
-//First let's set up an reduxAPI mutation that connects to fastAPI, we need to start by building a lessonData object, 
-// which will enable us to identify the tasks in the dataset 
-
-const res = await lessonQuestionFeedback(lessonData, latex).unwrap()
-console.log('The response from the apiRoute is , res)
-
-
-
-
-
-
-
-}
-
-
-
-     lessonQuestionFeedback: builder.mutation({
-            query: (lessonData, latex) => ({
-                url: `/lessontasks/${lessonData.slug}/${lessonData.partID}/${lessonData.task}`, 
-                method:'POST', 
-                body: latex
-            })
-        })
-
-
-
-
-    // simulateServerCheck(latexInput).then(res => {
-      
-    //   setFeedbackMessage(['testing', 'testing again']); // store message -> this is where we will need to recursively store feedback on each submit, appending new feedback to the array 
-    //   // Update the tasks
-    //   setTaskState(oldState => {
-    //     const newState = [...oldState];
-
-    //     // Mark current task as correct or incorrect
-    //     newState[taskIndex] = {
-    //       ...newState[taskIndex],
-    //       status: res.correct ? 'correct' : 'incorrect',
-    //     };
-    //     // If correct, unlock next if it exists
-    //     if (res.correct && newState[taskIndex + 1]) {
-    //       if (newState[taskIndex + 1].status === 'locked') {
-    //         newState[taskIndex + 1].status = 'unlocked';
-    //       }
-    //     }
-    //     console.log('The new taskState is given by', newState)
-    //     return newState;
-    //   });
-    // });
-  

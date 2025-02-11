@@ -49,10 +49,10 @@ export const apiSlice = createApi({
         })
         ,
         dynamicLessonData: builder.mutation({
-            query: ({params, userId}) => ({
+            query: ({params, userId, examBoard}) => ({
                 url: `lessons/lesson-data/placeholder/${params.lessonData}`, 
                 method:'POST', 
-                body: userId
+                body: {userId,examBoard}
             })
         })
         ,

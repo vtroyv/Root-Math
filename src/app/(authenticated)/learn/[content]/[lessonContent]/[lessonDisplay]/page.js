@@ -53,24 +53,33 @@ export default function LessonsPage() {
       try {
         // first build the params and userID
         if (isSignedIn) {
-          const {id} = user
-          const data = {params: apiParams, userId: id} 
+          const {id, unsafeMetadata} = user
+          const {examBoard} = unsafeMetadata
+          
+
+          
+          const dynamicRouteData = {params: apiParams, userId: id, examBoard: examBoard} 
         
         //This function should return a staticLessonData and dynamicLessonData as keys in obj
-        const result = await dynamicLessonData(data)
+        const result = await dynamicLessonData(dynamicRouteData)
+        console.log('The result is given by ', result.data.message )
 
-        const staticLessonData = result.staticLessonData
-        setLesson(staticLessonData)}
-      } catch(error) {
-        // handle error appropriately
-        console.log('Mutation error: ', err);
-      }
+        //so now that were able to successfully access the post we should simply update our route function to return the static lessonData and dynamic lessonData
+       
+    
+        // const staticLessonData = result.staticLessonData
+        // setLesson(staticLessonData)}
+      } 
+    } catch(error) {
+      // handle error appropriately
+      console.log('Mutation error: ', err);
     }
-
+  }
+  getLessonData()
 
     const lessonData = data;
     setLesson(lessonData);
-  }, [data]);
+},[data]);
 
   // When "part" changes, re-initialize taskState
   //currently from this line and below the code is responsible for fetching the taskstate and feedback.
