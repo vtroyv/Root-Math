@@ -73,14 +73,17 @@ export async function POST(request, {params}){
            //If it returns an error we create the progressData for theuser,--- does it even return an error 
         }
 
-        const dynamicLessonData = result2
+        const userProgressData = result2
         
        //Now return this data to the front end and begin adjusting the front end so that it renders the staticlessondata, 
        //and changes like progress and feedback are added and displayed from the dynamicLessonData.
-       const  data = {staticLessonData, dynamicLessonData }
+       const  data = {staticLessonData, userProgressData }
+       console.log('The data i wish to send back to client is ', data)
+       
 
-        return new Response(JSON.stringify({message:'successfully reaching the post '}), 
+        return new Response(JSON.stringify(data), 
     {
+        status:200,
         headers: {'Content-Type':'application/json'}
     })
     } catch(error) {
@@ -127,7 +130,7 @@ function createUserProgress(staticLessonData, userId) {
             hint: task.hint,
             expected: task.gpt,  // You might rename this field to "expectedAnswer" if you prefer.
             // Initial status fields for when the user hasn't answered yet.
-            status: "pending",   // Could also be "not attempted" or similar.
+            status: "locked",   // Could also be "not attempted" or similar.
             answer: null,
             correct: null,
             feedback: null,

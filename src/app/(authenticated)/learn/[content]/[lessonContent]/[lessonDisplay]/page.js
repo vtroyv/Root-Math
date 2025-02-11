@@ -12,12 +12,15 @@ import Feedback from '@/lib/components/learn/lessons/feedback';
 
 export default function LessonsPage() {
   const [lesson, setLesson] = useState(null);
+  const [userProgress, setUserProgress] = useState(null);
   const [currentPartIndex, setCurrentPartIndex] = useState(0);
 
   // For each part, we track an array of tasks with statuses
   const [taskState, setTaskState] = useState([]);
+  const [userTaskState, setUserTaskState]= useState([]);
   // We'll store a feedback message from the "server" to show in the right pane
   const [feedbackMessage, setFeedbackMessage] = useState([]);
+  const [userFeedbackMessage, setUserFeedbackMessage] = useState([]);
   const [tasksCount, setTasksCount] = useState(0);
   // Alert message state for displaying Reactstrap alerts
   const [alertMessage, setAlertMessage] = useState('');
@@ -39,16 +42,16 @@ export default function LessonsPage() {
   const [lessonQuestionFeedback, mutationStateA] = useLessonQuestionFeedbackMutation();
   const [dynamicLessonData, mutationStateB]= useDynamicLessonDataMutation();
   const params = useParams();
-  console.log('The params are ', params);
-
   const apiParams = { lessonData: params.lessonDisplay };
 
-  //Update this function so that when it fetches it returns the static lesson data in data.content and the dynamic lesson data in data.userProgress
-  const { data, isLoading } = useGetLessonDataQuery(apiParams); //This query returns the lesson content - so we may want to join the data or also fetch the user data from here. 
+
+ 
+
+
   
   // fetch multi-part lesson
   useEffect(() => {
-
+    
     const getLessonData = async () => {
       try {
         // first build the params and userID
@@ -62,13 +65,14 @@ export default function LessonsPage() {
         
         //This function should return a staticLessonData and dynamicLessonData as keys in obj
         const result = await dynamicLessonData(dynamicRouteData)
-        console.log('The result is given by ', result.data.message )
-
-        //so now that were able to successfully access the post we should simply update our route function to return the static lessonData and dynamic lessonData
+        const {staticLessonData,userProgressData} = result.data
        
-    
-        // const staticLessonData = result.staticLessonData
-        // setLesson(staticLessonData)}
+        setLesson(staticLessonData)
+        setUserProgress(userProgressData)
+        
+        
+
+       
       } 
     } catch(error) {
       // handle error appropriately
@@ -77,9 +81,12 @@ export default function LessonsPage() {
   }
   getLessonData()
 
-    const lessonData = data;
-    setLesson(lessonData);
-},[data]);
+  
+
+
+   
+},[ params.lessonDisplay ,isSignedIn, user,]);
+
 
   // When "part" changes, re-initialize taskState
   //currently from this line and below the code is responsible for fetching the taskstate and feedback.
@@ -87,13 +94,26 @@ export default function LessonsPage() {
   useEffect(() => {
     if (!lesson) return;
     const part = lesson.parts[currentPartIndex];
-    console.log('The current part is ', part);
+
+    // we will first use the currentPartIndex, to fetch the part from the userProgress State. 
+    const userProgressPart = userProgress.parts[currentPartIndex]
+    const tasksInUserProgressPart = userProgressPart.tasks
+   
+
+    
     // We'll look for tasks in part.blocks. 
     // The first task is "unlocked", rest "locked".
     const tasksInPart = part.blocks.filter(b => b.type === 'task');
-    const count = tasksInPart.length;
-    console.log('The count is ', count);
-    setTasksCount(count);
+    
+
+    // const count = tasksInPart.length;
+    const countTasksUserProgress = tasksInUserProgressPart.length 
+    setTasksCount(countTasksUserProgress);
+
+   //Now this code below essentially sets the task state, however, i would like to start reading the taskState instead.
+   
+   //Now in regards to this we may simply beable to just send over the userProgressTaskState as it is as it already contains a status field. 
+   
 
     const newTaskState = tasksInPart.map((task, idx) => {
       if (idx === 0) {
@@ -103,10 +123,43 @@ export default function LessonsPage() {
       }
     });
     setTaskState(newTaskState);
+
+    //Essentially a first time a new user accesses a specific lesson, 
+    //every taskStatus is set to 'locked', so essentially everytime a part changes this 
+    //should take the tasks for the parts for the user and unlock the first task without changing anything else
+    const newUserTaskState = tasksInUserProgressPart.map((task, idx) => {
+      if (idx === 0 && task.status == 'locked'){
+        const unlockedFirstTask = {...task, status:'unlocked'}
+        return unlockedFirstTask
+      } else{
+        return {task}
+      }
+    })
+  
+
+    setUserTaskState(newUserTaskState)
+   
+
     // Clear feedback each time we load a new part
     setFeedbackMessage('');
+
+    //should obtain the feedbackMessages everytime we load a new part 
+    const userFeedback = tasksInUserProgressPart.map(((task) => task.feedback))
+    //Now that we have an array of the user's current feedback we simply need to add it to the feedback state!
+    setUserFeedbackMessage(userFeedback)
+
+    
+//This is done we now simply need to replace what were calling to see if it works 
+
+
   }, [lesson, currentPartIndex]);
 
+  useEffect(() => {
+    console.log('userFeedbackMessage has been updated:', userFeedbackMessage);
+    console.log('userTaskState has been updated:', userTaskState);
+  }, [userFeedbackMessage, userTaskState]);
+
+  
   if (!lesson) {
     return <div>Loading lesson...</div>;
   }
@@ -117,17 +170,20 @@ export default function LessonsPage() {
    * Called by LessonDisplay on "submit"
    * We'll simulate a server check. In real usage, do fetch(...)
    */
+      //we will want to update this function to provide updates to the userProgres obect on submission aswell, e.g. store feedback etc
   async function handleSubmitTask(taskIndex, latexInput) {
+
     const task = taskState[taskIndex];
-    console.log('The task that i would like to send is ', task);
+    const userTask = userTaskState[taskIndex]
+
+
     const slug = lesson.slug;
     const partID = lesson.parts[currentPartIndex].id;
 
     const lessonData = { slug, partID, task, latexInput };
 
     const { feedback, correct } = await verifyTask(lessonData);
-    console.log('The feedback from the apiRoute is ', feedback);
-    console.log('The correct status from the apiRoute is ', correct);
+  
 
     setTaskState(oldState => {
       const newState = [...oldState];
@@ -138,25 +194,85 @@ export default function LessonsPage() {
         status: correct ? 'correct' : 'incorrect',
       };
 
+      //we essneially just need to copy this for the userTaskState, but if it's true also update the corresponding taskState in the database!
+      // Note we do want to eventually use zustand so eventually this should be updated to make a change to the zustand Store and then send the change to mongoD
+
       // If correct, unlock next if it exists.
       if (correct && newState[taskIndex + 1]) {
         if (newState[taskIndex + 1].status === 'locked') {
           newState[taskIndex + 1].status = 'unlocked';
         }
       }
-      console.log('The new taskState is given by ', newState);
+      
       return newState;
     });
+
+    setUserTaskState(oldState => {
+      const newState = [...oldState]
+    
+
+      //Mark the current task as correct or incorrect
+      newState[taskIndex] = {
+        ...newState[taskIndex],
+        status: correct ? 'correct': 'incorrect'
+      };
+
+      //If correct, unlock the next step if it exists 
+      if (correct && newState[taskIndex +1]) {
+        if (newState[taskIndex+1].status ==='locked') {
+          newState[taskIndex+1].status= 'unlocked';
+        }
+      }
+      
+      return newState
+    })
+
+    //lets handle updating the feedback for the given userTask first then send the update to the database
+
     setFeedbackMessage(prevFeedback => {
       const updated = [...prevFeedback];
       updated[taskIndex] = feedback;
       return updated;
     });
+    
+
+    setUserFeedbackMessage(prevFeedback => {
+      const updated = [...prevFeedback]
+ 
+      updated[taskIndex] = feedback;
+      return updated;
+    })
+
+
+    
+    
+
+    //Now lastly at this point i need to perform an update to the mongoBD, what needs to happen is,
+    //i need to send the updated feedback plus the new taskState to the mongoDB, 
+    //In fact it would even be good to update the correct field aswell,
+    /*
+    CHANGES/IMPROVEMENTS TO MAKE
+    ----------------------------
+    I should store and array of the feedbacks, for each task 
+    as well as an array of the correct, incorrect, or pending for the correct field
+    this will be extremely valueable for mem0.
+
+    */
+
+    
+
   }
+
+ 
+  
+
+ 
+
+ 
     
   async function verifyTask(lessonData) {
     const res = await lessonQuestionFeedback(lessonData).unwrap();
-    console.log('The response from the apiRoute is , ', res);
+    
     return res;
   }
     
