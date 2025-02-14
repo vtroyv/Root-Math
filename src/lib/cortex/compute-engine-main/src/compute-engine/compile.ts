@@ -414,7 +414,7 @@ export function compileToTarget(
   target: CompileTarget
 ): ((_: Record<string, CompiledType>) => CompiledType) | undefined {
   const js = compile(expr, target);
-  console.log('js is given by', js)
+  //console.log('js is given by', js)
   try {
   return new ComputeEngineFunction(js) as unknown as () => CompiledType;
   } catch (e) {
@@ -428,14 +428,14 @@ export function compileToJavascript(
 ): ((_: Record<string, CompiledType>) => CompiledType) | undefined {
   
 
-  console.log(`The expr printed as a string is ${expr}`)
-  console.log(`The type of expr is ${typeof expr} and it is ${expr}`)
+  //console.log(`The expr printed as a string is ${expr}`)
+  //console.log(`The type of expr is ${typeof expr} and it is ${expr}`)
   
   const unknowns = expr.unknowns;
-  console.log(`The unknowns are ${unknowns}`)
-  console.log(unknowns)
+  //console.log(`The unknowns are ${unknowns}`)
+  //console.log(unknowns)
 
-  console.log(`The operator is ${expr.operator}`)
+  //console.log(`The operator is ${expr.operator}`)
 
   return compileToTarget(expr,
      {
@@ -468,7 +468,7 @@ export function compileToJavascript(
 //This function is different
 export function compileToSympy(expr: BoxedExpression) :((_: Record<string, CompiledType>) => CompiledType) | undefined{
   const unknowns = expr.unknowns; 
-  console.log('The unknowns are ', unknowns)
+  //console.log('The unknowns are ', unknowns)
   return compileToTarget(expr,{
       operators: (op) => NATIVE_SYMPY_OPERATORS[op],
       functions: (id) => NATIVE_SYMPY_FUNCTIONS[id], 
@@ -500,9 +500,9 @@ function compileExpr(
   target: CompileTarget
 ): JSSource {
   // No need to check for 'Rational': this has been handled as a number
-  console.log('h is ', h)
+  //console.log('h is ', h)
 
-  console.log(`The args are ${args}`)
+  //console.log(`The args are ${args}`)
   if (h === 'Error') throw new Error('Error');
 
   if (h === 'Sequence') {
@@ -532,13 +532,13 @@ function compileExpr(
   
 
   if (args.every((x) => !x.isCollection)) {
-    console.log('x is given by ', args)
-    console.log('Read thru the code here, this is where you will beable to fix the issue with equals')
+    //console.log('x is given by ', args)
+    //console.log('Read thru the code here, this is where you will beable to fix the issue with equals')
     
     // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence
     // for operator precedence in JavaScript
     const op = target.operators?.(h);
-    console.log('the op is ', op)
+    //console.log('the op is ', op)
 
     if (isRelationalOperator(h) && args.length > 2 && op) {
       //NOTE EQUALS IS A RELATIONALOPERATOR SO IT CAUSES THIS TO RUN TRUE I.E CHECK THE ISRELATIONALOPERATOR
@@ -548,7 +548,7 @@ function compileExpr(
       for (let i = 0; i < args.length - 1; i++)
         result.push(compileExpr(h, [args[i], args[i + 1]], op[1], target));
 
-      console.log(`The result is ${result}`)
+      //console.log(`The result is ${result}`)
 
       return `(${result.join(') && (')})`;
     }
@@ -617,7 +617,7 @@ function compileExpr(
   }
 
   const fn = target.functions?.(h);
-  // console.log(`the function is ${fn}`)
+  // //console.log(`the function is ${fn}`)
   if (!fn) throw new Error(`Unknown function ${h}`);
   if (typeof fn === 'function') {
     if (args.length === 1 && isFiniteIndexableCollection(args[0])) {
@@ -677,12 +677,12 @@ export function compile(
 
   // Is it a string?
   const str = expr.string;
-  // console.log(`The string is ${str}`)
+  // //console.log(`The string is ${str}`)
   if (str !== null) return target.string(str!);
 
   // It must be a function expression...
-  console.log(`The operator is ${expr.operator}`)
-  console.log(`The ops are ${expr.ops}`)
+  //console.log(`The operator is ${expr.operator}`)
+  //console.log(`The ops are ${expr.ops}`)
   
   return compileExpr(expr.operator, expr.ops!, prec, target);
 }
@@ -749,10 +749,10 @@ function compileLoop(
  *
  * ```javascript
  * const result1 = iifeExpression(`Math.sin(\${x}) / Math.cos(\${x})`, '12');
- * console.log(result1); // Outputs: Math.sin(12) / Math.cos(12)
+ * //console.log(result1); // Outputs: Math.sin(12) / Math.cos(12)
  *
  * const result2 = iifeExpression(`Math.sin(\${x}) / Math.cos(\${x})`, 'a + b');
- * console.log(result2); // Outputs: (() => { const temp_7z1z = a + b; return Math.sin(temp_7z1z) / Math.cos(temp_7z1z); })()
+ * //console.log(result2); // Outputs: (() => { const temp_7z1z = a + b; return Math.sin(temp_7z1z) / Math.cos(temp_7z1z); })()
  * ```
  *
  */

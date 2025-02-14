@@ -8,6 +8,7 @@ let lessonData
 let users 
 let userProgress
 
+
 async function init() {
     if (db) return 
     try {
@@ -123,7 +124,7 @@ export async function getUserLessonProgress(data) {
     
     if(examBoard === 'edexcel' ) {
         //use the userId, and slug to attempt to fetch the dynamicData. 
-      
+      //how do we know it will be this database below, are you planning to pu
         userProgress = await db.collection('edx-maths-1-lesson-progress')
         const result = await userProgress.findOne({userId, lessonSlug:slug})
         
@@ -131,7 +132,40 @@ export async function getUserLessonProgress(data) {
     }
 } catch(error) {
     return {error: 'failed to get userLessonProgress from DB'}
+    }
 }
 
+export async function updateUserLessonProgress(data) {
+    const {collection, progress} = data; 
+
+    console.log('the progress is ', progress)
+    const {_id, ...progressWithoutId} = progress
+
+    const clonedProgress = JSON.parse(JSON.stringify(progressWithoutId));
+
+
     
-}
+    try {
+
+    
+
+    if (collection === 'edx-maths-1') {
+        console.log('inside the if statement')
+        userProgress = await db.collection('edx-maths-1-lesson-progress');
+        const userId = progress.userId;
+        const lessonSlug = progress.lessonSlug 
+        const filter = {userId, lessonSlug }
+        console.log('the filter is ', filter)
+        
+        
+
+        const result = await userProgress.replaceOne(filter, clonedProgress);
+        console.log('The result is ', result)
+        return result 
+        
+    }
+ } catch(error){
+    return {error: 'failed to update the userProgress in DB'}
+ }
+    
+} 

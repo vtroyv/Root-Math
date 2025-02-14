@@ -54,6 +54,13 @@ export const apiSlice = createApi({
                 method:'POST', 
                 body: {userId,examBoard}
             })
+        }),
+        updateLessonProgress: builder.mutation({
+            query: (userProgress) =>({
+                url: 'lessonprogress', 
+                method:'POST', 
+                body: userProgress
+            })
         })
         ,
         gradeSketchQuestion: builder.mutation({
@@ -70,7 +77,9 @@ export const apiSlice = createApi({
                 method:'POST',
                 body:userData
             })
-        })
+        }),
+
+       
 
     })
 })
@@ -85,7 +94,8 @@ export const {
     useGetLessonDataQuery, 
     useLessonQuestionFeedbackMutation, 
     useCreateUserMutation, 
-    useDynamicLessonDataMutation
+    useDynamicLessonDataMutation, 
+    useUpdateLessonProgressMutation
     } = apiSlice;
 
 

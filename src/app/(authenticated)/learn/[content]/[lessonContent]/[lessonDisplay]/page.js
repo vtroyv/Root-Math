@@ -9,11 +9,13 @@ import ThreePaneResponsive from '@/lib/components/learn/lessons/ThreePaneRespons
 import Instructions from '@/lib/components/learn/lessons/Instructions';
 import LessonDisplay from '@/lib/components/learn/lessons/LessonMathDisplay';
 import Feedback from '@/lib/components/learn/lessons/feedback';
+import { useUpdateLessonProgressMutation } from '@/lib/redux/slices/apiSlice';
 
 export default function LessonsPage() {
   const [lesson, setLesson] = useState(null);
   const [userProgress, setUserProgress] = useState(null);
   const [currentPartIndex, setCurrentPartIndex] = useState(0);
+  const [userTaskIndex, setUserTaskIndex] = useState(null);
 
   // For each part, we track an array of tasks with statuses
   const [taskState, setTaskState] = useState([]);
@@ -41,6 +43,7 @@ export default function LessonsPage() {
   // Set up reduxAPI hook to connect with nextjs API route handler 
   const [lessonQuestionFeedback, mutationStateA] = useLessonQuestionFeedbackMutation();
   const [dynamicLessonData, mutationStateB]= useDynamicLessonDataMutation();
+  const [updateUserProgress, mutationStateC] = useUpdateLessonProgressMutation();
   const params = useParams();
   const apiParams = { lessonData: params.lessonDisplay };
 
@@ -66,9 +69,13 @@ export default function LessonsPage() {
         //This function should return a staticLessonData and dynamicLessonData as keys in obj
         const result = await dynamicLessonData(dynamicRouteData)
         const {staticLessonData,userProgressData} = result.data
+        
        
         setLesson(staticLessonData)
         setUserProgress(userProgressData)
+
+        console.log('The userProgress is ', userProgressData)
+        console.log('THe static lesson data is ', staticLessonData)
         
         
 
@@ -132,7 +139,7 @@ export default function LessonsPage() {
         const unlockedFirstTask = {...task, status:'unlocked'}
         return unlockedFirstTask
       } else{
-        return {task}
+        return task
       }
     })
   
@@ -154,10 +161,88 @@ export default function LessonsPage() {
 
   }, [lesson, currentPartIndex]);
 
+  //This useEffect is responsible for updating the userProgressState and sending it to the DB
   useEffect(() => {
-    console.log('userFeedbackMessage has been updated:', userFeedbackMessage);
-    console.log('userTaskState has been updated:', userTaskState);
+    //Now all we have to do here is set a safety guard so that it only updates
+    //when both the userFeeedbackMessage and userTaskState have updated, 
+    //Then we need to send these updates to the database!
+
+    //Once this is fully working we'll simply replace all useState with zustand - potentially!
+
+    if (
+      (userTaskState[userTaskIndex]?.status === 'correct' ||
+       userTaskState[userTaskIndex]?.status === 'incorrect') &&
+      userFeedbackMessage[userTaskIndex]
+    ) {
+      console.log('userFeedbackMessage has been updated:', userFeedbackMessage);
+      console.log('userTaskState has been updated:', userTaskState);
+      console.log('The userProgess state is ', userProgress)
+      console.log('The current userPartIndex is ', currentPartIndex)
+      console.log('The currentuserTaskIndex is ', userTaskIndex)
+
+      //Now we should simply provide an update to the userProgress object then simply send that off to mongoDB
+      setUserProgress((oldState) => {
+        // Create a shallow copy of the entire state
+        const newState = { ...oldState };
+      
+        // Create a shallow copy of the parts array
+        newState.parts = [...oldState.parts];
+      
+        // Create a shallow copy of the specific part you want to update
+        newState.parts[currentPartIndex] = {
+          ...oldState.parts[currentPartIndex],
+          // Also create a copy of the tasks array for that part
+          tasks: [...oldState.parts[currentPartIndex].tasks]
+        };
+      
+        // Now update the tasks array as needed.
+        // If you want to replace the tasks array completely with userTaskState:
+        newState.parts[currentPartIndex].tasks = userTaskState;
+      
+        // Then update the feedback for the specific task:
+        newState.parts[currentPartIndex].tasks[userTaskIndex] = {
+          ...newState.parts[currentPartIndex].tasks[userTaskIndex],
+          feedback: userFeedbackMessage[userTaskIndex]
+        };
+      
+        console.log('The new userProgress state after updating feedback and everything is ', newState);
+        return newState;
+      });
+
+    
+      // This function isn't running as it's not 
+      // This function below should update our userStatus in the database whenever our user makes any progress
+     
+    }
   }, [userFeedbackMessage, userTaskState]);
+//
+  useEffect(()=>{
+    if((userTaskState[userTaskIndex]?.status === 'correct' ||
+      userTaskState[userTaskIndex]?.status === 'incorrect') &&
+     userFeedbackMessage[userTaskIndex] && userTaskIndex === 0 || userTaskIndex) {
+
+      
+
+      const updateUserProgresFunc = async()=>{
+
+        const progress= userProgress
+        const data = {progress, collection: lesson.collection}
+   
+        const updatedStatus = await updateUserProgress(data);
+
+        console.log('The updatedStatus is ', updatedStatus);
+      }
+
+      
+      //You should probably have some fall back logic to retry post if false value comes back etc!
+
+      updateUserProgresFunc();  
+      //Now that were successfully updating the database with the userProgress,
+      //It's about time to replace all the state with the dynamic state 
+
+    }
+
+  }, [userProgress])
 
   
   if (!lesson) {
@@ -172,6 +257,12 @@ export default function LessonsPage() {
    */
       //we will want to update this function to provide updates to the userProgres obect on submission aswell, e.g. store feedback etc
   async function handleSubmitTask(taskIndex, latexInput) {
+    
+    //First update the userTaskIndex in the global state using taskIndex, 
+    //as we will need it in our safeguarded useEffct which updates the userProgress DB!
+
+    setUserTaskIndex(taskIndex);
+    console.log('The task index is ', taskIndex)
 
     const task = taskState[taskIndex];
     const userTask = userTaskState[taskIndex]
@@ -217,12 +308,22 @@ export default function LessonsPage() {
         status: correct ? 'correct': 'incorrect'
       };
 
+      
+
       //If correct, unlock the next step if it exists 
       if (correct && newState[taskIndex +1]) {
+        console.log('This if clause is running')
+
         if (newState[taskIndex+1].status ==='locked') {
-          newState[taskIndex+1].status= 'unlocked';
+          
+          newState[taskIndex+1]= {
+            ...newState[taskIndex+1], 
+            status: 'unlocked'
+          }
         }
       }
+
+  
       
       return newState
     })
@@ -259,17 +360,14 @@ export default function LessonsPage() {
 
     */
 
-    
+    //tasks and feedback are both arrays so all we have to do is track the overall 
+    //Index for the specific task that were on then have a useEffect that updates the userProgress
+    //and sends the update to the mongoDB, if and only if both the feedback and task status
+    //feedback for currentIndex is non-nullish, and status is 'correct' or 'incorrect'
 
   }
 
  
-  
-
- 
-
- 
-    
   async function verifyTask(lessonData) {
     const res = await lessonQuestionFeedback(lessonData).unwrap();
     
