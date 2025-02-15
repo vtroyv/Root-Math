@@ -89,27 +89,35 @@ export async function createUser(data) {
     }
 }
 
-export async function createUserLessonProgress(data, examBoard){
-    //This function should take in data in particular the usersID, and create a progress for the user if it doesn't exist for that particular lesson, or if it exists simply return it. 
-     //I think we need to convert javascript obj to json before adding to mongoDB
+export async function createUserLessonProgress(data, examBoard) {
     try {
-        
-        //Once more determine colleciton using examBoard
-        if (examBoard === 'edexcel'){
-           
-            userProgress = await db.collection('edx-maths-1-lesson-progress')
-            const result = await userProgress.insertOne(data)
-            const insertedId = result.insertedId;
-            const result2 = await userProgress.findOne({_id: insertedId})
-            console.log('successfully added thew new progress to the DB ',result2 )
-            return result2
-        }
-    } catch(error) {
-        return {error:'failed to add new userProgress to DB'}
+      if (examBoard === 'edexcel') {
+        userProgress = await db.collection('edx-maths-1-lesson-progress');
+  
+        // Ensure the unique index exists. (This could also be done during initialization.)
+        await userProgress.createIndex({ userId: 1, lessonSlug: 1 }, { unique: true });
+  
+        // Attempt to insert the new document.
+        const result = await userProgress.insertOne(data);
+        const insertedId = result.insertedId;
+        const result2 = await userProgress.findOne({ _id: insertedId });
+        console.log('Successfully added new progress to the DB:', result2);
+        return result2;
+      }
+    } catch (error) {
+      if (error.code === 11000) {
+        // Duplicate key error: a document with the same userId and lessonSlug already exists.
+        const existingDoc = await userProgress.findOne({
+          userId: data.userId,
+          lessonSlug: data.lessonSlug,
+        });
+        console.log('User progress already exists, fetched existing progress:', existingDoc);
+        return existingDoc;
+      }
+      return { error: 'Failed to add new userProgress to DB' };
     }
-    
-}
-
+  }
+  
 export async function getUserLessonProgress(data) {
     //This function should take in the data and userID
     

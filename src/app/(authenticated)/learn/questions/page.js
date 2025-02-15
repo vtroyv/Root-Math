@@ -22,6 +22,7 @@ export default async function Questions() {
 
   return (
     <>
+    <h1 style={{fontWeight:'bold', color:'#17a2b8'}}>Questions By Topic </h1>
     <QuestionTable />
     </>
 

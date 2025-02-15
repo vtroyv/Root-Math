@@ -163,7 +163,7 @@ export default function EdxPm1() {
                 </ListGroupItem>
                 <ListGroupItem
                   action
-                  onClick={() => navigate('quadratic-functions')}
+                  onClick={() => navigate(preUrl+'/quadratic-functions')}
                   style={{ cursor: 'pointer' }}
                 >
                   Quadratic Functions

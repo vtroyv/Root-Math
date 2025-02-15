@@ -166,6 +166,7 @@ function getTaskStrings(compiledStrings, activeIndex) {
 
   // Return the group corresponding to the active task.
   // If the activeIndex is out of range, return an empty array.
+  console.log('THe currentGroup is ', currentGroup)
   return groups[activeIndex] || [];
 }
 
@@ -202,6 +203,7 @@ function getTaskStrings(compiledStrings, activeIndex) {
     console.log('The compiled array is ', compiled)
     const compiledStrings = compiled.map((fn) => fn.toString());
     console.log('The compiled strings are ', compiledStrings)
+    //so getTaskStrings, relies on everything being compileable at first 
     const taskStrings = getTaskStrings(compiledStrings, activeIndex)
     console.log('The task strings are', taskStrings)
 

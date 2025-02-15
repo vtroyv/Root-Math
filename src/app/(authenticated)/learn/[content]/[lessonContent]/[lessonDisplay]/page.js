@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Button, Alert } from 'reactstrap';
-import { useGetLessonDataQuery, useDynamicLessonDataMutation,useLessonQuestionFeedbackMutation } from '@/lib/redux/slices/apiSlice';
+import { Alert } from 'reactstrap';
+import {  useDynamicLessonDataMutation,useLessonQuestionFeedbackMutation } from '@/lib/redux/slices/apiSlice';
 import { useParams } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
 
@@ -69,8 +69,10 @@ export default function LessonsPage() {
         //This function should return a staticLessonData and dynamicLessonData as keys in obj
         const result = await dynamicLessonData(dynamicRouteData)
         const {staticLessonData,userProgressData} = result.data
+
+
         
-       
+        
         setLesson(staticLessonData)
         setUserProgress(userProgressData)
 
@@ -90,9 +92,9 @@ export default function LessonsPage() {
 
   
 
-
+console.log('This is the whole lesson is being fetched again')
    
-},[ params.lessonDisplay ,isSignedIn, user,]);
+},[ ,isSignedIn, user,]);
 
 
   // When "part" changes, re-initialize taskState
@@ -141,7 +143,7 @@ export default function LessonsPage() {
       } else{
         return task
       }
-    })
+    });
   
 
     setUserTaskState(newUserTaskState)
@@ -243,7 +245,7 @@ export default function LessonsPage() {
     }
 
   }, [userProgress])
-
+ 
   
   if (!lesson) {
     return <div>Loading lesson...</div>;
@@ -274,6 +276,7 @@ export default function LessonsPage() {
     const lessonData = { slug, partID, task, latexInput };
 
     const { feedback, correct } = await verifyTask(lessonData);
+    console.log('The feedback for the submitted task  is ', feedback)
   
 
     setTaskState(oldState => {
@@ -375,7 +378,7 @@ export default function LessonsPage() {
   }
     
   // Enable "Next" button only if all tasks are correct.
-  const allTasksCorrect = taskState.every(t => t.status === 'correct');
+  const allTasksCorrect = userTaskState.every(t => t.status === 'correct');
   const isLastPart = currentPartIndex === lesson.parts.length - 1;
 
   const handleBack = () => {
@@ -390,7 +393,9 @@ export default function LessonsPage() {
       return;
     }
     if (!isLastPart) {
+      console.log('Were now in this ifClause')
       setCurrentPartIndex(i => i + 1);
+      
     } else {
       setAlertMessage('You have reached the end of the lesson!');
     }
@@ -404,7 +409,7 @@ export default function LessonsPage() {
       totalParts={lesson.parts.length}
       onBack={handleBack}
       onNext={handleNext}
-      taskState={taskState} // pass tasks + statuses so we can show checkboxes
+      taskState={userTaskState} // pass tasks + statuses so we can show checkboxes
     />
   );
 
@@ -413,7 +418,7 @@ export default function LessonsPage() {
     <LessonDisplay
       part={currentPart}
       onSubmitTask={handleSubmitTask}
-      taskState={taskState}
+      taskState={userTaskState}
     />
   );
 
@@ -422,7 +427,7 @@ export default function LessonsPage() {
     <Feedback
       // You can store "feedbackMessage" here
       part={currentPart}
-      extraFeedback={feedbackMessage}
+      extraFeedback={userFeedbackMessage}
       tasksCount={tasksCount}
     />
   );
