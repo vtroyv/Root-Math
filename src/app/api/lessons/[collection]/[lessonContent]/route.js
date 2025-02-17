@@ -7,6 +7,7 @@ export async function GET(request,{params}) {
     console.log('The data before sending is ', data)
 
    const result = await getLessonContent(data)
+   console.log('The request is ', )
 
    
    const lessons = result.lessons[0]

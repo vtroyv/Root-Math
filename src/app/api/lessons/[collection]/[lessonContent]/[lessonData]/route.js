@@ -134,7 +134,8 @@ function createUserProgress(staticLessonData, userId) {
             answer: null,
             correct: null,
             feedback: null,
-            submittedAt: null
+            submittedAt: null, 
+            userLatex: '',
           };
         });
         

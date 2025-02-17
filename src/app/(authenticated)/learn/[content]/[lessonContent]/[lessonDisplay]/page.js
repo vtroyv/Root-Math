@@ -16,6 +16,7 @@ export default function LessonsPage() {
   const [userProgress, setUserProgress] = useState(null);
   const [currentPartIndex, setCurrentPartIndex] = useState(0);
   const [userTaskIndex, setUserTaskIndex] = useState(null);
+  const [userLatexStore, setUserLatexStore] = useState('');
 
   // For each part, we track an array of tasks with statuses
   const [taskState, setTaskState] = useState([]);
@@ -69,6 +70,7 @@ export default function LessonsPage() {
         //This function should return a staticLessonData and dynamicLessonData as keys in obj
         const result = await dynamicLessonData(dynamicRouteData)
         const {staticLessonData,userProgressData} = result.data
+        console.log('The result is ', result )
 
 
         
@@ -94,7 +96,7 @@ export default function LessonsPage() {
 
 console.log('This is the whole lesson is being fetched again')
    
-},[ ,isSignedIn, user,]);
+},[ isSignedIn, user,]);
 
 
   // When "part" changes, re-initialize taskState
@@ -258,13 +260,18 @@ console.log('This is the whole lesson is being fetched again')
    * We'll simulate a server check. In real usage, do fetch(...)
    */
       //we will want to update this function to provide updates to the userProgres obect on submission aswell, e.g. store feedback etc
-  async function handleSubmitTask(taskIndex, latexInput) {
+  async function handleSubmitTask(taskIndex, latexInput, userLatex) {
     
     //First update the userTaskIndex in the global state using taskIndex, 
     //as we will need it in our safeguarded useEffct which updates the userProgress DB!
 
+    //THis should set the userLatex;
+    setUserLatexStore(userLatex);
+
     setUserTaskIndex(taskIndex);
     console.log('The task index is ', taskIndex)
+
+
 
     const task = taskState[taskIndex];
     const userTask = userTaskState[taskIndex]
@@ -419,6 +426,7 @@ console.log('This is the whole lesson is being fetched again')
       part={currentPart}
       onSubmitTask={handleSubmitTask}
       taskState={userTaskState}
+      
     />
   );
 

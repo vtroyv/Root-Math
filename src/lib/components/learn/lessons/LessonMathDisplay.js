@@ -181,7 +181,10 @@ function getTaskStrings(compiledStrings, activeIndex) {
       return;
     }
 
- 
+    //##########################################################
+    /*
+    UNCOMMENT ALL THE CODE BELOW WHEN NO LONGER TESTING!
+    
     //Convert users work to sympy before sending to server 
     
     const userLatex = mfe.current.getValue();
@@ -206,8 +209,8 @@ function getTaskStrings(compiledStrings, activeIndex) {
     //so getTaskStrings, relies on everything being compileable at first 
     const taskStrings = getTaskStrings(compiledStrings, activeIndex)
     console.log('The task strings are', taskStrings)
-
-    
+    */
+    //##########################################################
     
 
   
@@ -215,8 +218,10 @@ function getTaskStrings(compiledStrings, activeIndex) {
     //You'll probably need to change the type in which fastapi expects to recieve the userLatex, 
     //before sending it to avoid breakage. 
 
+    const taskStrings = 'testing' //Delete when no longer testing
+    const userLatex = 'testing' //Delete when no longer testing
 
-    onSubmitTask(activeIndex, taskStrings);
+    onSubmitTask(activeIndex, taskStrings,userLatex);
   }
 
   return (
