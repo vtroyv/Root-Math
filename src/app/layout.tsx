@@ -1,6 +1,8 @@
 // import "bootswatch/dist/sketchy/bootstrap.min.css"
 import './bootstrap.css'
 import "bootstrap-icons/font/bootstrap-icons.css";
+
+
 import StoreProvider from "@/lib/redux/StoreProvider";
 import 'katex/dist/katex.min.css';
 import Navigation from "@/lib/components/home/Navigation";

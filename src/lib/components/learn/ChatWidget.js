@@ -49,7 +49,7 @@ function ChatWidget() {
           margin:'1%'
         }}
       >
-        {isOpen ? 'X' : 'My Tutor'}
+        {isOpen ? 'X' : <i className="bi bi-mortarboard-fill" style={{fontSize:'1.5rem'}}></i>}
       </Button>
 
       {isOpen && (

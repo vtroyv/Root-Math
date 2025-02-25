@@ -2,6 +2,8 @@
 import LearnNav from "@/lib/components/learn/LearnNav"
 import Breadcrumbs from "@/lib/components/learn/Breadcrumbs"
 import ChatWidget from "@/lib/components/learn/ChatWidget"
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 
 export default function LearnLayout({ children }) {
   return (

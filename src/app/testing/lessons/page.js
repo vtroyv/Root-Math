@@ -89,91 +89,190 @@ export default function LessonsPage() {
 
   // Hardcoded staticLessonData
   const staticLessonData = {
-    "_id": { "$oid": "67b36df8d5b1e261a98b903d" },
-    "slug": "negative-and-fractional-indices",
-    "title": "The Laws of Indices II",
-    "next": "introduction-to-surds",
+    "_id": { "$oid": "999999999999999999999999" },
+    "slug": "rationalising-the-denominator",
+    "title": "Rationalising the Denominator",
+    "next": "what-are-quadratic-equations",
     "parts": [
       {
         "id": { "$numberInt": "1" },
-        "title": "Let's get Rational",
+        "title": "Rationalising denominators - how do we do it?",
         "blocks": [
-          { "type": "paragraph", "content": "In our last lesson, we were introduced to the following index laws:" },
-          { "type": "bullet-points", "points": ["$a^{n} \\cdot a^{m} = a^{m+n}$", "$\\frac{a^n}{a^m} = a^{n-m}$", "$(a^m)^n = a^{m \\cdot n}$", "$(ab)^n = a^n\\,b^n$"] },
-          { "type": "paragraph", "content": "We can extend these laws to rational (i.e fractional) exponents, negative exponents, and even a combination of both of them! Before, we dive in, let's first get a solid understanding of what a rational number is." },
-          { "type": "paragraph", "content": "A rational number is any number that can be expressed in the form $\\frac{a}{b}$, where $a$ and $b$ are integers and $b$ can't equal 0 i.e  $(b \\neq 0)$. Note a integer is any whole number which can be positive, negative or zero, for example:" },
-          {"type": "paragraph", "content": " $..,  -2, -1, 0, 1, 2,...$ are all  examples of integers and the list continues to infinity and beyond!"},
-          { "type": "paragraph", "content": "Now  $\\frac{1}{2}$ or $-\\frac{7}{12}$ are both examples of rational numbers as we have written them in the form $\\frac{a}{b}$, where $a$ and $b$ are both integers" },
-          { "type": "paragraph", "content": "Also keep in mind that  numbers like $7$ or $2.75$ are also examples of rational numbers for instance, $7$ can be written in the form $7 = \\frac{7}{1}$ and  $2.75$ can be written as $2.75 = \\frac{11}{4}$, so be mindful." },
-          { "type": "paragraph", "content": "Although rare, not all numbers can be written in the form $\\frac{a}{b}$, which means not all numbers are rationals. Numbers that can't be written in the form $\\frac{a}{b}$ are called irrational numbers, some examples of irrational numbers include:" },
-          { "type": "paragraph", "content": "$\\pi = 3.1415926535...$ which continues forever without repeating making it irrational,another example is  $\\sqrt2 = 1.414..$ or $\\sqrt5$ both are non-repeating and non-terminating decimals and therefore irrational. " },
-          { "type": "paragraph", "content": "Lastly, it's important to keep in mind that all integers are also rationals, for instance, we saw that integers are  $.., -3, -2, -1, 0, 1, 2, 3,...$, however, this can be written as  $.., -\\frac{3}{1}, -\\frac{2}{1}, -\\frac{1}{1}, \\frac{0}{1}, \\frac{1}{1}, \\frac{2}{1}, \\frac{3}{1},...$" },
-          { "type": "paragraph", "content": "Now are you ready to hear something cool? - we can use the same laws of indices that we learned in our last lesosn with any rational power! " },
-          { "type": "paragraph", "content": "For example we have $x^{\\frac{1}{4}} \\cdot x^{\\frac{1}{4}} \\cdot  x^{\\frac{1}{4}} \\cdot x^{\\frac{1}{4}} = x^{\\frac{1}{4} + \\frac{1}{4} + \\frac{1}{4} + \\frac{1}{4}} = x^1 =1$,  or $\\frac{x^{\\frac{5}{2}}}{x^{- \\frac{1}{2}}} = x^{\\frac{5}{2} - (- \\frac{1}{2})} = x^3$" },
-          { "type": "paragraph", "content": "Now for rationals and negative numbers we have the following laws: " },
-          { "type": "bullet-points", "points": ["$a^{\\frac{1}{m}} = \\sqrt[m]{a}$", "$a^{\\frac{n}{m}} = \\sqrt[m]{a^n}$", "$a^{-m} = \\frac{1}{a^m}$"] },
-          { "type": "paragraph", "content": "These are just generalisations of our previous laws to rational expononent - We will now explore each of these laws in a bit more detail" },
-          { "type": "task", "title": "what's a square root?", "instructions": "Read through the notes in the editor, when you're happy click submit", "gpt": "This is not a question - all you have to do is return correct, and 'well done' as feedback" }
-        ],
-        
-        "latex": String.raw`
-        \[
-\begin{aligned}
-  &\text{Did you know that when we have a square root } \sqrt x \\
-  &\text{it's the same as } x^{\frac{1}{2}} \text{in other words, } x^{\frac{1}{2}} = \sqrt x\\
-  &\\
-  &\text{But it doesn't just stop there, we can also reprsent }\\
-  &\ \text{the cube root as: }\\
-  &\ \sqrt [3] x = x^{\frac{1}{3}} \text{ and, } \sqrt [4] x = x^{\frac{1}{4}} \text{ etc...}\\
-  &\\
-  &\ \text{So in general we have: } x^{\frac{1}{m}} = \sqrt [m] x\\
-  &\ \text{Now once you've read through hit submit and move on to the next part of the lesson! }\\
-  \end{aligned}
-  `
+          {
+            "type": "paragraph",
+            "content": "To rationalise something in mathematics it means to transform it from being 'irrational' to 'rational'."
+          },
+          {
+            "type":"paragraph", 
+            "content":"Now when working with fractions we will see that the denominator will sometimes contain a surd (making the denominator irrational), it will often be beneficial to rewrite it so that the denominator is a rational number."
+
+          },
+          {
+            "type":"paragraph", 
+            "content":"This process is known as rationalising the denominator!"
+          }
+          ,
+          {
+            "type": "paragraph",
+            "content": "To rationalise the  denominator of a fraction we use the following rules: "
+          },
+          {
+            "type":"heading",
+            "level":"4", 
+            "content":"Rules to rationalise denominators of fractions"
+
+          },
+          {
+            "type":"bullet-points", 
+            "points":["For fractions in the form $\\frac{a}{\\sqrt{b}}$, multiple the entire fraction by $\\frac{\\sqrt{a}}{\\sqrt{a}}$","For fractions in the form $\\frac{a}{b + \\sqrt{c}}$, multipy the entire fraction by $\\frac{a - \\sqrt{c}}{a - \\sqrt{c}}$","Lastly, for fractions of the form $\\frac{a}{b - \\sqrt{c}}$, multiply the entire fraction by $\\frac{a + \\sqrt{b}}{a + \\sqrt{b}}$"]
+
+          }, 
+          {
+            "type":"paragraph", 
+            "content":"Now you need to make sure that you understand that were not actually changing the value of the fraction when me multiply it by $\\frac{\\sqrt{a}}{\\sqrt{a}}, \\frac{a - \\sqrt{c}}{a - \\sqrt{c}}$, ... etc. This is because whenever the numerator and denominator of a fraction is the same the overall fraction is equal to 1", 
+            
+          }, 
+          {
+            "type":"paragraph", 
+            "content":"so $\\frac{\\sqrt{a}}{\\sqrt{a}} = 1$, $\\frac{a - \\sqrt{c}}{a - \\sqrt{c}} = 1$ etc... and as we are all know - multiplying anything by 1 doesn't change it's value"
+          },
+          {
+            "type":"paragraph", 
+            "content":"So now that we understand that rationalising the denominator of fraction doesn't change the fractions value it simply changes the fractions appearance (or form), let us go and practice rationalising some denominators!"
+          }
+
          
+        ],
       },
       {
         "id": { "$numberInt": "2" },
-        "title": "Negative Indices",
+        "title": "Rationalising denominators with a single term",
         "blocks": [
-          { "type": "paragraph", "content": "A negative power indicates a reciprocal. In general:" },
-          { "type": "bullet-points", "points": ["$a^{-1} = \\frac{1}{a}$", "$a^{-n} = \\frac{1}{a^n}$"] },
-          { "type": "paragraph", "content": "For instance, \\(x^{-3} = \\frac{1}{x^3}\\). This concept follows from the quotient rule \\(\\tfrac{a^n}{a^m} = a^{n-m}\\), along with \\(a^0 = 1\\)." },
-          { "type": "paragraph", "content": "Let's practice simplifying expressions with negative indices." },
-          { "type": "task", "title": "Check Your Understanding", "instructions": "Replace the '?' with the correct simplified form of 2x^-3.", "hint": "Remember x^-3 = 1/x^3.", "gpt": "Correct answer is 2 / x^3. Check if the student wrote that." },
-          { "type": "task", "title": "Now Try This", "instructions": "Simplify each expression:\n1) x^-2 y^-1\n2) 3 / x^-3\nReplace '?' with the final simplified form.", "hint": "Dividing by x^-3 is the same as multiplying by x^3.", "gpt": "Answers: 1) 1/(x^2 y),  2) 3 x^3." }
+          {
+            "type": "paragraph",
+            "content": "In this simple case the fractions denominator consists of only a single surd, for an example the fraction could be: $\\frac{5}{\\sqrt{2}}$"
+          },
+          {
+            "type":"paragraph", 
+            "content":"As explained in the previous page all we do is apply the following rule to rationalise the denominator:"
+          },
+          {
+            "type":"heading", 
+            "level":"4", 
+            "content":"Rationalising denominators with a single surd:"
+          },
+          {
+            "type":"bullet-points", 
+            "points":["For fractions in the form $\\frac{a}{\\sqrt{b}}$, multiple the entire fraction by $\\frac{\\sqrt{a}}{\\sqrt{a}}$"]
+          }, 
+          {
+            "type":"paragraph",
+            "content":"Heres a couple examples"
+          }, 
+          {
+            "type":"heading", 
+            "level":5, 
+            "content":"Example 1)"
+          }, 
+          {
+            "type":"paragraph", 
+            "content":"Suppose we have the fraction $\\frac{12}{\\sqrt{6}}$, to rationalise this all we do is multiply the fraction by another fraction being $\\frac{\\sqrt{6}}{\\sqrt{6}}$, this gives us the following $$ \\frac{12}{\\sqrt{6}} \\times \\frac{\\sqrt{6}}{\\sqrt{6}} = \\frac{12 \\cdot \\sqrt{6} }{6} = 2 \\sqrt{6}$$ where in the last equality we simply divided 12 by 6 to simplify"
+          },
+          {
+            "type":"heading",
+            "level":5, 
+            "content":"Example 2)"
+          }, 
+          {
+            "type":"paragraph", 
+            "content":"Now suppose we have the fraction $\\frac{4 + x}{\\sqrt{11}}$ How do we rationalise it ?"
+          }, 
+          {
+            "type":"paragraph", 
+            "content":"Well we rationalise it in the exact same way as we rationalised example 1) , simply treat 4+x as 'a' and 11 as 'b' (using the notation in our rule above). So we have $$ \\frac{4+x}{\\sqrt{11}} = \\frac{4+x}{\\sqrt{11}} \\times \\frac{\\sqrt{11}}{\\sqrt{11}} = \\frac{ \\bigl( 4+x \\bigr) \\cdot \\sqrt{11}}{11}$$"
+          }, 
+          {
+            "type":"paragraph", 
+            "content":"Now thats enough examples, time to run through some questions: "
+          }, 
+          {
+            "type":"task", 
+            "title":"1) Let's start with a warm up", 
+            "instructions":"In question 1) rationalise the denominator of the fraction and replace the '?' with the correct answer", 
+            "hint":"", 
+            "gpt":""
+          }
+          
+         
         ],
-        "latex": "\\begin{aligned}\\n  &\\text{1) Simplify the following: } 2x^{-3} = ?\\\\\\n  &\\\\\\n  &\\text{2) Now simplify these: } x^{-2}y^{-1}, \\quad \\frac{3}{x^{-3}}.\\\\\\n  &\\\\\\n  &\\text{3) A quick check: } \\frac{x^4}{x^3} = ?\\text{ (Is it a trick?)}\\\\\\n\\end{aligned}"
+        "latex": "\\[\n\\begin{aligned}\n\\text{Using the conjugate: }(a + b)(a - b) &= a^2 - b^2. \\\\[6pt]\n(1 + \\sqrt{2})(1 - \\sqrt{2}) &= 1^2 - (\\sqrt{2})^2 = 1 - 2 = -1.\n\\end{aligned}\n\\]"
       },
       {
         "id": { "$numberInt": "3" },
-        "title": "Fractional Indices",
+        "title": "Practice Questions",
         "blocks": [
-          { "type": "paragraph", "content": "A fractional index corresponds to roots. For instance:" },
-          { "type": "bullet-points", "points": ["$a^{\\tfrac{1}{2}} = \\sqrt{a}$ (the square root of a)", "$a^{\\tfrac{1}{3}} = \\sqrt[3]{a}$ (the cube root of a)", "$a^{\\tfrac{m}{n}} = \\bigl(a^m\\bigr)^{\\tfrac{1}{n}} = \\sqrt[n]{a^m}$"] },
-          { "type": "paragraph", "content": "The same rules apply: if you multiply or divide expressions with the same base, you add or subtract their exponents, even if those exponents are fractional. And if you raise a power to another power, you multiply the exponents." },
-          { "type": "paragraph", "content": "Let’s get some practice!" },
-          { "type": "task", "title": "Warm-Up Task", "instructions": "Rewrite each as a radical or evaluate:\n1) x^(1/2)\n2) 64^(1/3)\n3) 81^(1/4)", "hint": "64^(1/3) = cube root of 64 = 4, etc.", "gpt": "Answers: 1) sqrt(x), 2) 4, 3) 3." },
-          { "type": "task", "title": "Apply the Rules", "instructions": "Simplify:\n1) x^(3/4) * x^(5/4)\n2) (9^(1/2))^2\nReplace '?' with the correct exponent or value.", "hint": "Multiply with the same base => add exponents, raise a power to a power => multiply exponents.", "gpt": "Answers: 1) x^(3/4 + 5/4) = x^2, 2) 9." }
+          {
+            "type": "paragraph",
+            "content": "Now it's time to test your understanding. Remember, do not use a calculator—practice manipulating surds by hand."
+          },
+          {
+            "type": "task",
+            "title": "1) Rationalise the denominator",
+            "instructions": "Rationalise the denominator of \\(\\frac{4}{\\sqrt{5}}\\). Replace '?' with the correct value in the form '?\\sqrt{5}' or an integer if possible.",
+            "hint": "Multiply top and bottom by \\(\\sqrt{5}\\).",
+            "gpt": "The correct answer is \\(\\frac{4\\sqrt{5}}{5}\\)."
+          },
+          {
+            "type": "task",
+            "title": "2) Rationalise the denominator",
+            "instructions": "Rationalise the denominator of \\(\\frac{6}{2 - \\sqrt{3}}\\). Replace '?' with the correct value(s).",
+            "hint": "Multiply numerator and denominator by the conjugate \\(2 + \\sqrt{3}\\).",
+            "gpt": "The correct answer is \\(\\frac{6(2 + \\sqrt{3})}{(2 - \\sqrt{3})(2 + \\sqrt{3})} = \\frac{12 + 6\\sqrt{3}}{4 - 3} = 12 + 6\\sqrt{3}.\\)"
+          },
+          {
+            "type": "task",
+            "title": "3) Rationalise the denominator",
+            "instructions": "Rationalise the denominator of \\(\\frac{3 + \\sqrt{2}}{4 - \\sqrt{2}}\\). Replace '?' with the correct simplified form.",
+            "hint": "Again, use the conjugate: multiply by \\(4 + \\sqrt{2}\\). Carefully expand the numerator.",
+            "gpt": "The correct answer simplifies to \\(\\frac{(3 + \\sqrt{2})(4 + \\sqrt{2})}{(4 - \\sqrt{2})(4 + \\sqrt{2})} = \\frac{12 + 3\\sqrt{2} + 4\\sqrt{2} + 2}{16 - 2} = \\frac{14 + 7\\sqrt{2}}{14} = 1 + \\frac{1}{2}\\sqrt{2}.\\)"
+          }, 
+          {
+            "type": "paragraph",
+            "content": "Rationalise \\(\\frac{5}{\\sqrt{2}}\\)."
+          },
+          {
+            "type": "bullet-points",
+            "points": [
+              "Multiply numerator and denominator by \\(\\sqrt{2}\\).",
+              "Result: \\(\\frac{5}{\\sqrt{2}} = \\frac{5 \\cdot \\sqrt{2}}{\\sqrt{2} \\cdot \\sqrt{2}} = \\frac{5\\sqrt{2}}{2}.\\)"
+            ]
+          },
+          {
+            "type": "heading",
+            "level": 4,
+            "content": "Example 2"
+          },
+          {
+            "type": "paragraph",
+            "content": "Rationalise \\(\\frac{3}{1 + \\sqrt{2}}\\)."
+          },
+          {
+            "type": "bullet-points",
+            "points": [
+              "We use the conjugate \\(1 - \\sqrt{2}\\).",
+              "Multiply top and bottom by \\(1 - \\sqrt{2}\\): \\(\\frac{3}{1 + \\sqrt{2}} \\times \\frac{1 - \\sqrt{2}}{1 - \\sqrt{2}}\\).",
+              "Denominator becomes \\((1 + \\sqrt{2})(1 - \\sqrt{2}) = 1 - 2 = -1\\).",
+              "Hence, \\(\\frac{3(1 - \\sqrt{2})}{-1} = -3(1 - \\sqrt{2}) = -3 + 3\\sqrt{2}.\\)"
+            ]
+          }
         ],
-        "latex": "\\begin{aligned}\\n  &\\text{1) Simplify/interpret: } x^{1/2},\\quad 64^{1/3},\\quad 81^{1/4}.\\\\\\n  &\\\\\\n  &\\text{2) Combine fractional powers: } x^{3/4}\\cdot x^{5/4},\\quad \\bigl(9^{1/2}\\bigr)^{2}.\\\\\\n\\end{aligned}"
-      },
-      {
-        "id": { "$numberInt": "4" },
-        "title": "Combining Negative & Fractional Indices",
-        "blocks": [
-          { "type": "paragraph", "content": "We can also have negative fractional powers—these represent reciprocals of roots. For example:" },
-          { "type": "bullet-points", "points": ["$a^{-\\tfrac{1}{2}} = \\frac{1}{a^{\\tfrac{1}{2}}} = \\frac{1}{\\sqrt{a}}$", "$a^{-\\tfrac{m}{n}} = \\frac{1}{a^{\\tfrac{m}{n}}} = \\frac{1}{\\sqrt[n]{a^m}}$"] },
-          { "type": "paragraph", "content": "All of our earlier rules still apply. When multiplying or dividing, add or subtract exponents; when taking a power of a power, multiply the exponents." },
-          { "type": "paragraph", "content": "Let’s practice a few examples." },
-          { "type": "task", "title": "Check Your Understanding", "instructions": "Rewrite each expression without negative exponents:\n1) x^(-1/2) y^(3/2)\n2) 1 / x^(2/3)\nReplace '?' with the simplest form.", "hint": "Convert negative powers to reciprocal forms, fractional powers to radicals if needed.", "gpt": "Answers: 1) y^{3/2}/(x^{1/2}), 2) x^{-2/3} = 1/(x^{2/3})." },
-          { "type": "task", "title": "Final Challenge", "instructions": "Simplify:\n1) 2^(-4/3) * 2^(7/3)\n2) (3^(5/2))^(-1)\nGive your answer with no negative exponents, in simplest radical or integer form.", "hint": "Combine exponents (add/multiply). Negative flips the fraction.", "gpt": "Answers: 1) 2^{(-4/3 + 7/3)} = 2^1 = 2, 2) 3^{-5/2} = 1 / (3^{5/2})." }
-        ],
-        "latex": "\\begin{aligned}\\n  &\\text{1) Remove negative exponents:}\\quad x^{-1/2}y^{3/2},\\quad \\frac{1}{x^{2/3}}.\\\\\\n  &\\\\\\n  &\\text{2) Simplify:}\\quad 2^{-4/3}\\cdot 2^{7/3},\\quad \\bigl(3^{5/2}\\bigr)^{-1}.\\\\\\n\\end{aligned}"
+        "latex": "\\[\n\\text{Practice makes perfect! Try rationalising each denominator carefully.}\n\\]"
       }
     ],
     "collection": "edx-maths-1"
-  };
+  }
+  
+ 
 
   // On mount, set lesson and userProgress from the static lesson data
   useEffect(() => {

@@ -31,7 +31,7 @@ export default function BlockRenderer({ block }) {
           }}
         >
           <h4 style={{ fontWeight: 'bold' }}>{block.title}</h4>
-          <p>{block.instructions}</p>
+          <Latex><p>{block.instructions}</p></Latex>
           {block.hint && (
             <details style={{ marginTop: '0.5rem' }}>
               <summary>Hint</summary>

@@ -27,7 +27,9 @@ export default function LessonEditorDisplay({ part, onSubmitTask, taskState }) {
       // This regex finds all instances of \text{…}
       const segments = part.latex.match(/\\text\{[^}]*\}/g) || [];
       protectedSegmentsRef.current = segments;
+      console.log('The protectedSegmentsRef is ', segments)
       lastValidLatexRef.current = part.latex;
+      console.log('The lastValidatedLatexRef is ', lastValidLatexRef.current)
     }
   }, [part.latex]);
 
@@ -47,11 +49,17 @@ export default function LessonEditorDisplay({ part, onSubmitTask, taskState }) {
       // Listen for input events to validate the LaTeX.
       mfe.current.addEventListener('input', (event) => {
         const newLatex = mfe.current.getValue();
+        const newSegments = newLatex.match(/\\text\{[^}]*\}/g) || [];
+        console.log('The newSegments are ', newSegments)
+        
+        
 
         // Validate that every protected segment is still present.
         let valid = true;
         for (const seg of protectedSegmentsRef.current) {
           if (!newLatex.includes(seg)) {
+            
+            
             valid = false;
             break;
           }
@@ -182,8 +190,8 @@ function getTaskStrings(compiledStrings, activeIndex) {
     }
 
     //##########################################################
-    /*
-    UNCOMMENT ALL THE CODE BELOW WHEN NO LONGER TESTING!
+    
+    // UNCOMMENT ALL THE CODE BELOW WHEN NO LONGER TESTING!
     
     //Convert users work to sympy before sending to server 
     
@@ -209,7 +217,7 @@ function getTaskStrings(compiledStrings, activeIndex) {
     //so getTaskStrings, relies on everything being compileable at first 
     const taskStrings = getTaskStrings(compiledStrings, activeIndex)
     console.log('The task strings are', taskStrings)
-    */
+    
     //##########################################################
     
 
@@ -218,8 +226,8 @@ function getTaskStrings(compiledStrings, activeIndex) {
     //You'll probably need to change the type in which fastapi expects to recieve the userLatex, 
     //before sending it to avoid breakage. 
 
-    const taskStrings = 'testing' //Delete when no longer testing
-    const userLatex = 'testing' //Delete when no longer testing
+    // const taskStrings = 'testing' //Delete when no longer testing
+    // const userLatex = 'testing' //Delete when no longer testing
 
     onSubmitTask(activeIndex, taskStrings,userLatex);
   }

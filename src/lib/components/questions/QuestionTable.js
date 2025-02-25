@@ -24,6 +24,8 @@ import {
     Label,
     Input as StrapInput
   } from 'reactstrap';
+import Progress from "./Progress"
+import ActivityCalendar from "./Calendar"
 
 
   const ALL_TOPICS = [
@@ -89,7 +91,8 @@ export default function QuestionTable() {
 
  // Load data from Redux RTK Query
  const { data, isLoading, error } = useGetQuestionsQuery();
- console.log('The questions are ', data)
+ //Essentually what we will want to do here is update the route where questions are fetched to also get metadata on whether or not the user has completed it or not!
+ console.log('The questions are ', data);
 
    // Handle loading / error states
    if (isLoading) return <div>Loading...</div>;
@@ -135,10 +138,10 @@ export default function QuestionTable() {
         {/* Example Status icon (Completed vs. Todo).
             Adjust logic if your data doesn't have these exact statuses. */}
         {question.status === 'Completed' ? (
-          <i className="bi bi-check-lg" style={{ fontSize: '1.2rem' }} />
-        ) : (
-          <i className="bi bi-dash-lg" style={{ fontSize: '1.2rem' }} />
-        )}
+          <i className="bi bi-check-square-fill" style={{ fontSize: '1.25rem', color:'green' }} />
+        ) : question.status === 'Incorrect' ? (
+          <i className="bi bi-x-square-fill" style={{color:'red', fontSize:'1.25rem'}}></i>
+        ) :<i className="bi bi-dash-square-fill" style={{ fontSize: '1.25rem', color:'grey'}} /> }
       </td>
       <td>
         {/* The link to your question’s detail page */}
@@ -247,18 +250,29 @@ Did you accidentally call a React Hook after an early return?
                       </DropdownToggle>
                       <DropdownMenu container='body'>
                         <DropdownItem onClick={() => setStatusFilter('Completed')}>
-                          Completed
+                          <div style={{display:'flex', justifyContent:'space-between'}}>
+                         <span>Completed</span> <i className="bi bi-check-square-fill" style={{color:'green', fontSize:'1.25rem'}}></i>
+                         </div>
+                        </DropdownItem>
+                        <DropdownItem onClick={() => setStatusFilter('Incorrect')}>
+                        <div style={{display:"flex", justifyContent:'space-between'}}>
+                          <span>Incorrect</span><i className="bi bi-x-square-fill" style={{color:'red', fontSize:'1.25rem'}}></i>
+                          </div>
                         </DropdownItem>
                         <DropdownItem onClick={() => setStatusFilter('Todo')}>
-                          Todo
+                          <div style={{display:'flex', justifyContent:'space-between'}}>
+                          <span>Todo</span> <i className="bi bi-dash-square-fill" style={{color:'grey', fontSize:'1.25rem'}}></i>
+                          </div>
                         </DropdownItem>
+                        
+                        
                         <DropdownItem onClick={() => setStatusFilter(null)}>
                           All
                         </DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
                   </th>
-                  <th>Title</th>
+                  <th><h5 style={{marginBottom:'0px', padding:'0px', fontSize:'1.5rem', fontWeight:'bold', color:'#17a2b8'}}>Name</h5></th>
                   <th>
                     {/* Topic Filter Dropdown (multi-select with checkboxes) */}
                     <Dropdown isOpen={topicOpen} toggle={toggleTopic}>
@@ -299,18 +313,26 @@ Did you accidentally call a React Hook after an early return?
                       </DropdownToggle>
                       <DropdownMenu container='body'>
                         <DropdownItem onClick={() => setDifficultyFilter('Easy')}>
-                          Easy
+                          <div style={{display:'flex', justifyContent:'space-between'}}>
+                          <span>Easy</span> <i className="bi bi-emoji-heart-eyes" style={{color:'green', fontSize:'1.25rem'}}></i>
+                          </div>
                         </DropdownItem>
                         <DropdownItem onClick={() => setDifficultyFilter('Medium')}>
-                          Medium
+                          <div style={{display:'flex', justifyContent:'space-between'}}>
+                          <span>Medium</span> <i className="bi bi-emoji-grin" style={{color:'orange', fontSize:'1.25rem'}}></i>
+                          </div>
                         </DropdownItem>
                         <DropdownItem onClick={() => setDifficultyFilter('exam')}>
-                          Exam
+                          <div style={{display:'flex', justifyContent:"space-between"}}>
+                          <span>Exam</span> <i className="bi bi-emoji-grimace" style={{color:'black', fontSize:'1.25rem'}}></i>
+                          </div>
                         </DropdownItem>
                         <DropdownItem
                           onClick={() => setDifficultyFilter('Challenge')}
                         >
-                          Challenge
+                          <div style={{display:'flex', justifyContent:'space-between'}}>
+                          <span>Challenge</span> <i className="bi bi-emoji-dizzy" style={{color:'red', fontSize:'1.25rem'}}></i>
+                          </div>
                         </DropdownItem>
                         <DropdownItem onClick={() => setDifficultyFilter(null)}>
                           All
@@ -330,7 +352,7 @@ Did you accidentally call a React Hook after an early return?
             <div className="quiz-search">
               <InputGroup>
                 <Input
-                  placeholder="Search by title, topic or difficulty"
+                  placeholder="Search by name, topic or difficulty"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   style={{ paddingRight: '2rem', borderRadius: '10px' }}
@@ -355,17 +377,9 @@ Did you accidentally call a React Hook after an early return?
             </div>
     
             {/* Example Card to show progress or other info */}
-            <Card style={{ marginTop: '1rem' }}>
-              <CardBody>
-                <h5>Progress</h5>
-                <p>Some stats here...</p>
-              </CardBody>
-            </Card>
+           <Progress/>
     
-            {/* Calendar component example
-            <Card style={{ marginTop: '1rem', padding: '1%' }}>
-              <Calendar />
-            </Card> */}
+            <ActivityCalendar/>
           </div>
         </div>
       );

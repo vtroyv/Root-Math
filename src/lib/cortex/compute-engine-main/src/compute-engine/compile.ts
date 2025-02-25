@@ -334,6 +334,17 @@ const NATIVE_SYMPY_FUNCTIONS: CompiledFunctions = {
         if (x === null) throw new Error('Arcsech: no argument');
         return `asech(${compile})`
       }, 
+
+      Root: ([arg, exp], compile) => {
+        if (arg === null) throw new Error('Root: missing base argument');
+        // If exponent is missing or is 2, treat it as sqrt
+        if (exp === null) return `sqrt(${compile(arg)})`;
+        if (exp?.re === 2) return `sqrt(${compile(arg)})`;
+    
+        // Otherwise, x^(1/n)
+        return `(${compile(arg)})**(1/(${compile(exp)}))`;
+      },
+      
       
       Arsin:  'asin', 
       Arsinh: 'asinh', 

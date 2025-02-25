@@ -92,14 +92,14 @@ export default function EdxPm1() {
               <ListGroup flush style={{ borderRadius: '0 0 15px 15px' }}>
                 <ListGroupItem
                   action
-                  onClick={() => navigate('what-is-proof')}
+                  onClick={() => navigate(preUrl+'/what-is-proof')}
                   style={{ cursor: 'pointer' }}
                 >
                   What is Proof?
                 </ListGroupItem>
                 <ListGroupItem
                   action
-                  onClick={() => navigate('methods-of-proof')}
+                  onClick={() => navigate(preUrl+'/methods-of-proof')}
                   style={{ cursor: 'pointer' }}
                 >
                   Methods of Proof
@@ -170,28 +170,28 @@ export default function EdxPm1() {
                 </ListGroupItem>
                 <ListGroupItem
                   action
-                  onClick={() => navigate('simultaneous-equations')}
+                  onClick={() => navigate(preUrl+'/simultaneous-equations')}
                   style={{ cursor: 'pointer' }}
                 >
                   Simultaneous Equations
                 </ListGroupItem>
                 <ListGroupItem
                   action
-                  onClick={() => navigate('inequalities')}
+                  onClick={() => navigate(preUrl+'/inequalities')}
                   style={{ cursor: 'pointer' }}
                 >
                   Inequalities
                 </ListGroupItem>
                 <ListGroupItem
                   action
-                  onClick={() => navigate('')}
+                  onClick={() => navigate(preUrl+'/graphs-and-transformations')}
                   style={{ cursor: 'pointer' }}
                 >
                   Graphs &amp; Transformations
                 </ListGroupItem>
                 <ListGroupItem
                   action
-                  onClick={() => navigate('')}
+                  onClick={() => navigate(preUrl+'/algebraic-methods')}
                   style={{ cursor: 'pointer' }}
                 >
                   Algebraic Methods
