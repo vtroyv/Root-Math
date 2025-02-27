@@ -1,0 +1,99 @@
+'use client';
+import React, { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
+import { MathfieldElement } from 'mathlive';
+import { Alert } from 'reactstrap';
+
+const SingleMfe = forwardRef(({ part }, ref) => {
+  const mathfieldRef = useRef(null);
+  const mfe = useRef(null);
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [latex, setLatex] = useState(part.latex || '');
+
+  // Keep a reference to the last valid LaTeX value and protected segments.
+  const lastValidLatexRef = useRef('');
+  const protectedSegmentsRef = useRef([]);
+
+  useEffect(() => {
+    if (part.latex) {
+      const segments = part.latex.match(/\\text\{[^}]*\}/g) || [];
+      protectedSegmentsRef.current = segments;
+      lastValidLatexRef.current = part.latex;
+    }
+  }, [part.latex]);
+
+  useEffect(() => {
+    if (!mfe.current) {
+      mfe.current = new MathfieldElement({
+        mathModeSpace: '\\,',
+        mathVirtualKeyboardMode: 'manual',
+      });
+
+      mfe.current.style.width = '100%';
+      mfe.current.style.height = '100%';
+      mfe.current.style.backgroundColor = 'lightblue';
+
+      mfe.current.addEventListener('input', function (event) {
+        if (event.inputType === 'insertLineBreak') {
+          mfe.current.executeCommand('addRowAfter');
+          event.preventDefault();
+        }
+      });
+
+
+      // Listen for input events.
+      mfe.current.addEventListener('input', () => {
+        const newLatex = mfe.current.getValue();
+        let valid = true;
+        for (const seg of protectedSegmentsRef.current) {
+          if (!newLatex.includes(seg)) {
+            valid = false;
+            break;
+          }
+        }
+        if (!valid) {
+          setAlertVisible(true);
+          mfe.current.setValue(lastValidLatexRef.current);
+          setTimeout(() => {
+            setAlertVisible(false);
+          }, 3000);
+          return;
+        }
+        lastValidLatexRef.current = newLatex;
+        setLatex(newLatex);
+      });
+
+      if (mathfieldRef.current && !mathfieldRef.current.contains(mfe.current)) {
+        mathfieldRef.current.appendChild(mfe.current);
+      }
+    }
+  }, []);
+
+  // When part.latex changes, update the field—but do not trigger a parent update.
+  useEffect(() => {
+    if (mfe.current) {
+      mfe.current.setValue(part.latex || '');
+      lastValidLatexRef.current = part.latex || '';
+      setLatex(part.latex || '');
+    }
+  }, [part.latex]);
+
+  // Expose a getValue method so the parent can read the mathfield value.
+  useImperativeHandle(ref, () => ({
+    getValue: () => (mfe.current ? mfe.current.getValue() : '')
+  }));
+
+  return (
+    <>
+      {alertVisible && (
+        <Alert color="danger">
+          The questions cannot be edited.
+        </Alert>
+      )}
+      <div style={{ width: '100%', height: '100%' }} ref={mathfieldRef} />
+    </>
+  );
+});
+
+SingleMfe.displayName = "SingleMfe";
+
+export default SingleMfe;

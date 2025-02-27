@@ -21,7 +21,7 @@ function SkeletonCard() {
       style={{
         backgroundColor: "#f0f0f0",
         height: "200px",
-        borderRadius: "8px",
+        borderRadius: "0.5rem",
         marginBottom: "1.5rem",
       }}
     />
@@ -29,13 +29,7 @@ function SkeletonCard() {
 }
 
 export default function LearnCourses() {
-
-  /*
-  You may have to add a simple dictionary to contain different links e.g. if a CIE user logs in
-  */
   const { isLoaded, isSignedIn, user } = useUser();
-  console.log('The user info is given by', user)
-
   // 1) While Clerk is still loading, show our skeleton screen
   if (!isLoaded) {
     return (
@@ -65,7 +59,7 @@ export default function LearnCourses() {
     );
   }
 
-  // 2) If Clerk is loaded but the user is not signed in, either redirect or show a notice
+  // 2) If Clerk is loaded but the user is not signed in
   if (!isSignedIn) {
     return (
       <div style={{ padding: "2rem" }}>
@@ -82,21 +76,28 @@ export default function LearnCourses() {
   // 3) If Clerk is loaded and the user is signed in, render your normal component
   const firstName = user?.firstName;
   let examBoard = user?.unsafeMetadata?.examBoard;
-  console.log('the user object is given by ',user)
-
-  // Safely uppercase the exam board if it exists
   if (typeof examBoard === "string") {
     examBoard = examBoard.charAt(0).toUpperCase() + examBoard.slice(1);
   }
 
+  // A shared style for all course cards
+  const cardStyle = {
+    boxShadow: "0 2px 4px rgba(0,0,0,0.5)",
+    border: "none",
+    borderRadius: "0.5rem",
+    marginBottom: "1rem",
+  };
+
   return (
     <div className="learn-courses">
-      <h1 style={{ fontSize: '2.5rem', margin: '0 0 0.5rem 0', }}> <strong>Welcome Back {firstName}!</strong>  </h1>
+      <h1 style={{ fontSize: "2.5rem", margin: "0 0 0.5rem 0" }}>
+        <strong>Welcome Back {firstName}!</strong>
+      </h1>
 
-      {/* -- Card 1 -- */}
+      {/* Card 1 */}
       <Row>
         <Col sm="10">
-          <Card body>
+          <Card body style={cardStyle}>
             <CardBody className="course-card-body">
               <div>
                 <CardTitle tag="h5">
@@ -114,7 +115,6 @@ export default function LearnCourses() {
                 <CircularProgressbar value={0} text={"0%"} />
               </div>
             </CardBody>
-            {/* THINGS LIKE THIS NEED TO BE DYNAMIC FOR INSTANCE E.G IF ITS CIE it should be CIE-maths-1 */}
             <Link className="router-link" href={`/learn/edx-maths-1`}>
               <Button color="info" block>
                 Continue
@@ -123,12 +123,11 @@ export default function LearnCourses() {
           </Card>
         </Col>
       </Row>
-      <br />
 
-      {/* -- Card 2 -- */}
+      {/* Card 2 */}
       <Row>
         <Col sm="10">
-          <Card body>
+          <Card body style={cardStyle}>
             <CardBody className="course-card-body">
               <div>
                 <CardTitle tag="h5">
@@ -146,16 +145,17 @@ export default function LearnCourses() {
                 <CircularProgressbar value={0} text={"0%"} />
               </div>
             </CardBody>
-            <Button color="info">Continue</Button>
+            <Button color="info" block>
+              Continue
+            </Button>
           </Card>
         </Col>
       </Row>
-      <br />
 
-      {/* -- Card 3 -- */}
+      {/* Card 3 */}
       <Row>
         <Col sm="10">
-          <Card body>
+          <Card body style={cardStyle}>
             <CardBody className="course-card-body">
               <div>
                 <CardTitle tag="h5">
@@ -173,16 +173,17 @@ export default function LearnCourses() {
                 <CircularProgressbar value={0} text={"0%"} />
               </div>
             </CardBody>
-            <Button color="info">Continue</Button>
+            <Button color="info" block>
+              Continue
+            </Button>
           </Card>
         </Col>
       </Row>
-      <br />
 
-      {/* -- Card 4 -- */}
+      {/* Card 4 */}
       <Row>
         <Col sm="10">
-          <Card body>
+          <Card body style={cardStyle}>
             <CardBody className="course-card-body">
               <div>
                 <CardTitle tag="h5">
@@ -200,11 +201,12 @@ export default function LearnCourses() {
                 <CircularProgressbar value={0} text={"0%"} />
               </div>
             </CardBody>
-            <Button color="info">Continue</Button>
+            <Button color="info" block>
+              Continue
+            </Button>
           </Card>
         </Col>
       </Row>
-      <br />
     </div>
   );
 }

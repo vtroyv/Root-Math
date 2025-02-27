@@ -272,12 +272,264 @@ export default function LessonsPage() {
     "collection": "edx-maths-1"
   }
   
- 
+  const whatAreQuadratics ={
+    "_id": { "$oid": "999999999999999999999999" },
+    "slug": "what-are-quadratic-equations",
+    "title": "What are Quadratic Equations",
+    "next": "quadratic-graphs",
+    "parts": [
+      {
+        "id": { "$numberInt": "1" },
+        "title": "So what makes a equation Quadratic?",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": ""
+            /*
+            Have some tasks in this section e.g.  typing in 'Yes' or 'No' depending on if the equation is quadratic or not!
+             - this means we want to update the MathLessonDisplay compponent depending on if a question part has a textmode property it sets it in textmode.
+             */
+          }
+        ],
+        "latex": String.raw` 
+        `
+      },
+      {
+        "id": { "$numberInt": "2" },
+        "title": "Factorising Quadratics",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": ""
+            /*
+              Now Factorising let's simply  have a few exerercises practicing factorising quadratics getting progressively harder 
+             */
+          },
+          
+         
+        ],
+        "latex": String.raw `
+        `
+      },
+    ], 
+    "collection":'edx-maths-1'
+  }
+
+  const quadraticGraphs = {
+      "_id": { "$oid": "999999999999999999999999" },
+      "slug": "quadratic-graphs",
+      "title": "Quadratic Graphs",
+      "next": "solving-quadratics-equations",
+      "parts": [
+        {
+          "id": { "$numberInt": "1" },
+          "title": "What's a Quadratic Graph look like?",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": ""
+           
+            }
+          ],
+          "latex": String.raw` 
+          `
+        },
+        {
+          "id": { "$numberInt": "2" },
+          "title": "Factorising Quadratics",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "content": ""
+              /*
+                Now Factorising let's simply  have a few exerercises practicing factorising quadratics getting progressively harder 
+               */
+            },
+            
+           
+          ],
+          "latex": String.raw `
+          `
+        },
+      ], 
+      "collection":'edx-maths-1'
+    }
+
+    const solvingQuadratics = {
+      "_id": { "$oid": "999999999999999999999999" },
+      "slug":"solving-quadratic-equations", 
+      "title":"Solving Quadratic Equations", 
+      "next":"equations-that-cant-be-factorised", 
+      "parts":[
+        {
+          "id":{"$numberInt":"1"}, 
+          "title":"So how do we solve a quadratic equation?", 
+          "blocks":[
+            {
+              "type":"paragraph", 
+              "content":"Explain what solving a quadratic equation means and the different types of ways we can solve quadratic equations"
+            }
+          ], 
+          "latex":String.raw`
+          \text{Have exmaples of each method being used to solve a quadratic equation}
+          `
+        }, 
+
+        {
+          "id":{"$numberInt":"2"}, 
+          "title":"Solving by Factorisation", 
+          "blocks":[
+            {
+              "type":"paragraph", 
+              "content":""
+            }
+          ],
+          "latex":String.raw``
+        }, 
+        {
+          "id":{"$numberInt":"3"}, 
+          "title":"Solving by Completing the square", 
+          "blocks":[
+            {
+              "type":"paragraph", 
+              "content":""
+            }
+          ], 
+          "latex":String.raw``
+        }, 
+
+        {
+          "id":{"$numberInt":"4"}, 
+          "title":"Solving by the Quadratic Formula", 
+          "blocks":[
+            {
+              "type":"paragraph", 
+              "content":""
+            }
+          ], 
+          "latex":String.raw``
+        }
+      ],
+      "collection":"edx-maths-1"
+    }
+
+    const equationsThatCantBeFactorised ={
+     "_id": { "$oid": "999999999999999999999999" },
+     "slug":"equations-that-cant-be-factorised", 
+     "title":"Equations That Can't Be Factorised", 
+     "next":"the-discriminant", 
+     "parts":[
+      {
+        "id": {"$numberInt":"1"}, 
+        "title":"Wait...why can't I factorise this?", 
+        //make sure to include graph images of some quadratic equations that can't be factorised. 
+        "blocks":[
+          {
+            "type":"paragraph", 
+            "content":"Display some images illustrating quadratics above and below the curve"
+          }
+
+        ],
+        "latex": String.raw`Replace mathLessonDisplay with graphs displaying some curves perhaps`
+      }, 
+      {
+        "type":"paragraph", 
+        "content":"mainly just exercises on this page, get them to sketch/attempt to factorise the graph and then determine if it can be factorised or not"
+      }
+     ], 
+     "collection":"edx-maths-1"
+    }
+
+    const theDiscriminant = {
+      "_id": { "$oid": "999999999999999999999999" },
+      "slug":"the-disciminant", 
+      "title":"The Discriminant", 
+      "next":"modelling-with-quadratics", 
+      "parts":[
+        {
+          "id": {"$numberInt":"1"}, 
+          "title":"What's a discriminant and why do we need it?", 
+          "blocks":[
+            {
+              "type":"paragarph", 
+              "content":"Explain what the discriminat is and why it's and easier alternative to check if a quadratic can be factorised",
+            }
+          ]
+        },
+        {
+          "id":{"$numberInt":"2"},
+          "title":"Calculating Discriminants", 
+          "blocks":[
+            {
+              "type":"paragraph", 
+              "content":"Briefly go into a little more detail on the discriminant - then quite a few tasks to practice calculating the discriminant then answering questions on characteristics of quadratics based on it"
+            }, 
+            {
+              "type": "task",
+              "title": "1) Rationalise the denominator",
+              "instructions": "Rationalise the denominator of \\(\\frac{4}{\\sqrt{5}}\\). Replace '?' with the correct value in the form '?\\sqrt{5}' or an integer if possible.",
+              "hint": "Multiply top and bottom by \\(\\sqrt{5}\\).",
+              "gpt": "The correct answer is \\(\\frac{4\\sqrt{5}}{5}\\).",
+              "renderType":"sketch"
+            },
+            {
+              "type": "task",
+              "title": "1) Rationalise the denominator",
+              "instructions": "Rationalise the denominator of \\(\\frac{4}{\\sqrt{5}}\\). Replace '?' with the correct value in the form '?\\sqrt{5}' or an integer if possible.",
+              "hint": "Multiply top and bottom by \\(\\sqrt{5}\\).",
+              "gpt": "The correct answer is \\(\\frac{4\\sqrt{5}}{5}\\).",
+              
+            },
+          ]
+        }
+      ], 
+      "collection":"edx-maths-1"
+    }
+
+    const modellingQuadratics ={
+      "_id": { "$oid": "999999999999999999999999" },
+      "slug":"modelling-with-quadratics", 
+      "title":"Modelling with Quadratics", 
+      "next":"introduction-to-simultaneous-equations", 
+      "parts":[
+        {
+          "id":{"$numberInt":"1"}, 
+          "title":"Quadratics in real life?",
+          "blocks":[
+            {
+              "type":"paragraph", 
+              "content":"Quadratics can be used for lots of different things in the real world etc...", 
+            }
+
+          ] 
+        }, 
+        {
+          "id":{"$numberInt":"2"}, 
+          "title":"Time to Model", 
+          "blocks":[
+            {
+              "type":"paragraph", 
+              "content":"Now that we know the value of quadratic equations it's time to put all the techniques that we've learned so far in this section regarding quadratics to the test"
+            }, 
+            {
+              "type":"paragraph", 
+              "content":"By the time you complete all of the tasks in this in this lesson you will be more than comfortable modelling with quadratic equations",
+            },
+            {
+              "type":"paragraph", 
+              "content":"Well what are you waiting for - lets get to it!"
+            }, 
+            //fill it up with tasks 
+          ]
+        }
+      ], 
+      "collection":"edx-maths-1"
+    }
 
   // On mount, set lesson and userProgress from the static lesson data
   useEffect(() => {
     if (isLoaded && isSignedIn) {
-      setLesson(staticLessonData);
+      setLesson(theDiscriminant);
       setUserProgress(createUserProgress(staticLessonData, user.id));
     }
   }, [isLoaded, isSignedIn, user]);
