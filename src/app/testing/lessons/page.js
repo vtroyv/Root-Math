@@ -327,30 +327,88 @@ export default function LessonsPage() {
           "blocks": [
             {
               "type": "paragraph",
-              "content": ""
+              "content": "A quadratic graph is a graph of a quadratic equation. Quadratic equations are equations of the form: $$y = ax^2 + bx + c$$ where $a$, $b$, and $c$ are constants. The graph of a quadratic equation is a parabola, which is a curve with a single bend."
            
-            }
+            },
+            {
+              "type": "paragraph",
+              "content": "The direction of the parabola (upwards or downwards) and the position of the vertex (the bend in the parabola) depend on the values of $a$, $b$, and $c$."
+            }, 
+           
+            {
+              "type": "task",
+              "title": "2) Modelling with quadratics",
+              "instructions":"The curve should only touch the x-axis at one point $$y=x^2$$",
+              "hint":"The curve should only touch the x-axis at one point $y=x^2$", 
+              "gpt":"test",
+              "url":"/images/test.png", 
+              "alt":"testing question image", 
+              "caption":"This is a test image",
+              "latex":String.raw` \begin{aligned} &\ \text{Answer the folloiwing questions based on the image above:  }\\ &\\ &\text{a) What is ...} \end{aligned}`,
+             "renderType":"image"
+            },
+            
+            {
+              "type":"task",
+              "title":"3) Testing the sketch with mfe component",
+              "instructions":"Sketch the curve of $y=-x^2$ and answer the questions below",
+              "hint":"The curve should only touch the x-axis at one point $$y=-x^2$$",
+              "gpt":"test",
+              "renderType":"curveAndMfe", 
+              "latex":String.raw` \begin{aligned} &\ \text{Sketch the curve of } y=-x^2 \\ &\\ &\text{a) What is the vertex of the curve?} \end{aligned}`
+            }, 
+            
+            
           ],
-          "latex": String.raw` 
-          `
+          
+    
         },
         {
           "id": { "$numberInt": "2" },
-          "title": "Factorising Quadratics",
-          "blocks": [
+          "title": "Testing sketch with mfe undearneath",
+          "blocks":[
             {
-              "type": "paragraph",
-              "content": ""
-              /*
-                Now Factorising let's simply  have a few exerercises practicing factorising quadratics getting progressively harder 
-               */
+              "type":"paragraph", 
+              "content":"Now we will test the sketch and mfe component"
+            }, 
+            {
+              "type":"task",
+              "title":"1) Testing the sketch with mfe component",
+              "instructions":"Sketch the curve of $y=-x^2$ and answer the questions below",
+              "hint":"The curve should only touch the x-axis at one point $$y=-x^2$$",
+              "gpt":"test",
+              "renderType":"curveAndMfe", 
+              "latex":String.raw` \begin{aligned} &\ \text{Sketch the curve of } y=-x^2 \\ &\\ &\text{a) What is the vertex of the curve?} \end{aligned}`
             },
+            {
+              "type": "task",
+              "title": "4) Testing multiple choice questions",
+              "instructions": "Select the correct answer from the list below.",
+              "hint": "One of them is correct.",
+              "gpt": "test",
+              "renderType": "multipleChoice",
+              "question": "2) Which of the following is a quadratic function?",
+              "choices": [
+                "$y = x + 2$",
+                "$y = x^2 - 1$",
+                "$y = 2x - 3$"
+              ]
+            },
+            {
+              "type": "task",
+              "title": "5) Which image shows a parabola?",
+              "instructions": "Select the correct image from the list below.",
+              "hint": "One of them is correct.",
+              "gpt": "test",
+              "renderType": "multipleChoiceImages",
+              "imageChoices": [
+                { "url": "/images/test.png", "alt": "Test Image 1", "width": 300, "height": 200 },
+                { "url": "/images/features.png", "alt": "Test Image 2", "width": 300, "height": 200 }
+              ]
+            }
             
-           
-          ],
-          "latex": String.raw `
-          `
-        },
+          ]
+        }
       ], 
       "collection":'edx-maths-1'
     }
@@ -453,7 +511,18 @@ export default function LessonsPage() {
             {
               "type":"paragarph", 
               "content":"Explain what the discriminat is and why it's and easier alternative to check if a quadratic can be factorised",
-            }
+            },
+            {
+              "type": "task",
+              "title": "1) Rationalise the denominator",
+              "instructions": "Rationalise the denominator of \\(\\frac{4}{\\sqrt{5}}\\). Replace '?' with the correct value in the form '?\\sqrt{5}' or an integer if possible.",
+              "hint": "Multiply top and bottom by \\(\\sqrt{5}\\).",
+              "gpt": "The correct answer is \\(\\frac{4\\sqrt{5}}{5}\\).",
+              "renderType":"sketch"
+            },
+           
+            
+
           ]
         },
         {
@@ -470,7 +539,23 @@ export default function LessonsPage() {
               "instructions": "Rationalise the denominator of \\(\\frac{4}{\\sqrt{5}}\\). Replace '?' with the correct value in the form '?\\sqrt{5}' or an integer if possible.",
               "hint": "Multiply top and bottom by \\(\\sqrt{5}\\).",
               "gpt": "The correct answer is \\(\\frac{4\\sqrt{5}}{5}\\).",
-              "renderType":"sketch"
+           
+            },
+            {
+              "type": "task",
+              "title": "1) Rationalise the denominator",
+              "instructions": "Rationalise the denominator of \\(\\frac{4}{\\sqrt{5}}\\). Replace '?' with the correct value in the form '?\\sqrt{5}' or an integer if possible.",
+              "hint": "Multiply top and bottom by \\(\\sqrt{5}\\).",
+              "gpt": "The correct answer is \\(\\frac{4\\sqrt{5}}{5}\\).",
+              
+            },
+            {
+              "type": "task",
+              "title": "1) Rationalise the denominator",
+              "instructions": "Rationalise the denominator of \\(\\frac{4}{\\sqrt{5}}\\). Replace '?' with the correct value in the form '?\\sqrt{5}' or an integer if possible.",
+              "hint": "Multiply top and bottom by \\(\\sqrt{5}\\).",
+              "gpt": "The correct answer is \\(\\frac{4\\sqrt{5}}{5}\\).",
+              
             },
             {
               "type": "task",
@@ -529,8 +614,8 @@ export default function LessonsPage() {
   // On mount, set lesson and userProgress from the static lesson data
   useEffect(() => {
     if (isLoaded && isSignedIn) {
-      setLesson(theDiscriminant);
-      setUserProgress(createUserProgress(staticLessonData, user.id));
+      setLesson(quadraticGraphs);
+      setUserProgress(createUserProgress(quadraticGraphs, user.id));
     }
   }, [isLoaded, isSignedIn, user]);
 

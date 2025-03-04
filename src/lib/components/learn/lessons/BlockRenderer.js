@@ -21,6 +21,8 @@ export default function BlockRenderer({ block }) {
         </ul>
       );
     }
+    //Note i don't believe this case 'task' is ever being actually used. It's actually being covered in the taskRenderer part of the insctuction component 
+    //I believe at a later date you should delete this or simply replace it with the taskcase in the instruction component. 
     case 'task':
       return (
         <div
@@ -31,11 +33,11 @@ export default function BlockRenderer({ block }) {
           }}
         >
           <h4 style={{ fontWeight: 'bold' }}>{block.title}</h4>
-          <Latex><p>{block.instructions}</p></Latex>
+          <p><Latex>{block.instructions}</Latex></p>
           {block.hint && (
             <details style={{ marginTop: '0.5rem' }}>
               <summary>Hint</summary>
-              <p><Latex>{block.hint}</Latex></p>
+              <p>{block.hint}</p>
             </details>
           )}
         </div>

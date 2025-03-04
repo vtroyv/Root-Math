@@ -1,0 +1,4 @@
+/*
+In this file create a component that allowss the user to freehand draw 
+multiple sketches.
+*/

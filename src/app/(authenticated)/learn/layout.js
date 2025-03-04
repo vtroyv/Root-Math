@@ -1,7 +1,7 @@
 // LearnLayout.js
 import LearnNav from "@/lib/components/learn/LearnNav"
 import Breadcrumbs from "@/lib/components/learn/Breadcrumbs"
-import ChatWidget from "@/lib/components/learn/ChatWidget"
+import ChatWidget from "@/lib/components/learn/MyTutor"
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 

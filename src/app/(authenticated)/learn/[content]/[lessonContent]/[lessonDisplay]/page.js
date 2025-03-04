@@ -53,8 +53,15 @@ export default function LessonsPage() {
 
 
   
-  // fetch multi-part lesson
+
   useEffect(() => {
+    /*
+    PURPOSE
+    _______
+    The purpose of this useEffect is to fetch an object containing the staticLessonData and userProgressData from the database
+    and then set the lesson and userProgress state to these values.
+
+    */
     
     const getLessonData = async () => {
       try {
@@ -70,7 +77,7 @@ export default function LessonsPage() {
         //This function should return a staticLessonData and dynamicLessonData as keys in obj
         const result = await dynamicLessonData(dynamicRouteData)
         const {staticLessonData,userProgressData} = result.data
-        console.log('The result is ', result )
+       
 
 
         
@@ -78,40 +85,26 @@ export default function LessonsPage() {
         setLesson(staticLessonData)
         setUserProgress(userProgressData)
 
-        console.log('The userProgress is ', userProgressData)
-        console.log('THe static lesson data is ', staticLessonData)
-        
-        
-
-       
       } 
     } catch(error) {
-      // handle error appropriately
+      // Eventually update this error to return a UI where users 
       console.log('Mutation error: ', err);
     }
   }
-  getLessonData()
-
-  
-
-console.log('This is the whole lesson is being fetched again')
-   
+  getLessonData() 
 },[ isSignedIn, user,]);
 
 
   // When "part" changes, re-initialize taskState
   //currently from this line and below the code is responsible for fetching the taskstate and feedback.
-  //Now although this probably not the best practice, i would like to avoid as much as possible from rewriting all this code from scratch. 
   useEffect(() => {
     if (!lesson) return;
-    const part = lesson.parts[currentPartIndex];
+    const part = lesson.parts[currentPartIndex]; //Note the currentPartIndex is always set to 0, that's why page refreshes send you back to 0. 
 
     // we will first use the currentPartIndex, to fetch the part from the userProgress State. 
     const userProgressPart = userProgress.parts[currentPartIndex]
     const tasksInUserProgressPart = userProgressPart.tasks
-   
 
-    
     // We'll look for tasks in part.blocks. 
     // The first task is "unlocked", rest "locked".
     const tasksInPart = part.blocks.filter(b => b.type === 'task');
@@ -122,7 +115,6 @@ console.log('This is the whole lesson is being fetched again')
     setTasksCount(countTasksUserProgress);
 
    //Now this code below essentially sets the task state, however, i would like to start reading the taskState instead.
-   
    //Now in regards to this we may simply beable to just send over the userProgressTaskState as it is as it already contains a status field. 
    
 

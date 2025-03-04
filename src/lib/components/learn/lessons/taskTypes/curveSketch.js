@@ -1,10 +1,13 @@
 'use client';
 import React, { useRef, useEffect, useState } from 'react';
+import 'katex/dist/katex.min.css';
+import Latex from 'react-latex-next';
 
 // Optional: if you need a polyfill for older browsers
 // import ResizeObserver from 'resize-observer-polyfill';
 
-export default function CurveSketch({ question, onDataChange }) {
+export default function CurveSketch({ task, onDataChange }) {
+  console.log('The task  in curveSketch is:', task);
   const boardContainerRef = useRef(null);
   const boardRef = useRef(null);
   const [scriptLoaded, setScriptLoaded] = useState(false);
@@ -49,7 +52,7 @@ export default function CurveSketch({ question, onDataChange }) {
     boardRef.current = board;
 
     // The rest of your “sketch” logic...
-    const degree =  5;
+    const degree =  2;
     board.BOARD_MODE_SKETCH = 0x0100;
     let sketch = null;
     let curve = null;
@@ -165,6 +168,11 @@ export default function CurveSketch({ question, onDataChange }) {
   }, [scriptLoaded]);
 
   return (
+    <>
+    <div style={{marginTop:'0.5rem'  }}>
+    <div style={{marginBottom:'1rem'}}>
+    <h3 style={{fontWeight:'bold', }}><Latex style={{fontFamily:"Cabin Sketch"}}>{task.title}</Latex></h3>
+    </div>
     <div
       ref={boardContainerRef}
       style={{
@@ -173,5 +181,7 @@ export default function CurveSketch({ question, onDataChange }) {
         minHeight: '400px'
       }}
     />
+    </div>
+    </>
   );
 }

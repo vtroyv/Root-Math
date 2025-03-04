@@ -3,11 +3,15 @@ import React, { useEffect, useRef, useState, forwardRef, useImperativeHandle } f
 import { MathfieldElement } from 'mathlive';
 import { Alert } from 'reactstrap';
 
-const SingleMfe = forwardRef(({ part }, ref) => {
+const SingleMfe = forwardRef(({ part, noTasks }, ref) => {
   const mathfieldRef = useRef(null);
   const mfe = useRef(null);
   const [alertVisible, setAlertVisible] = useState(false);
   const [latex, setLatex] = useState(part.latex || '');
+
+  const height = noTasks ? '100%' : null;
+  console.log('noTasks is:', noTasks)
+
 
   // Keep a reference to the last valid LaTeX value and protected segments.
   const lastValidLatexRef = useRef('');
@@ -29,7 +33,7 @@ const SingleMfe = forwardRef(({ part }, ref) => {
       });
 
       mfe.current.style.width = '100%';
-      mfe.current.style.height = '100%';
+      mfe.current.style.height =  '100%';
       mfe.current.style.backgroundColor = 'lightblue';
 
       mfe.current.addEventListener('input', function (event) {
@@ -86,10 +90,10 @@ const SingleMfe = forwardRef(({ part }, ref) => {
     <>
       {alertVisible && (
         <Alert color="danger">
-          The questions cannot be edited.
+          This part of the question cannot be edited.
         </Alert>
       )}
-      <div style={{ width: '100%', height: '100%' }} ref={mathfieldRef} />
+      <div style={{ width: '100%', height: height  ,marginTop:"0.5rem",marginBottom:'0.5rem' }} ref={mathfieldRef} />
     </>
   );
 });

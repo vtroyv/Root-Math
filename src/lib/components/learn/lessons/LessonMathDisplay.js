@@ -49,6 +49,7 @@ export default function LessonMathDisplay({ part, onSubmitTask, taskState }) {
     return groups[activeIndex] || [];
   }
 
+  //You will need to updgrade the handlesubmit here and in the parent component to handle multiple types of tasks
   function handleSubmit() {
     const activeIndex = getActiveTaskIndex();
     if (activeIndex === -1) {
@@ -73,6 +74,7 @@ export default function LessonMathDisplay({ part, onSubmitTask, taskState }) {
   const tasksWithRenderType = tasksList.filter(task => task.renderType);
 
   return (
+    <>
     <div
       style={{
         display: 'flex',
@@ -81,24 +83,28 @@ export default function LessonMathDisplay({ part, onSubmitTask, taskState }) {
         overflowY: 'auto',
       }}
     >
-      {tasksWithRenderType.length === 0 ? (
+      {/* {tasksWithRenderType.length === 0 ? (
         // Render a single SingleMfe with ref if no task has a renderType.
-        <SingleMfe ref={singleMfeRef} part={part} />
+        <SingleMfe ref={singleMfeRef} part={part}  />
       ) : (
         // Otherwise, render TaskRenderer to handle multiple tasks.
         <TaskRenderer part={part} taskState={taskState} />
-      )}
-
+      )} */}
+      <TaskRenderer part={part} taskState={taskState} />
+      </div>
+<div>
       <Button
         block
         outline
         color="primary"
-        style={{ marginTop: '0.5rem' }}
+        style={{ marginTop: '0.5rem'}}
         onClick={handleSubmit}
       >
         Submit
       </Button>
-    </div>
+      </div>
+    
+    </>
   );
 }
 

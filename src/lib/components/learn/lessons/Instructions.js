@@ -107,8 +107,8 @@ function TaskRenderer({ block, status }) {
         {isCorrect ? '✅'  : isIncorrect ? '❌' : '⬜'}
       </div>
 
-      <h4>{block.title}</h4>
-      <p>{block.instructions}</p>
+      <h4><Latex>{block.title}</Latex></h4>
+      <p><Latex>{block.instructions}</Latex></p>
       {block.hint && (
         <details style={{ marginTop: '0.5rem' }}>
           <summary>Hint</summary>
