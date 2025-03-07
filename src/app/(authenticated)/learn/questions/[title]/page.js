@@ -30,6 +30,12 @@ export default function QuestionDisplay({ params }) {
   }
 
   const question = data?.find(obj => obj.title === title);
+  console.log('The question is', question);
+  //Now this question needs to be stored in some form of state, perhaps react context or zustand as we will 
+  //need to read from this in the mytutor component to be able to obtain context of what the user is doing. 
+  //It would also be good to write code in each of the question types 
+  //To update this shared/global every time the user interacts so the mytutor compoonent can have a up to date 
+  //view of the users progess on a lesson/question when ever the user asks a question.
 
   if (!question) {
       return <h1>Question not found</h1>;

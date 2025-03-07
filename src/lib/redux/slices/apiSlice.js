@@ -60,6 +60,7 @@ export const apiSlice = createApi({
                 url: 'lessonprogress', 
                 method:'POST', 
                 body: userProgress
+                
             })
         })
         ,
@@ -79,6 +80,14 @@ export const apiSlice = createApi({
             })
         }),
 
+        askTutor: builder.mutation({
+            query:(prompt) =>({
+                url:'/tutor/asktutor', 
+                method:'POST',
+                body:prompt
+            })
+        })
+
        
 
     })
@@ -95,7 +104,8 @@ export const {
     useLessonQuestionFeedbackMutation, 
     useCreateUserMutation, 
     useDynamicLessonDataMutation, 
-    useUpdateLessonProgressMutation
+    useUpdateLessonProgressMutation, 
+    useAskTutorMutation
     } = apiSlice;
 
 

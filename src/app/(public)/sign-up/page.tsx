@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Form, Label, Input, Button, Badge, Alert, Row, Col } from 'reactstrap';
-import { useSignUp , useUser} from '@clerk/nextjs';
+import { useSignUp , } from '@clerk/nextjs';
 import { useCreateUserMutation } from '@/lib/redux/slices/apiSlice';
 
 const Signup = () => {

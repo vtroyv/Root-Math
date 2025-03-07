@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect} from "react";
 import {
   Button,
   Card,
@@ -13,32 +13,71 @@ import {
   Col,
   Input,
 } from "reactstrap";
+import { useInView } from "react-intersection-observer";
 import classnames from "classnames";
-import { CircularProgressbar } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import { useParams, usePathname } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
+import { useAskTutorMutation } from "@/lib/redux/slices/apiSlice";
 
-/**
- * MyTutor Component
- *
- * - Home Tab: Displays a "New Chat" button (and some stats).
- * - Messages Tab: Displays either a list of previous chats (when no chat is active)
- *   or a chat view for a conversation (with a Back button to return to the list).
- * - Help Tab: Simple FAQ.
- */
 export default function MyTutor() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState("1"); // "1"=Home, "2"=Messages, "3"=Help
+  const [currentUrl, setCurrentUrl] =useState('');
+  const [validUrl, setValidUrl] = useState(false);
 
-  // currentConversation holds the messages for the chat view in the Messages tab.
   const [currentConversation, setCurrentConversation] = useState([]);
-  // inChatView determines if we are in the chat conversation view vs. the list view.
   const [inChatView, setInChatView] = useState(false);
-
-  // Chat input and typing indicator
   const [userInput, setUserInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
-  // Hard-coded previous chats (simulate saved conversations)
+ const pathname = usePathname();
+ const params = useParams();
+ const acceptedUrlKeys = ['lessonDisplay', 'title'] // can add to this as we develop futher 
+ const { isLoaded, isSignedIn, user } = useUser();
+ const [askTutor, mutationState] = useAskTutorMutation();
+
+
+
+ 
+
+  useEffect(() => {
+    console.log("Current pathname:", pathname);
+    console.log("Current params:", params);
+
+    // Optionally extract the last segment:
+    const segments = pathname.split("/");
+    // Handle trailing slash by checking the last element.
+    console.log('The segments are ', segments)
+    console.log('The params are ', params )
+    const lastParam = segments.pop()
+    setCurrentUrl(lastParam);
+    const lastParamKey = Object.keys(params).pop();
+    //This will check that the user is on a page with either a question, or a lesson and not on the homepage or navigation pages
+    // As starting off initially we'd like to only have the chatbot available on the lesson pages or question pages
+    //We can add more keys to the acceptedUrlKeys array to allow for more pages to have the chatbot at later stages
+    if (acceptedUrlKeys.includes(lastParamKey)){
+      setValidUrl(true);
+    }
+
+
+    
+
+  }, [pathname]);
+  
+
+  //The purpose of this function is to write the url in a form where it can be used as the title of a chat bot!
+  function urlToTitle(url){
+    let title = url.split('-').map(word=> word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    return title;
+  }
+
+
+  
+
+
+  // Hard-coded previous chats
   const [previousChats] = useState([
     {
       id: 1,
@@ -60,40 +99,95 @@ export default function MyTutor() {
     },
   ]);
 
-  // Toggle the widget open/closed
-  const toggleWidget = () => setIsOpen(!isOpen);
+  // Ref for the scroll container
+  const scrollContainerRef = useRef(null);
 
-  // Switch between Home, Messages, and Help tabs
+  // Set up a state to hold the actual DOM element for the New Chat button.
+  const [newChatElem, setNewChatElem] = useState(null);
+
+  // Use react-intersection-observer to know if the New Chat button is in view.
+  const { ref: inViewRef, inView: isBottomVisible } = useInView({
+    threshold: 0,
+  });
+
+  // Combine the inViewRef with our own ref state.
+  const setRefs = (node) => {
+    inViewRef(node);
+    setNewChatElem(node);
+  };
+
+  // Scroll to the New Chat button.
+  const scrollDown = () => {
+    newChatElem?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Toggle widget open/closed
+  const toggleWidget = () => setIsOpen(!isOpen);
+  // Toggle expanded view
+  const toggleExpand = () => setIsExpanded(!isExpanded);
+
+  // Switch between tabs
   const toggleTab = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
-  // Start a new chat from Home: set up an initial conversation and switch to Messages in chat view
+  // Start a new chat
   const handleNewChat = () => {
-    const initialMessage = { role: "assistant", content: "Hello! Let's start a new conversation." };
+    const initialMessage = {
+      role: "assistant",
+      content: "Hello! Let's start a new conversation.",
+    };
     setCurrentConversation([initialMessage]);
     setInChatView(true);
     setActiveTab("2");
   };
 
-  // Send a message in the chat view
-  const handleSendMessage = () => {
+  // Send a chat message
+  const handleSendMessage = async () => {
+
+    const {id} = user;
+    const title = urlToTitle(currentUrl);
+   
+
+
     if (!userInput.trim()) return;
     const userMsg = { role: "user", content: userInput };
     setCurrentConversation((prev) => [...prev, userMsg]);
     setUserInput("");
     setIsTyping(true);
-    setTimeout(() => {
+
+    // Now isTyping should stay true until the bots response is stored and ready to be displaye in the chat
+    let latestConversation = [...currentConversation, userMsg];
+    const promptData = {id, title, currentUrl, latestConversation }
+    const response = await askTutor(promptData);
+    console.log('The response is ', response);
+    
+
+
+    
+
+
+     setTimeout(() => {
       const botMsg = {
         role: "assistant",
         content: "Thanks for your question! Here's a helpful response.",
       };
       setCurrentConversation((prev) => [...prev, botMsg]);
+      
       setIsTyping(false);
     }, 1500);
+
+    console.log('The current conversation is ', currentConversation);
+
+
+  
+
+
   };
 
-  // Load a previous chat into the chat view
+
+
+  // Load a previous chat
   const handleLoadChat = (chatId) => {
     const chatToLoad = previousChats.find((c) => c.id === chatId);
     if (chatToLoad) {
@@ -103,11 +197,9 @@ export default function MyTutor() {
     }
   };
 
-  // Back button: return to the list view in the Messages tab.
+  // Return to chat list
   const handleBackToList = () => {
     setInChatView(false);
-    // Optionally clear the current conversation (if not meant to be saved)
-    // setCurrentConversation([]);
   };
 
   return (
@@ -138,8 +230,8 @@ export default function MyTutor() {
             position: "fixed",
             bottom: "80px",
             right: "20px",
-            width: "350px",
-            height: "500px",
+            width: isExpanded ? "700px" : "350px",
+            height: isExpanded ? "700px" : "500px",
             zIndex: 9999,
           }}
         >
@@ -149,27 +241,119 @@ export default function MyTutor() {
               boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
               border: "none",
               borderRadius: "0.5rem",
+              position: "relative",
             }}
           >
-            <CardBody className="d-flex flex-column">
-              {/* Main content area */}
-              <div className="flex-grow-1" style={{ overflow: "auto" }}>
+            <CardBody className="d-flex flex-column" style={{ height: "100%", padding: "1rem" }}>
+              {/* Expand icon at the top */}
+              <Button
+                onClick={toggleExpand}
+                color="link"
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                  zIndex: 10,
+                }}
+              >
+                <i className="bi bi-arrows-angle-expand" style={{ fontSize: "1.5rem" }} />
+              </Button>
+
+              {/* Scrollable main content */}
+              <div
+                ref={scrollContainerRef}
+                className="flex-grow-1"
+                style={{
+                  overflowY: "auto",
+                  marginTop: "40px",
+                  paddingBottom: "5px",
+                }}
+              >
                 <TabContent activeTab={activeTab}>
-                  {/* Home Tab: Shows stats and a New Chat button */}
+                  {/* HOME TAB */}
                   <TabPane tabId="1">
-                    <h5 style={{ color: "#17a2b8", fontWeight: "bold" }}>Home</h5>
-                    <p style={{ marginBottom: "1rem" }}>
-                      Welcome! Start a new conversation by clicking the button below.
+                    <h5 style={{ color: "#17a2b8", fontWeight: "bold" }}>Your Personal Tutor</h5>
+                    <p>
+                      Welcome to your personal tutor on RootMath! Ask any question about the platform and get personalized insights.
                     </p>
-                    <Button color="info" block onClick={handleNewChat}>
-                      New Chat
-                    </Button>
+                    <p>Your tutor tracks your progress—so the more you interact, the better the guidance.</p>
+                    <p>Example questions:</p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                      <Card
+                        style={{
+                          borderRadius: "1.5rem",
+                          padding: "0.5rem 1rem",
+                          backgroundColor: "#f0f8ff",
+                          border: "none",
+                          boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                        }}
+                      >
+                        <p style={{ margin: 0 }}>I&apos;ve only got 1 hour to study—what should I prioritize?</p>
+                      </Card>
+                      <Card
+                        style={{
+                          borderRadius: "1.5rem",
+                          padding: "0.5rem 1rem",
+                          backgroundColor: "#f0f8ff",
+                          border: "none",
+                          boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                        }}
+                      >
+                        <p style={{ margin: 0 }}>I&apos;m stuck on a differentiation problem—how do I start?</p>
+                      </Card>
+                      <Card
+                        style={{
+                          borderRadius: "1.5rem",
+                          padding: "0.5rem 1rem",
+                          backgroundColor: "#f0f8ff",
+                          border: "none",
+                          boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                        }}
+                      >
+                        <p style={{ margin: 0 }}>
+                          I watched the graph transformation video but didn&apos;t catch the rules for stretching. Can you explain it again?
+                        </p>
+                      </Card>
+                    </div>
+
+                    {/* New Chat button wrapped with the combined ref */}
+                    <div ref={setRefs}>
+                      <Button
+                        color="info"
+                        block
+                        onClick={handleNewChat}
+                        style={{ marginTop: "0.5rem" }}
+                      >
+                        New Chat
+                      </Button>
+                    </div>
+
+                    {/* Sticky arrow at the bottom-right */}
+                    <div
+                      style={{
+                        position: "sticky",
+                        bottom: "10px",
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        zIndex: 999,
+                      }}
+                    >
+                      <Button
+                        color="link"
+                        onClick={scrollDown}
+                        style={{
+                          marginRight: "20px",
+                          display: isBottomVisible ? "none" : "block",
+                        }}
+                      >
+                        <i className="bi bi-arrow-down-circle-fill" style={{ fontSize: "1.5rem" }} />
+                      </Button>
+                    </div>
                   </TabPane>
 
-                  {/* Messages Tab: Two views */}
+                  {/* MESSAGES TAB */}
                   <TabPane tabId="2">
                     {inChatView ? (
-                      // Chat view for current conversation
                       <>
                         <Row style={{ marginBottom: "0.5rem" }}>
                           <Col>
@@ -178,7 +362,7 @@ export default function MyTutor() {
                             </Button>
                           </Col>
                         </Row>
-                        <h5 style={{ color: "#17a2b8", fontWeight: "bold" }}>Conversation</h5>
+                        <h5 style={{ color: "#17a2b8", fontWeight: "bold" }}>{urlToTitle(currentUrl)}</h5>
                         <div
                           style={{
                             maxHeight: "240px",
@@ -199,8 +383,7 @@ export default function MyTutor() {
                                   display: "inline-block",
                                   padding: "0.5rem 1rem",
                                   borderRadius: "10px",
-                                  backgroundColor:
-                                    msg.role === "assistant" ? "#e9ecef" : "#17a2b8",
+                                  backgroundColor: msg.role === "assistant" ? "#e9ecef" : "#17a2b8",
                                   color: msg.role === "assistant" ? "#333" : "#fff",
                                   maxWidth: "80%",
                                 }}
@@ -241,7 +424,6 @@ export default function MyTutor() {
                         </div>
                       </>
                     ) : (
-                      // List view of previous chats
                       <>
                         <h5 style={{ color: "#17a2b8", fontWeight: "bold" }}>Messages</h5>
                         <p>Select a previous conversation:</p>
@@ -264,7 +446,7 @@ export default function MyTutor() {
                     )}
                   </TabPane>
 
-                  {/* Help Tab */}
+                  {/* HELP TAB */}
                   <TabPane tabId="3">
                     <h5 style={{ color: "#17a2b8", fontWeight: "bold" }}>Help</h5>
                     <p>Have questions? Check out our FAQ:</p>
@@ -279,7 +461,14 @@ export default function MyTutor() {
               </div>
 
               {/* Bottom nav for switching tabs */}
-              <Nav pills justified style={{ marginTop: "10px" }}>
+              <Nav
+                pills
+                justified
+                style={{
+                  marginTop: "10px",
+                  flexShrink: 0,
+                }}
+              >
                 <NavItem>
                   <NavLink
                     className={classnames({ active: activeTab === "1" })}
