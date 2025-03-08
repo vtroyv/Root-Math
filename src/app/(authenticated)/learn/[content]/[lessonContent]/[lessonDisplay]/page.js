@@ -4,7 +4,7 @@ import { Alert } from 'reactstrap';
 import {  useDynamicLessonDataMutation,useLessonQuestionFeedbackMutation } from '@/lib/redux/slices/apiSlice';
 import { useParams } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
-
+import { useLessonStore } from '@/lib/zustand/store';
 import ThreePaneResponsive from '@/lib/components/learn/lessons/ThreePaneResponsive';
 import Instructions from '@/lib/components/learn/lessons/Instructions';
 import LessonDisplay from '@/lib/components/learn/lessons/LessonMathDisplay';
@@ -28,6 +28,15 @@ export default function LessonsPage() {
   // Alert message state for displaying Reactstrap alerts
   const [alertMessage, setAlertMessage] = useState('');
 
+  //set up zustand hooks
+  // const  addLesson = useLessonStore(state => state.addLesson);
+  // const updateCurrentPart = useLessonStore(state=> state.updateCurrentPart)
+
+  const {addLesson, updateCurrentPart} = useLessonStore()
+
+ 
+
+
   //Access userData from clerkJS
   const { isLoaded, isSignedIn, user } = useUser();
   
@@ -47,6 +56,8 @@ export default function LessonsPage() {
   const [updateUserProgress, mutationStateC] = useUpdateLessonProgressMutation();
   const params = useParams();
   const apiParams = { lessonData: params.lessonDisplay };
+
+  
 
 
  
@@ -76,14 +87,19 @@ export default function LessonsPage() {
         
         //This function should return a staticLessonData and dynamicLessonData as keys in obj
         const result = await dynamicLessonData(dynamicRouteData)
-        const {staticLessonData,userProgressData} = result.data
+        const {staticLessonData,userProgressData} = result.data; 
+        console.log('The staticLessonData is ', staticLessonData)
+        console.log('The userProgressData is ', userProgressData)
        
 
 
         
         
         setLesson(staticLessonData)
+        addLesson(staticLessonData)
         setUserProgress(userProgressData)
+
+        
 
       } 
     } catch(error) {
@@ -239,6 +255,12 @@ export default function LessonsPage() {
     }
 
   }, [userProgress])
+
+  useEffect(()=>{
+    //Update zustandStore with the new currentPart
+    updateCurrentPart(currentPartIndex) 
+
+  }, [currentPartIndex])
  
   
   if (!lesson) {

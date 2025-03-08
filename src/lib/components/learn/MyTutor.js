@@ -19,6 +19,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { useParams, usePathname } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { useAskTutorMutation } from "@/lib/redux/slices/apiSlice";
+import { useLessonStore } from "@/lib/zustand/store";
 
 export default function MyTutor() {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,6 +38,12 @@ export default function MyTutor() {
  const acceptedUrlKeys = ['lessonDisplay', 'title'] // can add to this as we develop futher 
  const { isLoaded, isSignedIn, user } = useUser();
  const [askTutor, mutationState] = useAskTutorMutation();
+ 
+ //zustand hooks
+ const lesson = useLessonStore(state => state.lesson);
+const tasks = useLessonStore(state=> state.tasks);
+
+
 
 
 
@@ -144,6 +151,8 @@ export default function MyTutor() {
 
   // Send a chat message
   const handleSendMessage = async () => {
+    console.log('The lesson accessed from the tutor component is ', lesson);
+    console.log('The tasks accessed from the tutor component is ', tasks);
 
     const {id} = user;
     const title = urlToTitle(currentUrl);
