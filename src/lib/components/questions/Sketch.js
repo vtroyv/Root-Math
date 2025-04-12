@@ -11,7 +11,7 @@ import {
   ListGroup,
   ListGroupItem,
   CardBody,
-  Nav,
+  Nav, 
   NavItem,
   NavLink,
   TabContent,
@@ -74,16 +74,7 @@ export default function Sketch({ question }) {
       showCopyright: false,
     });
 
-    // Example: slider for polynomial degree
-    // const degree = board.create('slider', [
-    //   [1, 8],
-    //   [7, 8],
-    //   [1, 2, 10],
-    // ], {
-    //   name: 'degree',
-    //   snapWidth: 1,
-    //   digits: 0,
-    // });
+   
 
     const degree = question.degree
     board.BOARD_MODE_SKETCH = 0x0100;
@@ -93,6 +84,7 @@ export default function Sketch({ question }) {
     // Function to update reduced coordinates
     const updateReducedCoordinates = () => {
       const coords = points.map(p => new JXG.Coords(JXG.COORDS_BY_USER, [p.X(), p.Y()], board));
+     
       const reduced = JXG.Math.Numerics.Visvalingam(coords, degree - 1);
       const reducedCoords = reduced.map(r => ({
         x: r.usrCoords[1],

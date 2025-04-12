@@ -1,0 +1,7 @@
+1) Now that we have a globalStore via zustand, so now bascially for each taskType for all interactions we need to constantly update the globalState 
+for the lesson via the taskState key
+
+2) When the user clicks submit we then read from that global taskState to see the current state of the task using the activeIndex in the handlesubmit function 
+in the LessonMathDisplay component
+
+3) Now we must update the handleSubmit function to provide correct/incorrect aswell as accurate feedback for each task 

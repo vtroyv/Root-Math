@@ -6,7 +6,7 @@ export default function BlockRenderer({ block }) {
   switch (block.type) {
     case 'heading': {
       const Tag = `h${block.level || 2}`;
-      return <Tag style={{ margin: '0.5rem', fontWeight: 'bold', color: 'black' }}>{block.content}</Tag>;
+      return <Tag style={{ margin: '0.5rem', fontWeight: 'bold', color: 'black' }}><Latex>{block.content}</Latex></Tag>;
     }
     case 'paragraph':
       return <p style={{ fontSize: '1.25rem', margin: '0.5rem' }}><Latex>{block.content}</Latex></p>;
@@ -32,7 +32,7 @@ export default function BlockRenderer({ block }) {
             margin: '0.5rem 0',
           }}
         >
-          <h4 style={{ fontWeight: 'bold' }}>{block.title}</h4>
+          <h4 style={{ fontWeight: 'bold' }}><Latex>{block.title}</Latex></h4>
           <p><Latex>{block.instructions}</Latex></p>
           {block.hint && (
             <details style={{ marginTop: '0.5rem' }}>

@@ -1,8 +1,12 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Card, CardHeader, ListGroup, ListGroupItem, FormGroup, Label, Input, Modal, ModalBody, Button } from 'reactstrap';
 import Image from 'next/image';
 import "bootstrap-icons/font/bootstrap-icons.css";
+import 'katex/dist/katex.min.css';
+import Latex from 'react-latex-next';
+import { useMultipleChoiceStore } from '@/lib/zustand/providers/lesson-task-provider';
+import { useLessonStore } from '@/lib/zustand/providers/lesson-state-provider';
 
 /**
  * Displays multiple choice options as images, with a "zoom" icon to enlarge in a modal.
@@ -16,12 +20,28 @@ import "bootstrap-icons/font/bootstrap-icons.css";
  *     ]
  */
 export default function MultipleChoiceImagesTask({ task, imageChoices = [] }) {
+  // console.log('Rendering MultipleChoiceImagesTask with task:', task);
   const [selectedOption, setSelectedOption] = useState('');
   // For enlarging images in a modal:
   const [expandedImage, setExpandedImage] = useState(null);
 
+  //zustand hooks
+  const selectChoice = useMultipleChoiceStore((state) => state.selectChoice);
+  const updateTaskState = useLessonStore((state) => state.updateTaskState);
+  const taskState = useLessonStore((state) => state.taskState);
+
+
+
+
+
   function handleOptionChange(value) {
+    // console.log('Selected option:', value);
+    
     setSelectedOption(value);
+    selectChoice(value);
+    //Update the taskState in the store 
+    updateTaskState({title: task.title, selectedChoice: value});
+    //This works correctly now
   }
 
   function openModal(choice) {
@@ -31,6 +51,9 @@ export default function MultipleChoiceImagesTask({ task, imageChoices = [] }) {
   function closeModal() {
     setExpandedImage(null);
   }
+
+
+
 
   return (
     <Card
@@ -50,8 +73,9 @@ export default function MultipleChoiceImagesTask({ task, imageChoices = [] }) {
           padding: '0.75rem 1rem',
         }}
       >
+        
         <h5 style={{ margin: 0, fontWeight: 'bold' }}>
-          {task.title}
+          <Latex>{task.title}</Latex>
         </h5>
       </CardHeader>
 
@@ -61,21 +85,21 @@ export default function MultipleChoiceImagesTask({ task, imageChoices = [] }) {
             key={idx}
             style={{
               cursor: 'pointer',
-              borderLeft: selectedOption === choice.url ? '6px solid #17a2b8' : '4px solid transparent',
+              borderLeft: selectedOption === choice ? '6px solid #17a2b8' : '4px solid transparent',
               transition: 'border-left 0.2s ease',
               borderRadius: 0,
               position: 'relative', // so we can position the expand icon
             }}
-            onClick={() => handleOptionChange(choice.url)}
+            onClick={() => handleOptionChange(choice)}
           >
             <FormGroup check>
               <Label check style={{ width: '100%', margin: 0, cursor: 'pointer' }}>
                 <Input
                   type="radio"
-                  name="multipleChoiceImages"
-                  value={choice.url}
-                  checked={selectedOption === choice.url}
-                  onChange={() => handleOptionChange(choice.url)}
+                  name={`multipleChoiceImages-${task.title}`}
+                  value={choice}
+                  checked={selectedOption === choice}
+                  onChange={() => handleOptionChange(choice)}
                   style={{
                     accentColor: '#17a2b8',
                     marginRight: '0.5rem',

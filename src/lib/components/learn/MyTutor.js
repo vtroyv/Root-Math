@@ -19,7 +19,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { useParams, usePathname } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { useAskTutorMutation } from "@/lib/redux/slices/apiSlice";
-import { useLessonStore } from "@/lib/zustand/store";
+import { useLessonStore } from "@/lib/zustand/providers/lesson-state-provider";
 
 export default function MyTutor() {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,14 +50,12 @@ const tasks = useLessonStore(state=> state.tasks);
  
 
   useEffect(() => {
-    console.log("Current pathname:", pathname);
-    console.log("Current params:", params);
+
 
     // Optionally extract the last segment:
     const segments = pathname.split("/");
     // Handle trailing slash by checking the last element.
-    console.log('The segments are ', segments)
-    console.log('The params are ', params )
+
     const lastParam = segments.pop()
     setCurrentUrl(lastParam);
     const lastParamKey = Object.keys(params).pop();
@@ -151,9 +149,10 @@ const tasks = useLessonStore(state=> state.tasks);
 
   // Send a chat message
   const handleSendMessage = async () => {
-    console.log('The lesson accessed from the tutor component is ', lesson);
-    console.log('The tasks accessed from the tutor component is ', tasks);
 
+
+    const lessonContext = {lesson, tasks}
+    
     const {id} = user;
     const title = urlToTitle(currentUrl);
    
@@ -167,9 +166,10 @@ const tasks = useLessonStore(state=> state.tasks);
 
     // Now isTyping should stay true until the bots response is stored and ready to be displaye in the chat
     let latestConversation = [...currentConversation, userMsg];
-    const promptData = {id, title, currentUrl, latestConversation }
+    //Add a if statement, that checks if were on a lessonRoute, if so include the lessonContext
+    const promptData = {id, title, currentUrl, latestConversation, lessonContext }
     const response = await askTutor(promptData);
-    console.log('The response is ', response);
+
     
 
 
@@ -186,7 +186,7 @@ const tasks = useLessonStore(state=> state.tasks);
       setIsTyping(false);
     }, 1500);
 
-    console.log('The current conversation is ', currentConversation);
+
 
 
   

@@ -2,16 +2,34 @@
 import React, { useRef, useEffect, useState } from 'react';
 import 'katex/dist/katex.min.css';
 import Latex from 'react-latex-next';
+import { useLessonStore } from '@/lib/zustand/providers/lesson-state-provider';
 
-// Optional: if you need a polyfill for older browsers
-// import ResizeObserver from 'resize-observer-polyfill';
+/*
+TO DO: (Heavy on sympy )
+- look at the sketch.js question and see if we can use the same logic to get the reduced coordinates
+- using the same logic that the sketch.js component updates the reduced coordinates - use this to update global state to store the reduced coordinates (time for more zustand)
+- On submit send the reduced coordinates as well as question data about the problem
+- On the server side, create a framework for the following logic: 
+  -1. Use the reduced coordinates from client to create lagrange interpolation of the users sketch 
+  -2. Using this interpolated function, store its key points e.g. roots/turning points, axis-intercepts etc in a list
+  -3. Next using the original function from the problem, determine its key points e.g. roots/turning points, axis-intercepts etc in a list
+      - note this list for the original function could be predefined in the database and thus sent over to fastapi from the client
+  -4. Compare the two lists and determine if they are similar enough to be considered correct- e.g. have a threshold
+  -5. Based on which points are correct (e.g. near enough) we can provide insightful feedback on where the student went wrong
+  -6. We could also store and obtain additional information e.g. curve shapes, limits etc and use it to help aid our comparison between our approximation of the student’s sketch and the original function
+
+- Create some logic to determine the limits of a student’s sketch, perhaps by using the lagrange interpolation function of the student’s work and evaluating it at large values of ±x
+- Once more, be able to provide accurate feedback off this.
+*/
 
 export default function CurveSketch({ task, onDataChange }) {
-  console.log('The task  in curveSketch is:', task);
   const boardContainerRef = useRef(null);
   const boardRef = useRef(null);
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [reducedCoordinates, setReducedCoordinates] = useState([]);
+
+  // Zustand hook for updating the global task state
+  const updateTaskState = useLessonStore((state) => state.updateTaskState);
 
   // 1. Dynamically load JSXGraph CSS + script
   useEffect(() => {
@@ -49,27 +67,29 @@ export default function CurveSketch({ task, onDataChange }) {
       pan: { enabled: true, needTwoFingers: true, needShift: true },
       showCopyright: false
     });
+
     boardRef.current = board;
 
-    // The rest of your “sketch” logic...
-    const degree =  2;
+    const degree = 2; // Hardcoded; later you may load this dynamically.
     board.BOARD_MODE_SKETCH = 0x0100;
     let sketch = null;
     let curve = null;
     let points = [];
 
-    // Helper to update reduced coords
+    // This function computes the reduced coordinates and updates local state.
+    // It returns the computed coordinates so they can be sent to global state as needed.
     const updateReducedCoordinates = () => {
       const coords = points.map(p => new JXG.Coords(JXG.COORDS_BY_USER, [p.X(), p.Y()], board));
       const reduced = JXG.Math.Numerics.Visvalingam(coords, degree - 1);
-      const newCoords = reduced.map(r => ({ x: r.usrCoords[1], y: r.usrCoords[2] }));
-      setReducedCoordinates(newCoords);
-      if (onDataChange) {
-        onDataChange(newCoords);
-      }
+      const newReducedCoords = reduced.map(r => ({
+        x: r.usrCoords[1],
+        y: r.usrCoords[2],
+      }));
+      setReducedCoordinates(newReducedCoords);
+      return newReducedCoords;
     };
 
-    // “down” event
+    // “down” event: Begin the sketch.
     board.on('down', () => {
       if (board.mode !== board.BOARD_MODE_NONE) return;
       board.mode = board.BOARD_MODE_SKETCH;
@@ -81,10 +101,11 @@ export default function CurveSketch({ task, onDataChange }) {
       });
     });
 
-    // “up” event
+    // “up” event: Finalize sketch and update global state.
     board.on('up', () => {
       if (board.mode !== board.BOARD_MODE_SKETCH) return;
 
+      // If an existing curve exists, remove it and reset points.
       if (curve && JXG.exists(curve)) {
         board.removeObject(curve);
         points.forEach(pt => board.removeObject(pt));
@@ -92,14 +113,15 @@ export default function CurveSketch({ task, onDataChange }) {
       }
       board.mode = board.BOARD_MODE_NONE;
 
-      // Collect raw coords
-      const coords = sketch.dataX.map((x, i) => {
-        return new JXG.Coords(JXG.COORDS_BY_USER, [x, sketch.dataY[i]], board);
-      });
-      // Visvalingam
+      // Collect raw coordinates from the sketch.
+      const coords = sketch.dataX.map((x, i) =>
+        new JXG.Coords(JXG.COORDS_BY_USER, [x, sketch.dataY[i]], board)
+      );
+
+      // Use the Visvalingam algorithm to reduce the collected points.
       const reduced = JXG.Math.Numerics.Visvalingam(coords, degree - 1);
 
-      // Create points
+      // Create board points at the reduced coordinates.
       points = reduced.map(r => {
         const x = r.usrCoords[1];
         const y = r.usrCoords[2];
@@ -108,13 +130,25 @@ export default function CurveSketch({ task, onDataChange }) {
           withLabel: false
         });
       });
-      // Drag event to recalc coords
-      points.forEach(pt => {
-        pt.on('drag', () => updateReducedCoordinates());
-      });
-      updateReducedCoordinates();
 
-      // Lagrange polynomial
+      // Update local and global state after finishing sketch.
+      const finalReducedCoords = updateReducedCoordinates();
+      updateTaskState({ title: task.title, reducedCoordinates: finalReducedCoords });
+
+      // Attach events to each reduced point.
+      points.forEach(pt => {
+        // (Optional) Update local state continuously while dragging.
+        pt.on('drag', () => {
+          updateReducedCoordinates();
+        });
+        // Update global state only when the user releases the point.
+        pt.on('up', () => {
+          const newReducedCoords = updateReducedCoordinates();
+          updateTaskState({ title: task.title, reducedCoordinates: newReducedCoords });
+        });
+      });
+
+      // Create the Lagrange polynomial curve from the reduced points.
       curve = board.create('functiongraph', [
         JXG.Math.Numerics.lagrangePolynomial(points)
       ], {
@@ -127,7 +161,7 @@ export default function CurveSketch({ task, onDataChange }) {
       sketch = null;
     });
 
-    // “move” event
+    // “move” event: Update the sketch while drawing.
     board.on('move', (evt, mode) => {
       if (mode !== board.BOARD_MODE_SKETCH) return;
       const pos = board.getMousePosition(evt);
@@ -143,20 +177,15 @@ export default function CurveSketch({ task, onDataChange }) {
       board.off('move');
       JXG.JSXGraph.freeBoard(board);
     };
-  }, [scriptLoaded,  onDataChange]);
+  }, [scriptLoaded]);
 
-  // 3. Use a ResizeObserver to resize the board whenever the container changes size
+  // 3. Resize the board when the container size changes using a ResizeObserver.
   useEffect(() => {
     if (!scriptLoaded || !boardRef.current) return;
-
-    // If you need a polyfill, uncomment import above or install 'resize-observer-polyfill'
     const ro = new ResizeObserver(entries => {
       for (let entry of entries) {
         const { width, height } = entry.contentRect;
-        // Resize the board to the new container dimensions
         boardRef.current.resizeContainer(width, height);
-        // Optionally preserve the bounding box or re-set it:
-        // boardRef.current.setBoundingBox([-10, 10, 10, -10], false);
         boardRef.current.update();
       }
     });
@@ -167,21 +196,25 @@ export default function CurveSketch({ task, onDataChange }) {
     };
   }, [scriptLoaded]);
 
+  console.log('The coordinates are ', reducedCoordinates);
+
   return (
     <>
-    <div style={{marginTop:'0.5rem'  }}>
-    <div style={{marginBottom:'1rem'}}>
-    <h3 style={{fontWeight:'bold', }}><Latex style={{fontFamily:"Cabin Sketch"}}>{task.title}</Latex></h3>
-    </div>
-    <div
-      ref={boardContainerRef}
-      style={{
-        width: '100%',
-        height: '100%',
-        minHeight: '400px'
-      }}
-    />
-    </div>
+      <div style={{ marginTop: '0.5rem' }}>
+        <div style={{ marginBottom: '1rem' }}>
+          <h3 style={{ fontWeight: 'bold' }}>
+            <Latex style={{ fontFamily: 'Cabin Sketch' }}>{task.title}</Latex>
+          </h3>
+        </div>
+        <div
+          ref={boardContainerRef}
+          style={{
+            width: '100%',
+            height: '100%',
+            minHeight: '400px'
+          }}
+        />
+      </div>
     </>
   );
 }

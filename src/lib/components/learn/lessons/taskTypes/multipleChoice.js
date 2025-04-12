@@ -7,9 +7,11 @@ export default function MultipleChoiceTask({ question, choices ,task}) {
   const [selectedOption, setSelectedOption] = useState('');
 
   function handleOptionChange(value) {
+    // console.log('The selectedOption is ',selectedOption)
     setSelectedOption(value);
     // If you want to inform a parent component, you could call onChange(value) here.
   }
+
 
   return (
     <Card
@@ -36,6 +38,8 @@ export default function MultipleChoiceTask({ question, choices ,task}) {
 
       <ListGroup flush style={{ borderRadius: 0 }}>
         {choices.map((choice, idx) => (
+          // console.log('The choice is ', choice),
+          // console.log('selectedOption is ', selectedOption),
           <ListGroupItem
             key={idx}
             style={{
@@ -51,7 +55,7 @@ export default function MultipleChoiceTask({ question, choices ,task}) {
               <Label check style={{ width: '100%', margin: 0, cursor: 'pointer' }}>
                 <Input
                   type="radio"
-                  name="multipleChoice"
+                  name={`multipleChoice-${task.title}`}
                   value={choice}
                   checked={selectedOption === choice}
                   onChange={() => handleOptionChange(choice)}
@@ -61,7 +65,7 @@ export default function MultipleChoiceTask({ question, choices ,task}) {
                     marginRight: '0.5rem',
                   }}
                 />
-                <Latex>{choice}</Latex>
+                <Latex>{choice.text}</Latex> {/*THE ISSUE IS HERE */}
               </Label>
             </FormGroup>
           </ListGroupItem>

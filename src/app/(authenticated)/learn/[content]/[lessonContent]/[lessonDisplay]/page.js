@@ -4,7 +4,7 @@ import { Alert } from 'reactstrap';
 import {  useDynamicLessonDataMutation,useLessonQuestionFeedbackMutation } from '@/lib/redux/slices/apiSlice';
 import { useParams } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
-import { useLessonStore } from '@/lib/zustand/store';
+import { useLessonStore } from '@/lib/zustand/providers/lesson-state-provider';
 import ThreePaneResponsive from '@/lib/components/learn/lessons/ThreePaneResponsive';
 import Instructions from '@/lib/components/learn/lessons/Instructions';
 import LessonDisplay from '@/lib/components/learn/lessons/LessonMathDisplay';
@@ -29,10 +29,13 @@ export default function LessonsPage() {
   const [alertMessage, setAlertMessage] = useState('');
 
   //set up zustand hooks
-  // const  addLesson = useLessonStore(state => state.addLesson);
-  // const updateCurrentPart = useLessonStore(state=> state.updateCurrentPart)
 
-  const {addLesson, updateCurrentPart} = useLessonStore()
+
+  const {addLesson, updateCurrentPart, tasks,   } = useLessonStore();
+  const globalTaskStates = useLessonStore((state)=> state.taskState);
+
+
+  
 
  
 
@@ -88,8 +91,7 @@ export default function LessonsPage() {
         //This function should return a staticLessonData and dynamicLessonData as keys in obj
         const result = await dynamicLessonData(dynamicRouteData)
         const {staticLessonData,userProgressData} = result.data; 
-        console.log('The staticLessonData is ', staticLessonData)
-        console.log('The userProgressData is ', userProgressData)
+
        
 
 
@@ -98,6 +100,8 @@ export default function LessonsPage() {
         setLesson(staticLessonData)
         addLesson(staticLessonData)
         setUserProgress(userProgressData)
+
+
 
         
 
@@ -110,20 +114,31 @@ export default function LessonsPage() {
   getLessonData() 
 },[ isSignedIn, user,]);
 
+useEffect(()=>{
+  console.log('The tasks being read from the zustand store is ', tasks)
+
+
+}, [tasks])
+
 
   // When "part" changes, re-initialize taskState
   //currently from this line and below the code is responsible for fetching the taskstate and feedback.
+  // ---------------------------------------------------  
+
   useEffect(() => {
+
     if (!lesson) return;
     const part = lesson.parts[currentPartIndex]; //Note the currentPartIndex is always set to 0, that's why page refreshes send you back to 0. 
 
-    // we will first use the currentPartIndex, to fetch the part from the userProgress State. 
+    
     const userProgressPart = userProgress.parts[currentPartIndex]
     const tasksInUserProgressPart = userProgressPart.tasks
+
 
     // We'll look for tasks in part.blocks. 
     // The first task is "unlocked", rest "locked".
     const tasksInPart = part.blocks.filter(b => b.type === 'task');
+
     
 
     // const count = tasksInPart.length;
@@ -172,6 +187,7 @@ export default function LessonsPage() {
 
 
   }, [lesson, currentPartIndex]);
+  // ---------------------------------------------------------------
 
   //This useEffect is responsible for updating the userProgressState and sending it to the DB
   useEffect(() => {
@@ -186,11 +202,6 @@ export default function LessonsPage() {
        userTaskState[userTaskIndex]?.status === 'incorrect') &&
       userFeedbackMessage[userTaskIndex]
     ) {
-      console.log('userFeedbackMessage has been updated:', userFeedbackMessage);
-      console.log('userTaskState has been updated:', userTaskState);
-      console.log('The userProgess state is ', userProgress)
-      console.log('The current userPartIndex is ', currentPartIndex)
-      console.log('The currentuserTaskIndex is ', userTaskIndex)
 
       //Now we should simply provide an update to the userProgress object then simply send that off to mongoDB
       setUserProgress((oldState) => {
@@ -216,8 +227,7 @@ export default function LessonsPage() {
           ...newState.parts[currentPartIndex].tasks[userTaskIndex],
           feedback: userFeedbackMessage[userTaskIndex]
         };
-      
-        console.log('The new userProgress state after updating feedback and everything is ', newState);
+
         return newState;
       });
 
@@ -242,7 +252,6 @@ export default function LessonsPage() {
    
         const updatedStatus = await updateUserProgress(data);
 
-        console.log('The updatedStatus is ', updatedStatus);
       }
 
       
@@ -274,30 +283,64 @@ export default function LessonsPage() {
    * We'll simulate a server check. In real usage, do fetch(...)
    */
       //we will want to update this function to provide updates to the userProgres obect on submission aswell, e.g. store feedback etc
-  async function handleSubmitTask(taskIndex, latexInput, userLatex) {
-    
-    //First update the userTaskIndex in the global state using taskIndex, 
-    //as we will need it in our safeguarded useEffct which updates the userProgress DB!
+  async function handleSubmitTask(taskIndex, latexInput, userLatex, multipleChoiceImages = null) {
 
-    //THis should set the userLatex;
+
     setUserLatexStore(userLatex);
 
     setUserTaskIndex(taskIndex);
-    console.log('The task index is ', taskIndex)
 
-
-
+    
+    let lessonData
+   
+    // Create variables needed for the switch statement below
     const task = taskState[taskIndex];
-    const userTask = userTaskState[taskIndex]
-
-
+    const userTask = userTaskState[taskIndex] 
+    const taskType  = task.task.renderType;
     const slug = lesson.slug;
     const partID = lesson.parts[currentPartIndex].id;
 
-    const lessonData = { slug, partID, task, latexInput };
+    
+
+    switch(taskType) {
+      case 'multipleChoiceImages':
+        const selectedChoice =  globalTaskStates[taskIndex].selectedChoice; 
+        lessonData = {slug, partID, task, selectedChoice, taskType}
+        break; 
+
+      case 'sketch':
+        const reducedCoordinates = globalTaskStates[taskIndex].reducedCoordinates;
+        lessonData = {slug, partID, task, reducedCoordinates, taskType}
+        break;
+
+
+      default:
+        lessonData = { slug, partID, task, latexInput };
+        break;
+
+    }
+    // Now i can add more 
+
+    // const lessonData = { slug, partID, task, latexInput };
+
+    // if (taskType === 'multipleChoiceImages') {
+    //   const selectedChoice =  globalTaskStates[taskIndex].selectedChoice; 
+
+    //   const lessonDataMCI = {slug, partID, task, selectedChoice, taskType}
+
+
+    //   const {feedback, correct } =await verifyTask(lessonDataMCI)
+    // }
+
+
+    //Now I essentially need to probably update this route so that it can read the type of task and then mark it accordingly 
+    //Alternatively I can create multiple routes for each task type 
+    
+
 
     const { feedback, correct } = await verifyTask(lessonData);
-    console.log('The feedback for the submitted task  is ', feedback)
+ 
+    // ---------------------------
   
 
     setTaskState(oldState => {
@@ -336,7 +379,7 @@ export default function LessonsPage() {
 
       //If correct, unlock the next step if it exists 
       if (correct && newState[taskIndex +1]) {
-        console.log('This if clause is running')
+        
 
         if (newState[taskIndex+1].status ==='locked') {
           
@@ -393,7 +436,10 @@ export default function LessonsPage() {
 
  
   async function verifyTask(lessonData) {
+
     const res = await lessonQuestionFeedback(lessonData).unwrap();
+
+    //use the same route for everything but 
     
     return res;
   }
@@ -414,8 +460,8 @@ export default function LessonsPage() {
       return;
     }
     if (!isLastPart) {
-      console.log('Were now in this ifClause')
       setCurrentPartIndex(i => i + 1);
+      
       
     } else {
       setAlertMessage('You have reached the end of the lesson!');

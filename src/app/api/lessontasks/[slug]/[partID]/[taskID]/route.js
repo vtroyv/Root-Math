@@ -1,17 +1,59 @@
 
+//DO NEXT 
+//FIX THIS SO IT CAN HANDLE MULTIPLE TYPES
 export async function POST(request, {params}) {
     // Parse the JSON body from the incoming request 
     const body = await request.json();
-    // console.log('The current body that i would like to send is ', body)
+    console.log('The current body that i would like to send is ', body)
 
-    const feedback = {
-        task: body.task, 
-        latexInput: body.latexInput
+    const taskType = body.taskType;
+    let url;
+    let feedback;
+
+    switch (taskType) {
+        case "multipleChoiceImages":
+            // create the object and url 
+             feedback = {
+                task:body.task, 
+                selectedChoice: body.selectedChoice,
+                taskType: taskType,
+            }
+            url ='http://127.0.0.1:8000/lesson-feedback/multiple-choice-images'
+            break;
+        
+        case "sketch":
+            //For the sketch task, we'll probably need to update mongoDB to store details about the number of degrees, 
+            // we can probably store this in the task object
+            feedback = {
+                task: body.task, 
+                reducedCoordinates: body.reducedCoordinates,
+                taskType: taskType,
+            }
+            url ='http://127.0.0.1:8000/lesson-feedback/sketch'
+            break;
+        
+        
+
+        default:
+            feedback = {
+                task: body.task, 
+                latexInput: body.latexInput 
+            }
+            url = 'http://127.0.0.1:8000/lesson-feedback/'
+  
     }
-    console.log('The feedback is given by ', feedback)
-    // console.log('The feedback i wish to send is ', feedback)
+
+
+    
+ 
+   
+
+
     try {
-        const response = await fetch('http://127.0.0.1:8000/lesson-feedback', {
+
+
+
+        const response = await fetch(url, {
             method:'POST',
             headers: {'Content-Type': 'application/json'}, 
             body: JSON.stringify(feedback), //Send the body as JSON

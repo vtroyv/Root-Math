@@ -7,20 +7,24 @@ import CurveAndMfe from './taskTypes/curveAndMfe';
 import MultipleChoiceTask from './taskTypes/multipleChoice';
 import MultipleChoiceImagesTask from './taskTypes/multipleChoiceImage';
 
+//I should be passing refs to the taskrenderer that should then be passing it as props to the specific task types, meaning that when i click submit, regardless of the type using forwardRef we should beable to reference the tasktype and access info. 
+//If this takes to long we'll simply switch to using zustand state, and reading it during the submit. 
+
 export default function TaskRenderer({ part, taskState }) {
   // If no part exists, render a fallback SingleMfe with empty LaTeX.
-  console.log('This function is being called!')
+
   if (!part) {
     return <SingleMfe part={{ latex: '' }} />;
   }
   
   const tasksList = part.blocks.filter(b => b.type === 'task');
-  console.log('The tasksList is:', tasksList)
+
 
   // If there are no tasks, render a SingleMfe with empty LaTeX.
   if (!tasksList || tasksList.length === 0) {
-    console.log('Were in this if sttement')
-    return <SingleMfe part={{ latex: '' }} noTasks={true} />;
+    console.log('Are the tasksList empty? ', tasksList);
+
+    return <SingleMfe part={{ latex: '' }} noTasks={true} task={tasksList}/>;
   }
 
   // Check if any task has a renderType.
@@ -28,7 +32,7 @@ export default function TaskRenderer({ part, taskState }) {
   
   // If none have a renderType, render a single SingleMfe (using the part's LaTeX).
   if (tasksWithRenderType.length === 0) {
-    console.log('were here')
+
     return <SingleMfe part={part} noTasks={true}/>;
   }
 
@@ -48,7 +52,7 @@ export default function TaskRenderer({ part, taskState }) {
             );
           // Add additional cases for other renderTypes if needed.
           case 'image':
-            console.log('the image case was selected')
+
           return(
             <QuestionImage
               key={idx}
@@ -62,7 +66,7 @@ export default function TaskRenderer({ part, taskState }) {
               task={task}
               mfeHeight=''
             />
-          )
+          ) 
           case 'curveAndMfe':
             return (
               <CurveAndMfe
@@ -106,6 +110,7 @@ export default function TaskRenderer({ part, taskState }) {
                   ...part,
                   latex: task.latex || part.latex,
                 }}
+                task={task}
               />
             );
         }

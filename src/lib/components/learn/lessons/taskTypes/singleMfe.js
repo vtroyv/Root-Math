@@ -2,16 +2,24 @@
 import React, { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import { MathfieldElement } from 'mathlive';
 import { Alert } from 'reactstrap';
+import { useLessonStore } from '@/lib/zustand/providers/lesson-state-provider';
 
-const SingleMfe = forwardRef(({ part, noTasks }, ref) => {
+const SingleMfe = forwardRef(({ part, noTasks , task}, ref) => {
+
+  console.log('Rendering SingleMfe with part:', part);
+  console.log('Rendering SingleMfe with noTasks:', noTasks);
+  console.log('Rendering SingleMfe with task:', task);
+
+  //I need to pass the props in here, and 
+  
   const mathfieldRef = useRef(null);
   const mfe = useRef(null);
   const [alertVisible, setAlertVisible] = useState(false);
   const [latex, setLatex] = useState(part.latex || '');
 
   const height = noTasks ? '100%' : null;
-  console.log('noTasks is:', noTasks)
 
+  const updateTaskState = useLessonStore((state) => state.updateTaskState);
 
   // Keep a reference to the last valid LaTeX value and protected segments.
   const lastValidLatexRef = useRef('');
@@ -64,6 +72,9 @@ const SingleMfe = forwardRef(({ part, noTasks }, ref) => {
         }
         lastValidLatexRef.current = newLatex;
         setLatex(newLatex);
+        
+
+
       });
 
       if (mathfieldRef.current && !mathfieldRef.current.contains(mfe.current)) {
@@ -80,6 +91,8 @@ const SingleMfe = forwardRef(({ part, noTasks }, ref) => {
       setLatex(part.latex || '');
     }
   }, [part.latex]);
+
+
 
   // Expose a getValue method so the parent can read the mathfield value.
   useImperativeHandle(ref, () => ({
