@@ -212,6 +212,7 @@ export const DEFINITIONS_INEQUALITIES: LatexDictionaryEntry[] = [
     precedence: 242, // Note: different precedence than `>=` as per MathML
     parse: 'GreaterEqual',
   },
+  
   {
     latexTrigger: ['>', '='],
     kind: 'infix',

@@ -336,17 +336,24 @@ useEffect(()=>{
         const ce = ceConfig.getEngine();
         ceRef.current = {ce}
         const preprocessedArray = preprocessLatex(latexInput); 
+        console.log('The preprocessedArray is ', preprocessedArray)
+
         const boxedExpressionArray = preprocessedArray.map(item => 
           ceRef.current.ce.parse(item)
         );
 
+        console.log('The boxedExpressionArray is ', boxedExpressionArray)
+
+
         const compiled = boxedExpressionArray.map(bE => bE.compile('sympy'));
+        console.log('the compiled is ', compiled)
+        
         const compiledStrings= compiled.map(fn => fn.toString());
         console.log('The compiled strings are ', compiledStrings)
         
 
 
-        lessonData = {slug, partID, task, latexInput, taskType}
+        lessonData = {slug, partID, task, compiledStrings, taskType}
 
         break;
 
@@ -358,23 +365,7 @@ useEffect(()=>{
         break;
 
     } 
-    // Now i can add more 
-
-    // const lessonData = { slug, partID, task, latexInput };
-
-    // if (taskType === 'multipleChoiceImages') {
-    //   const selectedChoice =  globalTaskStates[taskIndex].selectedChoice; 
-
-    //   const lessonDataMCI = {slug, partID, task, selectedChoice, taskType}
-
-
-    //   const {feedback, correct } =await verifyTask(lessonDataMCI)
-    // }
-
-
-    //Now I essentially need to probably update this route so that it can read the type of task and then mark it accordingly 
-    //Alternatively I can create multiple routes for each task type 
-    
+   
 
 
     const { feedback, correct } = await verifyTask(lessonData);

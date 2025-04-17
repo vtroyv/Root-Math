@@ -121,6 +121,7 @@ export const RELOP_LIBRARY: IdentifierDefinitions = {
       return ce.True;
     },
   } as FunctionDefinition,
+  
 
   Less: {
     complexity: 11000,
@@ -173,6 +174,8 @@ export const RELOP_LIBRARY: IdentifierDefinitions = {
     canonical: (args, { engine: ce }) =>
       ce._fn('Not', [ce._fn('Greater', args)]),
   },
+
+
 
   LessEqual: {
     complexity: 11000,

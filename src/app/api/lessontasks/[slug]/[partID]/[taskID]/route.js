@@ -45,9 +45,15 @@ export async function POST(request, {params}) {
             url = 'http://127.0.0.1:8000/lesson-feedback/multiple-choice'
             console.log('The feedback id like to send is ', feedback)
             break;
-        
 
-        
+        case 'image':
+            feedback = {
+                task: body.task, 
+                compiledStrings: body.compiledStrings, 
+                taskType: taskType, 
+            }
+            url = 'http://127.0.0.1:8000/lesson-feedback/image'
+            break;
 
         default:
             feedback = {
@@ -55,14 +61,7 @@ export async function POST(request, {params}) {
                 latexInput: body.latexInput 
             }
             url = 'http://127.0.0.1:8000/lesson-feedback/'
-  
     }
-
-
-    
- 
-   
-
 
     try {
 

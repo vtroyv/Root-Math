@@ -53,6 +53,9 @@ function preprocessLatex(latex) {
   // (Lines with '\\' plus other content remain.)
   lines = lines.filter((line) => line.trim() !== '\\');
 
+  // Step 9: Remove lines that are exactly '{{' or '}}'
+  lines = lines.filter((line) => line !== '{{' && line !== '}}');
+
   return lines;
 }
 
