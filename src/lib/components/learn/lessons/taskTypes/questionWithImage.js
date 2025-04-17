@@ -9,7 +9,7 @@ export default function QuestionImage({ url, alt, caption, width = 600, height =
         <div style={{marginBottom:'0.5rem'}}>
             <div style={{margin:'0.5rem'}}><h3 style={{fontWeight:'bold'}}><Latex>{task.title}</Latex></h3></div>
             <ImageWithEnlarge url={url} alt={alt} caption={caption} width={width} height={height} />
-            <SingleMfe part={part}  mfeHeight={mfeHeight}/>
+            <SingleMfe part={part} task={task} mfeHeight={mfeHeight}/>  {/* I need to write logic in this component to update global task state with with the correct values*/}
         </div>
     );
 }

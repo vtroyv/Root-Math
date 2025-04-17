@@ -1,14 +1,19 @@
-'use client';
+'use client'
 import React, { useState } from 'react';
 import { Card, CardHeader, ListGroup, ListGroupItem, FormGroup, Label, Input } from 'reactstrap';
 import Latex from 'react-latex-next';
+import { useLessonStore } from '@/lib/zustand/providers/lesson-state-provider';
 
 export default function MultipleChoiceTask({ question, choices ,task}) {
   const [selectedOption, setSelectedOption] = useState('');
+  const updateTaskState = useLessonStore((state) => state.updateTaskState)
+
 
   function handleOptionChange(value) {
-    // console.log('The selectedOption is ',selectedOption)
+    
     setSelectedOption(value);
+    updateTaskState({title: task.title, selectedChoice: value})
+
     // If you want to inform a parent component, you could call onChange(value) here.
   }
 

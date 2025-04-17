@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useRef } from 'react';
 import { Alert } from 'reactstrap';
 import {  useDynamicLessonDataMutation,useLessonQuestionFeedbackMutation } from '@/lib/redux/slices/apiSlice';
 import { useParams } from 'next/navigation';
@@ -10,6 +10,10 @@ import Instructions from '@/lib/components/learn/lessons/Instructions';
 import LessonDisplay from '@/lib/components/learn/lessons/LessonMathDisplay';
 import Feedback from '@/lib/components/learn/lessons/feedback';
 import { useUpdateLessonProgressMutation } from '@/lib/redux/slices/apiSlice';
+import ComputeEngineConfig from '@/lib/utils/ceConfig';
+import preprocessLatex from '@/lib/utils/preprocess-latex';
+
+
 
 export default function LessonsPage() {
   const [lesson, setLesson] = useState(null);
@@ -17,6 +21,8 @@ export default function LessonsPage() {
   const [currentPartIndex, setCurrentPartIndex] = useState(0);
   const [userTaskIndex, setUserTaskIndex] = useState(null);
   const [userLatexStore, setUserLatexStore] = useState('');
+
+  const ceRef = useRef(null)
 
   // For each part, we track an array of tasks with statuses
   const [taskState, setTaskState] = useState([]);
@@ -299,26 +305,59 @@ useEffect(()=>{
     const taskType  = task.task.renderType;
     const slug = lesson.slug;
     const partID = lesson.parts[currentPartIndex].id;
+    let selectedChoice
+
+    console.log(`The task type is ${taskType}`)
 
     
 
     switch(taskType) {
       case 'multipleChoiceImages':
-        const selectedChoice =  globalTaskStates[taskIndex].selectedChoice; 
+         selectedChoice =  globalTaskStates[taskIndex].selectedChoice; 
         lessonData = {slug, partID, task, selectedChoice, taskType}
         break; 
 
       case 'sketch':
+       
         const reducedCoordinates = globalTaskStates[taskIndex].reducedCoordinates;
         lessonData = {slug, partID, task, reducedCoordinates, taskType}
+        console.log('The lessonData is ', lessonData)
         break;
+
+      case 'multipleChoice':
+         selectedChoice = globalTaskStates[taskIndex].selectedChoice;
+         lessonData = {slug, partID, task, selectedChoice, taskType}
+         break;
+
+      case 'image':
+        latexInput = globalTaskStates[taskIndex].latex
+
+        const ceConfig = new ComputeEngineConfig();
+        const ce = ceConfig.getEngine();
+        ceRef.current = {ce}
+        const preprocessedArray = preprocessLatex(latexInput); 
+        const boxedExpressionArray = preprocessedArray.map(item => 
+          ceRef.current.ce.parse(item)
+        );
+
+        const compiled = boxedExpressionArray.map(bE => bE.compile('sympy'));
+        const compiledStrings= compiled.map(fn => fn.toString());
+        console.log('The compiled strings are ', compiledStrings)
+        
+
+
+        lessonData = {slug, partID, task, latexInput, taskType}
+
+        break;
+
+
 
 
       default:
         lessonData = { slug, partID, task, latexInput };
         break;
 
-    }
+    } 
     // Now i can add more 
 
     // const lessonData = { slug, partID, task, latexInput };
@@ -340,7 +379,7 @@ useEffect(()=>{
 
     const { feedback, correct } = await verifyTask(lessonData);
  
-    // ---------------------------
+  
   
 
     setTaskState(oldState => {

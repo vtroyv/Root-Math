@@ -7,9 +7,20 @@ import { useLessonStore } from '@/lib/zustand/providers/lesson-state-provider';
 /*
 TO DO: (Heavy on sympy )
 - look at the sketch.js question and see if we can use the same logic to get the reduced coordinates
-- using the same logic that the sketch.js component updates the reduced coordinates - use this to update global state to store the reduced coordinates (time for more zustand)
-- On submit send the reduced coordinates as well as question data about the problem
+- using the same logic that the sketch.js component updates the reduced coordinates - use this to update global state to store the reduced coordinates (time for more zustand) [DONE]
+- On submit send the reduced coordinates as well as question data about the problem [DONE]
 - On the server side, create a framework for the following logic: 
+####
+- Before doing this you probably need to update the document of each question in the DB to provide more instructions regarding marking it, 
+- For instance if a problem requires taking the limit of a function you should add a something like the following to the problem: 
+{
+  "functionType": "limit", 
+  "mappings": [{"limit": "-∞", "target": "-∞", "threshold":-10000}, {"limit": "∞", "target": "∞", "threshold": 10000}],
+}
+  This would allow us to know that we need to take a limit, and evaluate it using the limits, and if each limit when evaluated the function approaches the target, within a certain threshold we return true, if all cases come back as true, 
+  we state that it's correct
+  -Although double check if sympy has some logic for this already so we minimise the amount of functionality we have to create
+###
   -1. Use the reduced coordinates from client to create lagrange interpolation of the users sketch 
   -2. Using this interpolated function, store its key points e.g. roots/turning points, axis-intercepts etc in a list
   -3. Next using the original function from the problem, determine its key points e.g. roots/turning points, axis-intercepts etc in a list
@@ -22,6 +33,8 @@ TO DO: (Heavy on sympy )
 - Once more, be able to provide accurate feedback off this.
 */
 
+
+// You may wish to consider when to reduce 
 export default function CurveSketch({ task, onDataChange }) {
   const boardContainerRef = useRef(null);
   const boardRef = useRef(null);
@@ -82,8 +95,8 @@ export default function CurveSketch({ task, onDataChange }) {
       const coords = points.map(p => new JXG.Coords(JXG.COORDS_BY_USER, [p.X(), p.Y()], board));
       const reduced = JXG.Math.Numerics.Visvalingam(coords, degree - 1);
       const newReducedCoords = reduced.map(r => ({
-        x: r.usrCoords[1],
-        y: r.usrCoords[2],
+        'x': r.usrCoords[1],
+        'y': r.usrCoords[2],
       }));
       setReducedCoordinates(newReducedCoords);
       return newReducedCoords;
@@ -118,7 +131,7 @@ export default function CurveSketch({ task, onDataChange }) {
         new JXG.Coords(JXG.COORDS_BY_USER, [x, sketch.dataY[i]], board)
       );
 
-      // Use the Visvalingam algorithm to reduce the collected points.
+      // Use the valingaVism algorithm to reduce the collected points.
       const reduced = JXG.Math.Numerics.Visvalingam(coords, degree - 1);
 
       // Create board points at the reduced coordinates.
@@ -196,7 +209,7 @@ export default function CurveSketch({ task, onDataChange }) {
     };
   }, [scriptLoaded]);
 
-  console.log('The coordinates are ', reducedCoordinates);
+  // console.log('The coordinates are ', reducedCoordinates);
 
   return (
     <>

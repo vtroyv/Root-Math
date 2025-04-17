@@ -75,12 +75,15 @@ export default function LessonMathDisplay({ part, onSubmitTask, taskState }) {
     const activeIndex = getActiveTaskIndex();
 
 
+
     if (activeIndex === -1) {
       alert("No task currently unlocked. Maybe you're done!");
       return;
     }
+
     // When no task has a renderType, we use our SingleMfe ref.
     const userLatex = singleMfeRef.current ? singleMfeRef.current.getValue() : "";
+    console.log('The userLatex is ', userLatex)
 
     const preprocessedArray = preprocessLatex(userLatex);
     const boxedExpressionArray = preprocessedArray.map(item =>
@@ -89,6 +92,8 @@ export default function LessonMathDisplay({ part, onSubmitTask, taskState }) {
     const compiled = boxedExpressionArray.map(bE => bE.compile('sympy'));
     const compiledStrings = compiled.map(fn => fn.toString());
     const taskStrings = getTaskStrings(compiledStrings, activeIndex);
+
+    console.log('The task strings are ', taskStrings)
 
     onSubmitTask(activeIndex, taskStrings, userLatex);
   }

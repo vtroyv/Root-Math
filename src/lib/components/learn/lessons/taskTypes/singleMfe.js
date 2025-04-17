@@ -6,11 +6,7 @@ import { useLessonStore } from '@/lib/zustand/providers/lesson-state-provider';
 
 const SingleMfe = forwardRef(({ part, noTasks , task}, ref) => {
 
-  console.log('Rendering SingleMfe with part:', part);
-  console.log('Rendering SingleMfe with noTasks:', noTasks);
-  console.log('Rendering SingleMfe with task:', task);
-
-  //I need to pass the props in here, and 
+  
   
   const mathfieldRef = useRef(null);
   const mfe = useRef(null);
@@ -54,6 +50,7 @@ const SingleMfe = forwardRef(({ part, noTasks , task}, ref) => {
 
       // Listen for input events.
       mfe.current.addEventListener('input', () => {
+        updateTaskState({title: task.title, latex: mfe.current.getValue()}) //check how efficient this is and if it impacts performance at all
         const newLatex = mfe.current.getValue();
         let valid = true;
         for (const seg of protectedSegmentsRef.current) {

@@ -4,11 +4,17 @@
 export async function POST(request, {params}) {
     // Parse the JSON body from the incoming request 
     const body = await request.json();
-    console.log('The current body that i would like to send is ', body)
+    console.log('The body i would like to send is ', body)
+  
 
     const taskType = body.taskType;
+
+
+
+  
     let url;
     let feedback;
+    
 
     switch (taskType) {
         case "multipleChoiceImages":
@@ -21,9 +27,7 @@ export async function POST(request, {params}) {
             url ='http://127.0.0.1:8000/lesson-feedback/multiple-choice-images'
             break;
         
-        case "sketch":
-            //For the sketch task, we'll probably need to update mongoDB to store details about the number of degrees, 
-            // we can probably store this in the task object
+        case "sketch": 
             feedback = {
                 task: body.task, 
                 reducedCoordinates: body.reducedCoordinates,
@@ -31,7 +35,18 @@ export async function POST(request, {params}) {
             }
             url ='http://127.0.0.1:8000/lesson-feedback/sketch'
             break;
+
+        case "multipleChoice":
+            feedback ={
+                task: body.task,
+                selectedChoice: body.selectedChoice, 
+                taskType: taskType, 
+            }
+            url = 'http://127.0.0.1:8000/lesson-feedback/multiple-choice'
+            console.log('The feedback id like to send is ', feedback)
+            break;
         
+
         
 
         default:
