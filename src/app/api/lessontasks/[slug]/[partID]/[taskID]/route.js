@@ -55,6 +55,17 @@ export async function POST(request, {params}) {
             url = 'http://127.0.0.1:8000/lesson-feedback/image'
             break;
 
+        case 'curveAndMfe':
+            feedback={
+                task: body.task, 
+                compiledStrings: body.compiledStrings,
+                reducedCoordinates: body.reducedCoordinates,
+                taskType: taskType,
+            }
+            
+            url = 'http://127.0.0.1:8000/lesson-feedback/curve-and-mfe'
+            break;
+
         default:
             feedback = {
                 task: body.task, 
