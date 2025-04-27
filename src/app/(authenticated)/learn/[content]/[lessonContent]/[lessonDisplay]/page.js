@@ -296,16 +296,24 @@ useEffect(()=>{
 
     setUserTaskIndex(taskIndex);
 
-    
+     // Create variables needed for the switch statement below
     let lessonData
    
-    // Create variables needed for the switch statement below
+   
     const task = taskState[taskIndex];
     const userTask = userTaskState[taskIndex] 
     const taskType  = task.task.renderType;
     const slug = lesson.slug;
     const partID = lesson.parts[currentPartIndex].id;
+    const ceConfig = new ComputeEngineConfig();
+    const ce = ceConfig.getEngine();
+    ceRef.current = {ce}
     let selectedChoice
+    let preprocessedArray
+    let boxedExpressionArray
+    let compiled
+    let compiledStrings
+    let reducedCoordinates
 
     console.log(`The task type is ${taskType}`)
 
@@ -319,7 +327,7 @@ useEffect(()=>{
 
       case 'sketch':
        
-        const reducedCoordinates = globalTaskStates[taskIndex].reducedCoordinates;
+        reducedCoordinates = globalTaskStates[taskIndex].reducedCoordinates;
         lessonData = {slug, partID, task, reducedCoordinates, taskType}
         console.log('The lessonData is ', lessonData)
         break;
@@ -332,23 +340,21 @@ useEffect(()=>{
       case 'image':
         latexInput = globalTaskStates[taskIndex].latex
 
-        const ceConfig = new ComputeEngineConfig();
-        const ce = ceConfig.getEngine();
-        ceRef.current = {ce}
-        const preprocessedArray = preprocessLatex(latexInput); 
+    
+         preprocessedArray = preprocessLatex(latexInput); 
         console.log('The preprocessedArray is ', preprocessedArray)
 
-        const boxedExpressionArray = preprocessedArray.map(item => 
+         boxedExpressionArray = preprocessedArray.map(item => 
           ceRef.current.ce.parse(item)
         );
 
         console.log('The boxedExpressionArray is ', boxedExpressionArray)
 
 
-        const compiled = boxedExpressionArray.map(bE => bE.compile('sympy'));
+         compiled = boxedExpressionArray.map(bE => bE.compile('sympy'));
         console.log('the compiled is ', compiled)
         
-        const compiledStrings= compiled.map(fn => fn.toString());
+         compiledStrings= compiled.map(fn => fn.toString());
         console.log('The compiled strings are ', compiledStrings)
         
 
@@ -356,6 +362,38 @@ useEffect(()=>{
         lessonData = {slug, partID, task, compiledStrings, taskType}
 
         break;
+
+        case 'curveAndMfe':
+          latexInput = globalTaskStates[taskIndex].latex
+          reducedCoordinates = globalTaskStates[taskIndex].reducedCoordinates;
+
+          preprocessedArray = preprocessLatex(latexInput);
+          console.log('The preprocessedArray is ', preprocessedArray)
+
+          boxedExpressionArray = preprocessedArray.map(item => 
+            ceRef.current.ce.parse(item)
+          );
+  
+          console.log('The boxedExpressionArray is ', boxedExpressionArray)
+  
+  
+           compiled = boxedExpressionArray.map(bE => bE.compile('sympy'));
+          console.log('the compiled is ', compiled)
+          
+           compiledStrings= compiled.map(fn => fn.toString());
+          console.log('The compiled strings are ', compiledStrings)
+
+          //IM CURRENTLY REPEATING ALOT OF CODE HERE BETWEEN THE curveAndMfe and image task cases, encapsulate this into a function
+
+          lessonData = {slug, partID, task, compiledStrings, reducedCoordinates, taskType}
+          console.log('The lessonData is ', lessonData)
+
+          //Next add a model and case for this in the fastapi sever -> implement sympy logic for checking if two expressions are equal or equal something predefined in the markScheme!
+          break;
+
+
+
+       
 
 
 

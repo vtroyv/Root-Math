@@ -6,6 +6,8 @@ import { useLessonStore } from '@/lib/zustand/providers/lesson-state-provider';
 
 const SingleMfe = forwardRef(({ part, noTasks , task}, ref) => {
 
+// I originally used forwardRef here, as i needed the parent component to beable to access the getValue method to read the latex within the mathfield element in this components ref
+// however i have since changed to a global state approach (zustand) and therefore should probably rewrite this component without forwardRef at some point
   
   
   const mathfieldRef = useRef(null);

@@ -6,14 +6,14 @@ import CurveSketch from './curveSketch';
 import SingleMfe from './singleMfe';
 
 export default function CurveAndMfe({ task, part,onDataChange }) {
-    console.log('The task  in curveAndMfe is:', task);
-    console.log('The part in curveAndMfe is:', part);
+//    essentially, what i need to do is get this component to successfully be updating the global task state on changes 
 
 
     return (
         <div >
         <CurveSketch task={task}  onDataChange={onDataChange}  />
-        <SingleMfe part={part} />
+        <SingleMfe part={part} task={task} />
+          
             </div>
     
     );
