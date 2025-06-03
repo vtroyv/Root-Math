@@ -364,6 +364,7 @@ useEffect(()=>{
         break;
 
         case 'curveAndMfe':
+          console.log('This case ran just right now!');
           latexInput = globalTaskStates[taskIndex].latex
           reducedCoordinates = globalTaskStates[taskIndex].reducedCoordinates;
 

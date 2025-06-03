@@ -68,9 +68,7 @@ function Navigation() {
                 <DropdownItem tag={Link} href="/blog">
                   Blog
                 </DropdownItem>
-                <DropdownItem tag={Link} href="/faq">
-                  Frequently Asked Questions
-                </DropdownItem>
+                
                 <DropdownItem divider style={{ padding: '0px', margin: '0px' }}></DropdownItem>
                 <DropdownItem tag={Link} href="/contact">
                   Contact us
