@@ -50,6 +50,27 @@ export default function BlockRenderer({ block }) {
           caption={block.caption}
         />
       );
+
+    case 'accordion':
+      return (
+        <details style={{ margin: '0.5rem 0', border: '1px solid #ccc', borderRadius: '4px' }}>
+          <summary
+            style={{
+              cursor: 'pointer',
+              padding: '0.5rem',
+              fontWeight: 'bold',
+              background: '#f7f7f7'
+            }}
+          >
+            <Latex>{block.title}</Latex>
+          </summary>
+          <div style={{ padding: '0.5rem' }}>
+            {block.children.map((child, i) => (
+              <BlockRenderer key={i} block={child} />
+            ))}
+          </div>
+        </details>
+      );
     default:
       return null;
   }

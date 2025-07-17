@@ -52,6 +52,7 @@ export default function LessonContent() {
   //   ...
   // }
   const lessons = data?.subsections || {}
+  console.log('The lessons being fetched on this page are ', lessons)
 
   // Title (optional "Edexcel Mathematics – Pure Mathematics Year 12" or similar)
   const pageTitle = data?.name

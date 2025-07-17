@@ -1,5 +1,14 @@
 "use client";
 
+/* 
+IMPORTANT
+----------
+You're going to have to rewrite this entire component so that it fetches the titles and everything from the database, unless it is suitable to keep these topic titles, 
+and then just render dynamically things like the exam board name, and other exam board specific things like the specific subtopics because currently this is only suitable for 
+year12 maths and doesn't account for any other years or examboards (aside from edexcel)
+
+*/
+
 import React from "react";
 import {
   Container,
@@ -15,6 +24,8 @@ import { useRouter } from "next/navigation";
 
 export default function EdxPm1() {
   const router = useRouter();
+
+  
 
   // Helper for navigation
   const navigate = (path) => {
@@ -148,14 +159,14 @@ export default function EdxPm1() {
               <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
                 <ListGroupItem
                   action
-                  onClick={() => navigate("")}
+                  onClick={() => navigate(preUrl + "/straight-lines")}
                   style={{ cursor: "pointer" }}
                 >
                   Straight Lines
                 </ListGroupItem>
                 <ListGroupItem
                   action
-                  onClick={() => navigate("")}
+                  onClick={() => navigate(preUrl + "/circles")}
                   style={{ cursor: "pointer" }}
                 >
                   Circles
@@ -254,45 +265,24 @@ export default function EdxPm1() {
               <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
                 <ListGroupItem
                   action
-                  onClick={() => navigate("")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Sine, Cosine &amp; Tangent
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate("")}
+                  onClick={() => navigate(preUrl+ "/trigonometry-and-triangles")}
                   style={{ cursor: "pointer" }}
                 >
                   Trigonometry &amp; Triangles
                 </ListGroupItem>
                 <ListGroupItem
                   action
-                  onClick={() => navigate("")}
+                  onClick={() => navigate(preUrl+ "/trignometric-graphs")}
                   style={{ cursor: "pointer" }}
                 >
-                  Trigonometric Graphs
+                  Trignometric Graphs
                 </ListGroupItem>
                 <ListGroupItem
                   action
-                  onClick={() => navigate("")}
+                  onClick={() => navigate(preUrl + "/ratios-identities-and-equations")}
                   style={{ cursor: "pointer" }}
                 >
-                  Trigonometric Angles &amp; Ratios
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate("")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Trigonometric Identities
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate("")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Trigonometric Equations
+                  Ratios, Identities and Equations
                 </ListGroupItem>
               </ListGroup>
             </Card>
@@ -322,7 +312,7 @@ export default function EdxPm1() {
               <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
                 <ListGroupItem
                   action
-                  onClick={() => navigate("")}
+                  onClick={() => navigate(preUrl + "/binomial-expansion")}
                   style={{ cursor: "pointer" }}
                 >
                   Binomial Expansion
@@ -400,28 +390,15 @@ export default function EdxPm1() {
               <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
                 <ListGroupItem
                   action
-                  onClick={() => navigate("")}
+                  onClick={() => navigate(preUrl + "/gradients-and-lines")}
                   style={{ cursor: "pointer" }}
                 >
-                  Gradients &amp; Derivatives
+                  Gradients and Lines 
                 </ListGroupItem>
+                
                 <ListGroupItem
                   action
-                  onClick={() => navigate("")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Differentiating Functions
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate("")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Gradients, Tangents &amp; Normals
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate("")}
+                  onClick={() => navigate(preUrl + "/rates-of-change-and-modelling")}
                   style={{ cursor: "pointer" }}
                 >
                   Rates of Change &amp; Modelling
@@ -452,24 +429,17 @@ export default function EdxPm1() {
               <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
                 <ListGroupItem
                   action
-                  onClick={() => navigate("")}
+                  onClick={() => navigate( preUrl + "/indefinite-integrals")}
                   style={{ cursor: "pointer" }}
                 >
-                  What Is Integration?
+                  Indefinite Integrals 
                 </ListGroupItem>
                 <ListGroupItem
                   action
-                  onClick={() => navigate("")}
+                  onClick={() => navigate(preUrl + "/definite-integrals-and-areas")}
                   style={{ cursor: "pointer" }}
                 >
-                  Definite Integrals
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate("")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Indefinite Integrals
+                  Definite Integrals and Areas
                 </ListGroupItem>
               </ListGroup>
             </Card>

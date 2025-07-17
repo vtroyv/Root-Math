@@ -26,8 +26,8 @@ export default function LearnNav() {
     router.push('/')
   }
   return (
-    <div>
-          <Navbar color="info" light={true} fixed='top' expand={true} style={{borderRadius:'0px'}}>
+    <div className='home-nav'>
+          <Navbar color="info" light={true} fixed='top' expand='md' style={{borderRadius:'0px'}}>
          < NavbarBrand className='px-2'><Link href="/" style={{textDecoration: 'none', fontWeight:'bold', color:'white'}}>RootMath</Link></NavbarBrand>
             <Nav light>
              <NavLink>
@@ -47,10 +47,12 @@ export default function LearnNav() {
 
               <DropdownMenu right>
 
-                <DropdownItem onClick={()=>navigate('edx-maths-1')}>Edexcel Pure Maths year 12</DropdownItem>
-                <DropdownItem>Edexcel Pure Maths year 13</DropdownItem>
-                <DropdownItem>Edexcel Statistics year 12/13</DropdownItem>
-                <DropdownItem>Edexcel Mechanics year 12/13</DropdownItem>
+                <DropdownItem onClick={()=>router.push('/learn/edx-maths-1')}>Edexcel Pure Maths year 12</DropdownItem>
+                <DropdownItem onClick={()=> router.push('/learn/edx-stats-1')}> Edexcel Statistics year 12</DropdownItem>
+                <DropdownItem onClick={()=> router.push('/learn/edx-mech-1')}>Edexcel Mechanics year 12</DropdownItem>
+                  <DropdownItem onClick={()=> router.push('/learn/edx-maths-2')}>Edexcel Pure Maths year 13</DropdownItem>
+                <DropdownItem onClick={()=> router.push('/learn/edx-stats-2')}>Edexcel Statistics year 13</DropdownItem>
+                <DropdownItem onClick={()=> router.push('/learn/edx-mech-2')}>Edexcel Mechanics year 13</DropdownItem>
 
                 <DropdownItem divider />
                 <DropdownItem>Add Course</DropdownItem>
