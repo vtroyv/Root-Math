@@ -1247,11 +1247,22 @@ const stationairypointsAndTheirNature = {
     }, 
     {
       type:"paragraph", 
-      content:"So now that we know how the second derivative can be used to classify stationairy points, how about understanding why?"
+      content:""
     }, 
     {
-      type:"paragraph", 
-      content:""
+      type:"accordion", 
+      title:"So now that we know how the second derivative can be used to classify stationairy points, how about understanding why?- if interested click here",
+      children:[
+        {type:'paragraph', content:"Testing"}, 
+        {
+          type:'image', 
+          url:"/Images/repeated-root.png"
+        }
+      ]
+    }, 
+    {
+      type:'paragraph', 
+      content:"So what are waiting for- time to get to work on the tasks!"
     }
 
 
@@ -1260,12 +1271,295 @@ const stationairypointsAndTheirNature = {
 }]
 }
 
+const sketchingGradient = {
+    _id: "650000000000000000000002",
+  slug: "gradient-sketching",
+  title: "Gradient Sketching",
+  next: "modelling",
+  parts: [
+    {
+      id:1,
+      title:"There's an easier way", 
+      blocks:[
+        {
+          type:"paragraph", 
+          content:''
+        }
+      ] 
+
+    }
+  ]
+}
+
+const exponentialsAndTheirGraphs = {
+     _id: "650000000000000000000002",
+  slug: "gradient-sketching",
+  title: "Exponentials and Their Graphs",
+  next: "modelling",
+  parts: [
+    {
+      id:1, 
+      title:'So What is an Exponential?', 
+      blocks:[
+        {
+          type:"paragraph",
+          content:"So have you ever heard the term exponential and not been fully sure what it means?- well guess what you're about to learn all you need to know about exponentials right now!"
+        }, 
+        {
+          type:"bold-paragraph", 
+          content:"Any function of the form $a^x$, i.e. $f(x)=a^x$ for any  positive constant $a \\ne 1$, is a exponential function"
+        }, 
+        {
+          type:"paragraph", 
+          content:"Recall all the way back on our lesson on indices that in $a^x$ $x$ can be referred to as the exponent."
+        },
+        {
+          type:"paragraph", 
+          content:"That's all their is, no surprises just a brief introduction to what an exponential function is! In the next part We'll explore the graphs of exponentials and their properties in a more detail."
+        }
+      ]
+    }, 
+    {
+      id:'2', 
+      title:'Exponential Graphs', 
+      blocks:[
+        {
+          type:"paragraph", 
+          content:"Now that we understand the form of exponential functions it's only right that we move on to study their graphs. Consider $y=3^x$ at different values of $x$ in the table below:", 
+          
+        }, 
+        
+        {
+        type: 'table',
+        header: ['x', '-2', '-1', '0', '1', '2', ],
+        rows: [
+          ['y', '$3^{-2} = \\frac{1}{9}$', '$3^{-1} = \\frac{1}{3}$', '$3^0=1$', '$3$', '$9$', ]
+  ]
+}, 
+{
+  type:"paragraph", 
+  content:"So if we were to continue calculating these values of x and y and plot the entire curve, we would end up with something like:"
+}, 
+{
+  type:"paragraph",
+  content:"$y=3^x$"
+}, 
+
+{
+  type:"image", 
+  url:'/images/exponential-graph-1.png', 
+  alt:'A sketch of the graph 3^x'
+}, 
+{
+  type:'paragraph', 
+  content:"Now alreay do you notice anything interesting about this function? As our $x$ value gets smaller and smaller (i.e. more and more negative), our function $y=3^x$, gets closer and closer to 0, this is because $3^{-x} = \\frac{1}{3^x}$, which becomes closer and closer to $0$ for large $x$. "
+}, 
+{
+  type:'bold-paragraph', 
+  content:'HOWEVER, $a^{-x} = \\frac{1}{a^{x}}$  NEVER precisely equals $0$ no matter how negative and big $x$ gets!'
+}, 
+{
+  type:"paragraph", 
+  content:"It simply gets infinitely closer to $0$, but never touches it. Therefore we say that our curve has an asymptote at $x=0$, and this is the case for all functions of the form $y=a^{x}$. "
+}, 
+{
+  type:"paragraph", 
+  content:"Now another interesting property shared between all function of the form $y=a^{x}$ is the value they take when $x=0$! Now we already know from our lessons on indices, that $x^0 =1 $ in other words 'anything to the power of $0$ is equal to $1$'. This means in the case of exponential functions i.e. $f(x) = e^x$ it will always be the case that $f(0) =1$ meaning our exponential functions will always cross the y axis at $y=1$ "
+}, 
+{
+  type:'paragraph', 
+  content:"Now so far we've only looked at functions $y=a^{x}$ when $a>1$, but what about the case when $a<1$? What does this look like? Well lets take $a=\\frac{1}{3}$ and consider the function $y= \\bigl( \\frac{1}{3} \\bigr) ^x$. If we create another table of values for a few $x$ we get:"
+},
+   {
+        type: 'table',
+        header: ['x', '-2', '-1', '0', '1', '2', ],
+        rows: [
+          ['y', '$ \\bigl( \\frac{1}{3} \\bigr)^{-2} =9$', '$ \\bigl( \\frac{1}{3} \\bigr)^{-1} =3$', '$ \\bigl( \\frac{1}{3} \\bigr)^{0} =1$', '$\\frac{1}{3}$', '$\\frac{1}{9}$', ]
+  ]
+},
+{
+  type:'paragraph', 
+  content:"This is exactly the reverse of what we had for $y=3^x$, in other words, our function gets smaller as x gets larger approaching 0 but never actually touching it, our stays at $x=0$ but our curve is reflected in the y-axis!"
+}, 
+{
+  type:'paragraph', 
+  content:"So if we were to sketch $\\bigl( \\frac{1}{3} \\bigr)^x $ on the same graph as $y=3^x$ we would get:"
+},
+{
+  type:"image", 
+  url:"/images/exponential-different-bases.png", 
+  alt:'Exponentials with a>1 and a <1 on the same graph'
+},
+{
+  type:"paragraph", 
+  content:"Now let's finish off this lesson with a quick example illustrating sketching an exponential function:"
+}, 
+{
+  type:"heading", 
+  level:'3', 
+  content:"Example- Sketch $y=2^x$"
+}, 
+{
+  type:""
+}
+
+      ]
+    }, 
+    {
+     id:'3', 
+     title:'Transformations with Exponentials', 
+     blocks:[
+      {
+        type:"paragraph", 
+        content:"So now that we've seen how  "
+      }
+     ]
+    }
+  ]
+}
+
+const exponentialDerivatives = {
+   _id: "650000000000000000000002",
+  slug: "exponential-derivatives",
+  title: "Exponential Derivatives",
+  next: "exponential-modelling",
+  parts: [
+    {
+      id:"1", 
+      title:"What's $e^x$ and why's it special?", 
+      blocks:[
+        {
+          type:'paragraph', 
+          content:"Now that you know what an exponential function is it's time to introduce one more special property about them... they look really like their derivatives.  Well what do we mean by this? Consider the example image, below in red we have the graph of $y=2^x$ and the blue curve denotes $\\frac{dy}{dx}$ the derivative, notice how similar it looks, "
+        }, 
+        {
+          type:"bold-paragraph", 
+          content:" (note you don't need to be able to differentiate functions of the form $y=a^x$ yet)"
+        }, 
+        {
+          type:"image", 
+          url:"/images/exponential-similar-derivatives-1.png", 
+          alt:"sketch of y=2^x and dy/dx to show similarity between exponential and derivative"
+        }, 
+        { 
+          type:"paragraph", 
+          content:"See they are quite close and also similarly shaped, now let's consider another example - $y=3^x$ and it's derivative: "
+        }, 
+        {
+          type:'image', 
+          url:"/images/exponential-similar-derivatives-2.png", 
+          alt:"sketch of y=3^x and dy/dx to show similarity between exponential and derivative"
+        }, 
+        {
+          type:"paragraph", 
+          content:"Notice how the curves are even closer now, with the difference being that $y=3^x$ is slight to the right of it's derivative whereas $y=2^x$ was to the left of it's! This is very important because something very special occurs between $y=2^x$ and $y=3^x$ - there exists a special constant $a$ such that $y=a^x$ is the same as it's derivative"
+        }, 
+        {
+          type:'paragraph', 
+          content:"This occurs when $a\\approx 2.71828$ and we represent this speical constant with the letter $e$! You can see $y=e^x$ plotted between $y=2^x$ and $y=3^x$ via the dashed line below"
+        }, 
+        {
+          type:"image", 
+          url:'/images/exponential-similar-derivatives-3.png', 
+          alt:'e^x plotted inbetween y-2^x and y=3^x'
+        }, 
+        {
+          type:"paragraph", 
+          content:"Well let's see if you've been paying attention - complete the task below to move on "
+          //This task should simply ask what is the derivative of e^x
+        }
+      ]
+    }, 
+    {
+      id:"2", 
+      title:"Differentiating Exponentials", 
+      blocks:[
+        {
+          type:"paragraph", 
+          content:"Now that we've introduced our speical constant $e$, it's time to state it's derivative results formally: For real values of $x$"
+        }, 
+        {
+          type:"bullet-points",
+          points:['If $y=e^x$ then $\\frac{dy}{dx} = e^{x} $', "If $f(x) = e^x$ then $f'(x) = e^{x}$"]
+        }, 
+        {
+          type:"paragraph", 
+          content:"For example if we have $y=24e^{x}$ then the derivative would simply be given by $\\frac{dy}{dx} = 24e^x$. See it's very simple there really isn't much too it at all, consider this second example:"
+        }, 
+        {
+          type:"heading", 
+          level:"4", 
+          content:"Example: $f(x)=24x + 3e^{x}$ what is $f'(x)$?"
+        }, 
+        {
+          type:"bullet-points", 
+          points:["Just like we've seen before just differeniate each term one-by-one. The derivative of $24x$ is $24$, and the derivative of $3e^x = 3e^x$ ", "Therefore $f'(x) = 24+3e^x$"]
+        }, 
+        {
+          type:"paragraph", 
+          content:"Now this is simple right- but what about functions of the form $y=e^{kx}$, where k is a real number? - well in this case all you need to do is apply the following rule: For real values of $x$ and $k$"
+        }, 
+        {
+          type:"bullet-points", 
+          points:["If $y=e^{kx}$ then $\\frac{dy}{dx} = ke^{kx}$", "If $f(x)=e^{kx}$ then $f'(x) = ke^{kx}$"]
+        }
+      ]
+    }
+  ]
+}
+
+const exponentialModelling = {
+   _id: "650000000000000000000002",
+  slug: "exponential-models",
+  title: "Exponential Models",
+  next: "introducing-logarithms",
+  parts: [{
+    id:"1", 
+    title:"When to use $e^x$", 
+    blocks: [
+      {
+        type:'paragraph', 
+        content:"So far throughout the course we've seen modelling in a variety of different concepts, for instance, we've seen you can use linear models (straight lines) in cases where we have two variables $x$ and $y$ which we could compare via the relationship $y=ax+b$ for some constants a and b. "
+      }, 
+      {
+        type:"paragraph", 
+        content:"We've also seen problems where we can use differentiation to model the rate of change between two variables. However we can't just use differential equations or linear models for everything, there will be alot of cases where it is better to model the problem using exponential functions like $e^x$"
+      }, 
+      {
+        type:'bold-paragraph', 
+        content:""
+      }
+    ]
+  }]
+}
+
+const introducingLogarithms = {
+   _id: "650000000000000000000002",
+  slug: "exponential-models",
+  title: "Exponential Models",
+  next: "introducing-logarithms",
+  parts: [{
+    id:'1', 
+    title:"What does log mean?", 
+    blocks:[
+      {
+        type:"paragraph", 
+        content:"So you've probably heard of logarithms before or seen them in textbooks or videos but what are they? Where do they originate? what is their purpose? What are $logs$?- We will answer all these questions in the reminader of this lesson."
+      }, 
+      {
+        type:"bold-paragraph", 
+        content:"Formally, a logarithm is the inverse of   "
+      }
+    ]
+  }]
+
+}
 
   // On mount, set lesson and userProgress from the static lesson data
   useEffect(() => {
     if (isLoaded && isSignedIn) {
-      setLesson(stationairypointsAndTheirNature);
-      setUserProgress(createUserProgress(stationairypointsAndTheirNature, user.id));
+      setLesson(exponentialModelling);
+      setUserProgress(createUserProgress(exponentialModelling, user.id));
     }
   }, [isLoaded, isSignedIn, user]);
 

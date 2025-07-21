@@ -48,7 +48,7 @@ export default function Instructions({
     >
       {/* Scrollable content */}
       <div style={{ overflowY: 'auto', flex: 1, }}>
-        <h2 style={{color:'#17a2b8', fontWeight:'bold'}}>{part.title}</h2>
+        <h2 style={{color:'#17a2b8', fontWeight:'bold'}}><Latex>{part.title}</Latex></h2>
         {part.blocks.map((block, i) => renderBlockOrTask(block, i))}
       </div>
 

@@ -343,24 +343,17 @@ export default function EdxPm1() {
               <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
                 <ListGroupItem
                   action
-                  onClick={() => navigate("")}
+                  onClick={() => navigate(preUrl + "/exponential-functions")}
                   style={{ cursor: "pointer" }}
                 >
-                  Exponential Graphs
+                  Exponential Functions
                 </ListGroupItem>
                 <ListGroupItem
                   action
-                  onClick={() => navigate("")}
+                  onClick={() => navigate(preUrl + "/logarithms")}
                   style={{ cursor: "pointer" }}
                 >
                   Logarithms
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate("")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Exponential Modelling
                 </ListGroupItem>
               </ListGroup>
             </Card>

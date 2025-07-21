@@ -94,7 +94,7 @@ export default function LessonsPage() {
           
           const dynamicRouteData = {params: apiParams, userId: id, examBoard: examBoard} 
         
-        //This function should return a staticLessonData and dynamicLessonData as keys in obj
+        //This function should return a              and dynamicLessonData as keys in obj
         const result = await dynamicLessonData(dynamicRouteData)
         const {staticLessonData,userProgressData} = result.data; 
 

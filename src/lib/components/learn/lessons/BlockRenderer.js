@@ -10,6 +10,8 @@ export default function BlockRenderer({ block }) {
     }
     case 'paragraph':
       return <p style={{ fontSize: '1.25rem', margin: '0.5rem' }}><Latex>{block.content}</Latex></p>;
+    case 'bold-paragraph':
+      return <strong><p style={{ fontSize: '1.25rem', margin: '0.5rem', fontWeight:'bold', color:'black' }}><Latex>{block.content}</Latex></p></strong>;
     case 'bullet-points': {
       return (
         <ul>
@@ -71,7 +73,59 @@ export default function BlockRenderer({ block }) {
           </div>
         </details>
       );
-    default:
+   case 'table': {
+      const { header, rows } = block;  
+      return (
+        <table
+          style={{
+            width: '100%',
+            borderCollapse: 'collapse',
+            margin: '0.5rem 0',
+            fontSize: '1.25rem'
+          }}
+        >
+          <thead>
+            <tr>
+              {header.map((cell, i) => (
+                <th
+                  key={i}
+                  style={{
+                    border: '1px solid #ccc',
+                    padding: '0.5rem',
+                    background: '#f0f0f0',
+                    textAlign: 'center'
+                  }}
+                >
+                  <Latex>{cell}</Latex>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, i) => (
+              <tr key={i}>
+                {row.map((cell, j) => (
+                  <td
+                    key={j}
+                    style={{
+                      border: '1px solid #ccc',
+                      padding: '0.5rem',
+                      textAlign: 'center'
+                    }}
+                  >
+                    <Latex>{cell}</Latex>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      );
+    }
+   
+   
+   
+      default:
       return null;
   }
 }

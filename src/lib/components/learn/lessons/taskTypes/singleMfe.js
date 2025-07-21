@@ -51,6 +51,7 @@ const SingleMfe = forwardRef(({ part, noTasks , task}, ref) => {
 
 
       // Listen for input events.
+      //PLEASE CHECK THIS AND SEE IF IT"S PREVENTING TEXT FROM BEING TYPED WHEN IT SHOULDN"T
       mfe.current.addEventListener('input', () => {
         updateTaskState({title: task.title, latex: mfe.current.getValue()}) //check how efficient this is and if it impacts performance at all
         const newLatex = mfe.current.getValue();
