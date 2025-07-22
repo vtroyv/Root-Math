@@ -6,7 +6,7 @@ import Selection from '@/lib/components/questions/Selection';
 import Sketch from '@/lib/components/questions/Sketch';
 import Explain from '@/lib/components/questions/Explain';
 import FillInBlank from '@/lib/components/questions/FillInBlank';
-
+import NewFullResponse from '@/lib/components/questions/questionTypes/newFullResponse';
 
 
 
