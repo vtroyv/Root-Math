@@ -4,12 +4,14 @@ import {Nav, NavItem, NavLink,TabContent, TabPane} from 'reactstrap';
 import classnames from 'classnames';
 import QuestionFeedbackPane from './questionFeedbackPane';
 import QuestionInstructionPane from './questionInstructionPane';
+import QuestionSolutionPane from './questionSolutionPane';
 
-export default function Feedback() {
+export default function Feedback({details}) {
     const [activeTab, setActiveTab] = useState('instructions');
     const toggle= (tab) => {
         if (activeTab !== tab) setActiveTab(tab)
     }
+    const {instructions, solution} = details
 
     return (
         
@@ -68,7 +70,11 @@ export default function Feedback() {
 
                 </TabPane>
                 <TabPane tabId='instructions'>
-                    < QuestionInstructionPane />
+                    < QuestionInstructionPane instructions={instructions}/>
+                </TabPane>
+                <TabPane tabId='solution-explanation'>
+                    <QuestionSolutionPane />
+
                 </TabPane>
 
             </TabContent>

@@ -3,13 +3,26 @@
 import React, { useEffect, useRef } from 'react';
 import { MathfieldElement } from 'mathlive';
 import 'katex/dist/katex.min.css';
+import ComputeEngineConfig from '@/lib/utils/ceConfig';
 import { Button } from 'reactstrap';
+import {
+  useGradeQuestionMutation, 
+  useGetQuestionsQuery
+} from '@/lib/redux/slices/apiSlice';
+
+import { useQuestionStore } from '@/lib/zustand/providers/question-state-provider';
+
+import preprocessLatex from '@/lib/utils/preprocess-latex';
 
 export default function NewFullResponse({ question }) {
   const questionRef  = useRef(null);
   const mathfieldRef = useRef(null);
   const mfe          = useRef(null);
   const questionView = useRef(null);
+  const ceRef = useRef(null);
+  const { updateProgress} = useQuestionStore();
+  const progress = useQuestionStore(state => state.userProgress)// note this pattern of selecting what state you listen to enables you to listen to just parts of the store
+  const [gradeQuestion, mutationState] = useGradeQuestionMutation();
 
   useEffect(() => {
     if (!question) return;
@@ -81,6 +94,49 @@ if (mathfieldRef.current && !mathfieldRef.current.contains(mf)) {
     }
   }, [question]);
 
+  //set up compute engine 
+  useEffect(()=> {
+    if (question) {
+      const ceConfig = new ComputeEngineConfig(question?.questionType); //don't think this serces any purpose right now
+      const ce = ceConfig.getEngine();
+      
+      if (ceRef.current) {
+        ceRef.current.ce = ce;
+
+      } else {
+        ceRef.current = {ce};
+      }
+
+    }
+  }, [question])
+
+  const handleSubmit = async () => {
+    try {
+      const latex = mfe.current.value;
+
+      const preprocessedArray = preprocessLatex(latex);
+      console.log('The preprocessed latex is given by ', preprocessedArray)
+
+      const boxedExpressionArray = preprocessedArray.map((item)=> ceRef.current.ce.parse(item));
+
+      const compiled = boxedExpressionArray.map((bE) => bE.compile('sympy'));
+      const compiledStrings = compiled.map((fn) => fn.toString());
+
+      //build data for server to mark 
+      const dataForFeedback = {
+        questionData: question, 
+        sympyResponse: compiledStrings
+      }
+      const resp = await gradeQuestion(dataForFeedback).unwrap();
+
+      console.log('THe feedback returned from the server is ', resp?.data?.feedback )
+      
+    } catch (error) {
+      console.log('Error when trying to access the route handler:', error)
+    }
+  }
+
+
   // pretty-print title
   const title = question?.title || '';
   const formattedTitle = title.includes('-')
@@ -151,7 +207,7 @@ if (mathfieldRef.current && !mathfieldRef.current.contains(mf)) {
           color="info"
           outline
           block
-          onClick={() => console.log('submitted')}
+          onClick={() => handleSubmit()}
         >
           Submit
         </Button>

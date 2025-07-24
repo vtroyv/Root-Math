@@ -25,6 +25,8 @@ export default function QuestionDisplayPage({params}) {
     }
 
     const question = data?.find(obj => obj.title==='Sum-Product-inequality-proof');
+
+    console.log('The question is ',question)
     if(!question) {
         return <h1>Question not found</h1>
     }
@@ -53,7 +55,7 @@ export default function QuestionDisplayPage({params}) {
 
 
 
-    const feedback = <Feedback  /> /* <---- i need to add in props here e.g. instructions for the question etc, then have it displayed accordingly  */
+    const feedback = <Feedback  details={question.details}/> /* <---- i need to add in props here e.g. instructions for the question etc, then have it displayed accordingly  */
     return (
         <div>
             <TwoPaneResponsive question = {selectComponent(question.type)} feedback = {feedback}/>

@@ -5,3 +5,18 @@ for the lesson via the taskState key
 in the LessonMathDisplay component
 
 3) Now we must update the handleSubmit function to provide correct/incorrect aswell as accurate feedback for each task 
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+##THE QUESTIONS SECTION ##
+
+-> essentially i need to rebuild the userProgress functionality with the questions, to enable feedback to be stored uniquely for each student, 
+and when a student attempts a problem for the first time that userprogress for the question should be created in the DB or fetched on all subsequent requests 
+
+1) Start by recreating the dynamicdata api hook from redux for the problem sheets, and all the functionality e.g. mongoDB stuff for it 
+

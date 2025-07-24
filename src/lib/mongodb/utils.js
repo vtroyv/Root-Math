@@ -9,6 +9,7 @@ let users
 let userProgress
 
 
+
 async function init() {
     if (db) return 
     try {
@@ -33,12 +34,12 @@ async function init() {
 export async function getQuestions() {
     try {
         if(!questions) await init()
-            console.log('the questions are', questions)
+            // console.log('the questions are', questions)
         const result = await questions.find({}).map(question => ({...question, _id: question._id.toString()})).toArray()
 
     //we map _id to the string version of _id as, _id is of type objectID and returning objectID's from server to client returns 
     // an error as it's not serializeable
-        console.log(result)
+        // console.log(result)
         return {questions: result}
     } catch(error) {
         return {error: 'Failed to fetch questions!'}
@@ -177,3 +178,61 @@ export async function updateUserLessonProgress(data) {
  }
     
 } 
+
+export async function getSpecificQuestion(title) {
+    
+     if(!questions) await init()
+    const result = await questions.findOne({title:title})
+     return result 
+}
+
+export async function getUserQuestionProgress(data) {
+    const collection = identifyQuesProg(data); 
+    const {userId, title} = data
+
+    const questionProgress = await db.collection(collection);
+
+    const result = await questionProgress.findOne({userId, title})
+
+    return result 
+
+}
+
+export async function createUserQuestionProgress(progressData, collectionData) {
+    //the progressData contains the data that should be put as the new userProgress Data, 
+    //the collectionData contains the data used to identify what collection 
+
+    const {userId, title }= collectionData
+    const collection = identifyQuesProg(collectionData); 
+    const userQuestionProgress = await db.collection(collection)
+try{
+    
+
+
+    await userQuestionProgress.createIndex({userId:1, title:1},{unique:true});
+
+    const result = await userQuestionProgress.insertOne(progressData); 
+    const insertedId = result.insertedId
+    const questionProgress = await userQuestionProgress.findOne({_id: insertedId})
+    return questionProgress
+} catch(error){
+    if (error.code === 11000) {
+        //duplicate key error: a document with the same userId and title already exists,
+        const existingDoc = await userQuestionProgress.findOne({userId, title})
+        console.log('User progress already exists, fetched existing progress:', existingDoc)
+        return existingDoc
+        
+    }
+    return {error: 'Failed to add new userProgress to DataBase'}
+}
+    
+}
+
+function identifyQuesProg(data) {
+      const {userId, examBoard, title, branch, year} = data
+
+    const correctYear = (year == '12') ? 'y1' : 'y2'
+
+    const collection = `${examBoard}-questions-${branch}-${correctYear}-progress`
+    return collection
+}

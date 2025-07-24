@@ -28,6 +28,7 @@ import {
 import classnames from 'classnames';
 
 import FeedbackDisplay from './FeedbackDisplay';
+import { useQuestionStore } from '@/lib/zustand/providers/question-state-provider';
 
 
 
@@ -37,8 +38,14 @@ export default function FullResponse({ question }) {
   const mfe = useRef(new MathfieldElement());
   const questionView = useRef(new MathfieldElement());
   const ceRef = useRef(null);
-  const { data, isLoading, isSuccess } = useGetQuestionsQuery();
-  const params = useParams();
+
+  const {userProgress, updateProgress} = useQuestionStore();
+
+
+useEffect(()=>{
+console.log('The userProgress is ', userProgress)
+}, [userProgress])
+
 
   const [gradeQuestion, mutationState] = useGradeQuestionMutation();
 
@@ -82,7 +89,7 @@ export default function FullResponse({ question }) {
     /This is where we will highlight errors, in red, do note however that this changes the underlying latex and therefore must be accounted for in preprocessing latex function or our compile script
     
     */
-    
+      
     
 
     if (mathfieldRef.current && !mathfieldRef.current.contains(mfe.current)) {
@@ -112,6 +119,8 @@ export default function FullResponse({ question }) {
   }, [question]);
 
   const handleSubmit = async () => {
+
+    //
     try {
       const latex = mfe.current.value;
       // Preprocess the LaTeX
@@ -146,7 +155,7 @@ export default function FullResponse({ question }) {
       console.log('Error when trying to access the route handler:', error);
     }
   };
-
+ 
   // If no question loaded yet, just show a spinner or fallback
   if (!question) {
     return <h2>Loading question...</h2>;

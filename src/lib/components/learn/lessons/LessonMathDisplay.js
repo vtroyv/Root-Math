@@ -9,6 +9,8 @@ import { useMultipleChoiceStore,  } from '@/lib/zustand/providers/lesson-task-pr
 import { useLessonStore } from '@/lib/zustand/providers/lesson-state-provider';
 
 export default function LessonMathDisplay({ part, onSubmitTask, taskState }) {
+
+  console.log('The userTaskState is ', taskState)
   // We'll use a ref if we are rendering a single SingleMfe.
   const singleMfeRef = useRef(null);
   const [alertVisible, setAlertVisible] = useState(false);

@@ -16,41 +16,30 @@ import preprocessLatex from '@/lib/utils/preprocess-latex';
 
 
 export default function LessonsPage() {
+  //Set up State hooks:
   const [lesson, setLesson] = useState(null);
   const [userProgress, setUserProgress] = useState(null);
   const [currentPartIndex, setCurrentPartIndex] = useState(0);
   const [userTaskIndex, setUserTaskIndex] = useState(null);
   const [userLatexStore, setUserLatexStore] = useState('');
-
-  const ceRef = useRef(null)
-
-  // For each part, we track an array of tasks with statuses
   const [taskState, setTaskState] = useState([]);
   const [userTaskState, setUserTaskState]= useState([]);
-  // We'll store a feedback message from the "server" to show in the right pane
   const [feedbackMessage, setFeedbackMessage] = useState([]);
   const [userFeedbackMessage, setUserFeedbackMessage] = useState([]);
   const [tasksCount, setTasksCount] = useState(0);
-  // Alert message state for displaying Reactstrap alerts
   const [alertMessage, setAlertMessage] = useState('');
 
-  //set up zustand hooks
+  //compute engine reference
+  const ceRef = useRef(null)
 
-
-  const {addLesson, updateCurrentPart, tasks,   } = useLessonStore();
+  const {addLesson, updateCurrentPart, tasks,    } = useLessonStore();
   const globalTaskStates = useLessonStore((state)=> state.taskState);
 
-
-  
-
- 
-
-
-  //Access userData from clerkJS
   const { isLoaded, isSignedIn, user } = useUser();
   
-  // Auto-dismiss alert after 3 seconds if one is shown.
+  
   useEffect(() => {
+    //Responsible for removing alery messages after 3 secs
     if (alertMessage) {
       const timer = setTimeout(() => {
         setAlertMessage('');
@@ -60,11 +49,15 @@ export default function LessonsPage() {
   }, [alertMessage]);
 
   // Set up reduxAPI hook to connect with nextjs API route handler 
-  const [lessonQuestionFeedback, mutationStateA] = useLessonQuestionFeedbackMutation();
-  const [dynamicLessonData, mutationStateB]= useDynamicLessonDataMutation();
-  const [updateUserProgress, mutationStateC] = useUpdateLessonProgressMutation();
+  const [lessonQuestionFeedback, mutationStateA] = useLessonQuestionFeedbackMutation(); // responsible for getting feedback on a lesson task
+  const [dynamicLessonData, mutationStateB]= useDynamicLessonDataMutation();// responsible for getting the static lesson data and dynamic userProgress data, if userProgress doesn't exist it creates it, e.g. first time doing lesson
+  const [updateUserProgress, mutationStateC] = useUpdateLessonProgressMutation(); //responsible for updating the user progress 
+
+
   const params = useParams();
-  const apiParams = { lessonData: params.lessonDisplay };
+
+  const apiParams = { lessonData: params.lessonDisplay } //the title of the lesson
+
 
   
 
@@ -104,7 +97,7 @@ export default function LessonsPage() {
         
         
         setLesson(staticLessonData)
-        addLesson(staticLessonData)
+        addLesson(staticLessonData) // how the addLesson hook from our zustand store works it updates the task states etc, using the static lesson data, e.g checking the tasks in the current part from the static data and updating the tasks part of the zustand store accordingly
         setUserProgress(userProgressData)
 
 
@@ -175,6 +168,8 @@ useEffect(()=>{
         return task
       }
     });
+
+
   
 
     setUserTaskState(newUserTaskState)
