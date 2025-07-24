@@ -21,9 +21,10 @@ export default function NewFullResponse({ question }) {
   const questionView = useRef(null);
   const ceRef = useRef(null);
   const { updateProgress} = useQuestionStore();
-  const progress = useQuestionStore(state => state.userProgress)// note this pattern of selecting what state you listen to enables you to listen to just parts of the store
+  const progress = useQuestionStore(state => state.userProgress)// note this pattern of selecting what state you listen to enables you to listen to just parts of
   const [gradeQuestion, mutationState] = useGradeQuestionMutation();
 
+  console.log('THe globalstate is ', progress)
   useEffect(() => {
     if (!question) return;
 
@@ -55,6 +56,7 @@ export default function NewFullResponse({ question }) {
       });
 
       const mf = mfe.current;
+
       Object.assign(mf.style, {
         display:         'block',
         width:           '100%',
@@ -64,6 +66,7 @@ export default function NewFullResponse({ question }) {
         borderRadius:    '4px',
         boxSizing:       'border-box',
       });
+      
 
   // Assume `mf = mfe.current`
 if (mathfieldRef.current && !mathfieldRef.current.contains(mf)) {
@@ -91,6 +94,16 @@ if (mathfieldRef.current && !mathfieldRef.current.contains(mf)) {
         event.preventDefault();
       }
     });
+
+     
+
+    mfe.current.addEventListener("input", (event) => {
+  // 1) grab the up-to-date LaTeX
+  const liveLatex = mfe.current.value;   
+  updateProgress({...progress, currentLatex: liveLatex})          // or mfe.current.getValue()
+event.preventDefault();
+    })
+
     }
   }, [question]);
 
@@ -113,6 +126,9 @@ if (mathfieldRef.current && !mathfieldRef.current.contains(mf)) {
   const handleSubmit = async () => {
     try {
       const latex = mfe.current.value;
+      //basically on submit we need to create something that updates the value of the latex, 
+      //next we also need to create functionality that reads the value of the latex when submitted and 
+      //displays it first but then 
 
       const preprocessedArray = preprocessLatex(latex);
       console.log('The preprocessed latex is given by ', preprocessedArray)

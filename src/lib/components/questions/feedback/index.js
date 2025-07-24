@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import QuestionFeedbackPane from './questionFeedbackPane';
 import QuestionInstructionPane from './questionInstructionPane';
 import QuestionSolutionPane from './questionSolutionPane';
+import { useQuestionStore } from '@/lib/zustand/providers/question-state-provider';
 
 export default function Feedback({details}) {
     const [activeTab, setActiveTab] = useState('instructions');
@@ -13,7 +14,15 @@ export default function Feedback({details}) {
     }
     const {instructions, solution} = details
 
+    const updatedFeedback = useQuestionStore((state)=> state.userProgress.feedback)
+    console.log('THe updated Feedback is ', updatedFeedback)
+
+    
+    // now i need to create a listener perhaps with useEffect that toggles to the feedback page, whenever the feedback 
+    //array gets updated 
+    //also you need to work on properly displaying the feedback 
     return (
+
         
         <div style={{height:'100%', display:'flex', flexDirection:'column'}}>
             <Nav tabs>
