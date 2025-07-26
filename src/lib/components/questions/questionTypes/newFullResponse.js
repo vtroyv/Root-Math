@@ -100,7 +100,7 @@ if (mathfieldRef.current && !mathfieldRef.current.contains(mf)) {
     mfe.current.addEventListener("input", (event) => {
   // 1) grab the up-to-date LaTeX
   const liveLatex = mfe.current.value;   
-  updateProgress({...progress, currentLatex: liveLatex})          // or mfe.current.getValue()
+  updateProgress({ userLatex: liveLatex})          // or mfe.current.getValue()
 event.preventDefault();
     })
 
@@ -143,7 +143,18 @@ event.preventDefault();
         questionData: question, 
         sympyResponse: compiledStrings
       }
+
+      //#-----------------------------------------------------
+      // Now I need to update this so that it returns the feedback, and then
+      // aswell as the status
       const resp = await gradeQuestion(dataForFeedback).unwrap();
+      const feedback = resp?.data?.feedback
+
+      //Once i get the status and feedback back, i need to update 
+      //#--------------------------------------------------
+      updateProgress({feedback:[...progress.feedback, feedback], attempts: progress.attempts +1 });
+
+      //Now i need to call something that updates this state from mongoDB, and also displays the typed students work, 
 
       console.log('THe feedback returned from the server is ', resp?.data?.feedback )
       

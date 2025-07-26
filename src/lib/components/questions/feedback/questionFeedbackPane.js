@@ -2,8 +2,11 @@
 import React from 'react'; 
 import Latex from 'react-latex-next';
 import 'katex/dist/katex.min.css';
+import { useQuestionStore } from '@/lib/zustand/providers/question-state-provider';
+import BlockRenderer from '../../learn/lessons/BlockRenderer';
 
 export default function QuestionFeedbackPane() {
+    const feedback = useQuestionStore((state)=> state.userProgress.feedback)
     return (
          <div style={{
       padding: '1.5rem',
@@ -15,14 +18,25 @@ export default function QuestionFeedbackPane() {
       flexDirection: 'column',
       margin: '1rem auto',
       boxSizing: 'border-box',
-      color:"#17a2b8"  
+      overflowY:'auto'
+
     }}>
-         <h1 style={{textAlign:'center', marginBottom:'1rem',  textDecoration:'underline', fontWeight:"bold"}}>
+         <h1 style={{textAlign:'center', marginBottom:'1rem',  textDecoration:'underline', fontWeight:"bold",       color:"#17a2b8"  }}>
             Feedback
         </h1>
-            {/* {Scrollable container for task feedback cards} */}
+            
+              {feedback.length > 0 && feedback[feedback.length-1].map((block, i) =>
+        <BlockRenderer key={i} block={block} />
+      )}
+
+      {feedback.length == 0 && emptyFeedback.map((block,i) => <BlockRenderer key={i} block={block} />)
+      }
+
+      
 
           
         </div>
     );
 }
+
+const emptyFeedback = [{type:"paragraph", content:"Submit your first attempt to begin recieving feedback!"}]

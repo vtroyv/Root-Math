@@ -1,5 +1,5 @@
 'use client'
-import React, {useState} from 'react'; 
+import React, {useState, useEffect} from 'react'; 
 import {Nav, NavItem, NavLink,TabContent, TabPane} from 'reactstrap';
 import classnames from 'classnames';
 import QuestionFeedbackPane from './questionFeedbackPane';
@@ -17,10 +17,18 @@ export default function Feedback({details}) {
     const updatedFeedback = useQuestionStore((state)=> state.userProgress.feedback)
     console.log('THe updated Feedback is ', updatedFeedback)
 
+
+
     
     // now i need to create a listener perhaps with useEffect that toggles to the feedback page, whenever the feedback 
     //array gets updated 
     //also you need to work on properly displaying the feedback 
+
+    useEffect(()=> {
+       //Whenever the updated feedback gets changed  
+       toggle('feedback')
+
+    },[updatedFeedback])
     return (
 
         
@@ -82,7 +90,7 @@ export default function Feedback({details}) {
                     < QuestionInstructionPane instructions={instructions}/>
                 </TabPane>
                 <TabPane tabId='solution-explanation'>
-                    <QuestionSolutionPane />
+                    <QuestionSolutionPane solution={details.solution} markScheme ={details.markScheme}/>
 
                 </TabPane>
 
