@@ -29,6 +29,8 @@ export default function QuestionSolutionPane({ solution , markScheme}) {
     updateProgress({ status: 'complete' });
   };
 
+  
+
   return (
     <div
       style={{

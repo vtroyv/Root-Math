@@ -140,7 +140,7 @@ const tasks = useLessonStore(state=> state.tasks);
   const handleNewChat = () => {
     const initialMessage = {
       role: "assistant",
-      content: "Hello! Let's start a new conversation.",
+      content: "Ask here for a hint, I'll assist you!",
     };
     setCurrentConversation([initialMessage]);
     setInChatView(true);

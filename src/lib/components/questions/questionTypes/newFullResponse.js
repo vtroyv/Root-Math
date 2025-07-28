@@ -1,20 +1,99 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MathfieldElement } from 'mathlive';
 import 'katex/dist/katex.min.css';
 import ComputeEngineConfig from '@/lib/utils/ceConfig';
-import { Button } from 'reactstrap';
+import {
+  Button,
+  Offcanvas,
+  OffcanvasHeader,
+  OffcanvasBody,
+  Card,
+  CardBody,
+  CardText,
+  Badge,
+  ListGroup, ListGroupItem
+} from 'reactstrap';
 import {
   useGradeQuestionMutation, 
   useGetQuestionsQuery
 } from '@/lib/redux/slices/apiSlice';
-
+import { useUser } from '@clerk/nextjs';
 import { useQuestionStore } from '@/lib/zustand/providers/question-state-provider';
 
 import preprocessLatex from '@/lib/utils/preprocess-latex';
+import { useUpdateQuestionProgressMutation } from '@/lib/redux/slices/apiSlice';
+
+
 
 export default function NewFullResponse({ question }) {
+
+  /*
+
+1) Whenever i submit a question , i need to update the userProgress object in the database 
+
+2) I need to create something that looks for a currentLatex Field and if it exists when we read the current userProgress, to set the latex to that!
+
+3) whenever i recieve the feedback i also need to recieve back from that api a status update, to use to also update the object!!!
+
+4)  Although not directly relevant to this component , I need to start to get GPT to build concise findings on the students work, 
+    to enable me to build up a profile of that students strengths and weaknesses. 
+
+5) When i click reveal solution on Solution Pane, without the userProgress Status being 'Complete' I need to set it to 'complete' and 
+   change the latex to a correct solution!
+
+6) Add a reset button to reset the user Progress for this problem. 
+   - This should still store previous feedback on the backend for my own usecase- but reset it from a users perspective.
+
+6.5) Add a next button 
+
+7) Whenever a solution is deemed correct prevent the latex from being edited anymore, 
+   and display a green alert  saying this is correct click 'next' to move on to the next question. 
+
+7.5) autmatically reveal comment and solution panels, when a userProgress status deems solution as correct!
+
+8) The next button should open side modal with a list of problems that are relevant, and enable to user to 
+   switch to the next problem
+
+9) Once all these things are done, the question my topic/question display page will be complete, 
+   for fullResponse type questions. Although you will need to continue improving the following: 
+  
+   - The flexibility of my sympy compiler!
+   - In cases where we get compiliation errors - bypassing it and calling the llm directly, or getting the llm to fix the issue
+   - Having the hint button open the AskTutor component which should beable to read the currentLatex and provide assistancen
+   - Having a maximum amount of hints per problem!
+
+   -Fix the notes component and hook it up to a DB
+  
+   -Fix the comment section, and enable it to be real time i.e. websockets/sockets.io maybe or maybe not + 
+    also hide comment section until at least 3 attempts have been made, with also a message being displayed like 'comments' 
+    can be distracting 'reveal' but have it automatically revealed when the solution is correct. 
+
+
+
+
+
+  */
+  const demoProblems = [
+    { id: 1, title: 'Quadratic Equations', topic: 'Algebra' },
+    { id: 2, title: 'Integration by Parts', topic: 'Calculus' },
+    { id: 3, title: 'Matrix Multiplication', topic: 'Linear Algebra' },
+     { id: 4, title: 'Quadratic Equations', topic: 'Algebra' },
+    { id: 5, title: 'Integration by Parts', topic: 'Calculus' },
+    { id: 6, title: 'Matrix Multiplication', topic: 'Linear Algebra' },
+     { id: 7, title: 'Quadratic Equations', topic: 'Algebra' },
+    { id: 8, title: 'Integration by Parts', topic: 'Calculus' },
+    { id: 9, title: 'Matrix Multiplication', topic: 'Linear Algebra' },
+     { id: 10, title: 'Quadratic Equations', topic: 'Algebra' },
+    { id: 11, title: 'Integration by Parts', topic: 'Calculus' },
+    { id: 12, title: 'Matrix Multiplication', topic: 'Linear Algebra' },
+     { id: 13, title: 'Quadratic Equations', topic: 'Algebra' },
+    { id: 14, title: 'Integration by Parts', topic: 'Calculus' },
+    { id: 15, title: 'Matrix Multiplication', topic: 'Linear Algebra' },
+,
+  ];
+    
   const questionRef  = useRef(null);
   const mathfieldRef = useRef(null);
   const mfe          = useRef(null);
@@ -22,7 +101,12 @@ export default function NewFullResponse({ question }) {
   const ceRef = useRef(null);
   const { updateProgress} = useQuestionStore();
   const progress = useQuestionStore(state => state.userProgress)// note this pattern of selecting what state you listen to enables you to listen to just parts of
-  const [gradeQuestion, mutationState] = useGradeQuestionMutation();
+  const [gradeQuestion, mutationStateA] = useGradeQuestionMutation();
+  const [updateUserProgress, mutationStateB] = useUpdateQuestionProgressMutation();
+
+  const {user} = useUser();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
 
   console.log('THe globalstate is ', progress)
   useEffect(() => {
@@ -95,6 +179,10 @@ if (mathfieldRef.current && !mathfieldRef.current.contains(mf)) {
       }
     });
 
+    //check if there is any userLatex in the current progress object and if so set the latex as it
+
+    mfe.current.setValue(progress?.userLatex || '') 
+
      
 
     mfe.current.addEventListener("input", (event) => {
@@ -152,11 +240,40 @@ event.preventDefault();
 
       //Once i get the status and feedback back, i need to update 
       //#--------------------------------------------------
-      updateProgress({feedback:[...progress.feedback, feedback], attempts: progress.attempts +1 });
+      const newProgress = {
+  ...progress,
+  feedback: [...progress.feedback, feedback],
+  attempts: progress.attempts + 1,
+};
+      updateProgress(newProgress);
 
       //Now i need to call something that updates this state from mongoDB, and also displays the typed students work, 
 
       console.log('THe feedback returned from the server is ', resp?.data?.feedback )
+      
+      const {id, unsafeMetadata} = user;
+      const {examBoard} = unsafeMetadata
+      
+      const collectionIdentifier = {
+        id, 
+        examBoard, 
+        title, 
+        branch: question.branch, 
+        year: question.year
+      }
+
+      const data = {
+        collectionIdentifier, 
+        progress: newProgress
+      }
+      const updatedStatus = await updateUserProgress(data)
+
+      console.log('The updated Status is ', updatedStatus)
+
+
+
+
+      
       
     } catch (error) {
       console.log('Error when trying to access the route handler:', error)
@@ -225,6 +342,24 @@ event.preventDefault();
         />
 
         {/* Submit button */}
+        <div
+        style={{'display':"flex", flexDirection:'row', gap :'5px'}}>
+            <Button
+        style={{marginTop:'1rem', alignSelf:'center', maxWidth:"10%"}}
+        color='secondary'
+        outline
+        block
+        >
+          Hint
+        </Button>
+            <Button
+        style={{marginTop:'1rem', alignSelf:'center', maxWidth:"10%"}}
+        color='secondary'
+        outline
+        block
+        >
+          Save
+        </Button>
         <Button
           style={{
             marginTop: '1rem',
@@ -238,7 +373,62 @@ event.preventDefault();
         >
           Submit
         </Button>
+      
+       
+            <Button
+        style={{marginTop:'1rem', alignSelf:'center', maxWidth:"10%"}}
+        color='secondary'
+        outline
+        block
+        >
+          Reset
+        </Button>
+             <Button
+        style={{marginTop:'1rem', alignSelf:'center', maxWidth:"10%"}}
+        color='secondary'
+        outline
+        block
+        onClick={toggleDrawer}
+        >
+          Next
+        </Button>
+        </div>
       </div>
+<Offcanvas
+  direction="end"
+  isOpen={isDrawerOpen}
+  toggle={toggleDrawer}
+  style={{ width: '320px' }}
+>
+  <OffcanvasHeader
+    toggle={toggleDrawer}
+    style={{
+      backgroundColor: '#17a2b8',
+      color: 'white',
+      fontWeight: 'bold',
+    }}
+  >
+    Select Next Problem
+  </OffcanvasHeader>
+
+  <OffcanvasBody style={{ padding: '2rem' }}>
+    {demoProblems.map((q) => (
+      <Card
+        key={q.id}
+        onClick={() => {/* navigate to q.id */}}
+        className="mb-2"
+        style={{ cursor: 'pointer', borderColor: 'black', height:"auto" }}
+      >
+        <CardBody className="d-flex justify-content-between align-items-center">
+          <CardText className="mb-0">{q.title}</CardText>
+          <Badge color="info" pill>
+            {q.topic}
+          </Badge>
+        </CardBody>
+      </Card>
+    ))}
+  </OffcanvasBody>
+</Offcanvas>
     </div>
   );
 }

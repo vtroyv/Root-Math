@@ -151,12 +151,8 @@ export async function updateUserLessonProgress(data) {
     const {_id, ...progressWithoutId} = progress
 
     const clonedProgress = JSON.parse(JSON.stringify(progressWithoutId));
-
-
-    
+  
     try {
-
-    
 
     if (collection === 'edx-maths-1') {
         console.log('inside the if statement')
@@ -164,10 +160,7 @@ export async function updateUserLessonProgress(data) {
         const userId = progress.userId;
         const lessonSlug = progress.lessonSlug 
         const filter = {userId, lessonSlug }
-        console.log('the filter is ', filter)
-        
-        
-
+        console.log('the filter is ', filter)   
         const result = await userProgress.replaceOne(filter, clonedProgress);
         console.log('The result is ', result)
         return result 
@@ -175,9 +168,39 @@ export async function updateUserLessonProgress(data) {
     }
  } catch(error){
     return {error: 'failed to update the userProgress in DB'}
- }
-    
+ } 
 } 
+
+export async function updateUserQuestionProgress(data) {
+    const {collectionIdentifier ,progress} = data; 
+
+    const {_id, ...progressWithoutId} = progress;
+
+    const clonedProgress = JSON.parse(JSON.stringify(progressWithoutId))
+    /*
+    userId, examBoard, title, branch, year must be contained in collectionIdentifier
+
+    */
+
+    const collection = identifyQuesProg(collectionIdentifier) 
+
+
+    try{
+        const userQuestionProgress = await db.collection(collection)
+        const {userId, title} = progress;
+
+        const filter = {userId, title}
+
+        const result = await userQuestionProgress.replaceOne(filter, clonedProgress);
+        console.log('The result is ', result )
+        return result 
+    
+    } catch(error) {
+        return {error: 'failed to update the userProgress in the DB'}
+    }
+
+
+}
 
 export async function getSpecificQuestion(title) {
     

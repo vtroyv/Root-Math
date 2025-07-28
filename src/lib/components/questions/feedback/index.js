@@ -79,6 +79,15 @@ export default function Feedback({details}) {
                         Comments
                     </NavLink>
                 </NavItem>
+                 <NavItem>
+                    <NavLink
+                    className={classnames({active: activeTab === 'Report'})}
+                    onClick={()=> toggle('Report')}
+                    style={{cursor: 'pointer'}}
+                    >
+                        Report
+                    </NavLink>
+                </NavItem>
             </Nav>
 
             <TabContent activeTab={activeTab} style={{padding:'1rem', flex:1}}>
