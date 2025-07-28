@@ -13,7 +13,8 @@ import {
   CardBody,
   CardText,
   Badge,
-  ListGroup, ListGroupItem
+  ListGroup, ListGroupItem,
+  Table,
 } from 'reactstrap';
 import {
   useGradeQuestionMutation, 
@@ -31,44 +32,44 @@ export default function NewFullResponse({ question }) {
 
   /*
 
-1) Whenever i submit a question , i need to update the userProgress object in the database 
+1) Whenever i submit a question , i need to update the userProgress object in the database  ✅ 
 
-2) I need to create something that looks for a currentLatex Field and if it exists when we read the current userProgress, to set the latex to that!
+2) I need to create something that looks for a currentLatex Field and if it exists when we read the current userProgress, to set the latex to that! ✅
 
-3) whenever i recieve the feedback i also need to recieve back from that api a status update, to use to also update the object!!!
+3) whenever i recieve the feedback i also need to recieve back from that api a status update, to use to also update the object!!! ✅
 
 4)  Although not directly relevant to this component , I need to start to get GPT to build concise findings on the students work, 
-    to enable me to build up a profile of that students strengths and weaknesses. 
+    to enable me to build up a profile of that students strengths and weaknesses + improve the feedback response so it's less ❌
 
 5) When i click reveal solution on Solution Pane, without the userProgress Status being 'Complete' I need to set it to 'complete' and 
-   change the latex to a correct solution!
+   change the latex to a correct solution! ❌ (honestly not fully necessary- perhaps having the user copy the solution out wouldn't be bad!)
 
 6) Add a reset button to reset the user Progress for this problem. 
-   - This should still store previous feedback on the backend for my own usecase- but reset it from a users perspective.
+   - This should still store previous feedback on the backend for my own usecase- but reset it from a users perspective. ❌
 
-6.5) Add a next button 
+6.5) Add a next button ✅
 
 7) Whenever a solution is deemed correct prevent the latex from being edited anymore, 
-   and display a green alert  saying this is correct click 'next' to move on to the next question. 
+   and display a green alert  saying this is correct click 'next' to move on to the next question. ❌
 
-7.5) autmatically reveal comment and solution panels, when a userProgress status deems solution as correct!
+7.5) autmatically reveal comment and solution panels, when a userProgress status deems solution as correct! ✅ 
 
 8) The next button should open side modal with a list of problems that are relevant, and enable to user to 
-   switch to the next problem
+   switch to the next problem ❌
 
 9) Once all these things are done, the question my topic/question display page will be complete, 
    for fullResponse type questions. Although you will need to continue improving the following: 
   
-   - The flexibility of my sympy compiler!
-   - In cases where we get compiliation errors - bypassing it and calling the llm directly, or getting the llm to fix the issue
-   - Having the hint button open the AskTutor component which should beable to read the currentLatex and provide assistancen
-   - Having a maximum amount of hints per problem!
+   - The flexibility of my sympy compiler! ❌
+   - In cases where we get compiliation errors - bypassing it and calling the llm directly, or getting the llm to fix the issue❌
+   - Having the hint button open the AskTutor component which should beable to read the currentLatex and provide assistancen❌
+   - Having a maximum amount of hints per problem!❌
 
-   -Fix the notes component and hook it up to a DB
+   -Fix the notes component and hook it up to a DB ❌
   
    -Fix the comment section, and enable it to be real time i.e. websockets/sockets.io maybe or maybe not + 
     also hide comment section until at least 3 attempts have been made, with also a message being displayed like 'comments' 
-    can be distracting 'reveal' but have it automatically revealed when the solution is correct. 
+    can be distracting 'reveal' but have it automatically revealed when the solution is correct. ❌
 
 
 
@@ -236,7 +237,11 @@ event.preventDefault();
       // Now I need to update this so that it returns the feedback, and then
       // aswell as the status
       const resp = await gradeQuestion(dataForFeedback).unwrap();
+      console.log('the--TEST response is ', resp)
       const feedback = resp?.data?.feedback
+      const isCorrect = resp?.data?.status
+      const status = isCorrect ? 'complete': 'incomplete'
+
 
       //Once i get the status and feedback back, i need to update 
       //#--------------------------------------------------
@@ -244,6 +249,7 @@ event.preventDefault();
   ...progress,
   feedback: [...progress.feedback, feedback],
   attempts: progress.attempts + 1,
+  status: status
 };
       updateProgress(newProgress);
 
@@ -411,24 +417,58 @@ event.preventDefault();
     Select Next Problem
   </OffcanvasHeader>
 
-  <OffcanvasBody style={{ padding: '2rem' }}>
-    {demoProblems.map((q) => (
-      <Card
-        key={q.id}
-        onClick={() => {/* navigate to q.id */}}
-        className="mb-2"
-        style={{ cursor: 'pointer', borderColor: 'black', height:"auto" }}
-      >
-        <CardBody className="d-flex justify-content-between align-items-center">
-          <CardText className="mb-0">{q.title}</CardText>
-          <Badge color="info" pill>
-            {q.topic}
-          </Badge>
-        </CardBody>
-      </Card>
-    ))}
+  <OffcanvasBody className="p-0">
+    <Table
+      borderless
+      hover
+      striped
+      size="md"
+      className="mb-0"
+      style={{ cursor: 'pointer' }}
+    >
+      <tbody>
+        {demoProblems.map((q) => (
+          <tr
+            key={q.id}
+            onClick={() => {
+              /* navigate to q.id */
+              toggleDrawer();
+              // e.g. router.push(`/learn/questions/${q.title}`);
+            }}
+          >
+            {/* Status icon cell (replace with real status if you have it) */}
+            <td style={{ width: '1.5rem', textAlign: 'center' }}>
+              <i
+                className="bi bi-dash-square-fill"
+                style={{ fontSize: '1.25rem', color: 'grey' }}
+              />
+            </td>
+
+            {/* Title */}
+            <td style={{ fontWeight: 500 }}>
+              {q.title}
+            </td>
+
+            {/* Topic */}
+            <td style={{ whiteSpace: 'nowrap' }}>
+              <Badge color="info" pill>
+                {q.topic}
+              </Badge>
+            </td>
+
+            {/* Difficulty */}
+            <td style={{ whiteSpace: 'nowrap', paddingLeft: '0.5rem' }}>
+              <small className="text-muted">
+                {q.difficulty || ''}
+              </small>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
   </OffcanvasBody>
 </Offcanvas>
+
     </div>
   );
 }

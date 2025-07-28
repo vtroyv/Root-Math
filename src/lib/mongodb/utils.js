@@ -44,6 +44,18 @@ export async function getQuestions() {
     } catch(error) {
         return {error: 'Failed to fetch questions!'}
     }
+}
+
+export async function getUserProgForAllQuestions(userId, examBoard) {
+    //could i acheive this with mongoDB aggregation -> at some later date come back and see if this is possible, 
+    //therefore i could save myself from doing two separate api requests to get my desired data.
+
+   switch (examBoard) {
+    case 'edexcel':
+        const progressCollection1 = db.collection('edexcel-questions-pure-y1-progress')
+        const prog1 = await progressCollection1.find({userId}).project({_id:0, title:1, status:1}).toArray();
+        return prog1
+   }
 
 }
 

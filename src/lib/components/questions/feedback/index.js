@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import QuestionFeedbackPane from './questionFeedbackPane';
 import QuestionInstructionPane from './questionInstructionPane';
 import QuestionSolutionPane from './questionSolutionPane';
+import QuestionNotesPane from './questionNotesPane';
 import { useQuestionStore } from '@/lib/zustand/providers/question-state-provider';
 
 export default function Feedback({details}) {
@@ -100,6 +101,10 @@ export default function Feedback({details}) {
                 </TabPane>
                 <TabPane tabId='solution-explanation'>
                     <QuestionSolutionPane solution={details.solution} markScheme ={details.markScheme}/>
+
+                </TabPane>
+                 <TabPane tabId='notes'>
+                    <QuestionNotesPane />
 
                 </TabPane>
 

@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useGetQuestionsQuery } from "@/lib/redux/slices/apiSlice";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { useUser } from "@clerk/nextjs";
+import { skipToken } from '@reduxjs/toolkit/query/react';
 
 import {
   Table,
@@ -67,12 +69,24 @@ export default function QuestionTable() {
 
   const dispatch = useDispatch();
   const router = useRouter();
+  // Get detials of user
+
+  const {isLoaded,isSignedIn, user} = useUser();
+ const args = (isLoaded && isSignedIn && user)
+    ? { userId: user.id, examBoard: user.unsafeMetadata.examBoard }
+    : skipToken;
+
+  // NOW it runs unconditionally on every render
+  const { data, isLoading, error } = useGetQuestionsQuery(args);
 
   // Load data from Redux RTK Query
-  const { data, isLoading, error } = useGetQuestionsQuery();
+    if (!isLoaded)                    return <div>Loading user…</div>;
+  if (!isSignedIn || !user)         return <div>Please sign in…</div>;
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   if (!data) return <div>No data available</div>;
+
+  
 
   // Toggle a topic in the topicFilter array
   const handleTopicToggle = (topic) => {
@@ -110,12 +124,12 @@ export default function QuestionTable() {
     <tr key={question.title}>
       <td>
         {/* Status icon */}
-        {question.status === "Completed" ? (
+        {question.status === "complete" ? (
           <i
             className="bi bi-check-square-fill"
             style={{ fontSize: "1.25rem", color: "green" }}
           />
-        ) : question.status === "Incorrect" ? (
+        ) : question.status === "incomplete" ? (
           <i
             className="bi bi-x-square-fill"
             style={{ color: "red", fontSize: "1.25rem" }}
@@ -164,7 +178,7 @@ export default function QuestionTable() {
                     style={{ cursor: "pointer" }}
                     onClick={() => setStatusFilter(null)}
                   >
-                    Status: {statusFilter} <i className="bi bi-x-lg ms-1"></i>
+                    Status: {statusFilter == 'complete' ? 'Completed' : (statusFilter == 'incomplete')  ?  'Incorrect' :'Todo'} <i className="bi bi-x-lg ms-1"></i>
                   </Badge>
                 )}
 
@@ -213,7 +227,7 @@ export default function QuestionTable() {
                         Status
                       </DropdownToggle>
                       <DropdownMenu container="body">
-                        <DropdownItem onClick={() => setStatusFilter("Completed")}>
+                        <DropdownItem onClick={() => setStatusFilter("complete")}>
                           <div
                             style={{
                               display: "flex",
@@ -227,7 +241,7 @@ export default function QuestionTable() {
                             ></i>
                           </div>
                         </DropdownItem>
-                        <DropdownItem onClick={() => setStatusFilter("Incorrect")}>
+                        <DropdownItem onClick={() => setStatusFilter("incomplete")}>
                           <div
                             style={{
                               display: "flex",

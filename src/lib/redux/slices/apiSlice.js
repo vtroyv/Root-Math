@@ -17,9 +17,15 @@ export const apiSlice = createApi({
     //the 'endpoints' represent operations and requests for this servrer
     endpoints: builder => ({
         //The `getQuestions` endpont is a "query" operation that returns data.
-        getQuestions: builder.query({
-            query: () => '/questions'
-        }),
+         getQuestions: builder.query({
+      // now our hook expects an object like { userId, examBoard }
+      query: ({ userId, examBoard }) => ({
+        url: '/questions',
+        method: 'GET',
+        // this becomes /questions?userId=…&examBoard=…
+        params: { userId, examBoard },
+      }),
+    }),
 
         //The `gradeQuestion` endpoint is a "mutation" operation that updates the DB, and returns feedback data
         gradeQuestion: builder.mutation({
