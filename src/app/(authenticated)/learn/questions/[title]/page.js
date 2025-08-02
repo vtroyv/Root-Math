@@ -120,7 +120,10 @@ export default function QuestionDisplay({ params }) {
       return <Selection question={question}/>
 
     } else if (questionType === 'sketch') {
-      return <Sketch question={question}/>
+      const newSketch = <Sketch question={question} />
+      const feedback = <Feedback details={question.details} />
+
+      return <TwoPaneResponsive question={newSketch} feedback ={feedback} />
     
     } else if (questionType ==='explain') {
       return <Explain />

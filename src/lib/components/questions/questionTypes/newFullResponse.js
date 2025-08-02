@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MathfieldElement } from 'mathlive';
 import 'katex/dist/katex.min.css';
 import ComputeEngineConfig from '@/lib/utils/ceConfig';
+import NextQuestions from '../other-question-components/NextQuestions';
+import { useDrawerStore } from '@/lib/zustand/providers/question-drawer-state-provider';
 import {
   Button,
   Offcanvas,
@@ -25,7 +27,7 @@ import { useQuestionStore } from '@/lib/zustand/providers/question-state-provide
 
 import preprocessLatex from '@/lib/utils/preprocess-latex';
 import { useUpdateQuestionProgressMutation } from '@/lib/redux/slices/apiSlice';
-
+import { useRouter } from "next/navigation";
 
 
 export default function NewFullResponse({ question }) {
@@ -73,11 +75,12 @@ export default function NewFullResponse({ question }) {
 
 
 
+    - PLEASE EXTRACT THE NEXT COMPONENT 
 
 
   */
-  const demoProblems = [
-    { id: 1, title: 'Quadratic Equations', topic: 'Algebra' },
+  const problems = [
+    { id: 1, title: 'Sketch-the-Quadratic-I', topic: 'Algebra' }, // you'll need to store in DB similar like to this and then perhaps have some function that formats e.g. removes dashes
     { id: 2, title: 'Integration by Parts', topic: 'Calculus' },
     { id: 3, title: 'Matrix Multiplication', topic: 'Linear Algebra' },
      { id: 4, title: 'Quadratic Equations', topic: 'Algebra' },
@@ -94,7 +97,7 @@ export default function NewFullResponse({ question }) {
     { id: 15, title: 'Matrix Multiplication', topic: 'Linear Algebra' },
 ,
   ];
-    
+  
   const questionRef  = useRef(null);
   const mathfieldRef = useRef(null);
   const mfe          = useRef(null);
@@ -106,10 +109,16 @@ export default function NewFullResponse({ question }) {
   const [updateUserProgress, mutationStateB] = useUpdateQuestionProgressMutation();
 
   const {user} = useUser();
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
+
+    const openDrawer = useDrawerStore(s => s.open)
 
   console.log('THe globalstate is ', progress)
+  const router = useRouter()
+   const selectNext = ({title}) => {
+    const next = problems.find(p => p.title === title)
+    router.push(`/learn/questions/${next?.title ?? 'fallback-slug'}`)
+    //now build this fallback slug component at some point lol
+  }
   useEffect(() => {
     if (!question) return;
 
@@ -394,81 +403,16 @@ event.preventDefault();
         color='secondary'
         outline
         block
-        onClick={toggleDrawer}
+        onClick={openDrawer}
         >
           Next
         </Button>
         </div>
       </div>
-<Offcanvas
-  direction="end"
-  isOpen={isDrawerOpen}
-  toggle={toggleDrawer}
-  style={{ width: '320px' }}
->
-  <OffcanvasHeader
-    toggle={toggleDrawer}
-    style={{
-      backgroundColor: '#17a2b8',
-      color: 'white',
-      fontWeight: 'bold',
-    }}
-  >
-    Select Next Problem
-  </OffcanvasHeader>
-
-  <OffcanvasBody className="p-0">
-    <Table
-      borderless
-      hover
-      striped
-      size="md"
-      className="mb-0"
-      style={{ cursor: 'pointer' }}
-    >
-      <tbody>
-        {demoProblems.map((q) => (
-          <tr
-            key={q.id}
-            onClick={() => {
-              /* navigate to q.id */
-              toggleDrawer();
-              // e.g. router.push(`/learn/questions/${q.title}`);
-            }}
-          >
-            {/* Status icon cell (replace with real status if you have it) */}
-            <td style={{ width: '1.5rem', textAlign: 'center' }}>
-              <i
-                className="bi bi-dash-square-fill"
-                style={{ fontSize: '1.25rem', color: 'grey' }}
-              />
-            </td>
-
-            {/* Title */}
-            <td style={{ fontWeight: 500 }}>
-              {q.title}
-            </td>
-
-            {/* Topic */}
-            <td style={{ whiteSpace: 'nowrap' }}>
-              <Badge color="info" pill>
-                {q.topic}
-              </Badge>
-            </td>
-
-            {/* Difficulty */}
-            <td style={{ whiteSpace: 'nowrap', paddingLeft: '0.5rem' }}>
-              <small className="text-muted">
-                {q.difficulty || ''}
-              </small>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
-  </OffcanvasBody>
-</Offcanvas>
+<NextQuestions problems={problems}  onSelect={selectNext}/>
 
     </div>
   );
 }
+
+

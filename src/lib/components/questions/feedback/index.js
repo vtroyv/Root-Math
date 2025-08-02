@@ -13,12 +13,16 @@ export default function Feedback({details}) {
     const toggle= (tab) => {
         if (activeTab !== tab) setActiveTab(tab)
     }
-    const {instructions, solution} = details
+    const {instructions, solution, markScheme} = details ?? {
+        'instructions': [{'type':'paragraph', 'content':'test'}], 
+        'solution': [{'type':'paragraph', 'content':'test'}], 
+        'markScheme': [{'type':'paragraph', 'content':'test'}]
+    }
 
     const updatedFeedback = useQuestionStore((state)=> state.userProgress.feedback)
     console.log('THe updated Feedback is ', updatedFeedback)
 
-
+    
 
     
     // now i need to create a listener perhaps with useEffect that toggles to the feedback page, whenever the feedback 
@@ -100,7 +104,7 @@ export default function Feedback({details}) {
                     < QuestionInstructionPane instructions={instructions}/>
                 </TabPane>
                 <TabPane tabId='solution-explanation'>
-                    <QuestionSolutionPane solution={details.solution} markScheme ={details.markScheme}/>
+                    <QuestionSolutionPane solution={solution} markScheme ={markScheme}/>
 
                 </TabPane>
                  <TabPane tabId='notes'>
