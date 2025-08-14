@@ -10,7 +10,7 @@ import preprocessLatex from '@/lib/utils/preprocess-latex';
 import Feedback from '@/lib/components/questions/feedback';
 import FullResponse from '@/lib/components/questions/FullResponse';
 import Selection from '@/lib/components/questions/Selection';
-import Sketch from '@/lib/components/questions/Sketch';
+import Sketch from '@/lib/components/questions/questionTypes/Sketch';
 import Explain from '@/lib/components/questions/Explain';
 import FillInBlank from '@/lib/components/questions/FillInBlank';
 import NewFullResponse from '@/lib/components/questions/questionTypes/newFullResponse';

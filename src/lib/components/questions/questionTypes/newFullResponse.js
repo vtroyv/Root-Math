@@ -20,13 +20,14 @@ import {
 } from 'reactstrap';
 import {
   useGradeQuestionMutation, 
-  useGetQuestionsQuery
+  useGetQuestionsQuery, 
+  useUpdateQuestionProgressMutation
 } from '@/lib/redux/slices/apiSlice';
 import { useUser } from '@clerk/nextjs';
 import { useQuestionStore } from '@/lib/zustand/providers/question-state-provider';
 
 import preprocessLatex from '@/lib/utils/preprocess-latex';
-import { useUpdateQuestionProgressMutation } from '@/lib/redux/slices/apiSlice';
+
 import { useRouter } from "next/navigation";
 
 
@@ -193,6 +194,11 @@ if (mathfieldRef.current && !mathfieldRef.current.contains(mf)) {
 
     mfe.current.setValue(progress?.userLatex || '') 
 
+
+// it would be great if there was some logic to set the parts which contain errors as red
+
+    // mfe.current.selection = [0,5]
+    // mfe.current.applyStyle({color:'red'})
      
 
     mfe.current.addEventListener("input", (event) => {

@@ -1,0 +1,4 @@
+the comparison list is  [
+{'label': 'y-intercept', 'user_point': {'x': -4.035696411132813, 'y': -5.703339912522007}, 'target_point': {'x': 0, 'y': -1}, 'is_correct': False}, 
+{'label': 'first root', 'user_point': {'x': -1.4180918375651042, 'y': -0.19581754442671656}, 'target_point': {'x': 0.17712, 'y': 0}, 'is_correct': True}, 
+{'label': 'second root', 'user_point': {'x': 5.432338460286458, 'y': 2.774740944445973}, 'target_point': {'x': 2.82288, 'y': 0}, 'is_correct': False}]

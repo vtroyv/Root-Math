@@ -125,16 +125,76 @@ export default function LessonMathDisplay({ part, onSubmitTask, taskState }) {
       )} */}
       <TaskRenderer part={part} taskState={taskState} />
       </div>
-<div>
+<div style={{'display':"flex", flexDirection:'row', gap :'5px',}}>
+   <Button
+ style={{
+    marginTop: '1rem',
+    alignSelf: 'center',
+    width: 'auto',         // let the button size to the text
+    whiteSpace: 'nowrap',  // force it on one line
+
+  }}
+          color='secondary'
+          outline
+          block
+          >
+            Hint
+          </Button>
+              <Button
+           style={{
+    marginTop: '1rem',
+    alignSelf: 'center',
+    width: 'auto',         // let the button size to the text
+    whiteSpace: 'nowrap',  // force it on one line
+
+  }}
+          color='secondary'
+          outline
+          block
+          >
+            Save
+          </Button>
+  
       <Button
         block
         outline
-        color="primary"
-        style={{ marginTop: '0.5rem'}}
+        color="info"
+        style={{
+            marginTop: '1rem',
+            alignSelf: 'center',
+            minWidth:     '45%',
+          }}
         onClick={handleSubmit}
       >
         Submit
       </Button>
+         <Button
+             style={{
+    marginTop: '1rem',
+    alignSelf: 'center',
+    width: 'auto',         // let the button size to the text
+    whiteSpace: 'nowrap',  // force it on one line
+
+  }}
+              color='secondary'
+              outline
+              block
+              >
+                Reset
+              </Button>
+        <Button
+  outline
+  color="secondary"
+  style={{
+    marginTop: '1rem',
+    alignSelf: 'center',
+    width: 'auto',         // let the button size to the text
+    whiteSpace: 'nowrap',  // force it on one line
+
+  }}
+>
+  Solution
+</Button>
       </div>
     
     </>

@@ -3,9 +3,10 @@
 import { useGetQuestionsQuery, useGradeQuestionMutation } from '@/lib/redux/slices/apiSlice';
 import FullResponse from '@/lib/components/questions/FullResponse';
 import Selection from '@/lib/components/questions/Selection';
-import Sketch from '@/lib/components/questions/Sketch';
+import Sketch from '@/lib/components/questions/questionTypes/Sketch';
 import Explain from '@/lib/components/questions/Explain';
 import FillInBlank from '@/lib/components/questions/FillInBlank';
+import ImageWithMfe from '@/lib/components/questions/questionTypes/imageWithMfe';
 import NewFullResponse from '@/lib/components/questions/questionTypes/newFullResponse';
 import Feedback from '@/lib/components/questions/feedback';
 import TwoPaneResponsive from "@/lib/components/learn/lessons/TwoPaneResponsive";
@@ -118,6 +119,10 @@ export default function QuestionDisplay({ params }) {
 
     } else if (questionType === 'selection') {
       return <Selection question={question}/>
+
+    } else if (questionType == 'imageWithMfe') {
+      const imageWithMfe = <ImageWithMfe question={question}/>
+      const feedback = <Feedback details ={question.details} />
 
     } else if (questionType === 'sketch') {
       const newSketch = <Sketch question={question} />

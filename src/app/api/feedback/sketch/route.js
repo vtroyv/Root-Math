@@ -3,7 +3,7 @@ export async function POST(request) {
     console.log('The current body that i would like to send in the sketch route is ', body)
 
     const feedback ={
-        coordinates: body.coordinates,
+        reducedCoordinates: body.reducedCoordinates,
         questionData: body.questionData
     }
     console.log('The feedback data that i would like to send is ', feedback)
@@ -19,6 +19,7 @@ export async function POST(request) {
 
         //Parse the response from the FastAPI Server
         const result = await response.json()
+        console.log('the result returned is ', result)
         return new Response(
             JSON.stringify({message:'completed', data: result}),
             {

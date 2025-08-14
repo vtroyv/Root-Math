@@ -1,6 +1,12 @@
 'use client';
 import { useEffect, useState,useRef } from 'react';
-import { Alert } from 'reactstrap';
+import { 
+  Alert, 
+  Button, 
+  Modal, 
+  ModalHeader, 
+  ModalBody 
+} from 'reactstrap';
 import {  useDynamicLessonDataMutation,useLessonQuestionFeedbackMutation } from '@/lib/redux/slices/apiSlice';
 import { useParams } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
@@ -28,7 +34,8 @@ export default function LessonsPage() {
   const [userFeedbackMessage, setUserFeedbackMessage] = useState([]);
   const [tasksCount, setTasksCount] = useState(0);
   const [alertMessage, setAlertMessage] = useState('');
-
+  const [visualModalOpen, setVisualModalOpen] = useState(false);
+  const toggleVisualModal = () => setVisualModalOpen(o => !o);
   //compute engine reference
   const ceRef = useRef(null)
 
@@ -565,20 +572,83 @@ useEffect(()=>{
   );
 
   return (
-    <>
-      {/* Display the Reactstrap alert if there's an alert message */}
-      {alertMessage && (
-        <Alert color="warning">
-          {alertMessage}
-        </Alert>
-      )}
+  <>
+    {alertMessage && <Alert color="warning">{alertMessage}</Alert>}
+
+    {/* 1) Make this the positioning context */}
+    <div style={{ position: 'relative' }}>
+      
+      {/* 2) Two-line hint, right-aligned, pointing at the button */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '-3rem',          // lift up above the panes
+          right: '5rem',         // sits to the left of the button
+          textAlign: 'right',
+          lineHeight: 1.2,
+          fontSize: '0.875rem',
+          color: '#17a2b8',
+          fontWeight: '500'
+        }}
+      >
+        <div>Are you a visual learner?</div>
+        <div>
+       Watch a video for this part<span style={{ fontSize: '1.2rem' }}>→</span>
+        </div>
+      </div>
+
+      {/* 3) Circular button */}
+      <Button
+        color="info"
+        outline
+        className="rounded-circle"
+        onClick={toggleVisualModal}
+        style={{
+          position: 'absolute',
+          top: '-3.5rem',
+          right: '1rem',
+          width: '3rem',
+          height: '3rem',
+          padding: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '1.25rem',
+          boxShadow: '0 0 8px rgba(23,162,184,0.7)',
+          transition: 'box-shadow 0.2s ease-in-out'
+        }}
+        title="Visual learner tutorial"
+      >
+        🎥
+      </Button>
+
+      {/* 4) Your existing three-pane layout */}
       <ThreePaneResponsive
         instructions={instructionsPane}
         mainContent={mainPane}
-        feedbackData={{
-          feedback: feedbackPane,
-        }}
+        feedbackData={{ feedback: feedbackPane }}
       />
-    </>
-  );
+    </div>
+
+    {/* 5) The modal */}
+    <Modal isOpen={visualModalOpen} toggle={toggleVisualModal} size="lg">
+      <ModalHeader toggle={toggleVisualModal}>
+        Visual Learner Tutorial
+      </ModalHeader>
+      <ModalBody style={{ padding: 0 }}>
+        {/* embed your video here */}
+        <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+          <iframe
+            src="https://www.youtube.com/embed/VIDEO_ID"
+            title="Visual Learner Tutorial"
+            frameBorder="0"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+          />
+        </div>
+      </ModalBody>
+    </Modal>
+  </>
+);
 }
