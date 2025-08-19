@@ -6,7 +6,7 @@ import Selection from '@/lib/components/questions/Selection';
 import Sketch from '@/lib/components/questions/questionTypes/Sketch';
 import Explain from '@/lib/components/questions/Explain';
 import FillInBlank from '@/lib/components/questions/FillInBlank';
-import ImageWithMfe from '@/lib/components/questions/questionTypes/imageWithMfe';
+
 import NewFullResponse from '@/lib/components/questions/questionTypes/newFullResponse';
 import Feedback from '@/lib/components/questions/feedback';
 import TwoPaneResponsive from "@/lib/components/learn/lessons/TwoPaneResponsive";
@@ -14,7 +14,7 @@ import { useUser } from '@clerk/nextjs';
 import { useEffect,useState } from 'react';
 import { useDynamicQuestionDataMutation } from '@/lib/redux/slices/apiSlice';
 import { useQuestionStore } from '@/lib/zustand/providers/question-state-provider';
-
+import Combination from '@/lib/components/questions/questionTypes/Combination';
 
 
 
@@ -39,7 +39,7 @@ export default function QuestionDisplay({ params }) {
 
   const [question, setQuestion] = useState(null);
   const [userProgress, setUserProgress] = useState(null);
-  const {updateProgress, } = useQuestionStore();
+  const {updateProgress,setProgress } = useQuestionStore();
 
   const progress = useQuestionStore((state) => state.userProgress); //access it like this as i already defined userProgress as state here
 
@@ -66,8 +66,11 @@ export default function QuestionDisplay({ params }) {
           const {question, existingUserProgress} = await dynamicQuestionData(dynamicQuestionRouteData).unwrap(); //note we use unwrap because it is retruend as {data: {question:..., existingUserProgress...}}
           console.log('the exisitng user progress is ', existingUserProgress)
         setQuestion(question) 
+        
         setUserProgress(existingUserProgress)
-        updateProgress(existingUserProgress)
+        //[CLEAR ANY ZUSTAND USERPROGRESS HERE ]
+        //THEN UPDATEPROGRESS BELOW
+        setProgress(existingUserProgress)
         
 
 
@@ -88,7 +91,7 @@ export default function QuestionDisplay({ params }) {
     //now the purpose of this should be to add the useProgress to globalState
     // then in our lower components e.g. FullResponse, we will update the global task state 
 
-    updateProgress(userProgress)
+    // updateProgress(userProgress)
     console.log('Thee current global question state is ', progress)
   }, [userProgress])
 
@@ -118,13 +121,18 @@ export default function QuestionDisplay({ params }) {
       return <TwoPaneResponsive question={fullResponse} feedback={feedback} />
 
     } else if (questionType === 'selection') {
-      return <Selection question={question}/>
+      const feedback = <Feedback details ={question?.details} />
+      const multipleChoice = <Selection question={question} />
+      return <TwoPaneResponsive question={multipleChoice} feedback={feedback}/>
 
-    } else if (questionType == 'imageWithMfe') {
-      const imageWithMfe = <ImageWithMfe question={question}/>
+    } else if(questionType == 'combination') {
+      const combination = <Combination question={question} />
       const feedback = <Feedback details ={question.details} />
-
-    } else if (questionType === 'sketch') {
+      return <TwoPaneResponsive question={combination} feedback={feedback}/>
+    } 
+    
+    
+    else if (questionType === 'sketch') {
       const newSketch = <Sketch question={question} />
       const feedback = <Feedback details={question.details} />
 

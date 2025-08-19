@@ -4,19 +4,7 @@ import { useUser } from '@clerk/nextjs';
 import 'katex/dist/katex.min.css';
 import Latex from 'react-latex-next';
 import {
-  Row,
   Button,
-  Col,
-  Card,
-  CardSubtitle,
-  ListGroup,
-  ListGroupItem,
-  CardBody,
-  Nav, 
-  NavItem,
-  NavLink,
-  TabContent,
-  TabPane
 } from 'reactstrap';
 import { useGradeSketchQuestionMutation, useUpdateQuestionProgressMutation } from '@/lib/redux/slices/apiSlice';
 import { useQuestionStore } from '@/lib/zustand/providers/question-state-provider';

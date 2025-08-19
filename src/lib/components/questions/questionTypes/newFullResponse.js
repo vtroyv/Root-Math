@@ -20,7 +20,6 @@ import {
 } from 'reactstrap';
 import {
   useGradeQuestionMutation, 
-  useGetQuestionsQuery, 
   useUpdateQuestionProgressMutation
 } from '@/lib/redux/slices/apiSlice';
 import { useUser } from '@clerk/nextjs';

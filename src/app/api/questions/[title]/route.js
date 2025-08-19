@@ -71,7 +71,7 @@ export async function POST (request, {params}) {
 function createUserProgress(question, userId) {
   return {
     title: question.title, 
-    status: 'incomplete', 
+    status: 'Todo', 
     feedback: [], 
     userId, 
     type: question.type, 

@@ -1,10 +1,19 @@
+'use client'
 import React from 'react';
 import { Card, CardBody, Row, Col } from 'reactstrap';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { useUser } from '@clerk/nextjs';
 
 export default function Progress() {
+  const {user} = useUser();
+  const {id, unsafeMetadata} = user; 
+
+
+
+  // Now i should create a useEffect hook here to fetch this information on loading 
   // Example stats — customize these to match your data
+
   const totalQuestions = 3435;
   const completedTotal = 2;
   const percentage = Math.round((completedTotal / totalQuestions) * 100);

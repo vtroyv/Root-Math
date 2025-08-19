@@ -15,17 +15,24 @@ export type QuestionProgress = {
 
 export type QuestionStore = {
     userProgress: QuestionProgress | null;
-
     updateProgress: (progress: QuestionProgress) => void;
+    setProgress: (progess: QuestionProgress) => void;
 }
 
 export const useQuestionStore = create<QuestionStore>((set, get) => ({
   userProgress: null,
+
   updateProgress: (partialProgress) =>
     set(state => ({
       userProgress: {
         ...state.userProgress!,
         ...partialProgress,
       }
-    }))
+    })),
+
+  setProgress: (progress) => 
+    set({
+      userProgress: progress
+    })
+
 }))
