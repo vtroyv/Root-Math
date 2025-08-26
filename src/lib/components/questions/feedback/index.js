@@ -86,11 +86,11 @@ export default function Feedback({details}) {
                 </NavItem>
                  <NavItem>
                     <NavLink
-                    className={classnames({active: activeTab === 'Report'})}
-                    onClick={()=> toggle('Report')}
+                    className={classnames({active: activeTab === 'Review'})}
+                    onClick={()=> toggle('Review')}
                     style={{cursor: 'pointer'}}
                     >
-                        Report
+                        Review
                     </NavLink>
                 </NavItem>
             </Nav>

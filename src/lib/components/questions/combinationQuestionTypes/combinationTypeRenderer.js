@@ -1,5 +1,5 @@
 'use client'
-import ImageWithMfe from "./imageWithMfe";
+import CombinationImageWithMfe from "./imageWithMfe";
 import CombinationSketch from "./sketch";
 import CombinationExplain from "./explain";
 
@@ -10,7 +10,7 @@ export default function CombinationTypeRenderer({key,block}) {
         case 'imageWithMfe': {
             return(
                 <div style={{marginTop:'0.5rem'}}>
-                    <ImageWithMfe questionDetails={block}/>
+                    <CombinationImageWithMfe questionDetails={block}/>
                 </div>
             )
         }

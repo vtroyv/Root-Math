@@ -16,10 +16,14 @@ export default function CombinationSketch({questionDetails}) {
     const boardRef = useRef(null);
     const pointsRef = useRef([]);
     const curveRef = useRef(null);
-    const {updateProgress} = useQuestionStore();
+
+    const setComponentProgressAt = useQuestionStore((s)=> s.setComponentProgressAt)
+    const {index} = questionDetails
 
     const [scriptLoaded,setScriptLoaded] = useState(false);
     const [reducedCoordinates, setReducedCoordinates] = useState([]);
+
+    console.log('the bounding box is ', questionDetails.boundingBox)
 
     const clearDrawing = (board) => {
         if (!board )return;
@@ -69,7 +73,8 @@ export default function CombinationSketch({questionDetails}) {
       pt.on('drag', () => syncReduced());
       pt.on('up', () => {
         const newReduced = syncReduced();
-        updateProgress({ coordinates: newReduced });
+        // updateProgress({ coordinates: newReduced });
+        setComponentProgressAt(index, {coordinates:newReduced})
       });
     });
 
@@ -107,7 +112,7 @@ export default function CombinationSketch({questionDetails}) {
 
 
     
-    })
+    },[questionDetails?.title])
 
     useEffect(()=>{
         console.log('The global userProgress is ', progress);
@@ -207,12 +212,14 @@ export default function CombinationSketch({questionDetails}) {
             });
 
             syncReduced();
-            updateProgress({coordinates: syncReduced()});  // ill need to change this so it updates the correct index in updateobject. 
+            // updateProgress({coordinates: syncReduced()});  // ill need to change this so it updates the correct index in updateobject. 
+            setComponentProgressAt(index, {coordinates: syncReduced()})
             pointsRef.current.forEach((pt)=> {
                 pt.on('drag', ()=> syncReduced());
                 pt.on('up', ()=> {
                     const newReduced = syncReduced();
-                    updateProgress({coordinates: newReduced});
+                    // updateProgress({coordinates: newReduced});
+                    setComponentProgressAt(index, {coordinates: newReduced})
                 })
             })
 
@@ -268,7 +275,7 @@ export default function CombinationSketch({questionDetails}) {
         if (progress?.componentProgress?.[questionIndex]?.coordinates?.length) {
             buildFromCoords(boardRef.current, progress.componentProgress[questionIndex].coordinates, labelsFallback)
         }
-    })
+    }, [index, questionDetails?.labels, progress?.componentProgress?.[index]?.coordinates])
 
   
 

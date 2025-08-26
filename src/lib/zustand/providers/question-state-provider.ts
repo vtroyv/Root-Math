@@ -19,20 +19,27 @@ export type QuestionStore = {
     setProgress: (progess: QuestionProgress) => void;
 }
 
-export const useQuestionStore = create<QuestionStore>((set, get) => ({
+export const useQuestionStore = create((set, get) => ({
   userProgress: null,
 
-  updateProgress: (partialProgress) =>
-    set(state => ({
+  setProgress: (progress) =>
+    set({ userProgress: progress }),
+
+  updateProgress: (partial) =>
+    set((state) => ({
       userProgress: {
-        ...state.userProgress!,
-        ...partialProgress,
-      }
+        ...(state.userProgress || {}),
+        ...partial,
+      },
     })),
 
-  setProgress: (progress) => 
-    set({
-      userProgress: progress
-    })
-
-}))
+  // NEW: upsert at componentProgress[index]
+  setComponentProgressAt: (index, patch) =>
+    set((state) => {
+      const up = state.userProgress || {};
+      const arr = Array.isArray(up.componentProgress) ? [...up.componentProgress] : [];
+      const current = arr[index] || {};
+      arr[index] = { ...current, ...patch };
+      return { userProgress: { ...up, componentProgress: arr } };
+    }),
+}));

@@ -7,12 +7,13 @@ import { useQuestionStore } from "@/lib/zustand/providers/question-state-provide
 import ImageWithEnlarge from "../../learn/lessons/ImageWithEnlarge";
 import { useEffect, useRef } from "react";
 
-export default function ImageWithMfe({questionDetails}) {
+export default function CombinationImageWithMfe({questionDetails}) {
     const titleView = useRef(null);
     const titleRef = useRef(null);
     const mfe = useRef(null);
     const mathfieldRef = useRef(null);
     const progress = useQuestionStore((state)=> state.userProgress)
+    const {setComponentProgressAt} = useQuestionStore();
 
     useEffect(()=>{
         if (!questionDetails) return;
@@ -93,7 +94,10 @@ export default function ImageWithMfe({questionDetails}) {
     mfe.current.addEventListener("input", (event) => {
   // 1) grab the up-to-date LaTeX
   const liveLatex = mfe.current.value;   
-  updateProgress({ userLatex: liveLatex})          // or mfe.current.getValue()
+  const {index}= questionDetails
+  
+  
+  setComponentProgressAt( index,{userLatex:liveLatex})          // or mfe.current.getValue()
 event.preventDefault();
     })
 

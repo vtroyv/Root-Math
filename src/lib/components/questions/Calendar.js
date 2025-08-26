@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Card,
@@ -13,9 +12,10 @@ import {
 } from 'reactstrap';
 
 export default function ActivityCalendar() {
-  // Display February 2025 by default
-  const [month, setMonth] = useState(1); // 0=Jan, 1=Feb, etc.
-  const [year, setYear] = useState(2025);
+  // Use today's date for initial state
+  const today = new Date();
+  const [month, setMonth] = useState(today.getMonth()); // 0=Jan
+  const [year, setYear] = useState(today.getFullYear());
 
   // For the modal
   const [selectedDate, setSelectedDate] = useState(null);
@@ -58,6 +58,13 @@ export default function ActivityCalendar() {
     }
   };
 
+  // Jump back to today
+  const jumpToToday = () => {
+    const d = new Date();
+    setMonth(d.getMonth());
+    setYear(d.getFullYear());
+  };
+
   // Utility: days in month
   const getDaysInMonth = (m, y) => new Date(y, m + 1, 0).getDate();
   // Utility: weekday of first day in month (0=Sun, 6=Sat)
@@ -97,7 +104,6 @@ export default function ActivityCalendar() {
         marginTop: '1rem',
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
         border: 'none',
-        // border: '1px solid black',
         borderRadius: '0.5rem',
         maxWidth: '600px',   // limit width to avoid horizontal scroll
         margin: 'auto',      // center it horizontally
@@ -109,12 +115,17 @@ export default function ActivityCalendar() {
             <Button color="light" onClick={handlePrevMonth}>
               &lt; Prev
             </Button>
-            <h5 style={{ fontWeight: 'bold', margin: 0 , color:'black'}}>
+            <h5 style={{ fontWeight: 'bold', margin: 0, color:'black'}}>
               {monthNames[month]} {year}
             </h5>
-            <Button color="light" onClick={handleNextMonth}>
-              Next &gt;
-            </Button>
+            <div>
+              <Button color="light" onClick={jumpToToday}>
+                Today
+              </Button>{' '}
+              <Button color="light" onClick={handleNextMonth}>
+                Next &gt;
+              </Button>
+            </div>
           </Col>
         </Row>
 
@@ -151,7 +162,7 @@ export default function ActivityCalendar() {
                         style={{ textDecoration: 'none', padding: 0 }}
                       >
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                          <span style={{ color: dotColor, fontSize: '1rrem' }}>•</span>
+                          <span style={{ color: dotColor, fontSize: '1rem' }}>•</span>
                           {day}
                         </div>
                       </Button>
