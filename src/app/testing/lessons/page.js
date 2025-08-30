@@ -1555,11 +1555,190 @@ const introducingLogarithms = {
 
 }
 
+
+
+const introducingBinomials = {
+  "_id": "000",
+  "slug": "introducing-binomials",
+  "title": "Introducing Binomials",
+  "next": "brackets-and-large-powers",
+  "parts": [
+    {
+      "id": 1,
+      "title": "Pascal and his Triangle",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "A binomial expression has exactly two terms joined by + or −. For example: $\\bigl(x+3\\bigr)$ or  $\\bigl(2y-5\\bigr)$."
+        },
+        {
+          "type": "paragraph",
+          "content": "Often in mathematics we need to expand these expressions when raised to a power."
+        },
+        {
+          "type":"paragraph", 
+          "content": " When we raise it to low powers—for instance $(x+2)^2$—it’s straightforward, but as the powers get larger, for instance $(x+2)^9$, the work becomes more time consuming."
+        }, 
+{
+  "type": "paragraph",
+  "content": "A French mathematician, Blaise Pascal, noticed a pattern that gives all the coefficients for the expansion of binomial expressions. We arrange the numbers in a triangle, now called *Pascal’s Triangle*. $$\\begin{array}{rccccccccccccc}  &  &  &  &  &  & 1 &  &  &  &  &  &  & \\\\  &  &  &  &  & 1 &  & 1 &  &  &  &  &  & \\\\  &  &  &  & 1 &  & 2 &  & 1 &  &  &  &  & \\\\  &  &  & 1 &  & 3 &  & 3 &  & 1 &  &  &  & \\\\  &  & 1 &  & 4 &  & 6 &  & 4 &  & 1 &  &  & \\\\  & \\textcolor{#17a2b8}{1} &  & \\textcolor{#17a2b8}{5} &  & \\textcolor{#17a2b8}{10} &  & \\textcolor{#17a2b8}{10} &  & \\textcolor{#17a2b8}{5} &  & \\textcolor{#17a2b8}{1} &  & \\\\ \\end{array}$$"
+}
+
+,
+
+{
+  "type": "paragraph",
+  "content": "Now let's consider expanding the binomial expression $(x+y)^n$ for different values of n to see where Pascal's triangle comes into play: $$\\footnotesize \\begin{array}{c} \\boldsymbol{(x+y)^0 =} 1 \\\\ \\boldsymbol{(x+y)^1 =} x+y \\\\ \\boldsymbol{(x+y)^2 =} x^2+2xy+y^2 \\\\ \\boldsymbol{(x+y)^3 =} x^3+3x^2y+3xy^2+y^3 \\\\ \\boldsymbol{(x+y)^4 =} x^4+4x^3y+6x^2y^2+4xy^3+y^4 \\\\ \\boldsymbol{(x+y)^5 =} \\textcolor{#17a2b8}{1}x^5+\\textcolor{#17a2b8}{5}x^4y+\\textcolor{#17a2b8}{10}x^3y^2+\\textcolor{#17a2b8}{10}x^2y^3+\\textcolor{#17a2b8}{5}xy^4+\\textcolor{#17a2b8}{1}y^5 \\\\ \\end{array}$$"
+},
+{
+  "type":"paragraph", 
+  "content":"Notice how the coefficient of each term in $(x+y)^5$ corresponds to the numbers in pascals triangle, this is no coincidence. In general: "
+},
+{
+  "type":"bold-paragraph", 
+  "content":"The $(n+1)^{th}$ row of pascals triangles gives the coefficeints in the expansion of $(x+y)^n$ "
+},
+ {
+          "type": "paragraph",
+          "content": "How it grows is simple: Every inside number is the sum of the two numbers directly above it. The edges are always 1’s, as shown below:"
+        },
+
+        {
+          "type":"paragraph", 
+          "content":"$$\\begin{array}{rccccccccccccc}  &  &  &  &  &  & 1 &  &  &  &  &  &  & \\\\  &  &  &  &  & 1 &  & 1 &  &  &  &  &  & \\\\  &  &  &  & 1 &  & 2 &  & 1 &  &  &  &  & \\\\  &  &  & 1 &  & 3 &  & 3 &  & 1 &  &  &  & \\\\  &  & 1 &  & \\textcolor{#17a2b8}{4} &  & \\textcolor{#17a2b8}{6} &  & 4 &  & 1 &  &  & \\\\  &  &  &  &  &  \\downarrow \\tiny + &  &  &  &  &  &  &  & \\\\  & 1 &  & 5 &  & \\textcolor{#17a2b8}{10} &  & 10 &  & 5 &  & 1 &  & \\\\ \\end{array}$$"
+        },
+        {
+          "type":"paragraph", 
+          "content":"See it's pretty easy, now work through the following tasks to ensure you understand, and although not necessary, if you are interested in diving deeper into pascal's triangle check out the information below:"
+        }, 
+        {
+  "type": "accordion",
+  "title": "Pascal's Triangle Deep Dive, click here",
+  "children": [
+    {
+      "type": "paragraph",
+      "content": "When you expand $(x+y)^n$, each term looks like $x^{n-k}y^k$, where $k$ is how many times you picked $y$ from the brackets."
+    },
+    {
+      "type": "paragraph",
+      "content": "Each term can appear more than once because there are many ways to pick which brackets give you a $y$."
+    },
+    {
+      "type": "paragraph",
+      "content": "For example, in $(x+y)^3$, the term $xy^2$ happens if you pick $y$ from 2 brackets and $x$ from the other 1. There are 3 different ways to do this, so the coefficient is 3."
+    },
+    {
+      "type": "paragraph",
+      "content": "Why does the adding rule work? Imagine building $(x+y)^n$ step by step from $(x+y)^{n-1}$. To make a term with $k$ $y$’s in row $n$, you either: (a) take a term with $(k-1)$ $y$’s from the previous row and multiply by another $y$, or (b) take a term with $k$ $y$’s from the previous row and multiply by another $x$. The total ways come from adding these two cases together. That’s why each number is the sum of the two numbers above it."
+    },
+    {
+      "type": "paragraph",
+      "content": "Simple example: In the 6th row , the coefficient $10$ for $x^3y^2$ comes from 4 ways of making $x^3y^1$ in the previous row then multiplying with a $y$ and 6 ways of making $x^2y^2$ in the previous row then multiplying by a $x$. Together $4+6=10$."
+    }
+  ]
+}
+
+
+      ]
+    }, 
+    {
+  "id": 2,
+  "title": "Factorials: The Shortcut Behind Pascal’s Triangle",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "content": "So far we’ve seen how Pascal’s triangle gives us the coefficients of $(x+y)^n$. But writing out whole triangles every time can be slow. Luckily, there’s a neat shortcut: factorials."
+    },
+    {
+      "type": "paragraph",
+      "content": "A factorial means you multiply a number by every whole number below it until you reach 1. It’s written with an exclamation mark."
+    },
+    {
+      "type": "bullet-points",
+      "points": [
+        "$5! = 5 \\times 4 \\times 3 \\times 2 \\times 1 = 120$",
+        "$3! = 3 \\times 2 \\times 1 = 6$"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": "And here’s an important special case: $0! = 1$. This is just a definition mathematicians agreed on, and it makes all the formulas work out nicely."
+    },
+    {
+      "type": "paragraph",
+      "content": "So now we know what factorials are. But how do they connect to Pascal’s triangle that we just learned about?"
+    },
+    {
+      "type": "paragraph",
+      "content": "Remember that the rows of Pascal’s triangle match the coefficients in the expansion of $(x+y)^n$:"
+    },
+    {
+      "type": "paragraph",
+      "content": "$$\\begin{array}{ccccccc} &&&&& 1 \\\\ &&&& 1 && 1 \\\\ &&& 1 && 2 && 1 \\\\ && 1 && 3 && 3 && 1 \\\\ & 1 && 4 && 6 && 4 && 1 \\\\  1 && 5 && 10 && 10 && 5 && 1 \\\\ \\end{array}$$"
+    },
+    {
+      "type": "paragraph",
+      "content": "At first we said these numbers were just the coefficients in the expansions of $(x+y)^n$. But they also have another meaning: they tell us how many different ways there are to make certain choices."
+    },
+    {
+      "type": "paragraph",
+      "content": "For example, the number 10 in row 5 tells us there are 10 different ways to choose 2 $y$’s from 5 brackets when expanding $(x+y)^5$."
+    },
+    {
+      "type": "paragraph",
+      "content": "So each entry in Pascal’s triangle is really counting the *number of ways to choose*."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "content": "The formula for the rth term in the nth row"
+    },
+    {
+      "type": "paragraph",
+      "content": "Now here’s the key connection: the rth entry in the nth row of Pascal’s triangle can be found using factorials. The formula is:"
+    },
+    {
+      "type": "paragraph",
+      "content": "$$^nC_r = \\frac{n!}{r!(n-r)!}$$"
+    },
+    {
+      "type": "paragraph",
+      "content": "We read this as 'n choose r'. It simply means the number of different ways we can choose r items from n possibilities."
+    },
+    {
+      "type": "paragraph",
+      "content": "So if we want the rth coefficient in row n of Pascal’s triangle, we don’t need to build the whole triangle — we can just plug into this formula."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "content": "Example using factorials"
+    },
+    {
+      "type": "paragraph",
+      "content": "Let’s check the '10' in row 5 without using Pascal’s triangle. Using the formula:"
+    },
+    {
+      "type": "paragraph",
+      "content": "$$^5C_2 = \\frac{5!}{2!(5-2)!} = \\frac{120}{2\\times6} = 10$$"
+    },
+    {
+      "type": "paragraph",
+      "content": "Exactly what we expected! So factorial notation is the quick way to find any entry in Pascal’s triangle, especially when the rows get large."
+    }
+  ]
+}
+
+  ],
+  "collection": "edx-maths-1"
+};
+
+
   // On mount, set lesson and userProgress from the static lesson data
   useEffect(() => {
     if (isLoaded && isSignedIn) {
-      setLesson(exponentialModelling);
-      setUserProgress(createUserProgress(exponentialModelling, user.id));
+      setLesson(introducingBinomials);
+      setUserProgress(createUserProgress(introducingBinomials, user.id));
     }
   }, [isLoaded, isSignedIn, user]);
 
