@@ -6,6 +6,8 @@ import QuestionImage from './taskTypes/questionWithImage';
 import CurveAndMfe from './taskTypes/curveAndMfe';
 import MultipleChoiceTask from './taskTypes/multipleChoice';
 import MultipleChoiceImagesTask from './taskTypes/multipleChoiceImage';
+import VectorSketch from './taskTypes/vectorSketch';
+
 
 //I should be passing refs to the taskrenderer that should then be passing it as props to the specific task types, meaning that when i click submit, regardless of the type using forwardRef we should beable to reference the tasktype and access info. 
 //If this takes to long we'll simply switch to using zustand state, and reading it during the submit. 
@@ -98,6 +100,16 @@ export default function TaskRenderer({ part, taskState }) {
                 imageChoices={task.imageChoices || []} 
                 />
             )
+
+          case 'vectorSketch':
+  return (
+    <VectorSketch
+      key={idx}
+      task={task}
+      onDataChange={(data) => {/* collect per-task answers if desired */}}
+    />
+  );
+
   
 
             

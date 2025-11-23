@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { MathfieldElement } from 'mathlive';
-import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Row, Col} from 'reactstrap';
 
 export default function QuestionNotesPane() {
   const [notes, setNotes] = useState([]);          // [{id, latex}]
@@ -16,9 +16,15 @@ export default function QuestionNotesPane() {
       newMfeRef.current = new MathfieldElement({
         mathModeSpace: '\\,',
         mathVirtualKeyboardPolicy: 'manual',
+        // defaultMode:'text',
       });
 
+    
+
+      
+
       const mf = newMfeRef.current;
+      mf.placeholder = 'Write your notes here...';
       Object.assign(mf.style, {
         display: 'block',
         width: '100%',
@@ -30,35 +36,46 @@ export default function QuestionNotesPane() {
         boxSizing: 'border-box',
       });
 
-      mf.addEventListener('pointerdown', (ev) => {
-        ev.preventDefault();
-        mf.focus();
-        const offset = mf.getOffsetFromPoint(ev.clientX, ev.clientY);
-        mf.position = offset;
-      });
+      // mf.addEventListener('pointerdown', (ev) => {
+      //   ev.preventDefault();
+      //   mf.focus();
+      //   const offset = mf.getOffsetFromPoint(ev.clientX, ev.clientY);
+      //   mf.position = offset;
+      // });
 
       mf.addEventListener('input', (event) => {
         if (event.inputType === 'insertLineBreak') {
           mf.executeCommand('addRowAfter');
-          event.preventDefault();
+          // event.preventDefault();
         }
       });
 
+      mf.addEventListener('pointerdown', (ev) => {
+      // ev.preventDefault();
+  
+      const offset = mf.getOffsetFromPoint(ev.clientX, ev.clientY);
+      if (offset != null && offset >= 0) {
+        mf.position = offset;
+      }
+          mf.focus();
+    });
+
       if (newMfeContainerRef.current && !newMfeContainerRef.current.contains(mf)) {
         newMfeContainerRef.current.appendChild(mf);
-        mf.focus();
+        // mf.focus();
       }
     }
   }, []);
 
-  const handleSaveNewNote = () => {
+  const handleCreateNewNote = () => {
     const latex = newMfeRef.current?.getValue
       ? newMfeRef.current.getValue('latex')
       : newMfeRef.current?.value;
     if (!latex || latex.trim() === '') return;
 
     setNotes((prev) => [...prev, { id: Date.now(), latex }]);
-    newMfeRef.current.setValue('');
+    newMfeRef.current.setValue("")
+    
     newMfeRef.current.focus();
   };
 
@@ -66,6 +83,8 @@ export default function QuestionNotesPane() {
     setNotes((prev) => prev.filter((n) => n.id !== noteId));
     if (editingNoteId === noteId) setEditingNoteId(null);
   };
+
+  
 
   return (
     <div style={{
@@ -115,15 +134,19 @@ export default function QuestionNotesPane() {
         </div>
 
         {/* New Note editor */}
-        <div style={{ borderTop: '1px solid #ddd', paddingTop: '1rem', flexShrink: 0 }}>
+        <div style={{ borderTop: '1px solid #ddd', paddingTop: '1rem', flexShrink: 0, }}>
           <div
             ref={newMfeContainerRef}
             style={{ width: '100%', marginBottom: '0.75rem' }}
-            onClick={() => newMfeRef.current?.focus()}
+           
           />
-          <Button color="primary" onClick={handleSaveNewNote} style={{ width: '100%' }}>
-            Save Note
+      
+            <div style={{display:'flex', alignItems:'center', gap:'0.5rem', justifyContent:'space-between'}}>
+              <ModeToggle mathfieldRef={newMfeRef}/>
+          <Button color="primary" onClick={handleCreateNewNote} style={{ width: '100%' }}>
+            Create Note
           </Button>
+          </div>
         </div>
       </div>
     </div>
@@ -139,6 +162,7 @@ function NoteItem({ note, onEdit, onDelete }) {
   useEffect(() => {
     if (!mfe.current) {
       mfe.current = new MathfieldElement({ readOnly: true });
+      mfe.current.placeholder ="Write your notes here..."
       mfe.current.value = note.latex;
       Object.assign(mfe.current.style, {
         display: 'block',
@@ -147,8 +171,12 @@ function NoteItem({ note, onEdit, onDelete }) {
         backgroundColor: 'transparent',
         border: 'none',
       });
+   
+
+
       if (hostRef.current && !hostRef.current.contains(mfe.current)) {
         hostRef.current.appendChild(mfe.current);
+        mfe.current.focus()
       }
     } else {
       mfe.current.setValue(note.latex || '');
@@ -203,6 +231,9 @@ function EditNoteItem({ note, onSave, onCancel }) {
         mathModeSpace: '\\,',
         mathVirtualKeyboardPolicy: 'manual',
       });
+
+      mfe.current.placeholder='Write your notes here...';
+
       Object.assign(mfe.current.style, {
         display: 'block',
         width: '100%',
@@ -214,8 +245,19 @@ function EditNoteItem({ note, onSave, onCancel }) {
       });
       mfe.current.value = note.latex || '';
 
+
+
+       mfe.current.addEventListener('input', (event) => {
+        if (event.inputType === 'insertLineBreak') {
+          mfe.current.executeCommand('addRowAfter');
+          // event.preventDefault();
+        }
+      
+      });
+
       mfe.current.addEventListener('pointerdown', (ev) => {
-        ev.preventDefault();
+        ev.preventDefault()
+    
         mfe.current.focus();
         const offset = mfe.current.getOffsetFromPoint(ev.clientX, ev.clientY);
         mfe.current.position = offset;
@@ -257,5 +299,58 @@ function EditNoteItem({ note, onSave, onCancel }) {
         </Button>
       </div>
     </div>
+  );
+}
+
+function ModeToggle({ mathfieldRef }) {
+  const [isTextMode, setIsTextMode] = useState(false);
+
+  const handleChange = (e) => {
+    const checked = e.target.checked;
+    setIsTextMode(checked);
+
+    const mf = mathfieldRef.current;
+    if (!mf) return;
+
+    mf.mode = checked ? 'text' : 'math';
+    mf.focus();
+  };
+
+  return (
+    <label
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',        // <-- keeps text + checkbox aligned
+        gap: '0.4rem',
+        padding: '0.25rem 0.75rem',
+        borderRadius: '0px',
+        border: '1px solid #ccc',
+        background: '#f7f7f7',
+        minWidth: '110px',
+        cursor: 'pointer',
+      }}
+    >
+      <span
+        style={{
+          fontSize: '0.9rem',
+          lineHeight: 1,
+          whiteSpace: 'nowrap',
+        }}
+      >
+        Text mode
+      </span>
+
+      <input
+  type="checkbox"
+  checked={isTextMode}
+  onChange={handleChange}
+  style={{
+    margin: 0,
+    width: '16px',
+    height: '16px',
+    transform: 'translateY(1px)', // tweak 0.5–2px to taste
+  }}
+/>
+    </label>
   );
 }

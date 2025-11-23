@@ -75,8 +75,33 @@ export const apiSlice = createApi({
                 method:'POST', 
                 body: userProgress
             })
-        })
-        ,
+        }), 
+
+        // QUESTION NOTE METHODS //
+        // ######################################################
+        updateQuestionNotes: builder.mutation({
+            query: (noteData) => ({
+                url: 'question-notes', 
+                method:'POST', 
+                body: noteData
+            })
+        }), 
+
+        getQuestionNotes: builder.query({
+            query: ({userId, questionUrl}) =>({
+                url:'question-notes', 
+                method:'GET', 
+                params: {userId, questionUrl}
+                
+            })
+        }),
+
+        // similarly creaet a PUT method for updating and a delete method for deleting
+        
+
+
+        // ##################################################
+        
 
         dynamicQuestionData: builder.mutation({
             query: ({params, userId, examBoard}) => ({
@@ -129,7 +154,8 @@ export const {
     useDynamicQuestionDataMutation,
     useUpdateLessonProgressMutation, 
     useUpdateQuestionProgressMutation,
-    useAskTutorMutation
+    useAskTutorMutation, 
+    useUpdateQuestionNotesMutation
     } = apiSlice;
 
 
