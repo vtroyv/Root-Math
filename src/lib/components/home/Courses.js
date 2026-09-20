@@ -1,260 +1,106 @@
 import React from 'react';
-import "bootstrap-icons/font/bootstrap-icons.css";
-import {Table, Card,CardBody, CardTitle, CardText, CardSubtitle, Row, Col  } from'reactstrap';
 import Link from 'next/link';
-import Image from 'next/image';
-import LessonImage from '../../images/lesson2.png'
+import Reveal from './Reveal';
 
+const boards = ['Edexcel', 'AQA', 'OCR', 'CIE'];
 
+const included = [
+  {
+    icon: 'bi-patch-question-fill',
+    title: 'Quizzes',
+    kicker: 'Hundreds of questions',
+    body:
+      'Questions from first principles up to exam level and beyond, covering the whole curriculum.',
+  },
+  {
+    icon: 'bi-play-btn-fill',
+    title: 'Lessons',
+    kicker: 'Detailed yet concise',
+    body:
+      'Short videos that explain each concept properly, written so it actually sticks.',
+  },
+  {
+    icon: 'bi-file-earmark-text-fill',
+    title: 'Exam papers',
+    kicker: 'Just like the real thing',
+    body:
+      'Full mocks under real conditions, marked instantly so you know your grade the same day.',
+  },
+  {
+    icon: 'bi-robot',
+    title: 'Designated tutor',
+    kicker: 'Experience the power of AI',
+    body:
+      'Ask questions, have your weaknesses analysed and get instant feedback on your working.',
+  },
+];
 
-const Courses = () => {
-  return (
-    <div className="courses-container">
-        
-        <h1 style={{fontWeight:'bold', color:'#17a2b8'}}>Our Courses</h1>
-        <h4>RootMath provides content fully covers the specification for the following exam boards: Edexcel, AQA, CIE and OCR</h4>
-        <h5 style={{fontWeight:'bold'}} > Is your course not covered?  Dont worry get in touch <Link href='/contact' style={{color:'#17a2b8'}}>here</Link> and well let you know which course matches your curriculum the best</h5>
+const Courses = () => (
+  <section className="rm-section rm-container">
+    <Reveal className="rm-section-head">
+      <span className="rm-eyebrow">Our courses</span>
+      <h2 className="rm-h2">Find your specification</h2>
+      <p className="rm-lead">
+        RootMath fully covers the A Level Maths specification for Edexcel, AQA, OCR and
+        CIE. Course not listed?{' '}
+        <Link href="/contact" className="rm-link">
+          Get in touch
+        </Link>{' '}
+        and we will tell you which one matches your curriculum best.
+      </p>
+    </Reveal>
 
-        <div className='courses-table-container'>
-        <Table
-        striped
-  responsive
-  hover={true}
-  
->
-  <thead>
-    <tr>
-      <th>
-       <h5 style={{fontWeight:'bold', color:'#17a2b8'}}>Exam Board</h5>
-      </th>
-      <th>
-      <h5 style={{fontWeight:'bold', color:'#17a2b8'}}>A Level Maths</h5>
-      </th>
-      <th>
-      <h5 style={{fontWeight:'bold', color:'#17a2b8'}}>A Level Further Maths</h5>
-      </th>
-      <th>
-      <h5 style={{fontWeight:'bold', color:'#17a2b8'}}>GCSE</h5>
-      </th>
-      
-    </tr>
-  </thead>
-  <tbody>
-    <tr >
-      <th scope="row">
-        Edexcel
-      </th>
-      <td>
-      <i className="bi bi-check-lg" style={{fontSize:'1.2rem'}}></i>
-      
-      </td>
-      <td>
-        Coming Soon
-        
-      </td>
-      <td>
-        Coming Soon
-      </td>
-    </tr>
-    <tr >
-      <th scope="row" >
-        AQA
-      </th>
-      <td>
-      <i className="bi bi-check-lg" style={{fontSize:'1.2rem'}}></i>
-      </td>
-      <td>
-       Coming Soon
-      </td>
-      <td>
-        Coming Soon
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">
-        OCR
-      </th>
-      <td>
-      <i className="bi bi-check-lg" style={{fontSize:'1.2rem'}}></i>
-      </td>
-      <td>
-        Coming Soon
-      </td>
-      <td>
-        Coming Soon
-      </td>
-    </tr>
-    <tr>
-        <th scope="row">
-            CIE
-        </th>
-        <td>
-             <i className="bi bi-check-lg" style={{fontSize:'1.2rem'}}></i>
-        </td>
-        <td>
-            Coming Soon
-        </td>
-        <td>
-            Coming Soon
-        </td>
+    <Reveal className="rm-table-wrap">
+      <table className="rm-table">
+        <thead>
+          <tr>
+            <th scope="col">Exam board</th>
+            <th scope="col">A Level Maths</th>
+            <th scope="col">A Level Further Maths</th>
+            <th scope="col">GCSE</th>
+          </tr>
+        </thead>
+        <tbody>
+          {boards.map((board) => (
+            <tr key={board}>
+              <th scope="row">{board}</th>
+              <td>
+                <span className="rm-tag rm-tag--live">
+                  <i className="bi bi-check-lg" aria-hidden="true" /> Available
+                </span>
+              </td>
+              <td>
+                <span className="rm-tag rm-tag--soon">Coming soon</span>
+              </td>
+              <td>
+                <span className="rm-tag rm-tag--soon">Coming soon</span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </Reveal>
 
-    </tr>
-  </tbody>
-</Table>
-<div style={{marginTop:'2%', marginBottom:'1.5%'}}>
-<h3 style={{fontWeight:'bold', color:'#17a2b8'}}>Each of our Courses comes filled with the following:</h3>
-</div>
-        </div>
-
-    <div className='course-contents'>
-        <Row>
-            <Col>
-    <Card
-    outline
-   
-  style={{
-    width: '18rem',
-    minHeight:'24rem', 
-    maxHeight:'24rem'
-  }}
->
-  <CardBody>
-    <CardTitle tag="h5">
-      <span style={{fontWeight:'bold', }}>Quizzes</span>
-    </CardTitle>
-    <CardSubtitle
-      className="mb-2 text-muted"
-      tag="h6"
+    <Reveal
+      className="rm-section-head"
+      style={{ marginTop: 'clamp(3rem, 6vw, 4.5rem)' }}
     >
-      <span style={{fontWeight:'bold', }}>Hundreds of questions</span>
-    </CardSubtitle>
-  </CardBody>
-  <Image
-    alt="Card cap"
-    src={LessonImage}
-    width="100"
-  />
-  <CardBody>
-    <CardText>
-     Countless questions ranging from basic to exam level and beyond, covering the entire curriculum
-    </CardText>
-  
+      <h3 className="rm-h2">Every course includes</h3>
+    </Reveal>
 
-  </CardBody>
-</Card>
-</Col>
-<Col>
-
-<Card
-  style={{
-    width: '18rem',
-   minHeight:'24rem',
-   maxHeight:'24rem'
-  }}
->
-  <CardBody>
-    <CardTitle tag="h5">
-    <span style={{fontWeight:'bold', }}>Lessons</span>
-    </CardTitle>
-    <CardSubtitle
-      className="mb-2 text-muted"
-      tag="h6"
-    >
-        <span style={{fontWeight:'bold', }}>Engaging & detailed yet consise</span>
-    </CardSubtitle>
-  </CardBody>
-  <Image
-    alt="Card cap"
-    src={LessonImage}
-    width="100"
-  />
-  <CardBody>
-    <CardText>
-    Each course has stimulating videos explaining concepts for easy student retention.
-    </CardText>
-  
-
-  </CardBody>
-</Card>
-</Col>
-<Col>
-<Card
-  style={{
-    width: '18rem',
-    minHeight:'24rem',
-    maxHeight:'24rem'
-  }}
->
-  <CardBody>
-    <CardTitle tag="h5">
-    <span style={{fontWeight:'bold', }}>Exam Papers</span>
-    </CardTitle>
-    <CardSubtitle
-      className="mb-2 text-muted"
-      tag="h6"
-    >
-         <span style={{fontWeight:'bold', }}>Just like the real thing </span>
-      
-    </CardSubtitle>
-  </CardBody>
-  <Image
-    alt="Card cap"
-    src={LessonImage}
-    width="100"
-  />
-  <CardBody>
-    <CardText>
-      Build confidence your completing our exam papers and recieve instant feedback
-      </CardText>
-  
-
-  </CardBody>
-</Card>
-
-
-</Col>
-<Col>
-<Card
-responsive
-  style={{
-    width: '18rem',
-    minHeight:'24rem',
-    maxHeight:'24rem'
-  }}
->
-  <CardBody>
-    <CardTitle tag="h5">
-    <span style={{fontWeight:'bold', }}>Designated Tutor</span>
-    </CardTitle>
-    <CardSubtitle
-      className="mb-2 text-muted"
-      tag="h6"
-    >
-      <span style={{fontWeight:'bold', }}>Experience the power of AI </span>
-    </CardSubtitle>
-  </CardBody>
-  <Image
-    alt="Card cap"
-    src={LessonImage}
-    width="100"
-  />
-  <CardBody>
-    <CardText>
-       Ask questions, have your weaknesses analysed and recieve instant feedback on your work
-    </CardText>
-  
-
-  </CardBody>
-</Card>
-</Col>
-</Row>
-
+    <div className="rm-grid rm-grid--4">
+      {included.map((item, index) => (
+        <Reveal key={item.title} className="rm-card" delay={index * 80}>
+          <span className="rm-card__icon" aria-hidden="true">
+            <i className={`bi ${item.icon}`} />
+          </span>
+          <h3 className="rm-h3">{item.title}</h3>
+          <span className="rm-card__kicker">{item.kicker}</span>
+          <p className="rm-card__body">{item.body}</p>
+        </Reveal>
+      ))}
     </div>
-        
+  </section>
+);
 
-        
-    </div>
-  )
-}
-
-export default Courses
+export default Courses;

@@ -1,97 +1,120 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import {
-  Nav,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Collapse,
-  NavbarToggler,
-  Navbar,
-  NavLink, 
-  NavbarBrand,
-} from 'reactstrap';
+
+const aboutLinks = [
+  { href: '/features', label: 'Features' },
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/mission', label: 'Mission' },
+  { href: '/blog', label: 'Blog' },
+];
 
 function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const aboutRef = useRef(null);
 
-  const toggle = () => setIsOpen(!isOpen);
+  // Close the About dropdown on an outside click or Escape.
+  useEffect(() => {
+    if (!aboutOpen) return;
+
+    const onPointerDown = (event) => {
+      if (aboutRef.current && !aboutRef.current.contains(event.target)) {
+        setAboutOpen(false);
+      }
+    };
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setAboutOpen(false);
+    };
+
+    document.addEventListener('mousedown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [aboutOpen]);
+
+  const closeAll = () => {
+    setMenuOpen(false);
+    setAboutOpen(false);
+  };
 
   return (
-    <div className="home-nav">
-      <Navbar
-        fixed="top"
-        color="info"
-        expand="md"
-        className="home-navbar"
-        style={{ borderRadius: '0px' }}
-      >
-        {/* Use the tag prop to render NavbarBrand as Link */}
-        <NavbarBrand tag={Link} href="/" className="px-2" style={{ textDecoration: 'none', fontWeight: 'bold', color: 'white' }}>
+    <nav className="rm-nav">
+      <div className="rm-container rm-nav__inner">
+        <Link href="/" className="rm-nav__brand" onClick={closeAll}>
           RootMath
-        </NavbarBrand>
+        </Link>
 
-        <NavbarToggler onClick={toggle} className="me-2" />
+        <button
+          type="button"
+          className="rm-nav__toggle"
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-expanded={menuOpen}
+          aria-label="Toggle navigation menu"
+        >
+          <i className={menuOpen ? 'bi bi-x' : 'bi bi-list'} />
+        </button>
 
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="ms-auto" navbar style={{ borderRadius: '0px' }}>
-            {/* Use Link with NavLink for non-anchor elements */}
-            <Link href="/courses" passHref legacyBehavior>
-              <NavLink className="px-2" style={{ cursor: 'pointer' }}>
-                COURSES
-              </NavLink>
+        <ul className="rm-nav__links" data-open={menuOpen}>
+          <li>
+            <Link href="/courses" className="rm-nav__link" onClick={closeAll}>
+              Courses
             </Link>
-
-            <Link href="/teachers" passHref legacyBehavior>
-              <NavLink className="px-2" style={{ cursor: 'pointer' }}>
-                TEACHERS
-              </NavLink>
+          </li>
+          <li>
+            <Link href="/teachers" className="rm-nav__link" onClick={closeAll}>
+              Teachers
             </Link>
+          </li>
 
-            {/* Use DropdownItem with tag prop */}
-            <UncontrolledDropdown nav inNavbar className="px-2">
-              <DropdownToggle nav caret>
-                ABOUT
-              </DropdownToggle>
-              <DropdownMenu right style={{ padding: '0px auto', borderRadius: '5px' }}>
-                <DropdownItem tag={Link} href="/features">
-                  Features
-                </DropdownItem>
-                <DropdownItem tag={Link} href="/pricing">
-                  Pricing
-                </DropdownItem>
-                <DropdownItem tag={Link} href="/mission">
-                  Mission
-                </DropdownItem>
-                <DropdownItem tag={Link} href="/blog">
-                  Blog
-                </DropdownItem>
-                
-                <DropdownItem divider style={{ padding: '0px', margin: '0px' }}></DropdownItem>
-                <DropdownItem tag={Link} href="/contact">
-                  Contact us
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
+          <li className="rm-nav__dropdown" ref={aboutRef}>
+            <button
+              type="button"
+              className="rm-nav__link"
+              onClick={() => setAboutOpen((open) => !open)}
+              aria-expanded={aboutOpen}
+            >
+              About <i className="bi bi-chevron-down" style={{ fontSize: '0.7rem' }} />
+            </button>
 
-            {/* Use Link with NavLink */}
-            <Link href="/sign-up" passHref legacyBehavior>
-              <NavLink className="px-2" style={{ cursor: 'pointer' }}>
-                SIGN UP
-              </NavLink>
+            {aboutOpen && (
+              <ul className="rm-nav__menu">
+                {aboutLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} onClick={closeAll}>
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+                <li className="rm-nav__divider" aria-hidden="true" />
+                <li>
+                  <Link href="/contact" onClick={closeAll}>
+                    Contact us
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </li>
+
+          <li>
+            <Link href="/sign-in" className="rm-nav__link" onClick={closeAll}>
+              Log in
             </Link>
-
-            <Link href="/sign-in" passHref legacyBehavior>
-              <NavLink className="px-2" style={{ cursor: 'pointer', marginRight: '60px' }}>
-                LOGIN
-              </NavLink>
+          </li>
+          <li>
+            <Link
+              href="/sign-up"
+              className="rm-btn rm-btn--primary rm-nav__cta"
+              onClick={closeAll}
+            >
+              Start free
             </Link>
-          </Nav>
-        </Collapse>
-      </Navbar>
-    </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
   );
 }
 

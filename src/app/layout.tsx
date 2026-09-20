@@ -1,18 +1,13 @@
 // import "bootswatch/dist/sketchy/bootstrap.min.css"
 import './bootstrap.css'
 import "bootstrap-icons/font/bootstrap-icons.css";
+// Loaded after the vendor theme so the RootMath design system wins.
+import './globals.css'
 
 
 import StoreProvider from "@/lib/redux/StoreProvider";
 import 'katex/dist/katex.min.css';
-import Navigation from "@/lib/components/home/Navigation";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'
 
 
 

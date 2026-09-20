@@ -8,11 +8,11 @@ export default function PublicLayout({
   }) {
 
     return(
-        <>        
-        <div>
-            <Navigation />
-        </div>
-        
+        <>
+        {/* Rendered as a direct child so `position: sticky` on the nav is
+            scoped to the page rather than to a wrapper div. */}
+        <Navigation />
+
         <div className="outlet-container">
             {children}
 

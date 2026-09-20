@@ -1,89 +1,81 @@
-import React from 'react'
-import "bootstrap-icons/font/bootstrap-icons.css";
+import React from 'react';
+import Link from 'next/link';
 
-const Footer = () => {
-  return (
-    <div className='footer' style={{position:"absolute"}}>
-      
-      <div style={{
-        position: 'absolute',
-        bottom: 0,
-        left: '5%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-start' }}>
-        <h1 style={{color:'white' ,fontWeight:'bold',marginBottom:'5%',  fontSize:'60px'}}>
-        RootMath
-        </h1>
-        </div>
+const columns = [
+  {
+    heading: 'Courses',
+    links: [
+      { label: 'Maths A Level', href: '/courses' },
+      { label: 'Further Maths A Level', href: '/courses' },
+      { label: 'GCSE Maths', href: '/courses' },
+      { label: 'Pricing', href: '/pricing' },
+    ],
+  },
+  {
+    heading: 'Company',
+    links: [
+      { label: 'Our mission', href: '/mission' },
+      { label: 'Features', href: '/features' },
+      { label: 'For teachers', href: '/teachers' },
+      { label: 'Blog', href: '/blog' },
+    ],
+  },
+  {
+    heading: 'Support',
+    links: [
+      { label: 'Contact us', href: '/contact' },
+      { label: 'Log in', href: '/sign-in' },
+      { label: 'Create account', href: '/sign-up' },
+    ],
+  },
+];
 
-        <div style={{position:'absolute', left:'5%', top:20, width:'30%', height:'40%', display:'flex', flexDirection:'Column',gap:'10px',}}>
-         
-          <h4 style={{fontWeight:"bold", color:'white'}}>Courses</h4>
-            <h6 style={{fontWeight:'bold', color:'white'}}>Math A Level</h6>
-            <h6 style={{fontWeight:'bold', color:'white'}}>Further Math A Level</h6>
-            <h6 style={{fontWeight:'bold', color:'white'}}>GCSE Maths</h6>
-            <h6 style={{fontWeight:'bold', color:'white'}}>Pricing</h6>
-          
+const socials = [
+  { label: 'Instagram', icon: 'bi-instagram' },
+  { label: 'Facebook', icon: 'bi-facebook' },
+  { label: 'Twitter', icon: 'bi-twitter' },
+  { label: 'TikTok', icon: 'bi-tiktok' },
+  { label: 'YouTube', icon: 'bi-youtube' },
+];
 
-        </div>
-
-        <div style={{position:'absolute', right:'60%', top:20, width:'20%', height:'40%', display:'flex', flexDirection:'Column', gap:'10px'}}>
-       
-          
-          <h6 style={{fontWeight:'bold', color:'white', marginTop:'2.5%'}}>Blog</h6>
-          <h6 style={{fontWeight:'bold', color:'white'}}>Annoucements</h6>
-          <h6 style={{fontWeight:'bold', color:'white'}}>Careers</h6>
-          <h6 style={{fontWeight:'bold', color:'white'}}>Contact</h6>
-
-          
-          
-          
-        </div>
-
-
-
-
-
-
-        <div style={{position:'absolute', right:'3%', top:20,  width:'25%', height:'40%', display:'flex', flexDirection:'Column'}}>
-          <div>
-          <h4 style={{fontWeight:"bold", color:'white'}}>Socials</h4>
-          <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-            
-          <i className="bi bi-instagram" style={{fontSize:'1.5rem', color:'white' }}></i>
-          <i className="bi bi-facebook" style={{fontSize:'1.5rem', color:'white'}}></i>
-          <i className="bi bi-twitter" style={{fontSize:'1.5rem', color:'white'}}></i>   
-          <i className="bi bi-tiktok" style={{fontSize:'1.5rem', color:'white'}}></i>  
-          <i className="bi bi-youtube" style={{fontSize:'1.5rem', color:'white'}}></i>
-            
-          </div>       
-            </div>
+const Footer = () => (
+  <footer className="rm-footer">
+    <div className="rm-container">
+      <div className="rm-footer__grid">
+        <div>
+          <p className="rm-footer__brand">RootMath</p>
+          <p className="rm-footer__tagline">
+            Say hello to the end of hefty tuition fees.
+          </p>
+          <div className="rm-footer__socials">
+            {socials.map((social) => (
+              <a key={social.label} href="/" aria-label={social.label}>
+                <i className={`bi ${social.icon}`} aria-hidden="true" />
+              </a>
+            ))}
           </div>
+        </div>
 
-          <div style={{position: 'absolute',
-        bottom: 0,
-        right: '3%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-start', 
-        marginBottom:'2.5%', 
-  
-         
-        fontSize:'13px'
-         }}>
-            <span style={{color:'white'}}>copyright © Root Math limited 2023. Registered company in England and Wales (number: 10010657). VAT Reg. No GB 249 7670 58.</span>
-            </div>
-          
+        {columns.map((column) => (
+          <div key={column.heading}>
+            <h4>{column.heading}</h4>
+            <ul>
+              {column.links.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
 
-          
-
-
-
+      <p className="rm-footer__legal">
+        Copyright © Root Math Limited {new Date().getFullYear()}. Registered company in
+        England and Wales (number: 10010657). VAT Reg. No GB 249 7670 58.
+      </p>
     </div>
-  )
-}
+  </footer>
+);
 
-export default Footer
+export default Footer;
