@@ -4,10 +4,14 @@ import Link from 'next/link';
 const columns = [
   {
     heading: 'Courses',
+    /* Each course links to its own section on the courses page — the ids match
+       the `id` field of the course array in CouresesPage.tsx. */
     links: [
-      { label: 'Maths A Level', href: '/courses' },
-      { label: 'Further Maths A Level', href: '/courses' },
-      { label: 'GCSE Maths', href: '/courses' },
+      { label: 'Maths A Level', href: '/courses#a-level-maths' },
+      { label: 'Further Maths A Level', href: '/courses#a-level-further-maths' },
+      { label: 'GCSE Maths', href: '/courses#gcse-maths' },
+      { label: 'STEP', href: '/courses#step' },
+      { label: 'TMUA', href: '/courses#tmua' },
       { label: 'Pricing', href: '/pricing' },
     ],
   },
@@ -24,8 +28,7 @@ const columns = [
     heading: 'Support',
     links: [
       { label: 'Contact us', href: '/contact' },
-      { label: 'Log in', href: '/sign-in' },
-      { label: 'Create account', href: '/sign-up' },
+  
     ],
   },
 ];

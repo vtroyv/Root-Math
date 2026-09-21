@@ -10,12 +10,11 @@ const CallToAction = () => (
         Start with your <span className="rm-underline">weakest topic</span>
       </h2>
       <p className="rm-lead">
-        Pick your exam board, answer a few questions, and RootMath will build the study
-        plan for you. It takes about five minutes.
+        Pick your exam board, answer a few questions, and RootMath will begin to adapt to your learning habits, giving you the tailored experience you deserve. It takes a couple minutes.
       </p>
       <div className="rm-btn-row">
-        <Link href="/sign-up" className="rm-btn rm-btn--primary rm-btn--lg">
-          Start learning free
+        <Link href="/register" className="rm-btn rm-btn--primary rm-btn--lg">
+          Register Interest Today
         </Link>
         <Link href="/pricing" className="rm-btn rm-btn--ghost rm-btn--lg">
           See pricing

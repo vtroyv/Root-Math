@@ -89,8 +89,8 @@ const LandingPage = () => {
 
             <p className="rm-lead">
               Every lesson, question and past paper for your specification in one place —
-              marked the moment you submit, with an AI tutor that explains where you went
-              wrong.
+              marked the moment you submit. Our AI tutor adapts to how you learn and
+              shows you exactly where you went wrong.
             </p>
 
             <ul className="rm-replaces">
@@ -103,8 +103,8 @@ const LandingPage = () => {
             </ul>
 
             <div className="rm-btn-row">
-              <Link href="/sign-up" className="rm-btn rm-btn--primary rm-btn--lg">
-                Start learning free
+              <Link href="/register" className="rm-btn rm-btn--primary rm-btn--lg">
+                Register Interest Today
               </Link>
               <button type="button" className="rm-btn rm-btn--ghost rm-btn--lg" onClick={toggle}>
                 <i className="bi bi-play-fill" /> See how it works

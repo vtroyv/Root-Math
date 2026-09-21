@@ -4,6 +4,19 @@ import Reveal from './Reveal';
 
 const boards = ['Edexcel', 'AQA', 'OCR', 'CIE'];
 
+const admissionsTests = [
+  {
+    name: 'STEP',
+    full: 'Sixth Term Examination Paper',
+    required: 'Cambridge, Warwick',
+  },
+  {
+    name: 'TMUA',
+    full: 'Test of Mathematics for University Admission',
+    required: 'Cambridge, Imperial, LSE, Durham, Warwick',
+  },
+];
+
 const included = [
   {
     icon: 'bi-patch-question-fill',
@@ -36,6 +49,7 @@ const included = [
 ];
 
 const Courses = () => (
+  <>
   <section className="rm-section rm-container">
     <Reveal className="rm-section-head">
       <span className="rm-eyebrow">Our courses</span>
@@ -81,6 +95,50 @@ const Courses = () => (
       </table>
     </Reveal>
 
+
+
+    <Reveal
+      className="rm-section-head"
+      style={{ marginTop: 'clamp(3rem, 6vw, 4.5rem)' }}
+    >
+      <span className="rm-eyebrow">Beyond A Level</span>
+      <h3 className="rm-h2">The exams that decide the offer</h3>
+      <p className="rm-lead">
+        Every year, students holding conditional offers for STEM courses at top
+        universities lose them on the admissions test rather than on their A Levels.
+        STEP and TMUA are hard by design — they reward working out a problem you have
+        never seen before, not recalling a method you have drilled. That is exactly
+        what we are building for: the same lessons, question banks and instant marking,
+        pointed at your raw problem solving.
+      </p>
+    </Reveal>
+
+    <Reveal className="rm-table-wrap">
+      <table className="rm-table">
+        <thead>
+          <tr>
+            <th scope="col">Admissions test</th>
+            <th scope="col">Typically required by</th>
+            <th scope="col">Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          {admissionsTests.map((test) => (
+            <tr key={test.name}>
+              <th scope="row">
+                {test.name}
+                <span className="rm-table__sub">{test.full}</span>
+              </th>
+              <td>{test.required}</td>
+              <td>
+                <span className="rm-tag rm-tag--soon">Coming soon</span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </Reveal>
+
     <Reveal
       className="rm-section-head"
       style={{ marginTop: 'clamp(3rem, 6vw, 4.5rem)' }}
@@ -101,6 +159,13 @@ const Courses = () => (
       ))}
     </div>
   </section>
+
+  
+  
+
+  </>
+
+  
 );
 
 export default Courses;
