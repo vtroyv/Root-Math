@@ -3,14 +3,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Form, Label, Input, Button, Badge, Alert, Row, Col } from 'reactstrap';
 import { useSignUp , } from '@clerk/nextjs';
 import { useCreateUserMutation } from '@/lib/redux/slices/apiSlice';
+import AuthShell from '@/lib/components/home/AuthShell';
 
 const Signup = () => {
   // Clerk states
   const { isLoaded, signUp, setActive } = useSignUp();
- 
+
   const router = useRouter();
   const [addNewUser, mutationState] = useCreateUserMutation()
 
@@ -28,7 +28,7 @@ const Signup = () => {
   const [error, setError] = useState('');
   const [alertVisible, setAlertVisible] = useState(false);
   const [verifying, setVerifying] = useState(false);
-  const [code, setCode] = useState(''); 
+  const [code, setCode] = useState('');
 
   const onDismiss = () => setAlertVisible(false);
 
@@ -86,13 +86,13 @@ const Signup = () => {
 
         //Also note at this point it's safe to create the the data to put in mongoDB for the user, because if the user doesn't doesn't successfully verify
         //e.g. unless attempt.status === 'complete', this block won't run, so were safe to add the user to the DB now.
-        //Lol thinking about it shouldn't we create another if (attempt.status === 'complete'statement first above this and add to the DB here, because if mongoDB, doesn't add to the DB, 
+        //Lol thinking about it shouldn't we create another if (attempt.status === 'complete'statement first above this and add to the DB here, because if mongoDB, doesn't add to the DB,
         //we won't want clerkJS to still create the user)
 
-        //This is the point where we will want to add a users credentials to the database: 
+        //This is the point where we will want to add a users credentials to the database:
 
-        
-        
+
+
         await setActive({ session: attempt.createdSessionId });
         console.log('The signUp object is now ', signUp)
         const {id, firstName, lastName, emailAddress, unsafeMetadata}= signUp
@@ -108,9 +108,9 @@ const Signup = () => {
         }catch(error) {
           console.log('Couldn\'t add user to the mongoDB database')
         }
-        
-        
-        
+
+
+
 
         router.push('/learn');
       } else {
@@ -124,162 +124,239 @@ const Signup = () => {
     }
   };
 
+  // The same error strip on both steps.
+  const errorAlert = error && alertVisible && (
+    <div className="rm-alert" role="alert">
+      <i className="bi bi-exclamation-triangle-fill" aria-hidden="true" />
+      {error}
+      <button type="button" aria-label="Dismiss" onClick={onDismiss}>
+        <i className="bi bi-x-lg" aria-hidden="true" />
+      </button>
+    </div>
+  );
+
   // --- Show Verification Form (STEP 2) ---
   if (verifying) {
     return (
-      <>
-        <h1>Verify your email</h1>
-        {error && (
-          <Alert color="danger" isOpen={alertVisible} toggle={onDismiss}>
-            {error}
-          </Alert>
-        )}
-        <Form onSubmit={handleVerifyCode}>
-          <Label for="code">Enter your verification code</Label>
-          <Input
-            id="code"
-            type="text"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            required
-          />
+      <AuthShell
+        title="Check your email"
+        intro={`We have sent a six-digit code to ${emailAddress || 'your inbox'}. Enter it below to finish setting up your account.`}
+      >
+        <form className="rm-form" onSubmit={handleVerifyCode}>
+          {errorAlert}
 
-          <Button color="info" size="lg" style={{ marginTop: '2rem' }} outline>
-            Verify
-          </Button>
-        </Form>
-      </>
+          <div className="rm-field">
+            <label className="rm-field__label" htmlFor="code">
+              Verification code
+            </label>
+            <input
+              className="rm-input"
+              id="code"
+              type="text"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              placeholder="123456"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              required
+            />
+            <p className="rm-field__hint">
+              It can take a minute to arrive — check your spam folder if it does not.
+            </p>
+          </div>
+
+          <div style={{ marginTop: '1.75rem' }}>
+            <button
+              type="submit"
+              className="rm-btn rm-btn--primary rm-btn--lg"
+              style={{ width: '100%' }}
+            >
+              Verify and continue
+            </button>
+          </div>
+        </form>
+      </AuthShell>
     );
   }
 
   // --- Show Sign-Up Form (STEP 1) ---
   return (
-    <>
-      <h1>
-        <Badge color="info">Welcome to Root Math Where Maths is Fun</Badge>
-      </h1>
-      <br />
-      <h3>
-        Do you already have an account? <Link href="/login">Login</Link>
-      </h3>
+    <AuthShell
+      wide
+      title="Create your account"
+      intro="Tell us what you are studying and we will set the course up around it."
+      alt={
+        <>
+          Already have an account? <Link href="/sign-in">Log in</Link>
+        </>
+      }
+    >
+      <form className="rm-form" onSubmit={handleSubmit}>
+        {errorAlert}
 
-      {error && (
-        <Alert color="danger" isOpen={alertVisible} toggle={onDismiss}>
-          {error}
-        </Alert>
-      )}
+        <fieldset>
+          <legend>About you</legend>
 
-      <Form onSubmit={handleSubmit}>
-        <Row className="row-cols-lg-auto g-3 align-items-center">
-          <Col>
-            <Label for="firstName">First Name</Label>
-            <Input
-              id="firstName"
-              placeholder="First Name"
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+          <div className="rm-form__row">
+            <div className="rm-field">
+              <label className="rm-field__label" htmlFor="firstName">
+                First name
+              </label>
+              <input
+                className="rm-input"
+                id="firstName"
+                placeholder="Ada"
+                type="text"
+                autoComplete="given-name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="rm-field">
+              <label className="rm-field__label" htmlFor="lastName">
+                Last name
+              </label>
+              <input
+                className="rm-input"
+                id="lastName"
+                placeholder="Lovelace"
+                type="text"
+                autoComplete="family-name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="rm-field">
+            <label className="rm-field__label" htmlFor="email">
+              Email address
+            </label>
+            <input
+              className="rm-input"
+              id="email"
+              type="email"
+              autoComplete="email"
+              placeholder="ada@example.com"
+              value={emailAddress}
+              onChange={(e) => setEmailAddress(e.target.value)}
               required
             />
-          </Col>
+          </div>
+        </fieldset>
 
-          <Col>
-            <Label for="lastName">Last Name</Label>
-            <Input
-              id="lastName"
-              placeholder="Last Name"
+        <fieldset>
+          <legend>Your studies</legend>
+
+          <div className="rm-form__row">
+            <div className="rm-field">
+              <label className="rm-field__label" htmlFor="yearGroup">
+                Year
+              </label>
+              <select
+                className="rm-input"
+                id="yearGroup"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+                required
+              >
+                <option value="">Choose your year</option>
+                <option value="12">Year 12</option>
+                <option value="13">Year 13</option>
+              </select>
+            </div>
+
+            <div className="rm-field">
+              <label className="rm-field__label" htmlFor="examBoard">
+                Exam board
+              </label>
+              <select
+                className="rm-input"
+                id="examBoard"
+                value={examBoard}
+                onChange={(e) => setExamBoard(e.target.value)}
+                required
+              >
+                <option value="">Choose your board</option>
+                <option value="edexcel">Edexcel</option>
+                <option value="ocr">OCR</option>
+                <option value="aqa">AQA</option>
+                <option value="cambridge-international">Cambridge International</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="rm-field">
+            <label className="rm-field__label" htmlFor="school">
+              School, sixth form or college <span>(optional)</span>
+            </label>
+            <input
+              className="rm-input"
+              id="school"
               type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
+              placeholder="Hills Road Sixth Form College"
+              value={school}
+              onChange={(e) => setSchool(e.target.value)}
             />
-          </Col>
+          </div>
+        </fieldset>
 
-          <Col>
-            <Label for="yearGroup">Year</Label>
-            <Input
-              id="yearGroup"
-              type="select"
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-              required
-            >
-              <option value="">--select year--</option>
-              <option value="12">Year 12</option>
-              <option value="13">Year 13</option>
-            </Input>
-          </Col>
-        </Row>
+        <fieldset>
+          <legend>Your password</legend>
 
-        <br />
+          <div className="rm-form__row">
+            <div className="rm-field">
+              <label className="rm-field__label" htmlFor="password">
+                Password
+              </label>
+              <input
+                className="rm-input"
+                id="password"
+                type="password"
+                autoComplete="new-password"
+                placeholder="Create a password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
 
-        <Label for="email">Email</Label>
-        <Input
-          id="email"
-          type="email"
-          placeholder="Enter Email"
-          value={emailAddress}
-          onChange={(e) => setEmailAddress(e.target.value)}
-          required
-        />
+            <div className="rm-field">
+              <label className="rm-field__label" htmlFor="confirmPassword">
+                Confirm password
+              </label>
+              <input
+                className="rm-input"
+                id="confirmPassword"
+                type="password"
+                autoComplete="new-password"
+                placeholder="Type it again"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+        </fieldset>
 
-        <br />
-
-        <Label for="examBoard">Exam Board</Label>
-        <Input
-          id="examBoard"
-          type="select"
-          value={examBoard}
-          onChange={(e) => setExamBoard(e.target.value)}
-          required
-        >
-          <option value="">--select exam board--</option>
-          <option value="edexcel">Edexcel</option>
-          <option value="ocr">OCR</option>
-          <option value="aqa">AQA</option>
-          <option value="cambridge-international">Cambridge International</option>
-        </Input>
-
-        <br />
-
-        <Label for="school">School</Label>
-        <Input
-          id="school"
-          type="text"
-          placeholder="Your school name"
-          value={school}
-          onChange={(e) => setSchool(e.target.value)}
-        />
-
-        <br />
-
-        <Label for="password">Password</Label>
-        <Input
-          id="password"
-          type="password"
-          placeholder="Create Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-
-        <br />
-
-        <Input
-          id="confirmPassword"
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
+        {/* Clerk mounts its bot-protection widget here — it has to stay. */}
         <div id="clerk-captcha"></div>
 
-        <Button color="info" size="lg" style={{ marginTop: '2rem' }} outline>
-          Continue
-        </Button>
-      </Form>
-    </>
+        <div style={{ marginTop: '1.75rem' }}>
+          <button
+            type="submit"
+            className="rm-btn rm-btn--primary rm-btn--lg"
+            style={{ width: '100%' }}
+            disabled={!isLoaded}
+          >
+            Continue
+          </button>
+        </div>
+      </form>
+    </AuthShell>
   );
 };
 

@@ -1175,6 +1175,9 @@
 .rm-form {
   position: relative;
   z-index: 1;
+  /* Explicit 100%: as a flex or grid child, the auto side margins below stop
+     the form stretching, and it collapses to the width of its own content. */
+  width: 100%;
   max-width: 46rem;
   margin-inline: auto;
   padding: clamp(1.5rem, 3.5vw, 2.5rem);
@@ -1404,6 +1407,311 @@
 }
 
 /* --------------------------------------------------------------------------
+   Pricing calculator — choices on the left, running total on the right.
+   -------------------------------------------------------------------------- */
+.rm-pricing {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: var(--rm-gap);
+  align-items: start;
+}
+
+.rm-summary {
+  /* .rm-card sets height:100%, which would stretch this to the column beside
+     it and break the sticky behaviour. */
+  height: auto;
+  position: sticky;
+  top: 6rem;
+}
+
+@media (max-width: 900px) {
+  .rm-pricing {
+    grid-template-columns: 1fr;
+  }
+
+  .rm-summary {
+    position: static;
+  }
+}
+
+.rm-summary__line {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.7rem;
+  border-bottom: 2px dashed var(--rm-teal-soft);
+}
+
+.rm-summary__line > span:last-child {
+  white-space: nowrap;
+}
+
+.rm-summary__detail {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--rm-ink-faint);
+}
+
+.rm-summary__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 1.1rem;
+  font-family: var(--rm-display);
+  font-size: 1.6rem;
+}
+
+.rm-summary__save {
+  margin: 0.5rem 0 0;
+  color: var(--rm-teal-deep);
+}
+
+.rm-summary__note {
+  margin: 0.6rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--rm-ink-faint);
+}
+
+/* --------------------------------------------------------------------------
+   Blog — ruled paper rather than squares or dots: the writing side of the
+   exercise book, for the part of the site that is writing. A single rose
+   margin rule down the left is what makes it read as a notebook page; change
+   `--rm-margin-rule` to a teal if you would rather stay strictly on palette.
+   -------------------------------------------------------------------------- */
+.rm-ruled {
+  --rm-margin-rule: #e8b0b0;
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(2.5rem, 5vw, 4rem) clamp(2.5rem, 5vw, 3.5rem);
+  border-bottom: 2px solid var(--rm-ink);
+  background-color: var(--rm-paper);
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 3.4rem,
+      var(--rm-margin-rule) 3.4rem,
+      var(--rm-margin-rule) calc(3.4rem + 2px),
+      transparent calc(3.4rem + 2px)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 31px,
+      var(--rm-grid-line) 31px,
+      var(--rm-grid-line) 32px
+    );
+}
+
+@media (max-width: 700px) {
+  /* The margin rule would run through the text on a phone. */
+  .rm-ruled {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 31px,
+      var(--rm-grid-line) 31px,
+      var(--rm-grid-line) 32px
+    );
+  }
+}
+
+/* Whole-card link on the blog index. */
+.rm-card--link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.rm-card--link:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.rm-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+  font-size: 0.95rem;
+  color: var(--rm-ink-faint);
+}
+
+/* --------------------------------------------------------------------------
+   Article body. The lesson BlockRenderer carries its own inline styles, so
+   this only sets the measure and the spacing around what it emits.
+   -------------------------------------------------------------------------- */
+.rm-article {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.rm-article > * {
+  margin-block: 1.1rem;
+}
+
+.rm-article h2,
+.rm-article h3,
+.rm-article h4 {
+  margin-block: 2.2rem 0.9rem !important;
+}
+
+.rm-article p {
+  line-height: 1.7;
+}
+
+.rm-article ul {
+  padding-left: 1.4rem;
+}
+
+.rm-article li {
+  margin-block: 0.5rem !important;
+  line-height: 1.6;
+}
+
+/* details/summary from the accordion block, in the site's own card language */
+.rm-article details {
+  padding: 0.35rem 1.1rem;
+  background: var(--rm-teal-wash);
+  border: 2px solid var(--rm-ink) !important;
+  border-radius: var(--rm-wobble-2) !important;
+}
+
+.rm-article summary {
+  padding: 0.75rem 0;
+  font-family: var(--rm-display);
+  font-size: 1.2rem;
+  background: none !important;
+}
+
+.rm-article table {
+  border: 2px solid var(--rm-ink);
+  border-radius: var(--rm-wobble-2);
+  overflow: hidden;
+}
+
+.rm-article th {
+  background: var(--rm-teal-soft) !important;
+  border-color: var(--rm-ink) !important;
+  font-family: var(--rm-display);
+  font-weight: normal;
+}
+
+.rm-article td {
+  border-color: var(--rm-teal-soft) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Auth pages (sign in / sign up) — a flat teal ground instead of paper, so
+   signing in feels like a different room to the rest of the site. No grid.
+   -------------------------------------------------------------------------- */
+.rm-authpage {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 4.8rem);
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  background: var(--rm-teal);
+}
+
+/* Chalked-on-the-board maths. Fixed positions, as in the hero — Math.random()
+   here would cause a hydration mismatch. */
+.rm-authpage__symbols {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.rm-authpage__symbols span {
+  position: absolute;
+  font-family: var(--rm-display);
+  color: #fff;
+  opacity: 0.16;
+  white-space: nowrap;
+  line-height: 1;
+  transform: rotate(var(--rm-symbol-rotate, 0deg));
+}
+
+@media (max-width: 900px) {
+  .rm-authpage__symbols {
+    display: none;
+  }
+}
+
+.rm-auth {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  /* The card carries its own padding, so this is just a gutter on phones. */
+  width: min(100%, 34rem);
+  padding-inline: 1.25rem;
+}
+
+/* Sign-up asks for eight things, so it gets the wider column. */
+.rm-auth--wide {
+  width: min(100%, 46rem);
+}
+
+.rm-auth__head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-align: center;
+}
+
+.rm-auth__head h1 {
+  color: #fff;
+}
+
+.rm-auth__head p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.rm-auth__alt {
+  margin: 0;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.rm-auth__alt a {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* Error message inside an auth card — the one place the site needs a colour
+   outside the teal/ink palette. */
+.rm-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  color: #8f2d20;
+  background: #fdecea;
+  border: 2px solid #c0392b;
+  border-radius: 14px 5px 12px 6px/6px 12px 5px 14px;
+}
+
+.rm-alert button {
+  margin-left: auto;
+  padding: 0;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
    Courses page — squared-paper header carrying the availability table, then
    one section per course.
    -------------------------------------------------------------------------- */
@@ -1421,6 +1729,18 @@
     transparent 1.6px
   );
   background-size: 24px 24px;
+}
+
+/* For a header carrying only a title — the full padding below is sized for
+   the courses page's availability table. */
+.rm-paperhead--tight {
+  padding-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+/* Nothing follows the heading in a tight band, so drop the margin that is
+   there to separate it from the content below. */
+.rm-paperhead--tight .rm-section-head {
+  margin-bottom: 0;
 }
 
 /* A sketched parabola in the corner. Decorative, so it goes only where there

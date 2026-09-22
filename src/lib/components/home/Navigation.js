@@ -98,18 +98,27 @@ function Navigation() {
             )}
           </li>
 
-          <li>
+          <li style ={{display:'none'}}>
             <Link href="/sign-in" className="rm-nav__link" onClick={closeAll}>
               Log in
             </Link>
           </li>
-          <li>
+          <li style={{display:'none'}}>
             <Link
               href="/sign-up"
               className="rm-btn rm-btn--primary rm-nav__cta"
               onClick={closeAll}
             >
-              Start free
+              Get started
+            </Link>
+          </li>
+            <li>
+            <Link
+              href="/register"
+              className="rm-btn rm-btn--primary rm-nav__cta"
+              onClick={closeAll}
+            >
+              Register Interest
             </Link>
           </li>
         </ul>
