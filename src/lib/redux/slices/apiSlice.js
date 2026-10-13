@@ -111,6 +111,15 @@ export const apiSlice = createApi({
             })
         }), 
 
+        // Marks every part of a parts-based question -> { results, marksAwarded, marksAvailable, status, feedback }
+        markQuestion: builder.mutation({
+            query: ({title, responses}) => ({
+                url: '/mark',
+                method: 'POST',
+                body: {title, responses}
+            })
+        }),
+
         gradeSketchQuestion: builder.mutation({
             query: (questionData) => ({
                 url: '/feedback/sketch', 
@@ -154,8 +163,9 @@ export const {
     useDynamicQuestionDataMutation,
     useUpdateLessonProgressMutation, 
     useUpdateQuestionProgressMutation,
-    useAskTutorMutation, 
-    useUpdateQuestionNotesMutation
+    useAskTutorMutation,
+    useUpdateQuestionNotesMutation,
+    useMarkQuestionMutation
     } = apiSlice;
 
 

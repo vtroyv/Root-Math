@@ -1,0 +1,84 @@
+{
+  "title": "Completing-the-Square-Exam-Style",
+  "type": "combination",
+  "schemaVersion": 2,
+  "topic": "Algebra and Functions",
+  "difficulty": "Exam",
+  "branch": "pure",
+  "examBoard": "all",
+  "year": "12",
+  "stem": [
+    { "type": "paragraph", "content": "$$f(x) = 2x^2 + 12x + 13$$" }
+  ],
+  "parts": [
+    {
+      "type": "working",
+      "label": "(a)",
+      "prompt": "Write $f(x)$ in the form $a(x + b)^2 + c$, where $a$, $b$ and $c$ are constants to be found.",
+      "markScheme": [
+        { "code": "M1", "marks": 1, "text": "Takes out the factor of 2: $2(x^2 + 6x) + 13$" },
+        { "code": "M1", "marks": 1, "text": "Completes the square on $x^2 + 6x$: $(x+3)^2 - 9$" },
+        { "code": "A1", "marks": 1, "text": "Correct final answer $2(x+3)^2 - 5$" }
+      ],
+      "hint": [
+        { "type": "paragraph", "content": "Take out the factor of $2$ from the $x^2$ and $x$ terms first." }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "$$2x^2 + 12x + 13 = 2(x^2 + 6x) + 13 = 2\\bigl[(x+3)^2 - 9\\bigr] + 13 = 2(x+3)^2 - 5$$" },
+        { "type": "paragraph", "content": "So $a = 2$, $b = 3$, $c = -5$." }
+      ]
+    },
+    {
+      "type": "answer",
+      "label": "(b)",
+      "prompt": "Hence write down the coordinates of the minimum point of $y = f(x)$.",
+      "template": "\\left(\\placeholder[x]{},\\ \\placeholder[y]{}\\right)",
+      "blanks": {
+        "x": { "answer": "-3", "feedback": "The $x$ coordinate makes the bracket $(x+3)^2$ equal to zero." },
+        "y": { "answer": "-5", "feedback": "When the squared term is zero, what is left of $2(x+3)^2 - 5$?" }
+      },
+      "solution": [
+        { "type": "paragraph", "content": "$(x+3)^2 \\ge 0$, so the minimum is when $x = -3$, giving $y = -5$. The minimum point is $(-3, -5)$." }
+      ]
+    },
+    {
+      "type": "sketch",
+      "label": "(c)",
+      "prompt": "Sketch $y = f(x)$. Your curve should pass through its minimum point and cross the axes in the right places.",
+      "degree": 2,
+      "boundingBox": [-7, 15, 2, -7],
+      "keyPoints": [
+        { "label": "minimum point", "x": -3, "y": -5, "threshold": 0.4 },
+        { "label": "root at x ≈ -4.58", "x": -4.58114, "y": 0, "threshold": 0.3 },
+        { "label": "root at x ≈ -1.42", "x": -1.41886, "y": 0, "threshold": 0.3 },
+        {
+          "label": "y-intercept",
+          "x": 0,
+          "y": 13,
+          "threshold": 0.5,
+          "feedback": [
+            { "type": "paragraph", "content": "Check your y-intercept: what is $f(0)$?" }
+          ]
+        }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "U-shaped curve with minimum $(-3, -5)$ and y-intercept $(0, 13)$." },
+        { "type": "paragraph", "content": "Roots: $2(x+3)^2 = 5 \\Rightarrow x = -3 \\pm \\sqrt{\\tfrac{5}{2}}$, so $x \\approx -4.58$ and $x \\approx -1.42$." }
+      ]
+    },
+    {
+      "type": "choice",
+      "label": "(d)",
+      "prompt": "For how many values of $x$ is $f(x) = -5$?",
+      "options": [
+        { "id": "A", "content": "None", "correct": false, "why": "$-5$ is the minimum value of $f$, so it is reached, just at a single point." },
+        { "id": "B", "content": "Exactly one", "correct": true, "why": "$-5$ is the minimum value, reached only at the vertex $x = -3$." },
+        { "id": "C", "content": "Exactly two", "correct": false, "why": "Two solutions would need a horizontal line above the minimum. $y = -5$ only touches the vertex." },
+        { "id": "D", "content": "Infinitely many", "correct": false, "why": "A quadratic equation has at most two solutions." }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "$2(x+3)^2 - 5 = -5 \\Rightarrow (x+3)^2 = 0$, so there is exactly one solution, $x = -3$." }
+      ]
+    }
+  ]
+}

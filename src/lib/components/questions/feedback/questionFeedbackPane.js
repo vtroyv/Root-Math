@@ -6,7 +6,7 @@ import { useQuestionStore } from '@/lib/zustand/providers/question-state-provide
 import BlockRenderer from '../../learn/lessons/BlockRenderer';
 
 export default function QuestionFeedbackPane() {
-    const feedback = useQuestionStore((state)=> state.userProgress.feedback)
+    const feedback = useQuestionStore((state)=> state.userProgress?.feedback) ?? []
     return (
          <div style={{
       padding: '1.5rem',

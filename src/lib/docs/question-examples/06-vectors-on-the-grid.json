@@ -1,0 +1,73 @@
+{
+  "title": "Vectors-On-The-Grid",
+  "type": "combination",
+  "schemaVersion": 2,
+  "topic": "Vectors",
+  "difficulty": "Easy",
+  "branch": "pure",
+  "examBoard": "all",
+  "year": "12",
+  "stem": [
+    { "type": "paragraph", "content": "$\\mathbf{a} = \\begin{pmatrix} 2 \\\\ 1 \\end{pmatrix}$ and $\\mathbf{b} = \\begin{pmatrix} 1 \\\\ -3 \\end{pmatrix}$" }
+  ],
+  "parts": [
+    {
+      "type": "place",
+      "label": "(a)",
+      "prompt": "$\\mathbf{a}$ and $\\mathbf{b}$ are drawn from the origin. Drag the ends of the orange arrow so it shows $\\mathbf{a} + \\mathbf{b}$.",
+      "boundingBox": [-6, 6, 6, -6],
+      "snap": 1,
+      "given": [
+        { "kind": "vector", "from": [0, 0], "to": [2, 1], "label": "a" },
+        { "kind": "vector", "from": [0, 0], "to": [1, -3], "label": "b" }
+      ],
+      "objects": [
+        {
+          "kind": "vector",
+          "label": "a + b",
+          "start": { "from": [-4, 4], "to": [-2, 4] },
+          "answer": { "components": [3, -2] },
+          "feedback": "Add the components: $\\begin{pmatrix} 2 \\\\ 1 \\end{pmatrix} + \\begin{pmatrix} 1 \\\\ -3 \\end{pmatrix}$. The arrow can start anywhere."
+        }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "$\\mathbf{a} + \\mathbf{b} = \\begin{pmatrix} 3 \\\\ -2 \\end{pmatrix}$: 3 right and 2 down, from any starting point." }
+      ]
+    },
+    {
+      "type": "place",
+      "label": "(b)",
+      "prompt": "Drag $M$ to the midpoint of $AB$.",
+      "boundingBox": [-6, 6, 6, -6],
+      "snap": 0.5,
+      "given": [
+        { "kind": "point", "at": [-2, 1], "label": "A" },
+        { "kind": "point", "at": [4, 3], "label": "B" }
+      ],
+      "objects": [
+        {
+          "kind": "point",
+          "label": "M",
+          "start": [0, -4],
+          "answer": { "at": [1, 2] },
+          "feedback": "The midpoint is the average of the coordinates: $\\left(\\frac{x_A + x_B}{2}, \\frac{y_A + y_B}{2}\\right)$."
+        }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "$M = \\left(\\frac{-2 + 4}{2}, \\frac{1 + 3}{2}\\right) = (1, 2)$." }
+      ]
+    },
+    {
+      "type": "answer",
+      "label": "(c)",
+      "prompt": "Find $|\\mathbf{a} + \\mathbf{b}|$, giving your answer as an exact value.",
+      "template": "|\\mathbf{a}+\\mathbf{b}| = \\placeholder[m]{}",
+      "blanks": {
+        "m": { "answer": "\\sqrt{13}", "feedback": "Use Pythagoras on the components of $\\mathbf{a} + \\mathbf{b}$, and leave the answer as a surd." }
+      },
+      "solution": [
+        { "type": "paragraph", "content": "$|\\mathbf{a} + \\mathbf{b}| = \\sqrt{3^2 + (-2)^2} = \\sqrt{13}$." }
+      ]
+    }
+  ]
+}

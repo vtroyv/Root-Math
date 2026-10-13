@@ -1,0 +1,33 @@
+{
+  "title": "Sum-Product-inequality-proof",
+  "type": "combination",
+  "schemaVersion": 2,
+  "topic": "Proof",
+  "difficulty": "Exam",
+  "branch": "pure",
+  "examBoard": "all",
+  "year": "12",
+  "parts": [
+    {
+      "type": "working",
+      "prompt": "Prove that for any positive numbers $p$ and $q$: $$p + q \\ge \\sqrt{4pq}$$",
+      "markScheme": [
+        { "code": "M1", "marks": 1, "text": "Expands $(p+q)^2$ and writes it as $(p-q)^2 + 4pq$, or an equivalent rearrangement" },
+        { "code": "M1", "marks": 1, "text": "States and uses the fact that $(p-q)^2 \\ge 0$" },
+        { "code": "A1", "marks": 1, "text": "Deduces $(p+q)^2 \\ge 4pq$" },
+        { "code": "A1", "marks": 1, "text": "Takes the positive square root, valid because $p+q>0$, to conclude $p+q \\ge \\sqrt{4pq}$" }
+      ],
+      "llm": {
+        "context": "Accept any rigorous equivalent method, for example starting from $(\\sqrt{p}-\\sqrt{q})^2 \\ge 0$. The final A1 requires a concluding statement."
+      },
+      "hint": [
+        { "type": "paragraph", "content": "Both sides are positive, so it is enough to compare their squares. What do you know about $(p-q)^2$?" }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "Expand and rearrange: $$(p+q)^2 = p^2 + 2pq + q^2 = (p-q)^2 + 4pq$$" },
+        { "type": "paragraph", "content": "Since $(p-q)^2 \\ge 0$ for all real $p, q$: $$(p+q)^2 \\ge 4pq$$" },
+        { "type": "paragraph", "content": "Both sides are positive because $p, q > 0$, so taking the positive square root gives $$p + q \\ge \\sqrt{4pq}$$ as required." }
+      ]
+    }
+  ]
+}

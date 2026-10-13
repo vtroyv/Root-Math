@@ -8,8 +8,8 @@ import { useQuestionStore } from '@/lib/zustand/providers/question-state-provide
 
 export default function QuestionSolutionPane({ solution , markScheme}) {
   const { updateProgress } = useQuestionStore();
-  const attempts = useQuestionStore((state) => state.userProgress.attempts);
-  const status = useQuestionStore((state) => state.userProgress.status);
+  const attempts = useQuestionStore((state) => state.userProgress?.attempts ?? 0);
+  const status = useQuestionStore((state) => state.userProgress?.status);
 
   // Local state for reveal
   const [showSolution, setShowSolution] = useState(status === 'complete');

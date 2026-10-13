@@ -1,0 +1,51 @@
+{
+  "title": "Advanced-Simplification-of-Indices-with-Multiple-Bases",
+  "type": "combination",
+  "schemaVersion": 2,
+  "topic": "Algebra and Functions",
+  "difficulty": "Easy",
+  "branch": "pure",
+  "examBoard": "all",
+  "year": "12",
+  "parts": [
+    {
+      "type": "choice",
+      "prompt": "Simplify the expression $\\dfrac{(2^3 \\cdot 4^2)^3}{8^4}$",
+      "marks": 1,
+      "options": [
+        {
+          "id": "A",
+          "content": "$2^{-1}$",
+          "correct": false,
+          "why": "A negative power means the denominator was bigger, but the numerator is $2^{21}$ and the denominator is only $2^{12}$. Check the order you subtracted the powers."
+        },
+        {
+          "id": "B",
+          "content": "$2^{9}$",
+          "correct": true,
+          "why": "$(2^3 \\cdot 2^4)^3 = (2^7)^3 = 2^{21}$ and $8^4 = (2^3)^4 = 2^{12}$, so the answer is $2^{21-12} = 2^9$."
+        },
+        {
+          "id": "C",
+          "content": "$2^{5}$",
+          "correct": false,
+          "why": "Check how you rewrote $4^2$. It is $(2^2)^2 = 2^4$, and the outer cube applies to both factors in the bracket."
+        },
+        {
+          "id": "D",
+          "content": "$2^{0}$",
+          "correct": false,
+          "why": "A power of $0$ would mean the numerator and denominator are equal. Write both as powers of $2$ and compare them."
+        }
+      ],
+      "hint": [
+        { "type": "paragraph", "content": "Write $4$ and $8$ as powers of $2$ before doing anything else." }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "Write every base as a power of $2$: $4^2 = 2^4$ and $8^4 = 2^{12}$." },
+        { "type": "paragraph", "content": "Numerator: $(2^3 \\cdot 2^4)^3 = (2^7)^3 = 2^{21}$." },
+        { "type": "paragraph", "content": "So $\\dfrac{2^{21}}{2^{12}} = 2^{9}$." }
+      ]
+    }
+  ]
+}

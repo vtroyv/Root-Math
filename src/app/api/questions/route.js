@@ -1,4 +1,5 @@
 import { getQuestions, getUserProgForAllQuestions } from "@/lib/mongodb/utils";
+import { toClientQuestion } from "@/lib/marking/sanitize";
 
 export async function GET(request) {
   const {searchParams} = new URL(request.url)
@@ -21,7 +22,7 @@ export async function GET(request) {
     //now i merge the status into each question 
 
     const enriched= questions.map(q => ({
-      ...q, 
+      ...toClientQuestion(q),
       status: statusByTitle.get(q.title) ?? 'Todo'
     }))
 

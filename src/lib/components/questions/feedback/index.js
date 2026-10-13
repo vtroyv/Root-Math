@@ -1,5 +1,5 @@
 'use client'
-import React, {useState, useEffect} from 'react'; 
+import React, {useState, useEffect, useRef} from 'react';
 import {Nav, NavItem, NavLink,TabContent, TabPane} from 'reactstrap';
 import classnames from 'classnames';
 import QuestionFeedbackPane from './questionFeedbackPane';
@@ -19,8 +19,8 @@ export default function Feedback({details}) {
         'markScheme': [{'type':'paragraph', 'content':'test'}]
     }
 
-    const updatedFeedback = useQuestionStore((state)=> state.userProgress.feedback)
-    console.log('THe updated Feedback is ', updatedFeedback)
+    const updatedFeedback = useQuestionStore((state)=> state.userProgress?.feedback)
+    const previousFeedback = useRef(updatedFeedback)
 
     
 
@@ -30,7 +30,9 @@ export default function Feedback({details}) {
     //also you need to work on properly displaying the feedback 
 
     useEffect(()=> {
-       //Whenever the updated feedback gets changed  
+       //Whenever the updated feedback gets changed (but not on first load, so the page opens on Instructions)
+       if (previousFeedback.current === updatedFeedback) return
+       previousFeedback.current = updatedFeedback
        toggle('feedback')
 
     },[updatedFeedback])

@@ -2,6 +2,7 @@
 // never attempted that question before, otherwise the purpose should be to fetch it 
 
 import { getSpecificQuestion, getUserQuestionProgress, createUserQuestionProgress } from "@/lib/mongodb/utils";
+import { toClientQuestion } from "@/lib/marking/sanitize";
 
 export async function POST (request, {params}) {
     // const {userProgress } = params
@@ -50,7 +51,8 @@ export async function POST (request, {params}) {
         console.log('the question is ', question)
         console.log('the userProgess is ', existingUserProgress)
 
-         return new Response(JSON.stringify({question, existingUserProgress}), {
+         // parts-based questions have their answer keys stripped before reaching the browser
+         return new Response(JSON.stringify({question: toClientQuestion(question), existingUserProgress}), {
       status: 200,
       headers: { "Content-Type": "application/json" }
     });

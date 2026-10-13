@@ -1,0 +1,51 @@
+{
+  "title": "Consecutive-Odd-Numbers-Proof",
+  "type": "combination",
+  "schemaVersion": 2,
+  "topic": "Proof",
+  "difficulty": "Medium",
+  "branch": "pure",
+  "examBoard": "all",
+  "year": "12",
+  "stem": [
+    { "type": "paragraph", "content": "Prove that the sum of any two consecutive odd numbers is a multiple of $4$." }
+  ],
+  "parts": [
+    {
+      "type": "order",
+      "label": "(a)",
+      "prompt": "Build the proof by putting the lines in order. Two of the lines don't belong.",
+      "marks": 2,
+      "lines": [
+        "Let the first odd number be $2n+1$, where $n$ is an integer.",
+        "Then the next odd number is $2n+3$.",
+        "Their sum is $(2n+1) + (2n+3) = 4n + 4$.",
+        "$4n + 4 = 4(n+1)$, and $n + 1$ is an integer.",
+        "So the sum of two consecutive odd numbers is a multiple of $4$."
+      ],
+      "distractors": [
+        "Let the two odd numbers be $2n+1$ and $2m+1$.",
+        "Then the next odd number is $2n+2$."
+      ],
+      "hint": [
+        { "type": "paragraph", "content": "A proof starts by defining what you're working with. Consecutive odd numbers differ by $2$." }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "Let the first odd number be $2n+1$, so the next is $2n+3$. Their sum is $4n+4 = 4(n+1)$, which is a multiple of $4$ because $n+1$ is an integer." },
+        { "type": "paragraph", "content": "$2m+1$ doesn't work because it doesn't say the numbers are consecutive, and $2n+2$ is even." }
+      ]
+    },
+    {
+      "type": "answer",
+      "label": "(b)",
+      "prompt": "Fill in the bracket.",
+      "template": "(2n+1)+(2n+3)=4\\left(\\placeholder[k]{}\\right)",
+      "blanks": {
+        "k": { "answer": "n+1", "feedback": "Collect the terms to get $4n + 4$, then take out the common factor." }
+      },
+      "solution": [
+        { "type": "paragraph", "content": "$(2n+1) + (2n+3) = 4n + 4 = 4(n+1)$." }
+      ]
+    }
+  ]
+}

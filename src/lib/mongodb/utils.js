@@ -1,4 +1,6 @@
-import clientPromise from "./db";
+// CHANGED 13 Oct 2026: db.js now exports a function (getMongoClient) instead of a promise,
+// so a failed connection can be retried. See the comment at the top of db.js.
+import getMongoClient from "./db";
 
 let client
 let db
@@ -10,24 +12,41 @@ let userProgress
 
 
 
+/*
+CHANGED 13 Oct 2026:
+  1. Calls getMongoClient() each time it isn't connected yet, so if an earlier
+     attempt failed, this one tries again (see db.js).
+  2. The real MongoDB error is now logged and included in the thrown message.
+     Before, it was replaced with a generic "Failed to establish connection to
+     database", which hid the actual cause (bad IP access list, network, wrong URI...).
+  3. Every exported function below now starts with `await init()`.
+     Before, only getQuestions and getSpecificQuestion did; the rest used `db`
+     directly, so if the first connection at startup failed, `db` stayed undefined
+     and those functions (lessons, progress, users) kept failing even after the
+     network came back. Once connected, init() returns immediately, so it's free.
+*/
 async function init() {
-    if (db) return 
+    if (db) return
     try {
-        client = await clientPromise
+        client = await getMongoClient()
         db = await client.db('RootMath')
         questions = await db.collection('quizzes')
-        
+
     } catch (error) {
-        throw new Error('Failed to establish connection to database')
+        console.error('MongoDB connection failed:', error)
+        throw new Error(`Failed to establish connection to database: ${error.message}`)
     }
 }
 
 //so we import the client promise that we created in our db.js file,
 // then db = await client.db is mongodb's way of accessing our database
 
+// CHANGED 13 Oct 2026: added .catch. This start-up connection attempt had no error
+// handler, so a failure here printed the "unhandledRejection" errors in your terminal.
+// Now it just logs; the next request will retry through init().
 ;(async () => {
     await init()
-})()
+})().catch(() => console.error('MongoDB: start-up connection failed; will retry on the next request.'))
 
 //we then call this init function to establish the connection
 
@@ -47,6 +66,7 @@ export async function getQuestions() {
 }
 
 export async function getUserProgForAllQuestions(userId, examBoard) {
+    await init() // CHANGED 13 Oct 2026: connect (or retry) before using db - see init() above
     //could i acheive this with mongoDB aggregation -> at some later date come back and see if this is possible, 
     //therefore i could save myself from doing two separate api requests to get my desired data.
 
@@ -61,6 +81,7 @@ export async function getUserProgForAllQuestions(userId, examBoard) {
 
 export async function getLessonContent(data) {
     try {
+       await init() // CHANGED 13 Oct 2026: connect (or retry) before using db - see init() above
        
        lessons = await db.collection(data.collection)
        console.log('The lessons are ', lessons)
@@ -75,6 +96,7 @@ export async function getLessonContent(data) {
 
 export async function getLessonData(data) {
     try{
+        await init() // CHANGED 13 Oct 2026: connect (or retry) before using db - see init() above
         // console.log('The data passed to the mongo function is ', data)
         lessonData = await db.collection('lesson-data')
         //console.log('The lessoData from the collection is ', lessonData)
@@ -92,6 +114,7 @@ export async function getLessonData(data) {
 
 export async function createUser(data) {
     try {
+        await init() // CHANGED 13 Oct 2026: connect (or retry) before using db - see init() above
         users = await db.collection('users')
         const result = await users.insertOne(data)
         //console.log('the result from adding the user to the DB is ', result)
@@ -104,6 +127,7 @@ export async function createUser(data) {
 
 export async function createUserLessonProgress(data, examBoard) {
     try {
+      await init() // CHANGED 13 Oct 2026: connect (or retry) before using db - see init() above
       if (examBoard === 'edexcel') {
         userProgress = await db.collection('edx-maths-1-lesson-progress');
   
@@ -132,6 +156,7 @@ export async function createUserLessonProgress(data, examBoard) {
   }
   
 export async function getUserLessonProgress(data) {
+    await init() // CHANGED 13 Oct 2026: connect (or retry) before using db - see init() above
     //This function should take in the data and userID
     
     const {userId, examBoard, slug} = data
@@ -157,6 +182,7 @@ export async function getUserLessonProgress(data) {
 }
 
 export async function updateUserLessonProgress(data) {
+    await init() // CHANGED 13 Oct 2026: connect (or retry) before using db - see init() above
     const {collection, progress} = data; 
 
     console.log('the progress is ', progress)
@@ -184,6 +210,7 @@ export async function updateUserLessonProgress(data) {
 } 
 
 export async function updateUserQuestionProgress(data) {
+    await init() // CHANGED 13 Oct 2026: connect (or retry) before using db - see init() above
     const {collectionIdentifier ,progress} = data; 
 
     const {_id, ...progressWithoutId} = progress;
@@ -222,6 +249,7 @@ export async function getSpecificQuestion(title) {
 }
 
 export async function getUserQuestionProgress(data) {
+    await init() // CHANGED 13 Oct 2026: connect (or retry) before using db - see init() above
     const collection = identifyQuesProg(data); 
     const {userId, title} = data
 
@@ -234,6 +262,7 @@ export async function getUserQuestionProgress(data) {
 }
 
 export async function createUserQuestionProgress(progressData, collectionData) {
+    await init() // CHANGED 13 Oct 2026: connect (or retry) before using db - see init() above
     //the progressData contains the data that should be put as the new userProgress Data, 
     //the collectionData contains the data used to identify what collection 
 

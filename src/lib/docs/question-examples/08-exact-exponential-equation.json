@@ -1,0 +1,27 @@
+{
+  "title": "Exact-Exponential-Equation",
+  "type": "combination",
+  "schemaVersion": 2,
+  "topic": "Exponentials and Logarithms",
+  "difficulty": "Easy",
+  "branch": "pure",
+  "examBoard": "all",
+  "year": "12",
+  "parts": [
+    {
+      "type": "answer",
+      "prompt": "Solve $e^{2x} = 5$, giving your answer in exact form.",
+      "template": "x = \\placeholder[x]{}",
+      "blanks": {
+        "x": {
+          "answer": "\\frac{1}{2}\\ln 5",
+          "accept": ["\\ln\\sqrt{5}"],
+          "feedback": "Take natural logs of both sides: $\\ln(e^{2x}) = 2x$. Give the answer as an exact log, not a decimal."
+        }
+      },
+      "solution": [
+        { "type": "paragraph", "content": "$e^{2x} = 5 \\Rightarrow 2x = \\ln 5 \\Rightarrow x = \\tfrac{1}{2}\\ln 5$, which is also $\\ln\\sqrt{5}$." }
+      ]
+    }
+  ]
+}

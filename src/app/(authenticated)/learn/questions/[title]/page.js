@@ -1,6 +1,7 @@
 'use client'
 
 import { useGetQuestionsQuery, useGradeQuestionMutation } from '@/lib/redux/slices/apiSlice';
+// These seem to be the question types that we have, so i need to go through each one and understand it
 import FullResponse from '@/lib/components/questions/FullResponse';
 import Selection from '@/lib/components/questions/Selection';
 import Sketch from '@/lib/components/questions/questionTypes/Sketch';
@@ -10,11 +11,18 @@ import FillInBlank from '@/lib/components/questions/FillInBlank';
 import NewFullResponse from '@/lib/components/questions/questionTypes/newFullResponse';
 import Feedback from '@/lib/components/questions/feedback';
 import TwoPaneResponsive from "@/lib/components/learn/lessons/TwoPaneResponsive";
+import Combination from '@/lib/components/questions/questionTypes/Combination';
+// New parts-based questions (any doc with a `parts` array) - see src/lib/docs/question-parts.md
+import QuestionParts from '@/lib/components/questions/parts/QuestionParts';
+import partsDetails from '@/lib/components/questions/parts/partsDetails';
+// -----------------------------------------------------------------------------------------
+
+
 import { useUser } from '@clerk/nextjs';
 import { useEffect,useState } from 'react';
 import { useDynamicQuestionDataMutation } from '@/lib/redux/slices/apiSlice';
 import { useQuestionStore } from '@/lib/zustand/providers/question-state-provider';
-import Combination from '@/lib/components/questions/questionTypes/Combination';
+
 
 
 
@@ -28,6 +36,7 @@ Just some food for thought
 */
 
 export default function QuestionDisplay({ params }) {
+  // test
 
 
 
@@ -35,13 +44,13 @@ export default function QuestionDisplay({ params }) {
 
   // const { data, isLoading, isSuccess } = useGetQuestionsQuery();
   const { isSignedIn, user} = useUser();
+  console.log('the current user object is ', user)
   const [dynamicQuestionData, mutationState] = useDynamicQuestionDataMutation();
 
   const [question, setQuestion] = useState(null);
   const [userProgress, setUserProgress] = useState(null);
-  const {updateProgress,setProgress } = useQuestionStore();
-
-  const progress = useQuestionStore((state) => state.userProgress); //access it like this as i already defined userProgress as state here
+  // select only what this page needs; subscribing to the whole store re-rendered the page on every keystroke
+  const setProgress = useQuestionStore((state) => state.setProgress);
 
 
 
@@ -78,7 +87,7 @@ export default function QuestionDisplay({ params }) {
 
         } 
       } catch(error) {
-          console.log('the error is ')
+          console.error('Loading the question failed:', error)
         }
 
     }
@@ -92,7 +101,7 @@ export default function QuestionDisplay({ params }) {
     // then in our lower components e.g. FullResponse, we will update the global task state 
 
     // updateProgress(userProgress)
-    console.log('Thee current global question state is ', progress)
+    console.log('Thee current global question state is ', useQuestionStore.getState().userProgress)
   }, [userProgress])
 
 
@@ -112,6 +121,16 @@ export default function QuestionDisplay({ params }) {
 
   if (!question) {
       return <h1>Question not found</h1>;
+  }
+
+  // New schema: every question is a list of parts, whatever its `type`
+  if (Array.isArray(question.parts)) {
+    return (
+      <TwoPaneResponsive
+        question={<QuestionParts question={question} />}
+        feedback={<Feedback details={partsDetails(question)} />}
+      />
+    );
   }
 
   const selectComponent = (questionType) =>{

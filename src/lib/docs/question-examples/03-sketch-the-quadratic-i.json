@@ -1,0 +1,83 @@
+{
+  "title": "Sketch-the-Quadratic-I",
+  "type": "combination",
+  "schemaVersion": 2,
+  "topic": "Algebra and Functions",
+  "difficulty": "Medium",
+  "branch": "pure",
+  "examBoard": "all",
+  "year": "12",
+  "parts": [
+    {
+      "type": "sketch",
+      "prompt": "Sketch the curve $y = -2x^2 + 6x - 1$. Make sure it crosses the axes in the right places.",
+      "degree": 2,
+      "boundingBox": [-3, 5, 5, -3],
+      "keyPoints": [
+        {
+          "label": "y-intercept",
+          "x": 0,
+          "y": -1,
+          "threshold": 0.25,
+          "feedback": [
+            { "type": "paragraph", "content": "You have a problem with your y-intercept, let's fix that!" },
+            { "type": "paragraph", "content": "The y-intercept always has $x = 0$, so evaluate the function at $x = 0$ to get its $y$ coordinate." }
+          ]
+        },
+        {
+          "label": "first root",
+          "x": 0.17712,
+          "y": 0,
+          "threshold": 0.2,
+          "feedback": [
+            { "type": "paragraph", "content": "There is an issue with your first root, let's fix it!" },
+            {
+              "type": "accordion",
+              "title": "What's the best way to find the roots here? Think about it, then click the arrow.",
+              "children": [
+                { "type": "paragraph", "content": "This one doesn't factorise nicely, so the quadratic formula is the best approach: $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$" },
+                { "type": "paragraph", "content": "Here $a = -2$, $b = 6$ and $c = -1$. Substitute these in to get your roots." }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "second root",
+          "x": 2.82288,
+          "y": 0,
+          "threshold": 0.2,
+          "feedback": [
+            { "type": "paragraph", "content": "There is an issue with your second root, let's fix it!" },
+            {
+              "type": "accordion",
+              "title": "What's the best way to find the roots here? Think about it, then click the arrow.",
+              "children": [
+                { "type": "paragraph", "content": "This one doesn't factorise nicely, so the quadratic formula is the best approach: $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$" },
+                { "type": "paragraph", "content": "Here $a = -2$, $b = 6$ and $c = -1$. Substitute these in to get your roots." }
+              ]
+            }
+          ]
+        }
+      ],
+      "correctFeedback": [
+        { "type": "heading", "level": 3, "content": "Well done, this is correct!" },
+        {
+          "type": "bullet-points",
+          "points": [
+            "You found and plotted both roots, $\\bigl(0.17712, 0\\bigr)$ and $\\bigl(2.82288, 0\\bigr)$.",
+            "You also found the y-intercept $\\bigl(0, -1\\bigr)$ and plotted it correctly."
+          ]
+        },
+        { "type": "paragraph", "content": "Keep up the good work." }
+      ],
+      "hint": [
+        { "type": "paragraph", "content": "A quadratic is fixed by its roots and its y-intercept. Work those out first, then drag the points onto them." }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "y-intercept: $y = -2(0)^2 + 6(0) - 1 = -1$, so $(0, -1)$." },
+        { "type": "paragraph", "content": "Roots: $x = \\dfrac{-6 \\pm \\sqrt{36 - 8}}{-4} = \\dfrac{3 \\mp \\sqrt{7}}{2}$, so $x \\approx 0.177$ and $x \\approx 2.823$." },
+        { "type": "paragraph", "content": "The coefficient of $x^2$ is negative, so the curve is an upside-down U with its maximum at $x = 1.5$, $y = 3.5$." }
+      ]
+    }
+  ]
+}
