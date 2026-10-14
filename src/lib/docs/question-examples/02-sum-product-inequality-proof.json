@@ -29,5 +29,64 @@
         { "type": "paragraph", "content": "Both sides are positive because $p, q > 0$, so taking the positive square root gives $$p + q \\ge \\sqrt{4pq}$$ as required." }
       ]
     }
+  ],
+  "review": [
+    {
+      "id": "key-idea",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "To prove $p + q \\ge \\sqrt{4pq}$ for positive $p$ and $q$, what's the key idea?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "Compare the squares instead."
+        },
+        {
+          "type": "paragraph",
+          "content": "$(p+q)^2 = (p-q)^2 + 4pq$, and $(p-q)^2 \\ge 0$, so $(p+q)^2 \\ge 4pq$."
+        }
+      ]
+    },
+    {
+      "id": "difference",
+      "type": "answer",
+      "prompt": "Fill in the box.",
+      "template": "(p+q)^2-(p-q)^2=\\placeholder[d]{}",
+      "blanks": {
+        "d": {
+          "answer": "4pq"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$(p^2 + 2pq + q^2) - (p^2 - 2pq + q^2) = 4pq$."
+        }
+      ]
+    },
+    {
+      "id": "square-root-step",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "You've shown $(p+q)^2 \\ge 4pq$. Why are you allowed to square-root both sides?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "Both sides are positive."
+        },
+        {
+          "type": "paragraph",
+          "content": "$p, q > 0$, so $p + q > 0$ and $4pq > 0$. Square-rooting positive numbers keeps the inequality the right way round."
+        }
+      ]
+    }
   ]
 }

@@ -80,5 +80,67 @@
         { "type": "paragraph", "content": "$2(x+3)^2 - 5 = -5 \\Rightarrow (x+3)^2 = 0$, so there is exactly one solution, $x = -3$." }
       ]
     }
+  ],
+  "review": [
+    {
+      "id": "first-step",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "To write $2x^2 + 12x + 13$ in the form $a(x+b)^2 + c$, what's the first step?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "Take out the factor of 2 from the $x$ terms."
+        },
+        {
+          "type": "paragraph",
+          "content": "$2x^2 + 12x + 13 = 2(x^2 + 6x) + 13$"
+        }
+      ]
+    },
+    {
+      "id": "complete",
+      "type": "answer",
+      "prompt": "Complete the square.",
+      "template": "x^2+6x=\\left(x+\\placeholder[b]{}\\right)^2-\\placeholder[c]{}",
+      "blanks": {
+        "b": {
+          "answer": "3"
+        },
+        "c": {
+          "answer": "9"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "Halve the $6$ to get $3$, then subtract $3^2 = 9$ so the expression is unchanged."
+        }
+      ]
+    },
+    {
+      "id": "turning-point",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "Where is the turning point of $y = a(x + p)^2 + q$?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "At $(-p,\\ q)$."
+        },
+        {
+          "type": "paragraph",
+          "content": "The squared bracket is zero when $x = -p$, which leaves $y = q$."
+        }
+      ]
+    }
   ]
 }

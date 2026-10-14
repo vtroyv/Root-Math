@@ -61,6 +61,9 @@ export async function getQuestions() {
         // console.log(result)
         return {questions: result}
     } catch(error) {
+        // CHANGED 13 Oct 2026: log the real cause. The generic message below hid a MongoDB
+        // "read ECONNRESET" (IP not on the Atlas Network Access list) behind "Failed to fetch questions!"
+        console.error('getQuestions failed:', error)
         return {error: 'Failed to fetch questions!'}
     }
 }
@@ -259,6 +262,79 @@ export async function getUserQuestionProgress(data) {
 
     return result 
 
+}
+
+// NEW 13 Oct 2026 (Skill Radar): every question-progress document for one user in one
+// progress collection. collectionData needs { userId, examBoard, branch, year }.
+export async function getUserProgressForCollection(collectionData) {
+    await init()
+    const collection = identifyQuesProg(collectionData)
+    return db.collection(collection)
+        .find({ userId: collectionData.userId })
+        .project({ _id: 0, title: 1, status: 1, marks: 1, attempts: 1, updatedAt: 1 })
+        .toArray()
+}
+
+// NEW 13 Oct 2026 (Skill Radar): chapter documents ({ name, subsections: { group: [lesson titles] } })
+export async function getChapters(collectionName) {
+    await init()
+    return db.collection(collectionName).find({}).project({ _id: 0, name: 1, subsections: 1 }).toArray()
+}
+
+// NEW 13 Oct 2026 (Skill Radar): which lessons are actually built (have content in lesson-data)
+export async function getBuiltLessons() {
+    await init()
+    return db.collection('lesson-data').find({}).project({ _id: 0, slug: 1, title: 1, collection: 1 }).toArray()
+}
+
+// NEW 13 Oct 2026 (Skill Radar): one student's lesson progress ({ lessonSlug, completed, updatedAt })
+export async function getUserLessonProgressList(collectionName, userId) {
+    await init()
+    return db.collection(collectionName).find({ userId }).project({ _id: 0, lessonSlug: 1, completed: 1, updatedAt: 1 }).toArray()
+}
+
+// ─── Review cards (NEW 14 Oct 2026) ─────────────────────────────────────
+// One document per student per card in `reviewStates` (see src/lib/docs/question-reviews.md).
+// Card *content* lives on the question document's `review` array; only schedules live here.
+
+let reviewIndexesReady
+function ensureReviewIndexes(collection) {
+    // created once per server process: one schedule per student per card, and fast "what's due?"
+    if (!reviewIndexesReady) {
+        reviewIndexesReady = Promise.all([
+            collection.createIndex({ userId: 1, cardKey: 1 }, { unique: true }),
+            collection.createIndex({ userId: 1, due: 1 }),
+        ]).catch((error) => { reviewIndexesReady = undefined; throw error })
+    }
+    return reviewIndexesReady
+}
+
+// one student's schedules for the given cards
+export async function getReviewStates(userId, cardKeys) {
+    await init()
+    return db.collection('reviewStates').find({ userId, cardKey: { $in: cardKeys } }).project({ _id: 0 }).toArray()
+}
+
+// insert new schedules, ignoring any that already exist (e.g. two tabs unlocking at once)
+export async function createReviewStates(states) {
+    if (!states.length) return
+    await init()
+    const collection = db.collection('reviewStates')
+    await ensureReviewIndexes(collection)
+    try {
+        await collection.insertMany(states.map((s) => ({ ...s })), { ordered: false })
+    } catch (error) {
+        const errors = error.writeErrors ?? [error]
+        if (!errors.every((e) => e.code === 11000)) throw error // only duplicates are expected
+    }
+}
+
+// save one student's schedule for one card
+export async function saveReviewState(state) {
+    await init()
+    // eslint-disable-next-line no-unused-vars
+    const { _id, ...rest } = state
+    await db.collection('reviewStates').replaceOne({ userId: state.userId, cardKey: state.cardKey }, rest)
 }
 
 export async function createUserQuestionProgress(progressData, collectionData) {

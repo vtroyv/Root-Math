@@ -11,7 +11,9 @@ after 3 attempts. If you want those hidden too, strip them here and fetch on rev
 export function toClientQuestion(question) {
   if (!Array.isArray(question?.parts)) return question;
 
-  const { parts, ...rest } = question;
+  // `review` cards hold answers too; they're served separately by /api/reviews (answer keys stripped)
+  // eslint-disable-next-line no-unused-vars
+  const { parts, review, ...rest } = question;
   return {
     ...rest,
     _id: question._id?.toString?.() ?? question._id,
@@ -19,7 +21,8 @@ export function toClientQuestion(question) {
   };
 }
 
-function toClientPart(part, index, title) {
+// exported so review cards (src/lib/reviews/cards.js) can be sanitised the same way as parts
+export function toClientPart(part, index, title) {
   const { hint, solution, image, ...p } = part;
   const base = { ...p, hint, solution, image, marks: partMarks(part) };
 

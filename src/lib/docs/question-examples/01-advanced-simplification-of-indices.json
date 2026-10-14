@@ -47,5 +47,61 @@
         { "type": "paragraph", "content": "So $\\dfrac{2^{21}}{2^{12}} = 2^{9}$." }
       ]
     }
+  ],
+  "review": [
+    {
+      "id": "common-base",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "You need to simplify $\\dfrac{(2^3 \\cdot 4^2)^3}{8^4}$. What's the very first step?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "Write every base as a power of 2."
+        },
+        {
+          "type": "paragraph",
+          "content": "$4 = 2^2$ and $8 = 2^3$, so everything can be combined with the index laws."
+        }
+      ]
+    },
+    {
+      "id": "power-of-power",
+      "type": "answer",
+      "prompt": "Fill in the power.",
+      "template": "\\left(2^a\\right)^b=2^{\\placeholder[p]{}}",
+      "blanks": {
+        "p": {
+          "answer": "ab"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "Raising a power to a power multiplies the indices: $(2^a)^b = 2^{ab}$."
+        }
+      ]
+    },
+    {
+      "id": "divide-powers",
+      "type": "answer",
+      "prompt": "Fill in the power.",
+      "template": "\\frac{2^m}{2^n}=2^{\\placeholder[p]{}}",
+      "blanks": {
+        "p": {
+          "answer": "m-n"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "Dividing powers of the same base subtracts the indices: $\\dfrac{2^m}{2^n} = 2^{m-n}$."
+        }
+      ]
+    }
   ]
 }

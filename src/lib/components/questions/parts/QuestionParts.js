@@ -10,7 +10,9 @@ import BlockRenderer from '@/lib/components/learn/lessons/BlockRenderer';
 import NextQuestions from '../other-question-components/NextQuestions';
 import { useDrawerStore } from '@/lib/zustand/providers/question-drawer-state-provider';
 import { useQuestionStore } from '@/lib/zustand/providers/question-state-provider';
+import { useDispatch } from 'react-redux';
 import {
+  apiSlice,
   useGetQuestionsQuery,
   useMarkQuestionMutation,
   useUpdateQuestionProgressMutation,
@@ -48,10 +50,13 @@ export default function QuestionParts({ question }) {
 
   const [markQuestion, { isLoading: isMarking }] = useMarkQuestionMutation();
   const [saveProgress] = useUpdateQuestionProgressMutation();
+  const dispatch = useDispatch();
 
   const [saveState, setSaveState] = useState('saved'); // saved | unsaved | saving | error
   const [error, setError] = useState(null);
   const [version, setVersion] = useState(0); // bumped on Reset to remount the parts
+  const [confirmingReset, setConfirmingReset] = useState(false); // shows the "clear answers?" alert
+  const [notice, setNotice] = useState(null); // short success message, e.g. after a reset
 
   const parts = question.parts ?? [];
   const componentProgress = progress?.componentProgress ?? [];
@@ -69,11 +74,26 @@ export default function QuestionParts({ question }) {
         progress: { ...toSave, updatedAt: new Date().toISOString() },
       }).unwrap();
       setSaveState('saved');
+      // completing (or revealing) can unlock review cards: refresh the Review tab without a reload
+      if (toSave.status === 'complete' || toSave.solutionRevealed) {
+        dispatch(apiSlice.util.invalidateTags([{ type: 'Reviews', id: question.title }]));
+      }
     } catch (e) {
       console.error('Saving progress failed:', e);
       setSaveState('error');
     }
   };
+
+  // "Reveal solution" (Solution tab) sets solutionRevealed in the store; save it straight away
+  // so the question's review cards unlock (see /api/reviews/question/[title]). Only saves on
+  // the change from not-revealed to revealed, not when an already-revealed question loads.
+  const revealed = progress?.solutionRevealed === true;
+  const wasRevealed = useRef(revealed);
+  useEffect(() => {
+    if (revealed && !wasRevealed.current) persist(useQuestionStore.getState().userProgress);
+    wasRevealed.current = revealed;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [revealed]);
 
   // autosave a moment after the student stops editing
   const timer = useRef(null);
@@ -93,6 +113,7 @@ export default function QuestionParts({ question }) {
   // ─── marking ───────────────────────────────────────────────────────────
   const handleSubmit = async () => {
     setError(null);
+    setNotice(null);
     clearTimeout(timer.current);
     const responses = parts.map((_, i) => componentProgress[i]?.response);
     try {
@@ -118,14 +139,21 @@ export default function QuestionParts({ question }) {
     }
   };
 
-  // clears answers + results but keeps attempts and the feedback history
-  const handleReset = async () => {
-    if (!window.confirm('Clear all your answers for this question? Your attempt history is kept.')) return;
+  // Reset button -> show the confirm alert (replaces the browser's window.confirm pop-up)
+  const handleReset = () => {
+    setNotice(null);
+    setConfirmingReset(true);
+  };
+
+  // confirmed: clears answers + results but keeps attempts and the feedback history
+  const confirmReset = async () => {
+    setConfirmingReset(false);
     const latest = useQuestionStore.getState().userProgress ?? {};
     const newProgress = { ...latest, componentProgress: [] };
     updateProgress(newProgress);
     setVersion((v) => v + 1);
     await persist(newProgress);
+    setNotice('Your answers have been cleared. Your attempt history is kept.');
   };
 
   // ─── next question drawer ──────────────────────────────────────────────
@@ -196,13 +224,35 @@ export default function QuestionParts({ question }) {
           })}
         </div>
 
+        {/* fade={false} on every alert: no show/hide animation, per the no-animation styling preference */}
+        {confirmingReset && (
+          <Alert color="warning" fade={false} style={{ margin: '0.5rem 0 0' }}>
+            <strong>Clear all your answers for this question?</strong>
+            <p style={{ margin: '0.25rem 0 0.75rem' }}>
+              Every part will be emptied so you can start again. Your attempts and past feedback are kept.
+            </p>
+            <div style={{ display: 'flex', gap: '5px' }}>
+              <Button color="danger" size="sm" onClick={confirmReset}>
+                Clear answers
+              </Button>
+              <Button color="secondary" size="sm" outline onClick={() => setConfirmingReset(false)}>
+                Cancel
+              </Button>
+            </div>
+          </Alert>
+        )}
+        {notice && (
+          <Alert color="success" fade={false} style={{ margin: '0.5rem 0 0' }} toggle={() => setNotice(null)}>
+            {notice}
+          </Alert>
+        )}
         {error && (
-          <Alert color="danger" style={{ margin: '0.5rem 0 0' }} toggle={() => setError(null)}>
+          <Alert color="danger" fade={false} style={{ margin: '0.5rem 0 0' }} toggle={() => setError(null)}>
             {error}
           </Alert>
         )}
         {!progress && (
-          <Alert color="warning" style={{ margin: '0.5rem 0 0' }}>
+          <Alert color="warning" fade={false} style={{ margin: '0.5rem 0 0' }}>
             Your progress couldn&apos;t be loaded, so answers won&apos;t be saved. Try refreshing.
           </Alert>
         )}

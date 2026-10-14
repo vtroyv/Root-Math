@@ -35,7 +35,9 @@ export default function LearnNav() {
              </NavLink>
 
               <NavLink> <Link href='/learn/questions' style={{textDecoration:"none"}}>QUESTIONS</Link></NavLink>
-              
+
+              <NavLink> <Link href='/learn/skill-radar' style={{textDecoration:"none"}}>SKILL RADAR</Link></NavLink>
+
 
              
               <UncontrolledDropdown nav inNavbar>

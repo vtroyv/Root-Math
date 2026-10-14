@@ -7,8 +7,20 @@ import QuestionInstructionPane from './questionInstructionPane';
 import QuestionSolutionPane from './questionSolutionPane';
 import QuestionNotesPane from './questionNotesPane';
 import { useQuestionStore } from '@/lib/zustand/providers/question-state-provider';
+import ReviewPane from '../reviews/ReviewPane';
+import { useGetQuestionReviewsQuery } from '@/lib/redux/slices/apiSlice';
+import { localToday } from '@/lib/reviews/localDay';
 
-export default function Feedback({details}) {
+// "Review" tab label with the number of cards due, e.g. "Review · 2".
+// Uses the same cached query as ReviewPane, so it adds no extra request.
+function ReviewTabLabel({title}) {
+    const [today] = useState(localToday)
+    const {data} = useGetQuestionReviewsQuery({title, today}, {skip: !title})
+    return <>Review{data?.dueCount > 0 && <strong style={{color: '#17a2b8'}}> · {data.dueCount}</strong>}</>
+}
+
+// reviewTitle = the question's title, used by the Review tab (review cards, src/lib/docs/question-reviews.md)
+export default function Feedback({details, reviewTitle}) {
     const [activeTab, setActiveTab] = useState('instructions');
     const toggle= (tab) => {
         if (activeTab !== tab) setActiveTab(tab)
@@ -92,7 +104,7 @@ export default function Feedback({details}) {
                     onClick={()=> toggle('Review')}
                     style={{cursor: 'pointer'}}
                     >
-                        Review
+                        <ReviewTabLabel title={reviewTitle} />
                     </NavLink>
                 </NavItem>
             </Nav>
@@ -112,6 +124,11 @@ export default function Feedback({details}) {
                  <TabPane tabId='notes'>
                     <QuestionNotesPane />
 
+                </TabPane>
+                <TabPane tabId='Review'>
+                    {reviewTitle
+                        ? <ReviewPane title={reviewTitle} />
+                        : <p style={{padding: '1rem'}}>Review cards aren&apos;t available for this question.</p>}
                 </TabPane>
 
             </TabContent>

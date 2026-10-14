@@ -13,7 +13,9 @@ export const apiSlice = createApi({
     //The cache reducer expectes to be added at `state.api` (already default- this is optional)
     reducerPath: 'api', 
     //All of our requests will have URLs starting with '/api'
-    baseQuery: fetchBaseQuery({baseUrl: '/api'}), 
+    baseQuery: fetchBaseQuery({baseUrl: '/api'}),
+    // cache tags: rating a review card refreshes the question's review data (e.g. the "Review · 2" count)
+    tagTypes: ['Reviews'],
     //the 'endpoints' represent operations and requests for this servrer
     endpoints: builder => ({
         //The `getQuestions` endpont is a "query" operation that returns data.
@@ -111,6 +113,33 @@ export const apiSlice = createApi({
             })
         }), 
 
+        // ─── Review cards (src/lib/docs/question-reviews.md) ───
+        // a question's review cards + due dates for the signed-in student; `today` = local 'YYYY-MM-DD'
+        getQuestionReviews: builder.query({
+            query: ({title, today}) => ({
+                url: `/reviews/question/${encodeURIComponent(title)}`,
+                params: {today}
+            }),
+            providesTags: (result, error, {title}) => [{type: 'Reviews', id: title}]
+        }),
+        // mark an answer / choice / order card -> { correct, result, explanation }
+        checkReviewCard: builder.mutation({
+            query: (body) => ({ url: '/reviews/check', method: 'POST', body })
+        }),
+        // record a rating -> { mode, due, intervalDays }
+        rateReviewCard: builder.mutation({
+            query: (body) => ({ url: '/reviews/rate', method: 'POST', body }),
+            invalidatesTags: (result, error, {title}) => [{type: 'Reviews', id: title}]
+        }),
+
+        // Skill Radar: mastery per specification area for the signed-in student
+        getMastery: builder.query({
+            query: (spec) => ({
+                url: '/mastery',
+                params: spec ? {spec} : undefined
+            })
+        }),
+
         // Marks every part of a parts-based question -> { results, marksAwarded, marksAvailable, status, feedback }
         markQuestion: builder.mutation({
             query: ({title, responses}) => ({
@@ -165,7 +194,11 @@ export const {
     useUpdateQuestionProgressMutation,
     useAskTutorMutation,
     useUpdateQuestionNotesMutation,
-    useMarkQuestionMutation
+    useMarkQuestionMutation,
+    useGetMasteryQuery,
+    useGetQuestionReviewsQuery,
+    useCheckReviewCardMutation,
+    useRateReviewCardMutation
     } = apiSlice;
 
 

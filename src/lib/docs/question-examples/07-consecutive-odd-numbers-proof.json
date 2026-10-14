@@ -47,5 +47,67 @@
         { "type": "paragraph", "content": "$(2n+1) + (2n+3) = 4n + 4 = 4(n+1)$." }
       ]
     }
+  ],
+  "review": [
+    {
+      "id": "odd-form",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "How do you write a general odd number in a proof?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "$2n + 1$, where $n$ is an integer."
+        },
+        {
+          "type": "paragraph",
+          "content": "Two consecutive odd numbers are $2n + 1$ and $2n + 3$."
+        }
+      ]
+    },
+    {
+      "id": "multiple-of-4",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "How do you show an expression is a multiple of 4?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "Write it as $4 \\times$ (an integer)."
+        },
+        {
+          "type": "paragraph",
+          "content": "For example $4n + 4 = 4(n + 1)$, and $n + 1$ is an integer because $n$ is."
+        }
+      ]
+    },
+    {
+      "id": "proof-skeleton",
+      "type": "order",
+      "prompt": "Put the steps of a \"show it's a multiple of $k$\" proof in order. One line doesn't belong.",
+      "lines": [
+        "Write the numbers in general form, e.g. $2n + 1$",
+        "Combine them and simplify",
+        "Take out the factor of $k$",
+        "Conclude: it's $k$ times an integer, so it's a multiple of $k$"
+      ],
+      "distractors": [
+        "Check that it works for $n = 1$ and $n = 2$"
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "Checking a few examples never proves a statement for every number, so that line doesn't belong."
+        }
+      ]
+    }
   ]
 }

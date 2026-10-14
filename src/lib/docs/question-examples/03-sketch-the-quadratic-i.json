@@ -79,5 +79,69 @@
         { "type": "paragraph", "content": "The coefficient of $x^2$ is negative, so the curve is an upside-down U with its maximum at $x = 1.5$, $y = 3.5$." }
       ]
     }
+  ],
+  "review": [
+    {
+      "id": "key-points",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "To sketch $y = ax^2 + bx + c$, what do you need to work out?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "The roots, the y-intercept and the shape."
+        },
+        {
+          "type": "paragraph",
+          "content": "Roots: where $y = 0$. y-intercept: $(0, c)$. Shape: $\\cup$ if $a > 0$, $\\cap$ if $a < 0$."
+        }
+      ]
+    },
+    {
+      "id": "shape",
+      "type": "choice",
+      "prompt": "Which way does $y = -2x^2 + 6x - 1$ open?",
+      "options": [
+        {
+          "id": "A",
+          "content": "$\\cup$ (it has a minimum)",
+          "correct": false,
+          "why": "A $\\cup$ shape needs a positive $x^2$ coefficient. Here it's $-2$."
+        },
+        {
+          "id": "B",
+          "content": "$\\cap$ (it has a maximum)",
+          "correct": true,
+          "why": "The coefficient of $x^2$ is $-2 < 0$, so the curve is an upside-down U."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "The sign of the $x^2$ coefficient decides the shape: positive gives $\\cup$, negative gives $\\cap$."
+        }
+      ]
+    },
+    {
+      "id": "y-intercept",
+      "type": "answer",
+      "prompt": "Where does $y = -2x^2 + 6x - 1$ cross the y-axis?",
+      "template": "\\left(0,\\ \\placeholder[y]{}\\right)",
+      "blanks": {
+        "y": {
+          "answer": "-1"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "On the y-axis $x = 0$, so $y = c = -1$."
+        }
+      ]
+    }
   ]
 }

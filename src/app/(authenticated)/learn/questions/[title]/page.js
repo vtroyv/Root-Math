@@ -128,32 +128,32 @@ export default function QuestionDisplay({ params }) {
     return (
       <TwoPaneResponsive
         question={<QuestionParts question={question} />}
-        feedback={<Feedback details={partsDetails(question)} />}
+        feedback={<Feedback reviewTitle={question.title} details={partsDetails(question)} />}
       />
     );
   }
 
   const selectComponent = (questionType) =>{
     if (questionType === 'fullResponse' ) {
-      const feedback = <Feedback  details={question.details}/>
+      const feedback = <Feedback reviewTitle={question.title} details={question.details}/>
       const fullResponse = <NewFullResponse question={question} />
       return <TwoPaneResponsive question={fullResponse} feedback={feedback} />
 
     } else if (questionType === 'selection') {
-      const feedback = <Feedback details ={question?.details} />
+      const feedback = <Feedback reviewTitle={question.title} details ={question?.details} />
       const multipleChoice = <Selection question={question} />
       return <TwoPaneResponsive question={multipleChoice} feedback={feedback}/>
 
     } else if(questionType == 'combination') {
       const combination = <Combination question={question} />
-      const feedback = <Feedback details ={question.details} />
+      const feedback = <Feedback reviewTitle={question.title} details ={question.details} />
       return <TwoPaneResponsive question={combination} feedback={feedback}/>
     } 
     
     
     else if (questionType === 'sketch') {
       const newSketch = <Sketch question={question} />
-      const feedback = <Feedback details={question.details} />
+      const feedback = <Feedback reviewTitle={question.title} details={question.details} />
 
       return <TwoPaneResponsive question={newSketch} feedback ={feedback} />
     

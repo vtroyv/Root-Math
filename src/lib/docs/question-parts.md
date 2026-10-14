@@ -105,8 +105,12 @@ Then open `/learn/questions/<title>`, for example `/learn/questions/Vectors-On-T
     solution: [blocks],                        //   default: built from each part's `solution`
     markScheme: [blocks],                      //   default: built from each part's `markScheme`
   },
+
+  review: [Card, ...],                         // optional: review flashcards, see question-reviews.md
 }
 ```
+
+The `review` cards are never sent with the question. They're served separately by `/api/reviews`, with answer keys removed. Format, writing rules and scheduling: [question-reviews.md](question-reviews.md).
 
 "Blocks" are the same format your lessons use (`BlockRenderer`): `heading`, `paragraph`, `bold-paragraph`, `bullet-points`, `image`, `accordion`, `table`. Text goes through KaTeX, so use `$...$` and `$$...$$`.
 
@@ -437,6 +441,6 @@ These are fixed in the migrated versions. The original documents in MongoDB stil
 - **Solutions and mark schemes are sent to the browser on purpose** (decided 12 October 2026). The Model Solution blur is a nudge, not a lock: a student who digs them out of the network tab is only cheating themselves. Answer keys for auto-marked parts are still stripped, so the marks saved to MongoDB always come from the server.
 - **Other routes still trust `userId` from the request body** (`/api/questions/[title]`, `/api/question-progress`). `/api/mark` uses Clerk's `auth()`; the others should too.
 - **Upgrade Next.js.** `npm install` currently fails a peer-dependency check: Clerk needs Next ≥ 14.2.25 and you have 14.2.7. I installed with `--legacy-peer-deps`, which changes nothing else. 14.2.25 is also the release that patched the Next.js middleware auth-bypass vulnerability (CVE-2025-29927), which matters once you protect routes in middleware.
-- **Review cards:** a `review: [...]` field on the question is reserved for the active-recall feature. Cards can reuse the `answer`, `choice` and `order` part components.
+- **Review cards:** built on 14 October. The `review: [...]` field holds each question's flashcards, shown in the Review tab. See [question-reviews.md](question-reviews.md).
 - **Old components** (`NewFullResponse`, `Sketch`, `Selection`, old `Combination`, `FullResponse`, `Explain`, `FillInBlank`) can be deleted once every question has `parts`.
 - **MyTutor** still can't see the question. `useQuestionStore.getState().userProgress.componentProgress` now has every part's live answer, ready to include in its prompt.

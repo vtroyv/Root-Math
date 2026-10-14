@@ -23,5 +23,75 @@
         { "type": "paragraph", "content": "$e^{2x} = 5 \\Rightarrow 2x = \\ln 5 \\Rightarrow x = \\tfrac{1}{2}\\ln 5$, which is also $\\ln\\sqrt{5}$." }
       ]
     }
+  ],
+  "review": [
+    {
+      "id": "first-step",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "To solve $e^{2x} = 5$, what's the first step?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "Take natural logs of both sides."
+        },
+        {
+          "type": "paragraph",
+          "content": "$\\ln\\left(e^{2x}\\right) = \\ln 5$, so $2x = \\ln 5$."
+        }
+      ]
+    },
+    {
+      "id": "ln-of-e",
+      "type": "answer",
+      "prompt": "Fill in the box.",
+      "template": "\\ln\\left(e^{k}\\right)=\\placeholder[a]{}",
+      "blanks": {
+        "a": {
+          "answer": "k"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$\\ln$ and $e^x$ undo each other, so $\\ln\\left(e^{k}\\right) = k$."
+        }
+      ]
+    },
+    {
+      "id": "exact-form",
+      "type": "choice",
+      "prompt": "Which is the exact solution of $e^{2x} = 5$?",
+      "options": [
+        {
+          "id": "A",
+          "content": "$\\tfrac{1}{2}\\ln 5$",
+          "correct": true,
+          "why": "$2x = \\ln 5$, so $x = \\tfrac{1}{2}\\ln 5$."
+        },
+        {
+          "id": "B",
+          "content": "$\\ln \\tfrac{5}{2}$",
+          "correct": false,
+          "why": "You can't divide inside the log. From $2x = \\ln 5$, divide the whole of $\\ln 5$ by 2."
+        },
+        {
+          "id": "C",
+          "content": "$2\\ln 5$",
+          "correct": false,
+          "why": "That would solve $e^{x/2} = 5$."
+        },
+        {
+          "id": "D",
+          "content": "$0.80$",
+          "correct": false,
+          "why": "Correct to 2 decimal places, but not exact."
+        }
+      ]
+    }
   ]
 }

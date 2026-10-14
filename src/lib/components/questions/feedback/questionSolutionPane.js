@@ -10,23 +10,27 @@ export default function QuestionSolutionPane({ solution , markScheme}) {
   const { updateProgress } = useQuestionStore();
   const attempts = useQuestionStore((state) => state.userProgress?.attempts ?? 0);
   const status = useQuestionStore((state) => state.userProgress?.status);
+  const revealed = useQuestionStore((state) => state.userProgress?.solutionRevealed === true);
 
   // Local state for reveal
-  const [showSolution, setShowSolution] = useState(status === 'complete');
+  const [showSolution, setShowSolution] = useState(status === 'complete' || revealed);
 
   // Compute remaining attempts
   const triesRemaining = Math.max(0, 3 - attempts);
 
   useEffect(() => {
-    // Show solution automatically if status is complete
-    if (status === 'complete') {
+    // Show solution automatically if the question is complete or was revealed before
+    if (status === 'complete' || revealed) {
       setShowSolution(true);
     }
-  }, [status]);
+  }, [status, revealed]);
 
+  // CHANGED 14 Oct 2026: revealing sets `solutionRevealed` instead of `status: 'complete'`.
+  // QuestionParts saves it to MongoDB, which unlocks the question's review cards, but it
+  // doesn't count as completing the question, so the Skill Radar isn't given 100% for it.
   const handleReveal = () => {
     setShowSolution(true);
-    updateProgress({ status: 'complete' });
+    updateProgress({ solutionRevealed: true });
   };
 
   

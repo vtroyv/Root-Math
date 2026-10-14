@@ -79,5 +79,83 @@
         }
       ]
     }
+  ],
+  "review": [
+    {
+      "id": "from-roots",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "A cubic has roots $x = -3, -1, 0$ and leading coefficient $3$. Write it in factorised form."
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "$f(x) = 3x(x+1)(x+3)$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Each root $r$ gives a factor $(x - r)$, and the leading coefficient goes in front."
+        }
+      ]
+    },
+    {
+      "id": "translate",
+      "type": "choice",
+      "prompt": "How is $y = f(x - 2)$ related to $y = f(x)$?",
+      "options": [
+        {
+          "id": "A",
+          "content": "A translation 2 units right",
+          "correct": true,
+          "why": "Replacing $x$ with $x - 2$ moves every point 2 units in the positive $x$ direction."
+        },
+        {
+          "id": "B",
+          "content": "A translation 2 units left",
+          "correct": false,
+          "why": "Changes inside the bracket work the opposite way to how they look: $x - 2$ moves the graph right."
+        },
+        {
+          "id": "C",
+          "content": "A translation 2 units up",
+          "correct": false,
+          "why": "That would be $f(x) + 2$, a change outside the function."
+        },
+        {
+          "id": "D",
+          "content": "A stretch with scale factor 2",
+          "correct": false,
+          "why": "A stretch multiplies: $f(\\tfrac{x}{2})$ or $2f(x)$."
+        }
+      ]
+    },
+    {
+      "id": "reflect",
+      "type": "choice",
+      "prompt": "How is $y = -f(x)$ related to $y = f(x)$?",
+      "options": [
+        {
+          "id": "A",
+          "content": "A reflection in the x-axis",
+          "correct": true,
+          "why": "Every $y$ value changes sign, so the graph flips over the x-axis."
+        },
+        {
+          "id": "B",
+          "content": "A reflection in the y-axis",
+          "correct": false,
+          "why": "That's $f(-x)$: the minus sign goes inside the bracket."
+        },
+        {
+          "id": "C",
+          "content": "A translation down",
+          "correct": false,
+          "why": "A translation down would be $f(x) - a$. A minus sign in front reflects."
+        }
+      ]
+    }
   ]
 }

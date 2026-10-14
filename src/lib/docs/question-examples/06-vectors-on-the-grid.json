@@ -69,5 +69,64 @@
         { "type": "paragraph", "content": "$|\\mathbf{a} + \\mathbf{b}| = \\sqrt{3^2 + (-2)^2} = \\sqrt{13}$." }
       ]
     }
+  ],
+  "review": [
+    {
+      "id": "add-vectors",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "How do you add two column vectors?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "Add the matching components."
+        },
+        {
+          "type": "paragraph",
+          "content": "$\\begin{pmatrix} a \\\\ b \\end{pmatrix} + \\begin{pmatrix} c \\\\ d \\end{pmatrix} = \\begin{pmatrix} a + c \\\\ b + d \\end{pmatrix}$"
+        }
+      ]
+    },
+    {
+      "id": "midpoint",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "What is the midpoint of $(x_1, y_1)$ and $(x_2, y_2)$?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "$\\left(\\dfrac{x_1 + x_2}{2},\\ \\dfrac{y_1 + y_2}{2}\\right)$"
+        },
+        {
+          "type": "paragraph",
+          "content": "The average of each coordinate."
+        }
+      ]
+    },
+    {
+      "id": "magnitude",
+      "type": "answer",
+      "prompt": "Find the magnitude of $\\mathbf{v} = \\begin{pmatrix} 3 \\\\ -2 \\end{pmatrix}$, as an exact value.",
+      "template": "|\\mathbf{v}|=\\placeholder[m]{}",
+      "blanks": {
+        "m": {
+          "answer": "\\sqrt{13}"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$|\\mathbf{v}| = \\sqrt{3^2 + (-2)^2} = \\sqrt{13}$"
+        }
+      ]
+    }
   ]
 }
