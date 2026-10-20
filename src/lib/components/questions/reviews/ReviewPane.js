@@ -1,8 +1,9 @@
 'use client';
 import { useState } from 'react';
 import { Alert, Button, Spinner } from 'reactstrap';
-import { useGetQuestionReviewsQuery, useRateReviewCardMutation } from '@/lib/redux/slices/apiSlice';
+import { useGetQuestionReviewsQuery, useGetLessonReviewsQuery, useRateReviewCardMutation } from '@/lib/redux/slices/apiSlice';
 import { localToday, whenDue } from '@/lib/reviews/localDay';
+import { lessonCardsTitle } from '@/lib/reviews/cards';
 import ReviewCard from './ReviewCard';
 
 /*
@@ -14,6 +15,10 @@ The question page's Review tab (design: src/lib/docs/question-reviews.md section
   finished      a short summary
 The session queue is a snapshot taken when it starts, so the refetch after each rating
 (which keeps the tab's due count up to date) can't reshuffle cards mid-session.
+
+Also the lesson page's Review tab: pass `lessonSlug` instead of `title`. A lesson's cards
+unlock when the whole lesson is complete and are shuffled for each session, so they don't
+follow the order of the lesson's parts (src/lib/docs/lessons.md).
 */
 
 const frame = {
@@ -28,9 +33,25 @@ const frame = {
 };
 const heading = { textAlign: 'center', marginBottom: '1rem', textDecoration: 'underline', fontWeight: 'bold', color: '#17a2b8' };
 
-export default function ReviewPane({ title }) {
+// Fisher-Yates
+const shuffled = (items) => {
+  const out = [...items];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+};
+
+export default function ReviewPane({ title: questionTitle, lessonSlug }) {
   const [today] = useState(localToday);
-  const { data, isLoading, error } = useGetQuestionReviewsQuery({ title, today });
+  const isLesson = Boolean(lessonSlug);
+  // the "title" the check/rate routes know these cards by: a question title, or 'lesson:<slug>'
+  const title = isLesson ? lessonCardsTitle(lessonSlug) : questionTitle;
+  const questionReviews = useGetQuestionReviewsQuery({ title: questionTitle, today }, { skip: isLesson });
+  const lessonReviews = useGetLessonReviewsQuery({ slug: lessonSlug, today }, { skip: !isLesson });
+  const { data, isLoading, error } = isLesson ? lessonReviews : questionReviews;
+  const what = isLesson ? 'lesson' : 'question';
   const [rateCard, { isLoading: rating }] = useRateReviewCardMutation();
 
   const [session, setSession] = useState(null); // { mode, queue, position, reviewed, again, nextDue }
@@ -39,7 +60,7 @@ export default function ReviewPane({ title }) {
   const start = (mode) => {
     const cards = mode === 'review' ? data.cards.filter((c) => c.isDue) : data.cards;
     setRateError(null);
-    setSession({ mode, queue: cards, position: 0, reviewed: 0, again: 0, finished: false });
+    setSession({ mode, queue: isLesson ? shuffled(cards) : cards, position: 0, reviewed: 0, again: 0, finished: false });
   };
 
   const handleRate = async (ratingValue) => {
@@ -86,17 +107,18 @@ export default function ReviewPane({ title }) {
     <div style={frame}>
       <h1 style={heading}>Review</h1>
 
-      {!data.hasCards && <Message>No review cards for this question yet.</Message>}
+      {!data.hasCards && <Message>No review cards for this {what} yet.</Message>}
 
       {data.hasCards && !data.unlocked && (
         <Message icon="bi-lock-fill">
-          Finish this question to unlock its review cards. Once it&apos;s complete (or you reveal the solution), short review cards
-          will help you keep the method fresh.
+          {isLesson
+            ? 'Finish every part of this lesson to unlock its review cards. They come in a random order, to check you really know the ideas, not just the order of the lesson.'
+            : 'Finish this question to unlock its review cards. Once it\u2019s complete (or you reveal the solution), short review cards will help you keep the method fresh.'}
         </Message>
       )}
 
       {data.unlocked && !session && (
-        <Overview data={data} today={today} onStart={() => start('review')} onPractise={() => start('practice')} />
+        <Overview data={data} today={today} what={what} onStart={() => start('review')} onPractise={() => start('practice')} />
       )}
 
       {session && !session.finished && (
@@ -141,12 +163,12 @@ function Message({ children, icon }) {
 }
 
 // before a session: what's due, or "all caught up" with the next date
-function Overview({ data, today, onStart, onPractise }) {
+function Overview({ data, today, what, onStart, onPractise }) {
   if (data.dueCount > 0) {
     return (
       <div style={{ textAlign: 'center', margin: '2rem 1rem' }}>
         <p style={{ fontSize: '1.1rem' }}>
-          You have <strong>{data.dueCount}</strong> card{data.dueCount === 1 ? '' : 's'} to review for this question.
+          You have <strong>{data.dueCount}</strong> card{data.dueCount === 1 ? '' : 's'} to review for this {what}.
         </p>
         <Button color="info" onClick={onStart}>
           Start review

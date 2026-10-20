@@ -12,7 +12,7 @@ export const RATINGS = ['again', 'hard', 'good', 'easy'];
 
 const START_EASE = 2.5;
 const MIN_EASE = 1.3;
-const round2 = (n) => Math.round(n * 100) / 100;
+const round2 = (n) => Math.round(n * 100) / 100; //enables rounding to 2 decimal places
 
 export function isDay(value) {
   if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
@@ -30,11 +30,12 @@ export function addDays(day, days) {
 export const isDue = (state, today) => state.due <= today;
 
 // the schedule for a card that has just unlocked: due today
-export function newState({ userId, cardKey, title, today, now = new Date().toISOString() }) {
+// source = where the card lives: { kind: 'question', title } (the default) or { kind: 'lesson', slug }
+export function newState({ userId, cardKey, title, source = { kind: 'question', title }, today, now = new Date().toISOString() }) {
   return {
     userId,
     cardKey,
-    source: { kind: 'question', title },
+    source,
     ease: START_EASE,
     intervalDays: 0,
     reps: 0,

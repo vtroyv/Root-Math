@@ -293,6 +293,41 @@ export async function getUserLessonProgressList(collectionName, userId) {
     return db.collection(collectionName).find({ userId }).project({ _id: 0, lessonSlug: 1, completed: 1, updatedAt: 1 }).toArray()
 }
 
+// ─── Lessons in the tasks format (NEW 20 Oct 2026, src/lib/docs/lessons.md) ───
+// Progress lives in `<lesson.collection>-lesson-progress` (e.g. edx-maths-1-lesson-progress),
+// one document per student per lesson, whatever the student's exam board.
+
+// one lesson document, with its answer keys and review cards (server only)
+export async function getLessonBySlug(slug) {
+    await init()
+    return db.collection('lesson-data').findOne({ slug })
+}
+
+// the fields the reviews page needs, for the given lesson slugs
+export async function getLessonSummaries(slugs) {
+    await init()
+    return db.collection('lesson-data').find({ slug: { $in: slugs } }).project({ _id: 0, slug: 1, title: 1, collection: 1 }).toArray()
+}
+
+export async function getLessonProgressDoc(collectionName, userId, lessonSlug) {
+    await init()
+    return db.collection(collectionName).findOne({ userId, lessonSlug }, { projection: { _id: 0 } })
+}
+
+let lessonProgressIndexes = {}
+// replace (or create) one student's progress for one lesson
+export async function saveLessonProgressDoc(collectionName, progress) {
+    await init()
+    const collection = db.collection(collectionName)
+    lessonProgressIndexes[collectionName] ??= collection
+        .createIndex({ userId: 1, lessonSlug: 1 }, { unique: true })
+        .catch((error) => { delete lessonProgressIndexes[collectionName]; throw error })
+    await lessonProgressIndexes[collectionName]
+    // eslint-disable-next-line no-unused-vars
+    const { _id, ...doc } = progress
+    await collection.replaceOne({ userId: doc.userId, lessonSlug: doc.lessonSlug }, doc, { upsert: true })
+}
+
 // ─── Review cards (NEW 14 Oct 2026) ─────────────────────────────────────
 // One document per student per card in `reviewStates` (see src/lib/docs/question-reviews.md).
 // Card *content* lives on the question document's `review` array; only schedules live here.
@@ -313,6 +348,18 @@ function ensureReviewIndexes(collection) {
 export async function getReviewStates(userId, cardKeys) {
     await init()
     return db.collection('reviewStates').find({ userId, cardKey: { $in: cardKeys } }).project({ _id: 0 }).toArray()
+}
+
+// every schedule one student has (only what the reviews page needs), for "what's due across everything?"
+export async function getAllReviewStates(userId) {
+    await init()
+    return db.collection('reviewStates').find({ userId }).project({ _id: 0, cardKey: 1, source: 1, due: 1 }).toArray()
+}
+
+// the fields needed to place questions in a course and skill, for the given titles
+export async function getQuestionSummaries(titles) {
+    if (!questions) await init()
+    return questions.find({ title: { $in: titles } }).project({ _id: 0, title: 1, branch: 1, year: 1, topic: 1 }).toArray()
 }
 
 // insert new schedules, ignoring any that already exist (e.g. two tabs unlocking at once)

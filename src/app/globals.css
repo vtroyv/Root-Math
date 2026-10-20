@@ -480,6 +480,33 @@
   cursor: pointer;
 }
 
+/* Laptops and monitors: a wider bar with the brand far left, the links centred and
+   Register Interest far right. The list's items sit straight in the bar's grid
+   (display: contents); the two equal 1fr columns keep the links exactly centred.
+   repeat(3, auto) = Courses, Teachers, About: change it if a link is added.
+   Phones keep the toggle menu below. */
+@media (min-width: 901px) {
+  .rm-nav__inner {
+    display: grid;
+    grid-template-columns: 1fr repeat(3, auto) 1fr;
+    column-gap: 0.35rem;
+    max-width: 1600px;
+  }
+
+  .rm-nav__links {
+    display: contents;
+  }
+
+  .rm-nav__brand {
+    justify-self: start;
+    margin-right: 0;
+  }
+
+  .rm-nav__links > li:last-child {
+    justify-self: end;
+  }
+}
+
 @media (max-width: 900px) {
   .rm-nav__toggle {
     display: block;

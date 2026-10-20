@@ -14,14 +14,14 @@ How mastery is worked out (questions only, unchanged):
 Per area it also returns, for the page's cards:
   lessons    every lesson in the area's chapters, with status complete / in-progress / todo / coming-soon
   questions  every question in the area, with status complete / in-progress / todo and score
-  reviews    always [] for now: review cards aren't built yet (the UI shows a "coming soon" state)
   insight    rule-based: last practised, strongest / weakest question, and one suggested next step
 */
 
-const normalise = (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+// also used by src/lib/reviews/due.js to place review cards in the same skills
+export const normalise = (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 // same rule the course pages use to build lesson URLs from lesson titles
 export const lessonSlug = (title) => String(title).toLowerCase().split(' ').join('-');
-const formatTitle = (title) => String(title).replace(/-/g, ' ');
+export const formatTitle = (title) => String(title).replace(/-/g, ' ');
 // most recent of a list of dates (ISO strings or Date objects), as an ISO string
 const latest = (dates) =>
   dates
@@ -108,7 +108,6 @@ export function computeMastery(spec, questions, progressList, lessonData = null)
       mastery,
       questions: areaQuestions,
       lessons,
-      reviews: [],
       insight: buildInsight(areaQuestions, lessons),
     };
   });
@@ -127,7 +126,7 @@ export function computeMastery(spec, questions, progressList, lessonData = null)
       questions: areas.reduce((sum, a) => sum + a.total, 0),
       completed: areas.reduce((sum, a) => sum + a.completed, 0),
     },
-    reviews: { available: false, due: [] }, // review cards aren't built yet
+    // reviews aren't part of this: the Skill Radar reads them from /api/reviews/due
   };
 }
 

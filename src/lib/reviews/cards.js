@@ -13,8 +13,11 @@ Auto-marked cards are treated as parts so they reuse the existing sanitiser
 (answer keys never reach the browser) and the existing markers.
 */
 
-// identifies one card across all questions: '<question title>#<card id>'
+// identifies one card across all questions and lessons: '<question title>#<card id>'.
+// Lesson cards use 'lesson:<slug>' as their title, so their keys are 'lesson:<slug>#<card id>'.
 export const cardKey = (title, cardId) => `${title}#${cardId}`;
+export const lessonCardsTitle = (slug) => `lesson:${slug}`;
+export const lessonSlugFromTitle = (title) => (String(title).startsWith('lesson:') ? String(title).slice('lesson:'.length) : null);
 
 const MARKERS = { answer: markAnswer, choice: markChoice, order: markOrder };
 export const isAutoMarked = (card) => Boolean(MARKERS[card?.type]);

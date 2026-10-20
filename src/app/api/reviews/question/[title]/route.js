@@ -63,6 +63,7 @@ export async function GET(request, { params }) {
       cards: clientCards,
       dueCount: clientCards.filter((c) => c.isDue).length,
       nextDue: upcoming[0] ?? null,
+      newlyUnlocked: missing.length > 0, // tells the browser to refresh the due-reviews list
     });
   } catch (error) {
     console.error('Loading review cards failed:', error);

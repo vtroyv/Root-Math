@@ -1,0 +1,718 @@
+{
+  "slug": "negative-and-fractional-indices",
+  "title": "The Laws of Indices II",
+  "next": "introduction-to-surds",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "Let's get Rational",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "In our last lesson, we were introduced to the following index laws:"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "$a^{n} \\cdot a^{m} = a^{m+n}$",
+            "$\\frac{a^n}{a^m} = a^{n-m}$",
+            "$(a^m)^n = a^{m \\cdot n}$",
+            "$(ab)^n = a^n\\,b^n$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "We can extend these laws to rational (i.e fractional) exponents, negative exponents, and even a combination of both of them! Before we dive in, let's first get a solid understanding of what a rational number is."
+        },
+        {
+          "type": "paragraph",
+          "content": "A rational number is any number that can be expressed in the form $\\frac{a}{b}$, where $a$ and $b$ are integers and $b$ can't equal 0 i.e  $(b \\neq 0)$. Note that an integer is any whole number which can be positive, negative or zero, for example:"
+        },
+        {
+          "type": "paragraph",
+          "content": "$..,  -2, -1, 0, 1, 2,...$ are all  examples of integers and the list continues to infinity and beyond!"
+        },
+        {
+          "type": "paragraph",
+          "content": "Now  $\\frac{1}{2}$ or $-\\frac{7}{12}$ are both examples of rational numbers as we have written them in the form $\\frac{a}{b}$, where $a$ and $b$ are both integers"
+        },
+        {
+          "type": "paragraph",
+          "content": "Also keep in mind that  numbers like $7$ or $2.75$ are also examples of rational numbers for instance, $7$ can be written in the form $7 = \\frac{7}{1}$ and  $2.75$ can be written as $2.75 = \\frac{11}{4}$, so be mindful."
+        },
+        {
+          "type": "paragraph",
+          "content": "Although rare, not all numbers can be written in the form $\\frac{a}{b}$, which means not all numbers are rationals. Numbers that can't be written in the form $\\frac{a}{b}$ are called irrational numbers, some examples of irrational numbers include:"
+        },
+        {
+          "type": "paragraph",
+          "content": "$\\pi = 3.1415926535...$ which continues forever without repeating making it irrational. Another example is  $\\sqrt2 = 1.414..$ or $\\sqrt5$ both are non-repeating and non-terminating decimals and therefore irrational. "
+        },
+        {
+          "type": "paragraph",
+          "content": "Lastly, it's important to keep in mind that all integers are also rationals, for instance, we saw that integers are  $.., -3, -2, -1, 0, 1, 2, 3,...$, however, this can be written as  $.., -\\frac{3}{1}, -\\frac{2}{1}, -\\frac{1}{1}, \\frac{0}{1}, \\frac{1}{1}, \\frac{2}{1}, \\frac{3}{1},...$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Now are you ready to hear something cool? - we can use the same laws of indices that we learned in our last lesson with any rational power! "
+        },
+        {
+          "type": "paragraph",
+          "content": "For example we have $x^{\\frac{1}{4}} \\cdot x^{\\frac{1}{4}} \\cdot  x^{\\frac{1}{4}} \\cdot x^{\\frac{1}{4}} = x^{\\frac{1}{4} + \\frac{1}{4} + \\frac{1}{4} + \\frac{1}{4}} = x^1 = x$,  or $\\frac{x^{\\frac{5}{2}}}{x^{- \\frac{1}{2}}} = x^{\\frac{5}{2} - (- \\frac{1}{2})} = x^3$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Now for rationals and negative numbers we have the following laws: "
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "$a^{\\frac{1}{m}} = \\sqrt[m]{a}$",
+            "$a^{\\frac{n}{m}} = \\sqrt[m]{a^n}$",
+            "$a^{-m} = \\frac{1}{a^m}$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "These are just generalisations of our previous laws to rational exponents - We will now explore each of these laws in a bit more detail"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "What's a square root?"
+        },
+        {
+          "type": "paragraph",
+          "content": "Did you know that a square root, $\\sqrt{x}$, is the same as $x^{\\frac{1}{2}}$? In other words, $$x^{\\frac{1}{2}} = \\sqrt{x}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "It doesn't stop there: the cube root is $\\sqrt[3]{x} = x^{\\frac{1}{3}}$, the fourth root is $\\sqrt[4]{x} = x^{\\frac{1}{4}}$, and so on. In general: $$x^{\\frac{1}{m}} = \\sqrt[m]{x}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "There are no tasks in this part. When you're happy with these notes, press Next."
+        }
+      ],
+      "tasks": []
+    },
+    {
+      "id": 2,
+      "title": "Negative Indices",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "A negative power indicates a reciprocal. In general:"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "$a^{-1} = \\frac{1}{a}$",
+            "$a^{-n} = \\frac{1}{a^n}$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "For instance, \\(x^{-3} = \\frac{1}{x^3}\\). This concept follows from the quotient rule which stated $$\\frac{a^n}{a^m} = a^{n-m}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "We can see this from the fact that if we consider $n = 0$ and using the fact that $a^0=1$, we obtain $$\\frac{a^0}{a^m}= \\frac{1}{a^m} = a^{0-m} = a^{-m}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "In other words we get: $$a^{-m} = \\frac{1}{a^m}$$ Now let's practice a few examples before moving on!"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "negative-1",
+          "type": "answer",
+          "title": "Check your understanding",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $x^{-3} \\cdot x^2$.",
+          "template": "x^{-3}\\cdot x^{2}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "x^{-1}",
+              "accept": [
+                "\\frac{1}{x}"
+              ],
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Same base, so add the powers: what is $-3 + 2$?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$x^{-3} \\cdot x^2 = x^{-3+2} = x^{-1} = \\frac{1}{x}$$"
+            }
+          ]
+        },
+        {
+          "id": "negative-2",
+          "type": "answer",
+          "title": "Now try this",
+          "instructions": "Fill in the denominator, then press Submit.",
+          "prompt": "Write $x^{-y} \\cdot y^{-x}$ as a single fraction.",
+          "template": "x^{-y}\\cdot y^{-x}=\\frac{1}{\\placeholder[ans]{}}",
+          "blanks": {
+            "ans": {
+              "answer": "x^yy^x",
+              "accept": [
+                "y^xx^y",
+                "x^{y}\\cdot y^{x}",
+                "y^{x}\\cdot x^{y}"
+              ],
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Remember $x^{-y} = \\frac{1}{x^y}$. Do the same for the next term and multiply the results!"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$x^{-y} \\cdot y^{-x} = \\frac{1}{x^y} \\cdot \\frac{1}{y^x} = \\frac{1}{x^y y^x}$$"
+            }
+          ]
+        },
+        {
+          "id": "negative-3",
+          "type": "answer",
+          "title": "Let's spice things up",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $\\frac{1}{x^{-2}}$.",
+          "template": "\\frac{1}{x^{-2}}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "x^2",
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Did you know that $\\frac{1}{\\frac{1}{a}} = a$?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$x^{-2} = \\frac{1}{x^2}$, so $$\\frac{1}{x^{-2}} = \\frac{1}{\\frac{1}{x^2}} = x^2$$"
+            }
+          ]
+        },
+        {
+          "id": "negative-4",
+          "type": "answer",
+          "title": "Challenge time",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $\\frac{x^{-3} \\cdot y^2}{x^4 \\cdot y^{-5}}$.",
+          "template": "\\frac{x^{-3}\\cdot y^{2}}{x^{4}\\cdot y^{-5}}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "\\frac{y^7}{x^7}",
+              "accept": [
+                "x^{-7}y^7",
+                "y^7x^{-7}",
+                "\\left(\\frac{y}{x}\\right)^7"
+              ],
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{x^{-3} \\cdot y^2}{x^4 \\cdot y^{-5}} = \\frac{x^{-3}}{x^4} \\cdot \\frac{y^2}{y^{-5}}$$ Now subtract the powers for each base. That's the last I'll say: the rest is up to you 😁"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{x^{-3}}{x^4} = x^{-3-4} = x^{-7}, \\qquad \\frac{y^2}{y^{-5}} = y^{2-(-5)} = y^7$$ so the answer is $x^{-7}y^7 = \\frac{y^7}{x^7}$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Fractional Indices",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "A fractional index corresponds to roots. For instance:"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "$a^{\\tfrac{1}{2}} = \\sqrt{a}$ (the square root of a)",
+            "$a^{\\tfrac{1}{3}} = \\sqrt[3]{a}$ (the cube root of a)"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "But what about when our fraction has a numerator, n, that doesn't equal 1 i.e. $(n \\neq 1)$, so the case when we have $a^{\\frac{n}{m}}$, instead of $a^{\\frac{1}{m}}$ ?"
+        },
+        {
+          "type": "paragraph",
+          "content": "Well this is just a simple application of the power of a power rule that we saw in our previous lesson. In other words, we simply have:"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "$a^{\\tfrac{m}{n}} = \\bigl(a^m\\bigr)^{\\tfrac{1}{n}} = \\sqrt[n]{a^m}$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "Literally our previous rules apply: If you multiply or divide expressions with the same base, you add or subtract their exponents, even if those exponents are fractional. And if you raise a power to another power, you multiply the exponents. Take a look at the following examples:"
+        },
+        {
+          "type": "paragraph",
+          "content": "Example 1) $$x^{\\frac{8}{3}} =  \\bigl(x^8 \\bigr)^{\\frac{1}{3}} = \\sqrt[3]{x^8}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Example 2) $$x^{\\frac{6}{7}} \\cdot x^{\\frac{3}{4}} = x^{\\frac{6}{7} + \\frac{3}{4}} = x^{\\frac{45}{28}} = \\sqrt [28]{x^{45}}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Note in example 2) the final answer is $x^{\\frac{45}{28}}$ which is a (improper) top heavy fraction. It's best to avoid writing it in the form $x^{\\frac{45}{28}}=x^{1\\frac{17}{28}}$ to avoid confusion, unless the question specifically asks you to!"
+        },
+        {
+          "type": "paragraph",
+          "content": "Now enough examples, let's answer some questions!"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "fractional-1",
+          "type": "answer",
+          "title": "Warm-up task",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Work out $81^{\\frac{1}{4}}$.",
+          "template": "81^{\\frac{1}{4}}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "3"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "$\\frac{1}{4} = \\frac{1}{2} \\cdot \\frac{1}{2}$, so $81^{\\frac{1}{4}} = \\bigl(81^{\\frac{1}{2}}\\bigr)^{\\frac{1}{2}}$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$81^{\\frac{1}{4}} = \\bigl(81^{\\frac{1}{2}}\\bigr)^{\\frac{1}{2}} = 9^{\\frac{1}{2}} = 3$$"
+            }
+          ]
+        },
+        {
+          "id": "fractional-2",
+          "type": "answer",
+          "title": "Let's make things interesting",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $x^{\\frac{3}{2}} \\cdot x^{\\frac{1}{2}}$.",
+          "template": "x^{\\frac{3}{2}}\\cdot x^{\\frac{1}{2}}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "x^2",
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Simply add the powers."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$x^{\\frac{3}{2}} \\cdot x^{\\frac{1}{2}} = x^{\\frac{3}{2}+\\frac{1}{2}} = x^{2}$$"
+            }
+          ]
+        },
+        {
+          "id": "fractional-3",
+          "type": "answer",
+          "title": "Light work!",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $\\frac{x^{\\frac{4}{3}}}{x^{\\frac{1}{6}}}$.",
+          "template": "\\frac{x^{\\frac{4}{3}}}{x^{\\frac{1}{6}}}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "x^{\\frac{7}{6}}",
+              "accept": [
+                "\\sqrt[6]{x^7}"
+              ],
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Simply subtract the powers. You will need a common denominator."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{x^{\\frac{4}{3}}}{x^{\\frac{1}{6}}} = x^{\\frac{8}{6}-\\frac{1}{6}} = x^{\\frac{7}{6}}$$"
+            }
+          ]
+        },
+        {
+          "id": "fractional-4",
+          "type": "answer",
+          "title": "Not as hard as it looks",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $\\bigl(x^{\\frac{3}{4}} \\cdot y^{\\frac{2}{3}}\\bigr)^2$.",
+          "template": "\\left(x^{\\frac{3}{4}}\\cdot y^{\\frac{2}{3}}\\right)^2=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "x^{\\frac{3}{2}}y^{\\frac{4}{3}}",
+              "accept": [
+                "y^{\\frac{4}{3}}x^{\\frac{3}{2}}",
+                "x^{\\frac{3}{2}}\\cdot y^{\\frac{4}{3}}"
+              ],
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Recall from our previous lesson: $$\\bigl(a^x \\cdot b^y\\bigr)^c = a^{x \\cdot c} \\cdot b^{y \\cdot c}$$ Use this result and you'll be fine!"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\bigl(x^{\\frac{3}{4}} \\cdot y^{\\frac{2}{3}}\\bigr)^2 = x^{\\frac{3}{4} \\cdot 2} \\cdot y^{\\frac{2}{3} \\cdot 2} = x^{\\frac{3}{2}}y^{\\frac{4}{3}}$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Combining Negative & Fractional Indices",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "We can also have negative fractional powers—these represent reciprocals of roots. For example:"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "$a^{-\\tfrac{1}{2}} = \\frac{1}{a^{\\tfrac{1}{2}}} = \\frac{1}{\\sqrt{a}}$",
+            "$a^{-\\tfrac{m}{n}} = \\frac{1}{a^{\\tfrac{m}{n}}} = \\frac{1}{\\sqrt[n]{a^m}}$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "All of our earlier rules still apply, simply whenever you come across a negative power whether it's a fraction or integer simply turn it upside down (i.e. reciprocal) and you're good to go!"
+        },
+        {
+          "type": "paragraph",
+          "content": "Take a look at some of the examples below:"
+        },
+        {
+          "type": "paragraph",
+          "content": "Example 1) $$ x^{-\\frac{5}{2}} = \\frac{1}{ \\bigl( x^{\\frac{5}{2}} \\bigr)} = \\frac{1}{\\bigl(\\sqrt{x^5} \\bigr)}$$ See - it's nothing we haven't seen before all we're doing is applying our rules for negative indices and fractional indices together."
+        },
+        {
+          "type": "paragraph",
+          "content": "Example 2) $$ \\bigl( x^{-\\frac{1}{2}} \\cdot y^{-\\frac{1}{2}} \\bigr)^{2} = \\bigl( x^{-\\frac{1}{2} \\cdot 2} \\cdot y^{-\\frac{1}{2} \\cdot 2} \\bigr) = \\bigl( x^{-1} \\cdot y^{-1} \\bigr) = \\frac{1}{xy}$$ Although this example may look a little complicated at first, all we do is apply the index laws that are all too familiar to us. Now complete the tasks below: it's time to wrap up our lessons on index laws 😁"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "combined-1",
+          "type": "answer",
+          "title": "Check your understanding",
+          "instructions": "Fill in the box, then press Submit.",
+          "prompt": "Write $x^{-\\frac{3}{2}}$ without a negative power.",
+          "template": "x^{-\\frac{3}{2}}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "\\frac{1}{x^{\\frac{3}{2}}}",
+              "accept": [
+                "\\frac{1}{\\sqrt{x^3}}",
+                "\\frac{1}{x\\sqrt{x}}",
+                "\\frac{1}{\\left(\\sqrt{x}\\right)^3}"
+              ],
+              "exactForm": true,
+              "feedback": "Write it as a fraction with a positive power on the bottom."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Write the negative power in its reciprocal form, then use the fact: $$x^{\\frac{a}{b}} = \\sqrt[b]{x^{a}}$$"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$x^{-\\frac{3}{2}} = \\frac{1}{x^{\\frac{3}{2}}} = \\frac{1}{\\sqrt{x^3}}$$"
+            }
+          ]
+        },
+        {
+          "id": "combined-2",
+          "type": "answer",
+          "title": "Let's get serious",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $x^{-\\frac{3}{4}} \\cdot x^{\\frac{1}{2}} \\cdot y^{-\\frac{1}{4}} \\cdot y^{\\frac{3}{4}}$.",
+          "template": "x^{-\\frac{3}{4}}\\cdot x^{\\frac{1}{2}}\\cdot y^{-\\frac{1}{4}}\\cdot y^{\\frac{3}{4}}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "x^{-\\frac{1}{4}}y^{\\frac{1}{2}}",
+              "accept": [
+                "y^{\\frac{1}{2}}x^{-\\frac{1}{4}}",
+                "\\frac{y^{\\frac{1}{2}}}{x^{\\frac{1}{4}}}",
+                "\\frac{\\sqrt{y}}{\\sqrt[4]{x}}"
+              ],
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Combine like bases by adding the powers. You can leave a negative power, or turn it into a fraction."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$x$: $-\\frac{3}{4} + \\frac{1}{2} = -\\frac{1}{4}$. $y$: $-\\frac{1}{4} + \\frac{3}{4} = \\frac{1}{2}$. $$x^{-\\frac{1}{4}}y^{\\frac{1}{2}} = \\frac{\\sqrt{y}}{\\sqrt[4]{x}}$$"
+            }
+          ]
+        },
+        {
+          "id": "combined-3",
+          "type": "answer",
+          "title": "You've got this",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $\\frac{x^{-\\frac{2}{3}} \\cdot y^{\\frac{4}{3}}}{x^{-\\frac{1}{6}} \\cdot y^{-\\frac{1}{2}}}$.",
+          "template": "\\frac{x^{-\\frac{2}{3}}\\cdot y^{\\frac{4}{3}}}{x^{-\\frac{1}{6}}\\cdot y^{-\\frac{1}{2}}}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "x^{-\\frac{1}{2}}y^{\\frac{11}{6}}",
+              "accept": [
+                "y^{\\frac{11}{6}}x^{-\\frac{1}{2}}",
+                "\\frac{y^{\\frac{11}{6}}}{x^{\\frac{1}{2}}}",
+                "\\frac{y^{\\frac{11}{6}}}{\\sqrt{x}}"
+              ],
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "We'll give you a little help with the $x$ terms; the $y$ is up to you: $$\\frac{x^{-\\frac{2}{3}}}{x^{-\\frac{1}{6}}} = \\frac{x^{\\frac{1}{6}}}{x^{\\frac{2}{3}}}$$"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$x$: $-\\frac{2}{3} - \\left(-\\frac{1}{6}\\right) = -\\frac{1}{2}$. $y$: $\\frac{4}{3} - \\left(-\\frac{1}{2}\\right) = \\frac{11}{6}$. $$x^{-\\frac{1}{2}}y^{\\frac{11}{6}} = \\frac{y^{\\frac{11}{6}}}{\\sqrt{x}}$$"
+            }
+          ]
+        },
+        {
+          "id": "combined-4",
+          "type": "answer",
+          "title": "Challenge time",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $\\left(\\frac{x^{-\\frac{2}{3}} \\cdot y^{\\frac{1}{4}}}{z^{-\\frac{3}{2}}}\\right)^{-\\frac{2}{3}}$.",
+          "template": "\\left(\\frac{x^{-\\frac{2}{3}}\\cdot y^{\\frac{1}{4}}}{z^{-\\frac{3}{2}}}\\right)^{-\\frac{2}{3}}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "\\frac{x^{\\frac{4}{9}}}{y^{\\frac{1}{6}}z}",
+              "accept": [
+                "x^{\\frac{4}{9}}y^{-\\frac{1}{6}}z^{-1}",
+                "\\frac{x^{\\frac{4}{9}}}{zy^{\\frac{1}{6}}}"
+              ],
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Did you know $$\\left(\\frac{a^x \\cdot b^y}{c^z}\\right)^k = \\left(a^x \\cdot b^y \\cdot c^{-z}\\right)^k$$ Then apply the rule for a power of a product from the previous lesson!"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Rewrite the bracket as $x^{-\\frac{2}{3}} y^{\\frac{1}{4}} z^{\\frac{3}{2}}$, then multiply every power by $-\\frac{2}{3}$: $$x^{\\frac{4}{9}} y^{-\\frac{1}{6}} z^{-1} = \\frac{x^{\\frac{4}{9}}}{y^{\\frac{1}{6}} z}$$"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "review": [
+    {
+      "id": "negative-power",
+      "type": "answer",
+      "prompt": "Fill in the denominator.",
+      "template": "a^{-n}=\\frac{1}{\\placeholder[d]{}}",
+      "blanks": {
+        "d": {
+          "answer": "a^n",
+          "exactForm": true
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "A negative power means a reciprocal: $a^{-n} = \\frac{1}{a^n}$."
+        }
+      ]
+    },
+    {
+      "id": "cube-root",
+      "type": "answer",
+      "prompt": "Work it out without a calculator.",
+      "template": "8^{\\frac{1}{3}}=\\placeholder[v]{}",
+      "blanks": {
+        "v": {
+          "answer": "2"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "A power of $\\frac{1}{3}$ is a cube root: $8^{\\frac{1}{3}} = \\sqrt[3]{8} = 2$."
+        }
+      ]
+    },
+    {
+      "id": "fraction-power",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "What does $a^{\\frac{m}{n}}$ mean?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "The $n$th root of $a^m$."
+        },
+        {
+          "type": "paragraph",
+          "content": "$a^{\\frac{m}{n}} = \\sqrt[n]{a^m} = \\left(\\sqrt[n]{a}\\right)^m$. The bottom of the fraction is the root, the top is the power."
+        }
+      ]
+    },
+    {
+      "id": "negative-not-negative",
+      "type": "choice",
+      "prompt": "$x^{-2}$ is equal to:",
+      "options": [
+        {
+          "id": "A",
+          "content": "$\\frac{1}{x^2}$",
+          "correct": true,
+          "why": "Correct: a negative power is a reciprocal."
+        },
+        {
+          "id": "B",
+          "content": "$-x^2$",
+          "why": "A negative power doesn't make the answer negative: it means a reciprocal."
+        },
+        {
+          "id": "C",
+          "content": "$-\\frac{1}{x^2}$",
+          "why": "The reciprocal is right, but nothing makes it negative."
+        },
+        {
+          "id": "D",
+          "content": "$x^{\\frac{1}{2}}$",
+          "why": "That would be a square root. A negative power is a reciprocal."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$x^{-2} = \\frac{1}{x^2}$."
+        }
+      ]
+    },
+    {
+      "id": "sixteen-three-quarters",
+      "type": "answer",
+      "prompt": "Work it out without a calculator.",
+      "template": "16^{\\frac{3}{4}}=\\placeholder[v]{}",
+      "blanks": {
+        "v": {
+          "answer": "8"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "Root first, then power: $16^{\\frac{3}{4}} = \\left(\\sqrt[4]{16}\\right)^3 = 2^3 = 8$."
+        }
+      ]
+    },
+    {
+      "id": "irrational",
+      "type": "choice",
+      "prompt": "Which of these numbers is irrational?",
+      "options": [
+        {
+          "id": "A",
+          "content": "$\\sqrt{2}$",
+          "correct": true,
+          "why": "Correct: its decimal never ends or repeats, so it can't be written as $\\frac{a}{b}$."
+        },
+        {
+          "id": "B",
+          "content": "$2.75$",
+          "why": "$2.75 = \\frac{11}{4}$, so it is rational."
+        },
+        {
+          "id": "C",
+          "content": "$-\\frac{7}{12}$",
+          "why": "It is already a fraction of two integers, so it is rational."
+        },
+        {
+          "id": "D",
+          "content": "$7$",
+          "why": "$7 = \\frac{7}{1}$: every integer is rational."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "A number is rational if it can be written as $\\frac{a}{b}$ with integers $a, b$ and $b \\neq 0$."
+        }
+      ]
+    }
+  ]
+}

@@ -20,8 +20,9 @@ function ReviewTabLabel({title}) {
 }
 
 // reviewTitle = the question's title, used by the Review tab (review cards, src/lib/docs/question-reviews.md)
-export default function Feedback({details, reviewTitle}) {
-    const [activeTab, setActiveTab] = useState('instructions');
+// openReview = start on the Review tab (the question was opened from the reviews page with ?tab=review)
+export default function Feedback({details, reviewTitle, openReview = false}) {
+    const [activeTab, setActiveTab] = useState(openReview ? 'Review' : 'instructions');
     const toggle= (tab) => {
         if (activeTab !== tab) setActiveTab(tab)
     }

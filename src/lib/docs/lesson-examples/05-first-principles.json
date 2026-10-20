@@ -1,0 +1,552 @@
+{
+  "slug": "first-principles",
+  "title": "First Principles",
+  "next": "power-rule",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "Introducing First Principles",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Differentiation is the mathematical process we use to find the rate at which one quantity changes with respect to another. As you will come to see, a lot of the time, we will be asking things like: \"What is \\(\\tfrac{dy}{dx}\\)?\" which is simply asking \"how much does the quantity \\(y\\) change with respect to the quantity \\(x\\)?\""
+        },
+        {
+          "type": "paragraph",
+          "content": "You’ll also learn how to apply this to a variety of contexts such as speed (mechanics), curve sketching and turning points, and many more real-life situations. But before we dive into what differentiation is and all its cool use cases, we first need to understand the first principles of differentiation."
+        },
+        {
+          "type": "paragraph",
+          "content": "In general, first principles refers to understanding something from its most basic components and assumptions, which cannot be broken down any further."
+        },
+        {
+          "type": "paragraph",
+          "content": "So in the context of differentiation, 'first principles' refers to deriving the rules of differentiation from the ground up, using only the definition of a limit. Rather than applying the memorised formulae that we will see in later lessons, for the rest of this lesson we will prove from scratch how the derivative of a function emerges directly from understanding its gradient. With that, let us now switch our focus to gradients!"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "meaning",
+          "type": "choice",
+          "title": "What are first principles?",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "In differentiation, what does working from 'first principles' mean?",
+          "options": [
+            {
+              "id": "A",
+              "content": "Deriving the gradient from the definition, using a limit",
+              "correct": true,
+              "why": "Correct: we build the derivative from the ground up."
+            },
+            {
+              "id": "B",
+              "content": "Using the rules of differentiation we have memorised",
+              "why": "That's the opposite: first principles is how those rules are derived."
+            },
+            {
+              "id": "C",
+              "content": "Drawing a tangent and measuring its gradient",
+              "why": "That only gives an estimate at one point, not a gradient function."
+            },
+            {
+              "id": "D",
+              "content": "Plotting points from a table of values",
+              "why": "That draws the curve, but doesn't give its gradient."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Re-read the last paragraph: what does 'first principles' use instead of memorised formulae?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "First principles means deriving the rules of differentiation from scratch, using only the definition of a limit."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Gradients of Curves and the Tangent Line",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Recall that a gradient is a measure of the steepness or slope of a line or surface. It indicates how much a function changes in relation to changes in its input variables. However, as you’ve seen, gradients of curves aren’t constant—for example, consider the following figures:"
+        },
+        {
+          "type": "paragraph",
+          "content": "Figure 1"
+        },
+        {
+          "type": "image",
+          "url": "/images/constant-gradient.png",
+          "alt": "A straight line illustrating a constant gradient"
+        },
+        {
+          "type": "paragraph",
+          "content": "Figure 2"
+        },
+        {
+          "type": "image",
+          "url": "/images/not-constant-gradient-a.png",
+          "alt": "A quadratic curve with a horizontal tangent at its turning point"
+        },
+        {
+          "type": "paragraph",
+          "content": "Figure 3"
+        },
+        {
+          "type": "image",
+          "url": "/images/not-constant-gradient-b.png",
+          "alt": "A quadratic curve with a non-zero gradient tangent away from the turning point"
+        },
+        {
+          "type": "paragraph",
+          "content": "As you can see in Figure 1, a straight line has constant gradient—no matter where on the curve you are, \\(dy/dx\\) is the same. But in Figures 2 and 3, the gradient of the quadratic curve changes: at the turning point the tangent is horizontal (gradient 0), while elsewhere it is non-zero."
+        },
+        {
+          "type": "paragraph",
+          "content": "Since the gradient of the tangent to a curve at a point gives the gradient of the curve at that point, it would be impractical to draw and calculate tangents at every value of \\(x\\). We need a single expression that tells us the gradient at any point."
+        },
+        {
+          "type": "paragraph",
+          "content": "That expression is known as the gradient function. In the next part, we will conclude our lesson by deriving this function from first principles."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "constant-gradient",
+          "type": "choice",
+          "title": "Constant gradient",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Which of these has the same gradient at every point?",
+          "options": [
+            {
+              "id": "A",
+              "content": "$y = 3x - 2$",
+              "correct": true,
+              "why": "Correct: a straight line has a constant gradient (here 3)."
+            },
+            {
+              "id": "B",
+              "content": "$y = x^2$",
+              "why": "Its gradient changes: it is 0 at the turning point and steeper further out."
+            },
+            {
+              "id": "C",
+              "content": "$y = x^3$",
+              "why": "Its gradient changes along the curve."
+            },
+            {
+              "id": "D",
+              "content": "$y = \\frac{1}{x}$",
+              "why": "Its gradient changes along the curve."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Look back at Figure 1."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Only a straight line has the same gradient everywhere. $y = 3x - 2$ has gradient 3 at every point."
+            }
+          ]
+        },
+        {
+          "id": "tangent",
+          "type": "choice",
+          "title": "The gradient of a curve",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "The gradient of a curve at a point is the gradient of the ________ to the curve at that point.",
+          "options": [
+            {
+              "id": "A",
+              "content": "tangent",
+              "correct": true,
+              "why": "Correct."
+            },
+            {
+              "id": "B",
+              "content": "chord",
+              "why": "A chord joins two points, so its gradient is only an approximation."
+            },
+            {
+              "id": "C",
+              "content": "x-axis",
+              "why": "The x-axis always has gradient 0."
+            },
+            {
+              "id": "D",
+              "content": "y-axis",
+              "why": "The y-axis is vertical, so its gradient is undefined."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "It is the straight line that just touches the curve at that point."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "The gradient of the curve at a point is the gradient of the tangent at that point."
+            }
+          ]
+        },
+        {
+          "id": "chord-gradient",
+          "type": "answer",
+          "title": "Gradient of a chord",
+          "instructions": "Fill in the box, then press Submit.",
+          "prompt": "Find the gradient of the chord joining $(1, 1)$ and $(3, 9)$ on the curve $y = x^2$.",
+          "template": "\\text{gradient}=\\placeholder[m]{}",
+          "blanks": {
+            "m": {
+              "answer": "4"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Gradient $= \\frac{\\text{change in } y}{\\text{change in } x}$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{9 - 1}{3 - 1} = \\frac{8}{2} = 4$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Deriving the Gradient Function from First Principles",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "To derive the gradient function, imagine a curve with two points, A and B, joined by a chord."
+        },
+        {
+          "type": "image",
+          "url": "/images/curve-with-chord.png",
+          "alt": "A curve showing a chord AB between two points"
+        },
+        {
+          "type": "paragraph",
+          "content": "Suppose we wish to find the gradient at A. We draw the chord AB, then move B closer and closer to A. As B approaches A, the gradient of AB approaches the gradient of the curve at A."
+        },
+        {
+          "type": "image",
+          "url": "/images/approaching-gradient-chords-zoomed.png",
+          "alt": "Zoom showing chords approaching the tangent as B moves toward A"
+        },
+        {
+          "type": "paragraph",
+          "content": "Algebraically, let A have coordinates \\(\\bigl(x,\\,f(x)\\bigr)\\) and B have coordinates \\(\\bigl(x+h,\\,f(x+h)\\bigr)\\). The gradient of AB is:"
+        },
+        {
+          "type": "paragraph",
+          "content": "$$\\frac{f(x+h)-f(x)}{(x+h)-x} = \\frac{f(x+h)-f(x)}{h}.$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Taking the limit as \\(h\\to0\\) gives the exact gradient at A:"
+        },
+        {
+          "type": "paragraph",
+          "content": "$$f'(x)=\\lim_{h\\to0}\\frac{f(x+h)-f(x)}{h}.$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "This is the definition of the derivative from first principles."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Worked Example"
+        },
+        {
+          "type": "paragraph",
+          "content": "Find \\(f'(x)\\) for \\(f(x)=3x^2\\) using first principles."
+        },
+        {
+          "type": "paragraph",
+          "content": "1. Start with: $$f(x+h)=3(x+h)^2=3(x^2+2xh+h^2)=3x^2+6xh+3h^2.$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "2. Form the difference quotient: $$\\frac{f(x+h)-f(x)}{h}=\\frac{(3x^2+6xh+3h^2)-3x^2}{h}=\\frac{6xh+3h^2}{h}=6x+3h.$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "3. Take the limit as \\(h\\to0\\): $$f'(x)=\\lim_{h\\to0}(6x+3h)=6x.$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Thus the derivative of \\(3x^2\\) is \\(6x\\). Now practise with the tasks below to solidify your understanding."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "order-steps",
+          "type": "order",
+          "title": "Order the steps",
+          "instructions": "Add the steps in the right order, then press Submit. Not every line belongs!",
+          "prompt": "Put the steps for finding $f'(x)$ for $f(x) = x^2$ from first principles in order.",
+          "lines": [
+            "Expand: $f(x+h) = (x+h)^2 = x^2 + 2xh + h^2$",
+            "Form the difference quotient: $\\frac{f(x+h)-f(x)}{h} = \\frac{2xh + h^2}{h}$",
+            "Simplify by dividing by $h$: $2x + h$",
+            "Let $h \\to 0$: $f'(x) = 2x$"
+          ],
+          "distractors": [
+            "Substitute $h = 0$ before dividing by $h$",
+            "Use the power rule to get $2x$"
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Follow the same steps as the worked example."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Expand $f(x+h)$, form $\\frac{f(x+h)-f(x)}{h}$, cancel the $h$, then let $h \\to 0$. Putting $h = 0$ before cancelling would divide by zero, and the power rule isn't first principles."
+            }
+          ]
+        },
+        {
+          "id": "difference-quotient",
+          "type": "answer",
+          "title": "The difference quotient",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "For $f(x) = 5x^2$, simplify the difference quotient.",
+          "template": "\\frac{f(x+h)-f(x)}{h}=\\placeholder[a]{}x+\\placeholder[b]{}h",
+          "blanks": {
+            "a": {
+              "answer": "10"
+            },
+            "b": {
+              "answer": "5"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Start with $f(x+h) = 5(x+h)^2$ and expand it, just like the worked example."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$f(x+h) = 5x^2 + 10xh + 5h^2$, so $$\\frac{f(x+h)-f(x)}{h} = \\frac{10xh + 5h^2}{h} = 10x + 5h$$"
+            }
+          ]
+        },
+        {
+          "id": "take-limit",
+          "type": "answer",
+          "title": "Take the limit",
+          "instructions": "Fill in the box, then press Submit.",
+          "prompt": "Using your answer above, find $f'(x)$ for $f(x) = 5x^2$.",
+          "template": "f'(x)=\\placeholder[d]{}",
+          "blanks": {
+            "d": {
+              "answer": "10x",
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "What happens to $10x + 5h$ as $h \\to 0$?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$f'(x) = \\lim_{h\\to0}(10x + 5h) = 10x$$"
+            }
+          ]
+        },
+        {
+          "id": "full-derivation",
+          "type": "working",
+          "title": "Your turn",
+          "instructions": "Write your working line by line in the box (press Enter for a new line), then press Submit.",
+          "prompt": "Use first principles to find $f'(x)$ for $f(x) = x^2 + 4x$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "text": "Writes $f(x+h) = (x+h)^2 + 4(x+h)$ and expands it to $x^2 + 2xh + h^2 + 4x + 4h$"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "text": "Forms $\\frac{f(x+h)-f(x)}{h}$ and simplifies it to $2x + h + 4$"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "text": "Lets $h \\to 0$ to conclude $f'(x) = 2x + 4$"
+            }
+          ],
+          "llm": {
+            "context": "This is first principles: the answer 2x + 4 from the power rule alone, without the limit argument, earns no marks. The limit must be taken after cancelling h."
+          },
+          "modelAnswer": {
+            "latex": "\\displaylines{f(x+h)=(x+h)^2+4(x+h)=x^2+2xh+h^2+4x+4h\\\\\\frac{f(x+h)-f(x)}{h}=\\frac{2xh+h^2+4h}{h}=2x+h+4\\\\f'(x)=\\lim_{h\\to0}(2x+h+4)=2x+4}"
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Follow the worked example: expand $f(x+h)$, subtract $f(x)$, divide by $h$, then let $h \\to 0$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$f(x+h) = (x+h)^2 + 4(x+h) = x^2 + 2xh + h^2 + 4x + 4h$$"
+            },
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{f(x+h)-f(x)}{h} = \\frac{2xh + h^2 + 4h}{h} = 2x + h + 4$$"
+            },
+            {
+              "type": "paragraph",
+              "content": "$$f'(x) = \\lim_{h\\to0}(2x + h + 4) = 2x + 4$$"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "review": [
+    {
+      "id": "definition",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "Write down the definition of $f'(x)$ from first principles."
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "$$f'(x) = \\lim_{h\\to0}\\frac{f(x+h)-f(x)}{h}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "It is the gradient of the chord from $x$ to $x + h$, as $h$ shrinks to 0."
+        }
+      ]
+    },
+    {
+      "id": "chord-to-tangent",
+      "type": "choice",
+      "prompt": "As point B moves closer to point A along a curve, the gradient of the chord AB approaches:",
+      "options": [
+        {
+          "id": "A",
+          "content": "the gradient of the tangent at A",
+          "correct": true,
+          "why": "Correct: that is the gradient of the curve at A."
+        },
+        {
+          "id": "B",
+          "content": "0",
+          "why": "Only if the tangent at A happens to be horizontal."
+        },
+        {
+          "id": "C",
+          "content": "the gradient of the line OA",
+          "why": "O is not involved: the chord AB tends to the tangent at A."
+        },
+        {
+          "id": "D",
+          "content": "infinity",
+          "why": "The chord tends to the tangent, which usually has a finite gradient."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "This is the idea behind the definition of the derivative."
+        }
+      ]
+    },
+    {
+      "id": "quotient-x-squared",
+      "type": "answer",
+      "prompt": "For $f(x) = x^2$, fill in the box.",
+      "template": "\\frac{f(x+h)-f(x)}{h}=2x+\\placeholder[t]{}",
+      "blanks": {
+        "t": {
+          "answer": "h"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$\\frac{(x+h)^2 - x^2}{h} = \\frac{2xh + h^2}{h} = 2x + h$, which tends to $2x$ as $h \\to 0$."
+        }
+      ]
+    },
+    {
+      "id": "why-not-h-zero",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "Why can't you just put $h = 0$ into $\\frac{f(x+h)-f(x)}{h}$ straight away?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "You would be dividing by zero."
+        },
+        {
+          "type": "paragraph",
+          "content": "Simplify first so the $h$ in the denominator cancels, then let $h \\to 0$."
+        }
+      ]
+    },
+    {
+      "id": "derivative-3x2",
+      "type": "answer",
+      "prompt": "From the worked example: if $f(x) = 3x^2$, what is $f'(x)$?",
+      "template": "f'(x)=\\placeholder[d]{}",
+      "blanks": {
+        "d": {
+          "answer": "6x"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$\\frac{f(x+h)-f(x)}{h} = 6x + 3h \\to 6x$ as $h \\to 0$."
+        }
+      ]
+    }
+  ]
+}

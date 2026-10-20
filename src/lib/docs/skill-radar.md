@@ -51,7 +51,7 @@ Year 13  [Pure] [Statistics] [Mechanics]
 - **Selecting a skill**: **click** a corner (or tap it, or Tab to it and press Enter) to show that skill in the cards. Hovering does nothing: hover previews were removed on 14 October because the cards changing as the mouse crossed the chart flickered. The page opens on the student's **weakest** skill.
 - **How to improve your skills**: a fixed card covering complete the lessons, answer the questions, and keep up with reviews.
 - **Insight: \<skill\>**: mastery bar, when the student last practised it, questions and lessons completed, strongest and weakest question (with links), one **next step** (with a link), and the subtopics the skill covers.
-- **Outstanding reviews**: "Review cards are coming soon" until the review system exists. After that it lists the cards due.
+- **Outstanding reviews**: a summary for the selected course, not a list: "3 questions have review cards due." with a **Go to reviews** button to `/learn/reviews?course=<course>`, or "You're all caught up. Next review tomorrow.", or "No reviews yet." The list itself is on the reviews page (see [reviews-page.md](reviews-page.md)).
 - **\<Skill\>: what's left**: the skill's content to work through, in two columns. Reviews aren't repeated here, because they have their own Outstanding reviews card.
   - **Lessons**: outstanding lessons with *In progress* / *Not started* badges and links, then "✓ n complete · n coming soon". When everything available is done: **"All relevant lessons for this skill complete."**
   - **Questions**: the same, with the score on in-progress questions. When all are done: **"All relevant questions for this skill complete."**
@@ -75,9 +75,10 @@ GET /api/mastery?spec=edx-maths-1                            (api/mastery/route.
    │  computeMastery(spec, questions, progress, lessonData)
    ▼
 { spec, overall, level, rank, totals,
-  reviews: { available: false, due: [] },
   areas: [{ id, name, short, subtopics, mastery, total, attempted, completed,
-            lessons: [...], questions: [...], reviews: [], insight: {...} }] }
+            lessons: [...], questions: [...], insight: {...} }] }
+
+Outstanding reviews card → useGetDueReviewsQuery(today) → GET /api/reviews/due (reviews-page.md)
 ```
 
 Nothing is stored for the Skill Radar itself. It's calculated fresh from progress on every visit.
@@ -166,7 +167,7 @@ In [computeMastery.js](../mastery/computeMastery.js). **Mastery currently counts
 
 ## 6. Lessons, questions, reviews and the insight
 
-For every skill, `computeMastery` returns three lists and an insight.
+For every skill, `computeMastery` returns two lists and an insight. (Reviews come from a separate API; see below.)
 
 **Lessons**, each `{ title, chapter, href, status, updatedAt }`:
 
@@ -179,7 +180,7 @@ For every skill, `computeMastery` returns three lists and an insight.
 
 **Questions**, each `{ title, label, difficulty, href, status, score, updatedAt }`, with status `complete`, `in-progress` (attempted) or `todo`.
 
-**Reviews**: always `[]` for now, and the top-level `reviews.available` is `false`. The page shows "coming soon" in the Outstanding reviews card. When the review system is built, filling `reviews.due` lights that card up with no page changes. `areas[i].reviews` is there for a per-skill view later, but the bottom breakdown deliberately shows only lessons and questions.
+**Reviews** aren't part of `computeMastery` (its placeholder `reviews` fields were removed on 19 October). The Outstanding reviews card reads `GET /api/reviews/due`, which covers every course, and keeps only the selected course's questions. Each entry also has a `skillId` if a per-skill review view is wanted later.
 
 **Insight** (rule-based, no LLM):
 
@@ -249,8 +250,8 @@ On 13 October the real error, which `getQuestions()` used to hide, was `MongoNet
 
 1. **The level formula.** Overall averages only skills that *have* questions, so completing the only question in a course makes a student Level 5.0 Grandmaster. Recommended fix: average every skill, counting empty ones as 0.
 2. **Count lessons (and later reviews) towards mastery.** The "How to improve" card says to complete lessons, but only questions move the radar today. A weighted blend, for example 70% questions and 30% lessons, would make lessons count.
-3. **Show real outstanding reviews.** Question review cards exist now (see [question-reviews.md](question-reviews.md)). The Outstanding reviews card only needs `/api/mastery` to fill `reviews.due` from the `reviewStates` collection (`{ userId, due ≤ today }`) and set `reviews.available: true`.
-4. **Lessons for the other five courses**: add a `lessons` block once their chapter collections exist.
+3. ~~**Show real outstanding reviews.**~~ Done 19 October: the card shows the count and links to the reviews page ([reviews-page.md](reviews-page.md)).
+4. **Lessons for the other five courses**: add a `lessons` block once their chapter collections exist. (Lesson progress itself was rebuilt on 20 October 2026, and `completed` is now set when every task is done: [lessons.md](lessons.md).)
 5. **Content clean-up** spotted while testing:
    - `quadratics-graphs` is a duplicate entry in `lesson-data`;
    - "Proof by contradiction" sits in the Year 12 `methods-of-proof` chapter, although it's Year 13 content in the specification.

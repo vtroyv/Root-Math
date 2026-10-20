@@ -2,14 +2,15 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Row, Col, Alert, Spinner, Button, Badge } from 'reactstrap';
-import { useGetMasteryQuery } from '@/lib/redux/slices/apiSlice';
+import { useGetMasteryQuery, useGetDueReviewsQuery } from '@/lib/redux/slices/apiSlice';
 import { DEFAULT_SPEC_ID, SUBSCRIBED_COURSES } from '@/lib/mastery/specs';
+import { localToday, whenDue } from '@/lib/reviews/localDay';
 import SkillRadar, { MasteryBar } from '@/lib/components/learn/skillRadar/SkillRadar';
 
 /*
 Skill Radar: a game-style stats page.
   left           the radar (src/lib/components/learn/skillRadar/SkillRadar.js)
-  right column   How to improve · Insight for the selected skill · Outstanding reviews
+  right column   How to improve · Insight for the selected skill · Outstanding reviews (a count + link to /learn/reviews)
   bottom         the selected skill's Lessons | Questions (reviews live in their own card)
 Clicking a radar corner selects that skill (click only: hover previews flickered). The page opens on the weakest skill.
 Data: GET /api/mastery (src/lib/mastery/computeMastery.js does the maths).
@@ -81,7 +82,7 @@ export default function SkillRadarPage() {
             <Col xs="12" lg="5">
               <HowToImprove />
               <Insight area={shown} />
-              <OutstandingReviews reviews={data.reviews} />
+              <OutstandingReviews course={course} />
             </Col>
           </Row>
 
@@ -225,21 +226,43 @@ function Insight({ area }) {
   );
 }
 
-function OutstandingReviews({ reviews }) {
+// A summary for the selected course; the list itself is on /learn/reviews (src/lib/docs/reviews-page.md).
+// Counts questions and lessons with cards due, not cards: "8 reviews due: 3 questions · 5 lessons".
+function OutstandingReviews({ course }) {
+  const [today] = useState(localToday);
+  const { data, error } = useGetDueReviewsQuery(today, { refetchOnMountOrArgChange: true });
+
+  const inCourse = (list) => (list ?? []).filter((entry) => entry.courseId === course);
+  const questions = inCourse(data?.questions);
+  const lessons = inCourse(data?.lessons);
+  const questionsDue = questions.filter((q) => q.cardsDue > 0).length;
+  const lessonsDue = lessons.filter((l) => l.cardsDue > 0).length;
+  const due = questionsDue + lessonsDue;
+  const nextDue = [...questions, ...lessons].map((entry) => entry.nextDue).filter(Boolean).sort()[0];
+  const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
+  const breakdown = [questionsDue && plural(questionsDue, 'question'), lessonsDue && plural(lessonsDue, 'lesson')].filter(Boolean).join(' · ');
+
   return (
     <Panel title="Outstanding reviews">
-      {!reviews.available ? (
-        <p style={{ margin: 0, color: '#495057' }}>
-          Review cards are coming soon. Once they&apos;re live, the cards you have due will be listed here.
+      {error && !data ? (
+        <p style={{ margin: 0, color: '#495057' }}>Your reviews couldn&apos;t be loaded.</p>
+      ) : !data ? (
+        <Spinner size="sm" color="info" />
+      ) : due > 0 ? (
+        <>
+          <p style={{ margin: '0 0 0.6rem' }}>
+            <strong style={{ color: INK }}>{plural(due, 'review')} due:</strong> {breakdown}
+          </p>
+          <Link href={`/learn/reviews?course=${course}${questionsDue === 0 ? '&tab=lessons' : ''}`} className="btn btn-info btn-sm">
+            Go to reviews
+          </Link>
+        </>
+      ) : questions.length + lessons.length > 0 ? (
+        <p style={{ margin: 0 }}>
+          You&apos;re all caught up.{nextDue && ` Next review ${whenDue(today, nextDue)}.`}
         </p>
-      ) : reviews.due.length === 0 ? (
-        <p style={{ margin: 0 }}>You&apos;re all caught up.</p>
       ) : (
-        <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
-          {reviews.due.map((r) => (
-            <li key={r.id}>{r.label}</li>
-          ))}
-        </ul>
+        <p style={{ margin: 0, color: '#495057' }}>No reviews yet. Finish a question or a lesson to unlock its review cards.</p>
       )}
     </Panel>
   );

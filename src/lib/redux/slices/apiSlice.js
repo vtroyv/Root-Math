@@ -120,7 +120,18 @@ export const apiSlice = createApi({
                 url: `/reviews/question/${encodeURIComponent(title)}`,
                 params: {today}
             }),
-            providesTags: (result, error, {title}) => [{type: 'Reviews', id: title}]
+            providesTags: (result, error, {title}) => [{type: 'Reviews', id: title}],
+            // cards that have just unlocked are due today, so the due list (nav count, reviews page) is out of date
+            async onQueryStarted(arg, {dispatch, queryFulfilled}) {
+                const {data} = await queryFulfilled.catch(() => ({}))
+                if (data?.newlyUnlocked) dispatch(apiSlice.util.invalidateTags([{type: 'Reviews', id: 'DUE'}]))
+            }
+        }),
+        // every question with unlocked review cards, across all courses -> { questions: [...] }
+        // (src/lib/reviews/due.js); `today` = local 'YYYY-MM-DD'
+        getDueReviews: builder.query({
+            query: (today) => ({ url: '/reviews/due', params: {today} }),
+            providesTags: [{type: 'Reviews', id: 'DUE'}]
         }),
         // mark an answer / choice / order card -> { correct, result, explanation }
         checkReviewCard: builder.mutation({
@@ -129,7 +140,35 @@ export const apiSlice = createApi({
         // record a rating -> { mode, due, intervalDays }
         rateReviewCard: builder.mutation({
             query: (body) => ({ url: '/reviews/rate', method: 'POST', body }),
-            invalidatesTags: (result, error, {title}) => [{type: 'Reviews', id: title}]
+            invalidatesTags: (result, error, {title}) => [{type: 'Reviews', id: title}, {type: 'Reviews', id: 'DUE'}]
+        }),
+
+        // ─── Lessons in the tasks format (src/lib/docs/lessons.md) ───
+        // the lesson (answer keys removed) + this student's progress -> { lesson, progress, nextLesson } or { legacy: true }
+        getLesson: builder.query({
+            query: (slug) => `/lesson/${encodeURIComponent(slug)}`
+        }),
+        // mark one task -> { result }
+        markLessonTask: builder.mutation({
+            query: ({slug, ...body}) => ({ url: `/lesson/${encodeURIComponent(slug)}/mark`, method: 'POST', body })
+        }),
+        // the Solution button: one task's correct answer -> { response, solution }
+        getLessonSolution: builder.mutation({
+            query: ({slug, ...body}) => ({ url: `/lesson/${encodeURIComponent(slug)}/solution`, method: 'POST', body })
+        }),
+        // save progress -> { completed, newlyCompleted }. Completing the lesson unlocks its review cards.
+        saveLessonProgress: builder.mutation({
+            query: ({slug, progress}) => ({ url: `/lesson/${encodeURIComponent(slug)}/progress`, method: 'POST', body: {progress} }),
+            invalidatesTags: (result, error, {slug}) => (result?.newlyCompleted ? [{type: 'Reviews', id: `lesson:${slug}`}] : [])
+        }),
+        // a lesson's review cards, same shape as getQuestionReviews
+        getLessonReviews: builder.query({
+            query: ({slug, today}) => ({ url: `/reviews/lesson/${encodeURIComponent(slug)}`, params: {today} }),
+            providesTags: (result, error, {slug}) => [{type: 'Reviews', id: `lesson:${slug}`}],
+            async onQueryStarted(arg, {dispatch, queryFulfilled}) {
+                const {data} = await queryFulfilled.catch(() => ({}))
+                if (data?.newlyUnlocked) dispatch(apiSlice.util.invalidateTags([{type: 'Reviews', id: 'DUE'}]))
+            }
         }),
 
         // Skill Radar: mastery per specification area for the signed-in student
@@ -197,8 +236,14 @@ export const {
     useMarkQuestionMutation,
     useGetMasteryQuery,
     useGetQuestionReviewsQuery,
+    useGetDueReviewsQuery,
     useCheckReviewCardMutation,
-    useRateReviewCardMutation
+    useRateReviewCardMutation,
+    useGetLessonQuery,
+    useMarkLessonTaskMutation,
+    useGetLessonSolutionMutation,
+    useSaveLessonProgressMutation,
+    useGetLessonReviewsQuery
     } = apiSlice;
 
 

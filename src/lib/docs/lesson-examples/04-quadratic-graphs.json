@@ -1,0 +1,1215 @@
+{
+  "slug": "quadratic-graphs",
+  "title": "Quadratic Graphs",
+  "next": "solving-quadratics-equations",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "A brief introduction to Quadratic Graphs",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Recall that a quadratic expression is an expression which has the form $ax^2+bx+c$. Now we’ve seen lots of different types of quadratic expressions but what does the curve of a quadratic expression look like? How would we go about sketching it?"
+        },
+        {
+          "type": "paragraph",
+          "content": "In general the curve of a quadratic expression will either be a ‘U’ or an upside down ‘U’ shape which is formally called a parabola, for example:"
+        },
+        {
+          "type": "image",
+          "url": "/images/quadratic-graph.png",
+          "alt": "Quadratic Graph",
+          "caption": "The curve of a quadratic expression"
+        },
+        {
+          "type": "paragraph",
+          "content": "The image above shows a sketch of the graph $$y=x^2 -4x +2$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "The point A shows where the curve crosses the y-axis. Given that the general form of our quadratic equation is $ax^2+bx+c$, the point where the curve crosses the y-axis will always be $(0,c)$. So in our case, since the image shows the curve $y=x^2-4x+2$, point A is at $(0,2)$, as shown in the image."
+        },
+        {
+          "type": "paragraph",
+          "content": "Now the points B in the image correspond to the roots of the quadratic equation. In general, if we have a function represented by f(x), then the roots are the values of $x$ for which $f(x) = 0$. So in our example, using $f(x) = x^2 -4x +2$, the roots are the values of x that satisfy $x^2 -4x +2 = 0$, namely: $$x_1 = 2-\\sqrt{2}$$ and $$x_2 = 2+\\sqrt{2}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "The point C in the image represents the turning point of a quadratic expression. Quadratic graphs have one turning point—the point of the bend of the 'U'-shape. This can be a minimum or maximum. Since a parabola is symmetrical, the turning point and line of symmetry lie halfway between the two roots. In our example, the turning point is $(2,-2)$."
+        },
+        {
+          "type": "paragraph",
+          "content": "Now this is just a brief introduction to quadratic graphs, but there's still much to discuss – when do we get an upside down 'U'-shape curve? Or how do we actually go about sketching such graphs?"
+        },
+        {
+          "type": "paragraph",
+          "content": "By the end of this lesson you'll be able to answer all of these questions and much more. Now answer the quick warm up question below and let's get started!"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "warm-up",
+          "type": "choice",
+          "title": "Identify the quadratic curve",
+          "instructions": "Select the graph that shows a quadratic, then press Submit.",
+          "prompt": "Which of these graphs is a quadratic curve?",
+          "options": [
+            {
+              "id": "A",
+              "content": "Graph A",
+              "image": {
+                "url": "/images/quartic-case.png",
+                "alt": "Graph A"
+              },
+              "why": "This image shows a quartic curve, not a quadratic curve."
+            },
+            {
+              "id": "B",
+              "content": "Graph B",
+              "image": {
+                "url": "/images/cubic-case.png",
+                "alt": "Graph B"
+              },
+              "why": "This image shows a cubic function, not a quadratic curve."
+            },
+            {
+              "id": "C",
+              "content": "Graph C",
+              "image": {
+                "url": "/images/quadratic-case.png",
+                "alt": "Graph C"
+              },
+              "correct": true,
+              "why": "Well done. This is the correct choice because it shows a quadratic graph."
+            },
+            {
+              "id": "D",
+              "content": "Graph D",
+              "image": {
+                "url": "/images/reciprocal-case.png",
+                "alt": "Graph D"
+              },
+              "why": "This image shows a reciprocal function, not a quadratic curve."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "A quadratic's curve is a 'U' or an upside-down 'U'. Only one of these is."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Graph C is the only 'U'-shaped curve (a parabola). A is a quartic, B is a cubic and D is a reciprocal graph."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "The Anatomy of a Quadratic Graph-What's the shape?",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Now quadratic curves take two shapes depending on the expression: they can either be a 'U' shape or an upside down 'U' shape. The specific shape depends on the value of the coefficient of the $x^2$ term."
+        },
+        {
+          "type": "paragraph",
+          "content": "Recalling that a quadratic expression has the form $ax^2+bx+c$, when the value of a is positive our quadratic curve will have the shape: $$a>0$$"
+        },
+        {
+          "type": "image",
+          "url": "/images/positive-quadratic.png",
+          "alt": "Quadratic Graph",
+          "caption": "The curve of a positive quadratic expression"
+        },
+        {
+          "type": "paragraph",
+          "content": "And when the value of a is negative, our quadratic curve will have the shape: $$a<0$$"
+        },
+        {
+          "type": "image",
+          "url": "/images/negative-quadratic.png",
+          "alt": "Quadratic Graph",
+          "caption": "The curve of a negative quadratic expression"
+        },
+        {
+          "type": "paragraph",
+          "content": "Not too hard at all! Now complete the tasks below before moving on."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "shape-1",
+          "type": "sketch",
+          "title": "What's the shape? I",
+          "instructions": "Draw the curve in one stroke, then drag the orange handles to adjust it. Press Submit when you're happy.",
+          "prompt": "Sketch any quadratic where the coefficient of $x^2$ is positive.",
+          "degree": 2,
+          "boundingBox": [
+            -6,
+            8,
+            6,
+            -6
+          ],
+          "shape": "up",
+          "correctFeedback": [
+            {
+              "type": "paragraph",
+              "content": "Correct: with $a > 0$ the curve is a 'U' shape."
+            }
+          ],
+          "modelAnswer": {
+            "points": [
+              {
+                "x": -2,
+                "y": 2
+              },
+              {
+                "x": 0,
+                "y": -2
+              },
+              {
+                "x": 2,
+                "y": 2
+              }
+            ]
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Any quadratic will do, as long as $a > 0$. What shape does that give?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "When $a > 0$ the curve is a 'U' shape, for example $y = x^2 - 2$."
+            }
+          ]
+        },
+        {
+          "id": "shape-2",
+          "type": "sketch",
+          "title": "What's the shape? II",
+          "instructions": "Draw the curve in one stroke, then drag the orange handles to adjust it. Press Submit when you're happy.",
+          "prompt": "Sketch any quadratic where the coefficient of $x^2$ is negative.",
+          "degree": 2,
+          "boundingBox": [
+            -6,
+            8,
+            6,
+            -6
+          ],
+          "shape": "down",
+          "correctFeedback": [
+            {
+              "type": "paragraph",
+              "content": "Correct: with $a < 0$ the curve is an upside-down 'U' shape."
+            }
+          ],
+          "modelAnswer": {
+            "points": [
+              {
+                "x": -2,
+                "y": -2
+              },
+              {
+                "x": 0,
+                "y": 2
+              },
+              {
+                "x": 2,
+                "y": -2
+              }
+            ]
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Any quadratic will do, as long as $a < 0$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "When $a < 0$ the curve is an upside-down 'U' shape, for example $y = -x^2 + 2$."
+            }
+          ]
+        },
+        {
+          "id": "shape-3",
+          "type": "sketch",
+          "title": "Sketch $y=ax^2+bx-4$ with $a>0$",
+          "instructions": "Draw the curve in one stroke, then drag the orange handles to adjust it. Press Submit when you're happy.",
+          "prompt": "Sketch a curve $y = ax^2 + bx - 4$ where $a > 0$.",
+          "degree": 2,
+          "boundingBox": [
+            -6,
+            8,
+            6,
+            -8
+          ],
+          "shape": "up",
+          "keyPoints": [
+            {
+              "label": "y-intercept",
+              "x": 0,
+              "y": -4,
+              "threshold": 0.25,
+              "feedback": [
+                {
+                  "type": "paragraph",
+                  "content": "Check where your curve crosses the y-axis: for $y = ax^2 + bx + c$ it is $(0, c)$."
+                }
+              ]
+            }
+          ],
+          "correctFeedback": [
+            {
+              "type": "paragraph",
+              "content": "Correct: a 'U' shape through $(0, -4)$."
+            }
+          ],
+          "modelAnswer": {
+            "points": [
+              {
+                "x": -2,
+                "y": 0
+              },
+              {
+                "x": 0,
+                "y": -4
+              },
+              {
+                "x": 2,
+                "y": 0
+              }
+            ]
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "It must be a 'U' shape, and the $-4$ tells you one point it passes through."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "The curve is a 'U' shape ($a > 0$) and crosses the y-axis at $(0, -4)$, for example $y = x^2 - 4$."
+            }
+          ]
+        },
+        {
+          "id": "roots-1",
+          "type": "choice",
+          "title": "Two positive roots?",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Is it possible for a quadratic $ax^2+bx+c$ with $a>0$ to have two positive roots?",
+          "options": [
+            {
+              "id": "A",
+              "content": "Yes",
+              "correct": true,
+              "why": "Correct. A quadratic expression with a > 0 can have two positive roots under the right conditions."
+            },
+            {
+              "id": "B",
+              "content": "No",
+              "why": "Incorrect. It is possible for a quadratic with a > 0 to have two positive roots."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Try to picture a 'U' shape that crosses the x-axis twice, both times to the right of the y-axis."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Yes. For example $y = (x-1)(x-2) = x^2 - 3x + 2$ has $a = 1 > 0$ and roots $x = 1$ and $x = 2$."
+            }
+          ]
+        },
+        {
+          "id": "roots-2",
+          "type": "choice",
+          "title": "What about now?",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Is it possible for a quadratic $ax^2+bx+c$ with $a>0$ and $c<0$ to have two positive roots?",
+          "options": [
+            {
+              "id": "A",
+              "content": "Yes",
+              "why": "Incorrect. With c < 0, the product of the roots is negative, so both roots cannot be positive."
+            },
+            {
+              "id": "B",
+              "content": "No",
+              "correct": true,
+              "why": "Correct. A quadratic with a > 0 and c < 0 cannot have two positive roots."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "If $a > 0$ and $c < 0$, where does the 'U' cross the y-axis? Think about what that means for where the roots can be."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "No. The curve crosses the y-axis below the origin, at $(0, c)$, and opens upwards, so it must cross the x-axis once on each side of the y-axis: one root is negative."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "The Anatomy of a Quadratic Graph - How many roots?",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "So far, every quadratic we've seen has had two roots: its curve crosses the x-axis twice, like both of these:"
+        },
+        {
+          "type": "paragraph",
+          "content": "A positive quadratic ($a > 0$) with two roots:"
+        },
+        {
+          "type": "image",
+          "url": "/images/positive-quadratic.png",
+          "alt": "Quadratic Graph",
+          "caption": "The curve of a positive quadratic expression"
+        },
+        {
+          "type": "paragraph",
+          "content": "A negative quadratic ($a < 0$) with two roots:"
+        },
+        {
+          "type": "image",
+          "url": "/images/negative-quadratic.png",
+          "alt": "Quadratic Graph",
+          "caption": "The curve of a negative quadratic expression"
+        },
+        {
+          "type": "paragraph",
+          "content": "In general, since the highest power in a quadratic expression $ax^2+bx+c$ is 2, it can have at most 2 roots. This means it is perfectly possible for a quadratic expression to have 1 or 0 roots."
+        },
+        {
+          "type": "paragraph",
+          "content": "For example, if a quadratic equation has 1 root, we sometimes call it a repeated root. An example is the quadratic expression $$(x-2)^2$$, which has a repeated root at $x=2$ as shown in the image below:"
+        },
+        {
+          "type": "image",
+          "url": "/images/repeated-root.png",
+          "alt": "Quadratic Graph",
+          "caption": "The curve of a quadratic expression with a repeated root"
+        },
+        {
+          "type": "paragraph",
+          "content": "As we can see, the curve only touches the x-axis at one point (here $x=2$) in contrast to previous examples where the curve crossed the x-axis at two points. This is because the quadratic expression $$x^2-4x+4$$ factorises as $$(x-2)(x-2)$$, giving the repeated root $x=2$."
+        },
+        {
+          "type": "paragraph",
+          "content": "Now that we have an idea of what the graph of a quadratic expression with a repeated root looks like, let's look at the final case: quadratic expressions with no roots."
+        },
+        {
+          "type": "image",
+          "url": "/images/no-roots.png",
+          "alt": "Quadratic Graph",
+          "caption": "The curve of a quadratic expression with no roots"
+        },
+        {
+          "type": "paragraph",
+          "content": "Now let's test your knowledge. Complete the tasks below before moving on to the next part of this lesson!"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "how-many",
+          "type": "choice",
+          "title": "More than two roots?",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Is it possible for a quadratic $ax^2+bx+c$ to have more than 2 roots?",
+          "options": [
+            {
+              "id": "A",
+              "content": "Yes",
+              "why": "Incorrect. A quadratic expression, having degree 2, cannot have more than 2 roots."
+            },
+            {
+              "id": "B",
+              "content": "No",
+              "correct": true,
+              "why": "Correct. A quadratic expression can have at most 2 roots."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "What is the highest power of $x$ in a quadratic?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "No. The highest power is 2, so a quadratic has at most 2 roots."
+            }
+          ]
+        },
+        {
+          "id": "no-roots",
+          "type": "choice",
+          "title": "Select the graph that has no real roots",
+          "instructions": "Select the graph, then press Submit.",
+          "prompt": "Which of these quadratics has no real roots?",
+          "options": [
+            {
+              "id": "A",
+              "content": "Graph A",
+              "image": {
+                "url": "/images/how-many-roots-a.png",
+                "alt": "Graph A"
+              },
+              "why": "Incorrect. This image does not represent a quadratic with no real roots."
+            },
+            {
+              "id": "B",
+              "content": "Graph B",
+              "image": {
+                "url": "/images/how-many-roots-b.png",
+                "alt": "Graph B"
+              },
+              "why": "Incorrect. This image does not have the characteristics of a quadratic with no real roots."
+            },
+            {
+              "id": "C",
+              "content": "Graph C",
+              "image": {
+                "url": "/images/how-many-roots-c.png",
+                "alt": "Graph C"
+              },
+              "correct": true,
+              "why": "Correct. This image correctly shows a quadratic with no real roots."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "A root is where the curve meets the x-axis. Look for the curve that never touches it."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Graph C never meets the x-axis, so there are no real values of $x$ where $y = 0$."
+            }
+          ]
+        },
+        {
+          "id": "prove-no-roots",
+          "type": "working",
+          "title": "Prove $y=(x-3)^2+1$ has no real roots",
+          "instructions": "Write your proof line by line in the box (press Enter for a new line), then press Submit.",
+          "prompt": "Above is a sketch of $y=(x-3)^2+1$. Prove that it has no real roots.",
+          "image": {
+            "url": "/images/Show-no-real-roots.png",
+            "alt": "The curve of y = (x - 3) squared + 1, which stays above the x-axis",
+            "caption": "The curve of a quadratic expression with no roots"
+          },
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "text": "Sets $(x-3)^2 + 1 = 0$ and rearranges to $(x-3)^2 = -1$"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "text": "States that a square can never be negative ($(x-3)^2 \\ge 0$ for all real $x$), so there are no real solutions"
+            }
+          ],
+          "llm": {
+            "context": "A correct solution needs to recognise that (x-3)^2 >= 0, so it cannot equal -1, meaning there are no real solutions. Accept an equivalent argument, e.g. the minimum value of y is 1 > 0."
+          },
+          "modelAnswer": {
+            "latex": "\\displaylines{(x-3)^2+1=0\\\\(x-3)^2=-1\\\\\\text{But }(x-3)^2\\ge0\\text{ for every real }x\\text{, so there are no real roots.}}"
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "First make $(x-3)^2$ the subject, then explain why no real value of $x$ satisfies the equation."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Set $y = 0$: $$(x-3)^2 + 1 = 0 \\quad\\Rightarrow\\quad (x-3)^2 = -1$$"
+            },
+            {
+              "type": "paragraph",
+              "content": "But a real number squared is never negative: $(x-3)^2 \\ge 0$ for every real $x$. So there is no real $x$ with $(x-3)^2 = -1$, and the curve has no real roots."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Sketching Quadratic Graphs",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Now when it comes to sketching a quadratic equation, as long as we can answer the following questions regarding the anatomy of the quadratic expression, we can sketch its curve. These questions are:"
+        },
+        {
+          "type": "heading",
+          "level": "4",
+          "content": "Essentials to sketching $ax^2+bx+c$"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "1) Is $a>0$ or $a<0$",
+            "2) Where is the y-intercept",
+            "3) What are the x-intercepts?",
+            "4) Where is the turning point?"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "4",
+          "content": "Is $a>0$ or $a<0$?"
+        },
+        {
+          "type": "paragraph",
+          "content": "1) The purpose of the first question is to determine the shape of the quadratic curve. If $a>0$, the curve will be a 'U' shape; if $a<0$, it will be an upside down 'U' shape."
+        },
+        {
+          "type": "heading",
+          "level": "4",
+          "content": "Where is the y-intercept?"
+        },
+        {
+          "type": "paragraph",
+          "content": "2) Next, we need to know the y-intercept of the quadratic expression. This is simply the value of $c$ in $ax^2+bx+c$. For example, if the expression is $x^2-4x+2$, the y-intercept is $(0,2)$."
+        },
+        {
+          "type": "heading",
+          "level": "4",
+          "content": "What are the x-intercepts?"
+        },
+        {
+          "type": "paragraph",
+          "content": "3) The x-intercepts are the values of $x$ for which $ax^2+bx+c=0$. There are various methods to find the roots: factorisation, completing the square, or the quadratic formula."
+        },
+        {
+          "type": "heading",
+          "level": "4",
+          "content": "What is the turning point?"
+        },
+        {
+          "type": "paragraph",
+          "content": "4) The turning point is where the curve changes from increasing to decreasing (or vice versa). It can be found by completing the square or using the formula $x=-\\frac{b}{2a}$."
+        },
+        {
+          "type": "paragraph",
+          "content": "Here's a full example:"
+        },
+        {
+          "type": "paragraph",
+          "content": "Consider the quadratic expression $x^2-5x+4$ Let's work through the four guiding questions to sketch it."
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "Firstly, $a=1$ which is positive, so the curve will be a 'U' shape.",
+            "Next, the constant term $c=4$, so the y-intercept is $(0,4)$.",
+            "To determine the x-intercepts, solve $x^2-5x+4=0$, which factorises as $(x-4)(x-1)=0$ giving $x=4$ and $x=1$.",
+            "Finally, the turning point is found using $x=-\\frac{b}{2a}$. With $a=1$ and $b=-5$, we get $x=\\frac{5}{2}$. Substituting $x=\\frac{5}{2}$ into the equation gives $y=-\\frac{9}{4}$, so the turning point is $(2.5,-2.25)$."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "Now that we have all the information needed to sketch the quadratic expression, let's plot the points:"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "Point A: the y-intercept $(0,4)$",
+            "Points B and C: the x-intercepts $(1,0)$ and $(4,0)$",
+            "Point D: the turning point $(2.5,-2.25)$"
+          ]
+        },
+        {
+          "type": "image",
+          "url": "/images/points-for-sketching.png",
+          "alt": "Quadratic Graph Points",
+          "caption": "The points we need to sketch the quadratic expression"
+        },
+        {
+          "type": "paragraph",
+          "content": "Connect these points to form a 'U' shape (since $a>0$) and sketch the curve."
+        },
+        {
+          "type": "image",
+          "url": "/images/points-connected.png",
+          "alt": "Quadratic Graph Points Connected",
+          "caption": "The points connected to form the curve of the quadratic expression"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "sketch-1",
+          "type": "sketch",
+          "title": "Sketch the curve of $y=-x^2-4x+5$",
+          "instructions": "Draw the curve in one stroke, then drag the orange handles to adjust it. Press Submit when you're happy.",
+          "prompt": "Sketch the curve of $y=-x^2-4x+5$.",
+          "degree": 2,
+          "boundingBox": [
+            -7,
+            11,
+            3,
+            -5
+          ],
+          "shape": "down",
+          "keyPoints": [
+            {
+              "label": "root at $x = -5$",
+              "x": -5,
+              "y": 0,
+              "threshold": 0.25
+            },
+            {
+              "label": "y-intercept $(0, 5)$",
+              "x": 0,
+              "y": 5,
+              "threshold": 0.25
+            },
+            {
+              "label": "root at $x = 1$",
+              "x": 1,
+              "y": 0,
+              "threshold": 0.25
+            }
+          ],
+          "modelAnswer": {
+            "points": [
+              {
+                "x": -5,
+                "y": 0
+              },
+              {
+                "x": 0,
+                "y": 5
+              },
+              {
+                "x": 1,
+                "y": 0
+              }
+            ]
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "First decide if it's a 'U' or an upside-down 'U', then find the y-intercept, the x-intercepts and the turning point, step by step."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$a = -1 < 0$, so it is an upside-down 'U'. y-intercept $(0, 5)$. Roots: $-x^2 - 4x + 5 = 0 \\Rightarrow x^2 + 4x - 5 = 0 \\Rightarrow (x+5)(x-1) = 0$, so $x = -5$ and $x = 1$. Turning point at $x = -2$: $(-2, 9)$."
+            }
+          ]
+        },
+        {
+          "id": "sketch-2",
+          "type": "sketch",
+          "title": "Sketch the curve of $y=4x^2-2x-2$",
+          "instructions": "Draw the curve in one stroke, then drag the orange handles to adjust it. Press Submit when you're happy.",
+          "prompt": "Sketch the curve of $y=4x^2-2x-2$.",
+          "degree": 2,
+          "boundingBox": [
+            -3,
+            6,
+            3,
+            -4
+          ],
+          "shape": "up",
+          "keyPoints": [
+            {
+              "label": "root at $x = -0.5$",
+              "x": -0.5,
+              "y": 0,
+              "threshold": 0.25
+            },
+            {
+              "label": "y-intercept $(0, -2)$",
+              "x": 0,
+              "y": -2,
+              "threshold": 0.25
+            },
+            {
+              "label": "root at $x = 1$",
+              "x": 1,
+              "y": 0,
+              "threshold": 0.25
+            }
+          ],
+          "modelAnswer": {
+            "points": [
+              {
+                "x": -0.5,
+                "y": 0
+              },
+              {
+                "x": 0,
+                "y": -2
+              },
+              {
+                "x": 1,
+                "y": 0
+              }
+            ]
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "This is a 'U' shape. Take out a factor of 2 to find the roots: $4x^2 - 2x - 2 = 2(2x^2 - x - 1)$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$a = 4 > 0$, so it is a 'U'. y-intercept $(0, -2)$. Roots: $2(2x+1)(x-1) = 0$, so $x = -\\frac{1}{2}$ and $x = 1$. Turning point at $x = \\frac{1}{4}$: $\\left(\\frac{1}{4}, -\\frac{9}{4}\\right)$."
+            }
+          ]
+        },
+        {
+          "id": "sketch-3",
+          "type": "sketch",
+          "title": "Sketch the curve of $y=(x-3)^2$",
+          "instructions": "Draw the curve in one stroke, then drag the orange handles to adjust it. Press Submit when you're happy.",
+          "prompt": "Sketch the curve of $y=(x-3)^2$.",
+          "degree": 2,
+          "boundingBox": [
+            -2,
+            12,
+            7,
+            -3
+          ],
+          "shape": "up",
+          "keyPoints": [
+            {
+              "label": "y-intercept $(0, 9)$",
+              "x": 0,
+              "y": 9,
+              "threshold": 0.25
+            },
+            {
+              "label": "repeated root at $x = 3$",
+              "x": 3,
+              "y": 0,
+              "threshold": 0.25
+            }
+          ],
+          "modelAnswer": {
+            "points": [
+              {
+                "x": 0,
+                "y": 9
+              },
+              {
+                "x": 3,
+                "y": 0
+              },
+              {
+                "x": 6,
+                "y": 9
+              }
+            ]
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "This curve has a repeated root!"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "A 'U' shape that touches the x-axis at its turning point $(3, 0)$ (a repeated root), and crosses the y-axis at $(0, 9)$."
+            }
+          ]
+        },
+        {
+          "id": "vertex-a",
+          "type": "answer",
+          "title": "Vertex form (a)",
+          "instructions": "A quadratic has its turning point at $(3,-2)$ and passes through $(1,6)$. Fill in each box, then press Submit.",
+          "prompt": "Write the quadratic in vertex form $y=a(x-h)^2+k$: what are $h$ and $k$?",
+          "template": "h=\\placeholder[h]{},\\quad k=\\placeholder[k]{}",
+          "blanks": {
+            "h": {
+              "answer": "3"
+            },
+            "k": {
+              "answer": "-2"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "In $y = a(x-h)^2 + k$, the turning point is $(h, k)$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "The turning point $(h, k)$ is $(3, -2)$, so $h = 3$ and $k = -2$: $$y = a(x-3)^2 - 2$$"
+            }
+          ]
+        },
+        {
+          "id": "vertex-b",
+          "type": "answer",
+          "title": "Vertex form (b)",
+          "instructions": "Fill in the box, then press Submit.",
+          "prompt": "The curve $y = a(x-3)^2 - 2$ passes through $(1, 6)$. Find $a$.",
+          "template": "a=\\placeholder[a]{}",
+          "blanks": {
+            "a": {
+              "answer": "2"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Substitute $x = 1$ and $y = 6$, then solve for $a$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$6 = a(1-3)^2 - 2 = 4a - 2 \\quad\\Rightarrow\\quad 4a = 8 \\quad\\Rightarrow\\quad a = 2$$"
+            }
+          ]
+        },
+        {
+          "id": "vertex-c",
+          "type": "sketch",
+          "title": "Vertex form (c)",
+          "instructions": "Draw the curve in one stroke, then drag the orange handles to adjust it. Press Submit when you're happy.",
+          "prompt": "Sketch the curve $y = 2(x-3)^2 - 2$ that you found.",
+          "degree": 2,
+          "boundingBox": [
+            -1,
+            18,
+            7,
+            -4
+          ],
+          "shape": "up",
+          "keyPoints": [
+            {
+              "label": "root at $x = 2$",
+              "x": 2,
+              "y": 0,
+              "threshold": 0.25
+            },
+            {
+              "label": "turning point $(3, -2)$",
+              "x": 3,
+              "y": -2,
+              "threshold": 0.25
+            },
+            {
+              "label": "root at $x = 4$",
+              "x": 4,
+              "y": 0,
+              "threshold": 0.25
+            }
+          ],
+          "modelAnswer": {
+            "points": [
+              {
+                "x": 2,
+                "y": 0
+              },
+              {
+                "x": 3,
+                "y": -2
+              },
+              {
+                "x": 4,
+                "y": 0
+              }
+            ]
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Expand to $y = 2x^2 - 12x + 16$ to find the y-intercept, and solve $2(x-3)^2 - 2 = 0$ for the roots."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "A 'U' shape with turning point $(3, -2)$. Roots: $(x-3)^2 = 1$, so $x = 2$ and $x = 4$. y-intercept: $y = 2(9) - 2 = 16$, so $(0, 16)$."
+            }
+          ]
+        },
+        {
+          "id": "match-graph",
+          "type": "choice",
+          "title": "Match the graph",
+          "instructions": "Select the graph, then press Submit.",
+          "prompt": "Which graph shows $$y=\\left(x-\\frac{5}{2}\\right)^2+\\frac{11}{4}$$",
+          "options": [
+            {
+              "id": "A",
+              "content": "Graph A",
+              "image": {
+                "url": "/images/true.png",
+                "alt": "Graph A"
+              },
+              "correct": true,
+              "why": "Correct. This image represents the quadratic expression in question."
+            },
+            {
+              "id": "B",
+              "content": "Graph B",
+              "image": {
+                "url": "/images/optionB.png",
+                "alt": "Graph B"
+              },
+              "why": "Incorrect. This image does not match the quadratic expression."
+            },
+            {
+              "id": "C",
+              "content": "Graph C",
+              "image": {
+                "url": "/images/optionC.png",
+                "alt": "Graph C"
+              },
+              "why": "Incorrect. This image does not correspond to the given quadratic expression."
+            },
+            {
+              "id": "D",
+              "content": "Graph D",
+              "image": {
+                "url": "/images/optionD.png",
+                "alt": "Graph D"
+              },
+              "why": "Incorrect. This image does not match the quadratic expression."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "In this form you can read off the turning point. Then put $x = 0$ to find the y-intercept."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "The turning point is $\\left(\\frac{5}{2}, \\frac{11}{4}\\right) = (2.5, 2.75)$ and the y-intercept is $\\frac{25}{4} + \\frac{11}{4} = 9$. Graph A is the only one with both."
+            }
+          ]
+        },
+        {
+          "id": "find-equation",
+          "type": "answer",
+          "title": "Determine the quadratic expression",
+          "instructions": "Use the graph to find $a$, $b$ and $c$. Fill in each box, then press Submit.",
+          "prompt": "Find the equation of the quadratic in the graph, in the form $y=ax^2+bx+c$.",
+          "image": {
+            "url": "/images/Determine-quadratic.png",
+            "alt": "A quadratic with roots at x = -2 and x = 0.5, y-intercept (0, -2) and turning point (-0.75, -3.125)"
+          },
+          "template": "y=\\placeholder[a]{}x^2+\\placeholder[b]{}x+\\placeholder[c]{}",
+          "blanks": {
+            "a": {
+              "answer": "2"
+            },
+            "b": {
+              "answer": "3"
+            },
+            "c": {
+              "answer": "-2"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Use the roots to write $y = a(x - p)(x - q)$, then use the y-intercept to find $a$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "The roots are $x = -2$ and $x = \\frac{1}{2}$, so $y = a(x+2)\\left(x - \\frac{1}{2}\\right)$. At $x = 0$, $y = -2$: $a \\cdot 2 \\cdot \\left(-\\frac{1}{2}\\right) = -2$, so $a = 2$. $$y = 2(x+2)\\left(x-\\tfrac{1}{2}\\right) = 2x^2 + 3x - 2$$"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "review": [
+    {
+      "id": "shape",
+      "type": "choice",
+      "prompt": "The curve of $y=ax^2+bx+c$ is an upside-down 'U' when:",
+      "options": [
+        {
+          "id": "A",
+          "content": "$a < 0$",
+          "correct": true,
+          "why": "Correct: the sign of $a$ decides the shape."
+        },
+        {
+          "id": "B",
+          "content": "$a > 0$",
+          "why": "That gives a 'U' shape."
+        },
+        {
+          "id": "C",
+          "content": "$c < 0$",
+          "why": "$c$ is the y-intercept: it moves the curve up or down, not the shape."
+        },
+        {
+          "id": "D",
+          "content": "$b < 0$",
+          "why": "$b$ shifts the curve sideways; it does not flip it."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$a > 0$: 'U'. $a < 0$: upside-down 'U'."
+        }
+      ]
+    },
+    {
+      "id": "y-intercept",
+      "type": "answer",
+      "prompt": "Where does $y = 3x^2 - 5x + 7$ cross the y-axis?",
+      "template": "\\left(0,\\ \\placeholder[c]{}\\right)",
+      "blanks": {
+        "c": {
+          "answer": "7"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "Put $x = 0$: the y-intercept of $y = ax^2 + bx + c$ is always $(0, c)$."
+        }
+      ]
+    },
+    {
+      "id": "how-many-roots",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "How many real roots can a quadratic have?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "0, 1 or 2."
+        },
+        {
+          "type": "paragraph",
+          "content": "One root means a repeated root: the curve just touches the x-axis at its turning point."
+        }
+      ]
+    },
+    {
+      "id": "sketch-checklist",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "What four things do you find before sketching $y = ax^2 + bx + c$?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "The shape, the y-intercept, the roots and the turning point."
+        },
+        {
+          "type": "paragraph",
+          "content": "Shape from the sign of $a$; y-intercept $(0, c)$; roots by solving $ax^2 + bx + c = 0$; turning point at $x = -\\frac{b}{2a}$."
+        }
+      ]
+    },
+    {
+      "id": "turning-point",
+      "type": "answer",
+      "prompt": "What is the turning point of $y = (x-4)^2 + 1$?",
+      "template": "\\left(\\placeholder[x]{},\\ \\placeholder[y]{}\\right)",
+      "blanks": {
+        "x": {
+          "answer": "4"
+        },
+        "y": {
+          "answer": "1"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$y = (x - h)^2 + k$ has its turning point at $(h, k)$, so here it is $(4, 1)$."
+        }
+      ]
+    },
+    {
+      "id": "touches-axis",
+      "type": "choice",
+      "prompt": "A quadratic graph touches the x-axis at exactly one point. It has:",
+      "options": [
+        {
+          "id": "A",
+          "content": "a repeated root",
+          "correct": true,
+          "why": "Correct: both roots are the same value."
+        },
+        {
+          "id": "B",
+          "content": "no real roots",
+          "why": "It does meet the x-axis, so there is a real root."
+        },
+        {
+          "id": "C",
+          "content": "two different roots",
+          "why": "Two different roots would mean crossing the x-axis twice."
+        },
+        {
+          "id": "D",
+          "content": "three roots",
+          "why": "A quadratic has at most two roots."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "For example $y = (x-2)^2$ touches the x-axis only at $x = 2$."
+        }
+      ]
+    }
+  ]
+}

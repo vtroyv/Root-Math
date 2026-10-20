@@ -1,0 +1,517 @@
+{
+  "slug": "introduction-to-surds",
+  "title": "Introduction to Surds",
+  "next": "rationalising-the-denominator",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "So what are Surds?",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Let's consider a number n, which isn't a square number. For instance, n could be 8 or 11 as neither 8 nor 11 are square numbers."
+        },
+        {
+          "type": "paragraph",
+          "content": "Then any multiple of $\\sqrt{n}$ is called a surd."
+        },
+        {
+          "type": "paragraph",
+          "content": "For instance, $5\\sqrt{n}$ would be an example of a surd. The numbers below are all examples of surds:"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "$\\sqrt 2$",
+            "$\\sqrt{17}$",
+            "$7\\sqrt2$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "Now in our previous lesson where we introduced rational and irrational numbers, we stated that irrational numbers were numbers that couldn't be written in the form $\\frac{a}{b}$. We then went on to say that both $\\sqrt 2$ and $\\sqrt 5$, were examples of irrational numbers."
+        },
+        {
+          "type": "paragraph",
+          "content": "Well as you've probably guessed by now in general surds are examples of irrational numbers. This is because the decimal expansion of a surd, for instance,  $\\sqrt{5} = 2.23606797749...$, is never ending and never repeats meaning we can't write it in the form $\\frac{a}{b}$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Now we can simplify and manipulate surds using the following two rules: "
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "$\\sqrt{ab} = \\sqrt{a} \\cdot \\sqrt{b}$",
+            "$\\sqrt{\\frac{a}{b}} = \\frac{\\sqrt{a}}{\\sqrt{b}}$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "For example, $$\\sqrt{10} = \\sqrt {5 \\cdot 2} = \\sqrt 5 \\sqrt 2$$ Or $$\\sqrt{\\frac{15}{6}} = \\frac{\\sqrt{15}}{\\sqrt{6}} = \\frac{\\sqrt {3 \\cdot 5}}{\\sqrt {3 \\cdot 2}} = \\frac{\\sqrt 3 \\sqrt 5}{\\sqrt 3 \\sqrt 2} = \\frac{\\sqrt 5}{\\sqrt 2}$$ where in the last equality we simply cancel the $\\sqrt 3$'s"
+        },
+        {
+          "type": "paragraph",
+          "content": "Make sure you remember that $\\sqrt{x} = x^{\\frac{1}{2}}$. There are no tasks in this part: press Next when you're ready to practise manipulating surds."
+        }
+      ],
+      "tasks": []
+    },
+    {
+      "id": 2,
+      "title": "Multiplying Surds",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Now recall our first rule: $$\\sqrt {a \\cdot b} = \\sqrt a \\cdot \\sqrt b$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "We've actually seen this before, we just haven't necessarily seen it in this form yet - long story short it all comes down to our index laws. Recall the following index law:"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "The power of products"
+        },
+        {
+          "type": "paragraph",
+          "content": "$$ \\bigl( a \\cdot b \\bigr)^n = a^n \\cdot b^n $$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Now keeping this in mind and remembering $\\sqrt x = x^{\\frac{1}{2}}$, we have: $$\\sqrt {a \\cdot b} = \\bigl( a \\cdot b\\bigr)^{\\frac{1}{2}} = a^{\\frac{1}{2}} \\cdot b^{\\frac{1}{2}} = \\sqrt a \\cdot \\sqrt b$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "See it's exactly what we've seen before, so don't get confused - you can always think back to indices when in doubt!"
+        },
+        {
+          "type": "paragraph",
+          "content": "Now enough talk, let's get some practice in!"
+        },
+        {
+          "type": "heading",
+          "level": "4",
+          "content": "Avoid using a calculator in the following tasks - don't cheat yourself 😁"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "multiply-1",
+          "type": "answer",
+          "title": "Let's jump right into it!",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Simplify $\\sqrt{108} - \\sqrt{27}$.",
+          "template": "\\sqrt{108}-\\sqrt{27}=\\placeholder[k]{}\\sqrt{3}",
+          "blanks": {
+            "k": {
+              "answer": "3"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Did you know $108 = 36 \\times 3$ and $27 = 9 \\times 3$?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$\\sqrt{108} = \\sqrt{36}\\sqrt{3} = 6\\sqrt{3}$ and $\\sqrt{27} = \\sqrt{9}\\sqrt{3} = 3\\sqrt{3}$, so $$6\\sqrt{3} - 3\\sqrt{3} = 3\\sqrt{3}$$"
+            }
+          ]
+        },
+        {
+          "id": "multiply-2",
+          "type": "answer",
+          "title": "How about this one",
+          "instructions": "Expand the brackets and fill in each box, then press Submit.",
+          "prompt": "Expand $\\left(x\\sqrt{3}+4\\sqrt{5}\\right)\\left(x\\sqrt{3}+2\\sqrt{5}\\right)$.",
+          "template": "\\left(x\\sqrt{3}+4\\sqrt{5}\\right)\\left(x\\sqrt{3}+2\\sqrt{5}\\right)=\\placeholder[a]{}x^2+\\placeholder[b]{}x\\sqrt{15}+\\placeholder[c]{}",
+          "blanks": {
+            "a": {
+              "answer": "3"
+            },
+            "b": {
+              "answer": "6"
+            },
+            "c": {
+              "answer": "40"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Remember: $$\\sqrt{a} \\cdot \\sqrt{a} = a^{\\frac{1}{2}} \\cdot a^{\\frac{1}{2}} = a$$ and $\\sqrt{a}\\sqrt{b} = \\sqrt{ab}$. Multiply out all four pairs and take your time."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$x\\sqrt{3} \\cdot x\\sqrt{3} = 3x^2$, $\\quad x\\sqrt{3} \\cdot 2\\sqrt{5} = 2x\\sqrt{15}$, $\\quad 4\\sqrt{5} \\cdot x\\sqrt{3} = 4x\\sqrt{15}$, $\\quad 4\\sqrt{5} \\cdot 2\\sqrt{5} = 8 \\cdot 5 = 40$."
+            },
+            {
+              "type": "paragraph",
+              "content": "Adding them up: $$3x^2 + 6x\\sqrt{15} + 40$$"
+            }
+          ]
+        },
+        {
+          "id": "multiply-3",
+          "type": "answer",
+          "title": "Time to get serious",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Simplify $x\\sqrt{18} \\cdot y\\sqrt{6} \\cdot \\sqrt{3}$.",
+          "template": "x\\sqrt{18}\\cdot y\\sqrt{6}\\cdot\\sqrt{3}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "18xy",
+              "accept": [
+                "18yx"
+              ],
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Using $\\sqrt{18} = \\sqrt{3} \\cdot \\sqrt{6}$, rewrite the question as $$x \\cdot \\sqrt{3} \\cdot \\sqrt{6} \\cdot y \\cdot \\sqrt{6} \\cdot \\sqrt{3}$$ Then use the fact that $\\sqrt{a}\\sqrt{a} = a$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$x\\sqrt{18} \\cdot y\\sqrt{6} \\cdot \\sqrt{3} = xy\\sqrt{18 \\cdot 6 \\cdot 3} = xy\\sqrt{324} = 18xy$$"
+            }
+          ]
+        },
+        {
+          "id": "multiply-4",
+          "type": "answer",
+          "title": "You thought it was over?",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Simplify $\\sqrt{8} \\times \\sqrt{18}$.",
+          "template": "\\sqrt{8}\\times\\sqrt{18}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "12"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Use the fact that $\\sqrt{18} = \\sqrt{3} \\cdot \\sqrt{6} = \\sqrt{3} \\cdot \\bigl(\\sqrt{3} \\cdot \\sqrt{2}\\bigr)$, or simply multiply under one square root."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\sqrt{8} \\times \\sqrt{18} = \\sqrt{144} = 12$$"
+            }
+          ]
+        },
+        {
+          "id": "multiply-5",
+          "type": "answer",
+          "title": "Let's wrap this up",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Expand and simplify $\\left(2\\sqrt{3}+3\\sqrt{6}\\right)\\left(4\\sqrt{6}-\\sqrt{3}\\right)^2$.",
+          "template": "\\left(2\\sqrt{3}+3\\sqrt{6}\\right)\\left(4\\sqrt{6}-\\sqrt{3}\\right)^2=\\placeholder[a]{}\\sqrt{3}+\\placeholder[b]{}\\sqrt{6}",
+          "blanks": {
+            "a": {
+              "answer": "54"
+            },
+            "b": {
+              "answer": "249"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "This is a challenge question. Expand the square first, and simplify $\\sqrt{18} = 3\\sqrt{2}$ as you go. Then multiply by the first bracket, and simplify $\\sqrt{6} \\cdot \\sqrt{2} = \\sqrt{12} = 2\\sqrt{3}$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\left(4\\sqrt{6}-\\sqrt{3}\\right)^2 = 96 - 8\\sqrt{18} + 3 = 99 - 24\\sqrt{2}$$"
+            },
+            {
+              "type": "paragraph",
+              "content": "$$\\left(2\\sqrt{3}+3\\sqrt{6}\\right)\\left(99 - 24\\sqrt{2}\\right) = 198\\sqrt{3} - 48\\sqrt{6} + 297\\sqrt{6} - 72\\sqrt{12}$$"
+            },
+            {
+              "type": "paragraph",
+              "content": "$72\\sqrt{12} = 144\\sqrt{3}$, so the total is $$54\\sqrt{3} + 249\\sqrt{6}$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Dividing Surds",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Now recall our second surd rule which stated: $$\\sqrt{\\frac{a}{b}} = \\frac{\\sqrt{a}}{\\sqrt{b}} $$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Just like our surd multiplication rule, we've seen this rule before, just not necessarily in this form yet. "
+        },
+        {
+          "type": "paragraph",
+          "content": "Recall the following: $$ \\sqrt{\\frac{a}{b}} = \\bigl( \\frac{a}{b} \\bigr)^{\\frac{1}{2}} = \\bigl( a \\cdot b^{-1}\\bigr)^{\\frac{1}{2}}$$ Now we simply apply our power rule for indices so we get: $$ \\bigl( a \\cdot b^{-1}\\bigr)^{\\frac{1}{2}} = a^{\\frac{1}{2}} \\cdot b^{-\\frac{1}{2}} = \\frac{a^{\\frac{1}{2}}}{b^{\\frac{1}{2}}}$$ Now we simply use the fact that $a^{\\frac{1}{2}} = \\sqrt{a}$ So we get $$ \\frac{a^{\\frac{1}{2}}}{b^{\\frac{1}{2}}} = \\frac{\\sqrt{a}}{\\sqrt{b}}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "So now that we understand where our rule comes from, let's get some practice in!"
+        },
+        {
+          "type": "heading",
+          "level": "4",
+          "content": "Once more, don't use a calculator in these tasks!"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "divide-1",
+          "type": "answer",
+          "title": "Let's go!",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Simplify $\\sqrt{\\frac{18}{2}}$.",
+          "template": "\\sqrt{\\frac{18}{2}}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "3"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Maybe you don't even need to use the rule for this one."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\sqrt{\\frac{18}{2}} = \\sqrt{9} = 3$$"
+            }
+          ]
+        },
+        {
+          "id": "divide-2",
+          "type": "answer",
+          "title": "Time for some fun",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Simplify $\\sqrt{\\frac{75}{12}}$.",
+          "template": "\\sqrt{\\frac{75}{12}}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "\\frac{5}{2}",
+              "accept": [
+                "2.5"
+              ]
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Rewrite the question using our two rules: $$\\sqrt{\\frac{75}{12}} = \\frac{\\sqrt{75}}{\\sqrt{12}} = \\frac{\\sqrt{3 \\times 25}}{\\sqrt{3 \\times 4}}$$ From here, separate each square root, then cancel and simplify."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{\\sqrt{3}\\sqrt{25}}{\\sqrt{3}\\sqrt{4}} = \\frac{5}{2}$$"
+            }
+          ]
+        },
+        {
+          "id": "divide-3",
+          "type": "answer",
+          "title": "You've got this",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Simplify $\\sqrt{\\frac{192}{32}}$ into the form shown.",
+          "template": "\\sqrt{\\frac{192}{32}}=2\\cdot\\frac{\\sqrt{\\placeholder[a]{}}}{\\sqrt{2}}",
+          "blanks": {
+            "a": {
+              "answer": "3"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Use the two facts: $192 = 12 \\times 16$ and $32 = 2 \\times 16$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\sqrt{\\frac{192}{32}} = \\frac{\\sqrt{12}\\sqrt{16}}{\\sqrt{2}\\sqrt{16}} = \\frac{\\sqrt{12}}{\\sqrt{2}} = \\frac{2\\sqrt{3}}{\\sqrt{2}} = 2 \\cdot \\frac{\\sqrt{3}}{\\sqrt{2}}$$"
+            }
+          ]
+        },
+        {
+          "id": "divide-4",
+          "type": "answer",
+          "title": "Last one!",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Simplify $\\sqrt{\\frac{72 \\cdot 8}{12}}$ into the form shown.",
+          "template": "\\sqrt{\\frac{72\\cdot8}{12}}=\\frac{\\placeholder[a]{}}{\\sqrt{3}}",
+          "blanks": {
+            "a": {
+              "answer": "12"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Rewrite the question as $$\\sqrt{\\frac{72 \\cdot 8}{12}} = \\frac{\\sqrt{(9 \\cdot 8) \\cdot 8}}{\\sqrt{3 \\cdot 4}}$$ It's up to you to take it from here."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{\\sqrt{9 \\cdot 64}}{\\sqrt{4}\\sqrt{3}} = \\frac{3 \\cdot 8}{2\\sqrt{3}} = \\frac{12}{\\sqrt{3}}$$"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "review": [
+    {
+      "id": "multiply-rule",
+      "type": "answer",
+      "prompt": "Fill in the box.",
+      "template": "\\sqrt{a}\\cdot\\sqrt{b}=\\sqrt{\\placeholder[p]{}}",
+      "blanks": {
+        "p": {
+          "answer": "ab"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$\\sqrt{a}\\sqrt{b} = \\sqrt{ab}$: it is the index law $(ab)^{\\frac{1}{2}} = a^{\\frac{1}{2}}b^{\\frac{1}{2}}$."
+        }
+      ]
+    },
+    {
+      "id": "root-12",
+      "type": "answer",
+      "prompt": "Simplify without a calculator.",
+      "template": "\\sqrt{12}=\\placeholder[k]{}\\sqrt{3}",
+      "blanks": {
+        "k": {
+          "answer": "2"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$12 = 4 \\times 3$, so $\\sqrt{12} = \\sqrt{4}\\sqrt{3} = 2\\sqrt{3}$."
+        }
+      ]
+    },
+    {
+      "id": "root-50",
+      "type": "answer",
+      "prompt": "Simplify without a calculator.",
+      "template": "\\sqrt{50}=\\placeholder[k]{}\\sqrt{2}",
+      "blanks": {
+        "k": {
+          "answer": "5"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$50 = 25 \\times 2$, so $\\sqrt{50} = 5\\sqrt{2}$."
+        }
+      ]
+    },
+    {
+      "id": "what-is-a-surd",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "What makes a number like $\\sqrt{7}$ a surd?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "It is the square root of a number that is not a square number."
+        },
+        {
+          "type": "paragraph",
+          "content": "So it is irrational: its decimal never ends or repeats, and it can't be written as $\\frac{a}{b}$."
+        }
+      ]
+    },
+    {
+      "id": "which-surd",
+      "type": "choice",
+      "prompt": "Which of these is a surd?",
+      "options": [
+        {
+          "id": "A",
+          "content": "$\\sqrt{7}$",
+          "correct": true,
+          "why": "Correct: 7 is not a square number."
+        },
+        {
+          "id": "B",
+          "content": "$\\sqrt{9}$",
+          "why": "$\\sqrt{9} = 3$, a whole number."
+        },
+        {
+          "id": "C",
+          "content": "$\\sqrt{\\frac{16}{4}}$",
+          "why": "$\\sqrt{\\frac{16}{4}} = \\sqrt{4} = 2$."
+        },
+        {
+          "id": "D",
+          "content": "$\\sqrt{0.25}$",
+          "why": "$\\sqrt{0.25} = 0.5$, which is rational."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "A surd is a root that simplifies to an irrational number."
+        }
+      ]
+    },
+    {
+      "id": "divide-rule",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "Complete the rule: $\\sqrt{\\frac{a}{b}} = \\;?$"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "$\\sqrt{\\frac{a}{b}} = \\frac{\\sqrt{a}}{\\sqrt{b}}$"
+        },
+        {
+          "type": "paragraph",
+          "content": "It is the index law $\\left(\\frac{a}{b}\\right)^{\\frac{1}{2}} = \\frac{a^{\\frac{1}{2}}}{b^{\\frac{1}{2}}}$."
+        }
+      ]
+    }
+  ]
+}

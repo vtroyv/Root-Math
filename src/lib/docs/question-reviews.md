@@ -256,8 +256,9 @@ Question page → Review tab → ReviewPane
 
 ## 10. Not in this version
 
+Built since (19 October): the **reviews page** (`/learn/reviews`), the **REVIEWS · n** nav count and the Skill Radar's **Outstanding reviews** count, all from `GET /api/reviews/due`. See [reviews-page.md](reviews-page.md). A link with `?tab=review` opens a question on its Review tab.
+
 These come later and build on the same `reviewStates` collection:
-- **Skill Radar "Outstanding reviews"**: fill `reviews.due` in `/api/mastery` from `reviewStates`.
 - **A "Review" column in the questions table** (Locked / Due · 2 / Next in 3 days).
-- **Lesson and group cards**, stored on lessons or in a `reviewCards` collection, using the same card format and scheduler.
-- **A "Review everything due" page** mixing all topics: the most effective way to review.
+- ~~**Lesson cards**~~: built 20 October 2026. They're stored on the lesson document's `review` array, keyed `lesson:<slug>#<card id>`, and unlock when the lesson is complete. See [lessons.md](lessons.md#7-review-cards).
+- **"Review all"** on the reviews page: one session mixing every due card across topics, the most effective way to review.

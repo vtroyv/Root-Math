@@ -1,0 +1,750 @@
+{
+  "slug": "welcome-to-the-laws-of-indices",
+  "title": "The Laws of Indices I",
+  "next": "negative-and-fractional-indices",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "Introduction to the Laws of Indices",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Indices (also known as exponents or powers) appear in many areas of maths. They're a way to represent the repeated multiplication of a number by itself."
+        },
+        {
+          "type": "paragraph",
+          "content": "For instance if we had the number 3 multiplied by itself 5 times, we could represent this as: $$ 3 \\cdot 3 \\cdot 3 \\cdot 3 \\cdot 3 = 3^{5}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "There are 4 index laws that you must know and understand, these are:"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "$a^{n} \\cdot a^{m} = a^{m+n}$",
+            "$\\frac{a^n}{a^m} = a^{n-m}$",
+            "$(a^m)^n = a^{m \\cdot n}$",
+            "$(ab)^n = a^n \\, b^n$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "We will now take a closer look at each of these rules one by one."
+        }
+      ],
+      "tasks": []
+    },
+    {
+      "id": 2,
+      "title": "Law 1: Product of Powers",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Let's consider a term with the form $x^{n}$. When we see terms like this we refer to $x$ as the base and $n$ as the index (or power). Now let's take a look at our first index law!"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "The product of powers:"
+        },
+        {
+          "type": "paragraph",
+          "content": "If you multiply two expressions with the same base, you add their exponents: $$ a^m \\cdot a^n = a^{m+n}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "So for example if we had $3^3 \\cdot 3^4$, this is the same as $3^7$, as given our bases are the same (i.e. 3 in this case), we can simply add the indices (i.e. $3+4 = 7$ in this case)."
+        },
+        {
+          "type": "paragraph",
+          "content": "Pretty straight forward right? - Now let's get some practice!"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "product-1",
+          "type": "answer",
+          "title": "Check your understanding",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $a^m \\cdot a^n$.",
+          "template": "a^{m}\\cdot a^{n}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "a^{m+n}",
+              "exactForm": true,
+              "feedback": "The bases are the same, so add the powers."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Add the powers when the bases match!"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Both terms have base $a$, so add the powers: $$a^m \\cdot a^n = a^{m+n}$$"
+            }
+          ]
+        },
+        {
+          "id": "product-2",
+          "type": "answer",
+          "title": "Time to add",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $x^3 \\cdot x^4 \\cdot x^5$.",
+          "template": "x^{3}\\cdot x^{4}\\cdot x^{5}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "x^{12}",
+              "exactForm": true,
+              "feedback": "Add all three powers."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Just like before, add the powers: all the bases are the same!"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "All three terms have base $x$, so add the powers: $$x^{3+4+5} = x^{12}$$"
+            }
+          ]
+        },
+        {
+          "id": "product-3",
+          "type": "answer",
+          "title": "Let's spice things up",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "Simplify, writing each base with a single power.",
+          "template": "a^3\\cdot a^{4\\cdot5}\\cdot b^5\\cdot b^6\\cdot x^4=a^{\\placeholder[a]{}}\\cdot b^{\\placeholder[b]{}}\\cdot x^{\\placeholder[x]{}}",
+          "blanks": {
+            "a": {
+              "answer": "23",
+              "feedback": "Work out $4 \\cdot 5$ first, then add the powers of $a$."
+            },
+            "b": {
+              "answer": "11"
+            },
+            "x": {
+              "answer": "4"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Add together the powers of the terms with the same base. Work out $4 \\cdot 5$ first."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Powers of $a$: $3 + 4 \\cdot 5 = 3 + 20 = 23$. Powers of $b$: $5 + 6 = 11$. The $x$ term is on its own, so it stays $x^4$."
+            },
+            {
+              "type": "paragraph",
+              "content": "$$a^{23} \\cdot b^{11} \\cdot x^{4}$$"
+            }
+          ]
+        },
+        {
+          "id": "product-4",
+          "type": "answer",
+          "title": "Time for a challenge",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "Simplify, writing each base with a single power.",
+          "template": "a^{4}\\cdot x^{5}\\cdot a^{x}\\cdot x^{a}=a^{\\placeholder[a]{}}\\cdot x^{\\placeholder[x]{}}",
+          "blanks": {
+            "a": {
+              "answer": "4+x"
+            },
+            "x": {
+              "answer": "5+a"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Group the $a$ terms together and the $x$ terms together. The powers don't have to be numbers: you still add them."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Powers of $a$: $a^4 \\cdot a^x = a^{4+x}$. Powers of $x$: $x^5 \\cdot x^a = x^{5+a}$. $$a^{4+x} \\cdot x^{5+a}$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Law 2: Quotient of Powers",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Now we've seen when we multiply two terms together with the same base that we add the powers, so what about when we divide two terms with the same base? "
+        },
+        {
+          "type": "paragraph",
+          "content": "Well maybe you guessed it already - we simply subtract the indices."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "The quotient of powers:"
+        },
+        {
+          "type": "paragraph",
+          "content": "If you divide two terms with the same base, you subtract their exponents $$ \\frac{a^n}{a^m} = a^{n-m}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Pretty simple, right? So if we have $\\frac{7^3}{7^2}$, this would simply be $$7^{3-2} = 7^1 = 7$$ All we do is apply our rule, the bases are the same and we're dividing, so we just subtract the power of the denominator from the power of the numerator, and we're good to go! "
+        },
+        {
+          "type": "paragraph",
+          "content": "Now let's test our understanding by working through the following problems."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "quotient-1",
+          "type": "answer",
+          "title": "Have you been paying attention?",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $\\frac{x^4}{x^2}$.",
+          "template": "\\frac{x^4}{x^2}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "x^2",
+              "exactForm": true,
+              "feedback": "Same base, dividing: subtract the powers."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "What is $4 - 2$?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Subtract the power of the denominator from the power of the numerator: $$\\frac{x^4}{x^2} = x^{4-2} = x^2$$"
+            }
+          ]
+        },
+        {
+          "id": "quotient-2",
+          "type": "answer",
+          "title": "Put your knowledge to the test!",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $\\frac{e^{7x}}{3e^3}$.",
+          "template": "\\frac{e^{7x}}{3e^{3}}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "\\frac{e^{7x-3}}{3}",
+              "accept": [
+                "\\frac{1}{3}e^{7x-3}"
+              ],
+              "exactForm": true,
+              "feedback": "The 3 stays in the denominator; only the powers of $e$ are subtracted."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Think of it as $\\frac{1}{3} \\cdot \\frac{e^{7x}}{e^3}$, then subtract the powers."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{e^{7x}}{3e^3} = \\frac{1}{3} \\cdot \\frac{e^{7x}}{e^3} = \\frac{1}{3}e^{7x-3} = \\frac{e^{7x-3}}{3}$$"
+            }
+          ]
+        },
+        {
+          "id": "quotient-3",
+          "type": "answer",
+          "title": "It's not as hard as it looks",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $\\frac{x^4}{x^3}$.",
+          "template": "\\frac{x^4}{x^3}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "x",
+              "accept": [
+                "x^1"
+              ],
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Did you know that, in general, $a^1 = a$?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{x^4}{x^3} = x^{4-3} = x^1 = x$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Law 3: Power of a Power",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "So we've seen two cases now! First we saw, when we multiply two terms with the same base, we add the powers, next we saw when we divide two terms with the same base, we subtract the powers."
+        },
+        {
+          "type": "paragraph",
+          "content": "Now our third index rule is a little different, what do we do when we have a power to a power? - we simply multiply the powers."
+        },
+        {
+          "type": "paragraph",
+          "content": "For example if we had $(12^3)^4$, this is simply $$(12^3)^4 = 12^{3 \\cdot 4}= 12^{12}$$ All we've done is multiply the powers. Nothing complicated. So in general we have the following:"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "The power of powers"
+        },
+        {
+          "type": "paragraph",
+          "content": "If you take the power of a term which has a power you simply multiply their exponents: $$(a^{n})^m = a^{n \\cdot m}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Pretty simple, right? Now let's answer some questions to make sure you understand."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "power-1",
+          "type": "answer",
+          "title": "Here we go",
+          "instructions": "The expression simplifies to 7 to the power of something. Fill in the power, then press Submit.",
+          "prompt": "Simplify $(7^2)^3$, leaving your answer as a power of 7.",
+          "template": "(7^2)^3=7^{\\placeholder[p]{}}",
+          "blanks": {
+            "p": {
+              "answer": "6",
+              "feedback": "Multiply the powers."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Multiply the powers!"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$(7^2)^3 = 7^{2 \\cdot 3} = 7^6$$"
+            }
+          ]
+        },
+        {
+          "id": "power-2",
+          "type": "answer",
+          "title": "Time to really think",
+          "instructions": "The expression simplifies to 4 to the power of something. Fill in the power, then press Submit.",
+          "prompt": "Simplify $(4^2 \\cdot 16)^4$.",
+          "template": "(4^2\\cdot16)^4=4^{\\placeholder[p]{}}",
+          "blanks": {
+            "p": {
+              "answer": "16"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Did you know that $4^2 = 16$?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$16 = 4^2$, so $$(4^2 \\cdot 16)^4 = (4^2 \\cdot 4^2)^4 = (4^4)^4 = 4^{16}$$"
+            }
+          ]
+        },
+        {
+          "id": "power-3",
+          "type": "answer",
+          "title": "Time to cook!",
+          "instructions": "The expression simplifies to 6 to the power of something. Fill in the power, then press Submit.",
+          "prompt": "Simplify $(6^3 \\cdot 216^5)^2$.",
+          "template": "(6^3\\cdot216^5)^2=6^{\\placeholder[p]{}}",
+          "blanks": {
+            "p": {
+              "answer": "36"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Did you know that $6^3 = 216$?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$216 = 6^3$, so $216^5 = (6^3)^5 = 6^{15}$. Then $$(6^3 \\cdot 6^{15})^2 = (6^{18})^2 = 6^{36}$$"
+            }
+          ]
+        },
+        {
+          "id": "power-4",
+          "type": "answer",
+          "title": "Time to combine concepts",
+          "instructions": "The expression simplifies to 7 to the power of something. Fill in the power, then press Submit.",
+          "prompt": "Simplify $\\left(\\frac{49^7}{7^2} \\cdot 7^3\\right)^2$.",
+          "template": "\\left(\\frac{49^7}{7^2}\\cdot7^3\\right)^2=7^{\\placeholder[p]{}}",
+          "blanks": {
+            "p": {
+              "answer": "30"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Did you know $49^7 = (7^2)^7$? Well, now you do! Use this fact and the laws from the previous parts, and you'll have the answer in no time."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$49^7 = (7^2)^7 = 7^{14}$. Inside the bracket: $\\frac{7^{14}}{7^2} \\cdot 7^3 = 7^{14-2+3} = 7^{15}$. Then $$\\left(7^{15}\\right)^2 = 7^{30}$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Law 4: The Power of a Product",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Now thinking back to our first law, we saw $$a^n \\cdot a^m = a^{n+m}$$ In other words, when we multiplied terms with the same base, we simply added the powers."
+        },
+        {
+          "type": "paragraph",
+          "content": "However, what happens if we want to take the power of a product of numbers which all have different bases? For instance, what is $(ab)^5$ or $(x^{2}y^{3})^7$ ?"
+        },
+        {
+          "type": "paragraph",
+          "content": "Well we do this using our final index law."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "The power of products"
+        },
+        {
+          "type": "paragraph",
+          "content": "The power of a product of two numbers, a and b, is given by $$(a \\cdot b)^n  = a^n \\cdot b^n $$"
+        },
+        {
+          "type": "paragraph",
+          "content": "In other words, all we do is apply the power to each one of the terms in the product, for instance if we have, $$(5 \\cdot 12)^8$$ We can write this as $5^{8} \\cdot 12^{8}$. Now there's no better way to improve your understanding than answering questions, so attempt the following tasks:"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "product-power-1",
+          "type": "answer",
+          "title": "Just a little warm up",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "Fill in each power.",
+          "template": "(5\\cdot9)^3=5^{\\placeholder[a]{}}\\cdot9^{\\placeholder[b]{}}=5^{\\placeholder[c]{}}\\cdot3^{\\placeholder[d]{}}",
+          "blanks": {
+            "a": {
+              "answer": "3"
+            },
+            "b": {
+              "answer": "3"
+            },
+            "c": {
+              "answer": "3"
+            },
+            "d": {
+              "answer": "6",
+              "feedback": "$9 = 3^2$, so $9^3 = (3^2)^3$. What's that as a power of 3?"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "For the second equals sign: did you know $9 = 3^2$?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Apply the power to each factor: $(5 \\cdot 9)^3 = 5^3 \\cdot 9^3$. Then $9^3 = (3^2)^3 = 3^6$, so $$5^3 \\cdot 9^3 = 5^3 \\cdot 3^6$$"
+            }
+          ]
+        },
+        {
+          "id": "product-power-2",
+          "type": "answer",
+          "title": "Let's up the difficulty",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "Fill in each power.",
+          "template": "(5x\\cdot15y)^3=3^{\\placeholder[a]{}}\\cdot5^{\\placeholder[b]{}}\\cdot x^{\\placeholder[c]{}}\\cdot y^{\\placeholder[d]{}}",
+          "blanks": {
+            "a": {
+              "answer": "3"
+            },
+            "b": {
+              "answer": "6"
+            },
+            "c": {
+              "answer": "3"
+            },
+            "d": {
+              "answer": "3"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Use the fact that $5x = 5 \\cdot x$, then the fact that $15 = 3 \\cdot 5$, then think back to our first index law 😄"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$5x \\cdot 15y = 5 \\cdot x \\cdot 3 \\cdot 5 \\cdot y = 3 \\cdot 5^2 \\cdot x \\cdot y$. Cubing each factor: $$(3 \\cdot 5^2 \\cdot x \\cdot y)^3 = 3^3 \\cdot 5^6 \\cdot x^3 \\cdot y^3$$"
+            }
+          ]
+        },
+        {
+          "id": "product-power-3",
+          "type": "answer",
+          "title": "Not as hard as it looks!",
+          "instructions": "Fill in the box with the simplified answer, then press Submit.",
+          "prompt": "Simplify $(3x^3)^3$.",
+          "template": "(3x^3)^3=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "27x^9",
+              "exactForm": true,
+              "feedback": "Cube the 3 as well as the $x^3$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Don't overthink it: $(3x^3)^3 = (3 \\cdot x^3)^3$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$(3x^3)^3 = 3^3 \\cdot (x^3)^3 = 27x^9$$"
+            }
+          ]
+        },
+        {
+          "id": "product-power-4",
+          "type": "answer",
+          "title": "Apply the rule again & again!",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "Fill in each power.",
+          "template": "\\left(\\left(x^2\\cdot y^3\\cdot z^4\\right)^2\\right)^3=x^{\\placeholder[a]{}}\\cdot y^{\\placeholder[b]{}}\\cdot z^{\\placeholder[c]{}}",
+          "blanks": {
+            "a": {
+              "answer": "12"
+            },
+            "b": {
+              "answer": "18"
+            },
+            "c": {
+              "answer": "24"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Let $A = x^2 \\cdot y^3 \\cdot z^4$. Then $(A^2)^3 = A^6$. Now replace $A^6$ with $(x^2 \\cdot y^3 \\cdot z^4)^6$ and carry on."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\left(\\left(x^2 y^3 z^4\\right)^2\\right)^3 = \\left(x^2 y^3 z^4\\right)^6 = x^{12} \\cdot y^{18} \\cdot z^{24}$$"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "review": [
+    {
+      "id": "multiply-rule",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "You multiply two terms with the same base, like $a^m \\cdot a^n$. What happens to the powers?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "Add them."
+        },
+        {
+          "type": "paragraph",
+          "content": "$a^m \\cdot a^n = a^{m+n}$, for example $3^3 \\cdot 3^4 = 3^7$."
+        }
+      ]
+    },
+    {
+      "id": "divide-rule",
+      "type": "answer",
+      "prompt": "Fill in the power.",
+      "template": "\\frac{a^m}{a^n}=a^{\\placeholder[p]{}}",
+      "blanks": {
+        "p": {
+          "answer": "m-n"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "Dividing terms with the same base subtracts the powers: $\\frac{a^m}{a^n} = a^{m-n}$."
+        }
+      ]
+    },
+    {
+      "id": "power-rule",
+      "type": "answer",
+      "prompt": "Fill in the power.",
+      "template": "\\left(a^m\\right)^n=a^{\\placeholder[p]{}}",
+      "blanks": {
+        "p": {
+          "answer": "mn"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "A power of a power multiplies the powers: $(a^m)^n = a^{mn}$."
+        }
+      ]
+    },
+    {
+      "id": "product-rule",
+      "type": "choice",
+      "prompt": "Which of these is equal to $(ab)^n$?",
+      "options": [
+        {
+          "id": "A",
+          "content": "$a^n b^n$",
+          "correct": true,
+          "why": "Correct: the power applies to every factor in the bracket."
+        },
+        {
+          "id": "B",
+          "content": "$ab^n$",
+          "why": "The power applies to $a$ as well as $b$."
+        },
+        {
+          "id": "C",
+          "content": "$a^n b$",
+          "why": "The power applies to $b$ as well as $a$."
+        },
+        {
+          "id": "D",
+          "content": "$a^{2n}$",
+          "why": "$a$ and $b$ are different bases, so they can't be combined into one power."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$(ab)^n = a^n b^n$: raise each factor to the power."
+        }
+      ]
+    },
+    {
+      "id": "add-not-multiply",
+      "type": "choice",
+      "prompt": "Simplify $2^3 \\cdot 2^4$.",
+      "options": [
+        {
+          "id": "A",
+          "content": "$2^7$",
+          "correct": true,
+          "why": "Correct: same base, so add the powers."
+        },
+        {
+          "id": "B",
+          "content": "$2^{12}$",
+          "why": "That multiplies the powers. When you multiply terms with the same base, you add the powers."
+        },
+        {
+          "id": "C",
+          "content": "$4^7$",
+          "why": "The base stays as 2: only the powers change."
+        },
+        {
+          "id": "D",
+          "content": "$4^{12}$",
+          "why": "The base stays as 2, and the powers are added, not multiplied."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$2^3 \\cdot 2^4 = 2^{3+4} = 2^7$."
+        }
+      ]
+    },
+    {
+      "id": "different-bases",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "Can $x^3 \\cdot y^4$ be simplified with the first index law? Why or why not?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "No: the bases are different."
+        },
+        {
+          "type": "paragraph",
+          "content": "The index laws for multiplying and dividing only combine powers of the **same** base."
+        }
+      ]
+    }
+  ]
+}

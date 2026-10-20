@@ -23,7 +23,9 @@ export function toClientQuestion(question) {
 
 // exported so review cards (src/lib/reviews/cards.js) can be sanitised the same way as parts
 export function toClientPart(part, index, title) {
-  const { hint, solution, image, ...p } = part;
+  // modelAnswer = the response the lesson Solution button fills in (src/lib/marking/solutions.js)
+  // eslint-disable-next-line no-unused-vars
+  const { hint, solution, image, modelAnswer, ...p } = part;
   const base = { ...p, hint, solution, image, marks: partMarks(part) };
 
   switch (part.type) {
@@ -57,7 +59,7 @@ export function toClientPart(part, index, title) {
         objects: (part.objects ?? []).map(({ answer, ...object }) => object),
       };
     case 'sketch': {
-      const { keyPoints, correctFeedback, ...keep } = base;
+      const { keyPoints, correctFeedback, shape, shapeFeedback, ...keep } = base;
       return keep;
     }
     case 'working':
@@ -79,7 +81,7 @@ export function partMarks(part) {
     case 'place':
       return (part.objects ?? []).length || 1;
     case 'sketch':
-      return (part.keyPoints ?? []).length || 1;
+      return (part.keyPoints ?? []).length + (part.shape ? 1 : 0) || 1;
     case 'working':
     case 'explain':
       return (part.markScheme ?? []).reduce((sum, m) => sum + (m.marks ?? 1), 0) || 1;

@@ -12,7 +12,8 @@ import OrderPart from './OrderPart';
 import PlacePart from './PlacePart';
 import SketchPart from './SketchPart';
 
-const BODIES = {
+// also used by lesson tasks (src/lib/components/learn/lessons/tasks/), which share these bodies
+export const BODIES = {
   working: MathInputPart,
   explain: MathInputPart,
   answer: AnswerPart,
@@ -22,7 +23,7 @@ const BODIES = {
   sketch: SketchPart,
 };
 
-const STATUS_COLOURS = {
+export const STATUS_COLOURS = {
   correct: '#28a745',
   partial: '#f0ad4e',
   incorrect: '#dc3545',

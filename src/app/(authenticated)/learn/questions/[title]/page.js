@@ -35,7 +35,9 @@ to not use it, if once we import the CE and configure it, our mathfield element 
 Just some food for thought 
 */
 
-export default function QuestionDisplay({ params }) {
+export default function QuestionDisplay({ params, searchParams }) {
+  // ?tab=review (links from the reviews page) opens the Review tab
+  const openReview = searchParams?.tab === 'review'
   // test
 
 
@@ -128,32 +130,32 @@ export default function QuestionDisplay({ params }) {
     return (
       <TwoPaneResponsive
         question={<QuestionParts question={question} />}
-        feedback={<Feedback reviewTitle={question.title} details={partsDetails(question)} />}
+        feedback={<Feedback reviewTitle={question.title} openReview={openReview} details={partsDetails(question)} />}
       />
     );
   }
 
   const selectComponent = (questionType) =>{
     if (questionType === 'fullResponse' ) {
-      const feedback = <Feedback reviewTitle={question.title} details={question.details}/>
+      const feedback = <Feedback reviewTitle={question.title} openReview={openReview} details={question.details}/>
       const fullResponse = <NewFullResponse question={question} />
       return <TwoPaneResponsive question={fullResponse} feedback={feedback} />
 
     } else if (questionType === 'selection') {
-      const feedback = <Feedback reviewTitle={question.title} details ={question?.details} />
+      const feedback = <Feedback reviewTitle={question.title} openReview={openReview} details ={question?.details} />
       const multipleChoice = <Selection question={question} />
       return <TwoPaneResponsive question={multipleChoice} feedback={feedback}/>
 
     } else if(questionType == 'combination') {
       const combination = <Combination question={question} />
-      const feedback = <Feedback reviewTitle={question.title} details ={question.details} />
+      const feedback = <Feedback reviewTitle={question.title} openReview={openReview} details ={question.details} />
       return <TwoPaneResponsive question={combination} feedback={feedback}/>
     } 
     
     
     else if (questionType === 'sketch') {
       const newSketch = <Sketch question={question} />
-      const feedback = <Feedback reviewTitle={question.title} details={question.details} />
+      const feedback = <Feedback reviewTitle={question.title} openReview={openReview} details={question.details} />
 
       return <TwoPaneResponsive question={newSketch} feedback ={feedback} />
     

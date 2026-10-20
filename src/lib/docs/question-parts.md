@@ -253,6 +253,8 @@ Make sure `start` isn't already a correct answer. A part only counts as answered
 - **Marks default:** one per key point.
 - **Response:** `{ points: [{ x, y }] }`.
 - **Limitation:** the curve is always a polynomial, so this suits quadratics and cubics, not exponentials, reciprocals or trig graphs (section 11).
+- **Optional `shape: 'up' | 'down'`** (added 20 October 2026 for lessons): one extra mark for the curve opening upwards (∪) or downwards (∩), judged by the sign of its $x^{degree}$ coefficient. Lets a part ask for "any quadratic with $a > 0$" without key points. `shapeFeedback` overrides the default message.
+- **`modelAnswer`** (any part, optional): the response the lesson Solution button fills in. Only needed for `sketch`, `working` and `explain`; see [lessons.md](lessons.md#4-the-lesson-format).
 
 ---
 

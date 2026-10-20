@@ -211,6 +211,23 @@ function distanceToCurve(f, px, py, [xMin, xMax]) {
   return best;
 }
 
+// leading coefficient of the polynomial through the handles: positive = ends up (∪), negative = ends down (∩)
+function leadingCoefficient(points) {
+  return points.reduce((sum, pi, i) => {
+    let denominator = 1;
+    points.forEach((pj, j) => {
+      if (i !== j) denominator *= pi.x - pj.x;
+    });
+    return sum + pi.y / denominator;
+  }, 0);
+}
+
+/*
+Checks, each worth one mark:
+  keyPoints   the curve passes within `threshold` of each one
+  shape       optional 'up' | 'down': the sign of the x^degree coefficient (∪ or ∩ for a quadratic).
+              Lets a task ask for "any quadratic with a > 0" without fixing its points.
+*/
 export function markSketch(part, response) {
   const keyPoints = part.keyPoints ?? [];
   const points = (response?.points ?? []).filter((p) => Number.isFinite(p?.x) && Number.isFinite(p?.y));
@@ -221,18 +238,24 @@ export function markSketch(part, response) {
   const f = lagrange(points);
   const bbox = part.boundingBox ?? [-10, 10, 10, -10];
   const results = keyPoints.map((kp) => distanceToCurve(f, kp.x, kp.y, [bbox[0], bbox[2]]) <= (kp.threshold ?? 0.25));
+  const lead = leadingCoefficient(points);
+  const shapeRight = !part.shape || (part.shape === 'up' ? lead > 0 : lead < 0);
 
-  const correctCount = results.filter(Boolean).length;
-  const marks = Math.round((partMarks(part) * correctCount) / Math.max(keyPoints.length, 1));
+  const checks = results.length + (part.shape ? 1 : 0);
+  const correctCount = results.filter(Boolean).length + (part.shape && shapeRight ? 1 : 0);
+  const marks = Math.round((partMarks(part) * correctCount) / Math.max(checks, 1));
 
   let feedback = [];
-  if (correctCount === keyPoints.length) {
+  if (correctCount === checks) {
     feedback = part.correctFeedback ?? [para('Correct. Your curve passes through every key point.')];
   } else {
+    if (!shapeRight) {
+      feedback.push(...(part.shapeFeedback ?? [para(`Check the shape: this curve should open ${part.shape === 'up' ? 'upwards (∪)' : 'downwards (∩)'}.`)]));
+    }
     keyPoints.forEach((kp, i) => {
       if (results[i]) return;
       feedback.push(...(kp.feedback ?? [para(`Check your ${kp.label ?? 'key point'}.`)]));
     });
   }
-  return buildResult(part, marks, feedback, { keyPoints: results }, answered);
+  return buildResult(part, marks, feedback, { keyPoints: results, shape: shapeRight }, answered);
 }

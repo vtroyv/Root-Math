@@ -1,9 +1,19 @@
 'use client'
-import React,{useEffect} from 'react'
+import React,{useEffect, useState} from 'react'
 import { Nav, Navbar, NavbarBrand,NavLink, UncontrolledDropdown, DropdownToggle, DropdownItem,DropdownMenu, Button } from 'reactstrap';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useGetDueReviewsQuery } from '@/lib/redux/slices/apiSlice';
+import { localToday } from '@/lib/reviews/localDay';
+
+// "REVIEWS · 3": questions + lessons with review cards due, across all courses (src/lib/docs/reviews-page.md)
+function ReviewsLink() {
+  const [today] = useState(localToday)
+  const { data } = useGetDueReviewsQuery(today)
+  const due = [...(data?.questions ?? []), ...(data?.lessons ?? [])].filter((entry) => entry.cardsDue > 0).length
+  return <Link href='/learn/reviews' style={{textDecoration:"none"}}>REVIEWS{due > 0 && ` · ${due}`}</Link>
+}
 
 
 export default function LearnNav() {
@@ -37,6 +47,8 @@ export default function LearnNav() {
               <NavLink> <Link href='/learn/questions' style={{textDecoration:"none"}}>QUESTIONS</Link></NavLink>
 
               <NavLink> <Link href='/learn/skill-radar' style={{textDecoration:"none"}}>SKILL RADAR</Link></NavLink>
+
+              <NavLink> <ReviewsLink /></NavLink>
 
 
              
