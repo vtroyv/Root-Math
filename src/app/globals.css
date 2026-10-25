@@ -2346,3 +2346,219 @@ a.learn-row:hover {
 .learn-status--in-progress {
   color: var(--rm-teal-deep);
 }
+
+.learn-row__title {
+  display: block;
+}
+
+.learn-row__sub {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--rm-ink-faint);
+}
+
+.learn-empty {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 1.25rem;
+  font-size: 1.15rem;
+  color: var(--rm-ink-soft);
+}
+
+/* a count badge on a button, e.g. Questions (3) */
+.learn-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.4rem;
+  height: 1.4rem;
+  margin-left: 0.4rem;
+  padding: 0 0.35rem;
+  font-size: 0.85rem;
+  color: var(--rm-teal-deep);
+  background: #fff;
+  border: 1.5px solid var(--rm-ink);
+  border-radius: 999px;
+}
+
+/* Reviews page (learn/reviews/page.js) */
+.learn-hero__sub--small {
+  max-width: 40rem;
+  font-size: 1.2rem;
+}
+
+.learn-due-count {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 8rem;
+  height: 8rem;
+  line-height: 1.1;
+  text-align: center;
+  color: var(--rm-ink-soft);
+  border: 2px solid var(--rm-ink);
+  border-radius: 50%;
+  background: var(--rm-teal-wash);
+}
+
+.learn-due-count__number {
+  font-family: var(--rm-display);
+  font-size: 2.6rem;
+  color: var(--rm-teal-deep);
+}
+
+.learn-reviews__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.learn-reviews__tabs {
+  margin-bottom: 0;
+}
+
+.learn-reviews__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.learn-reviews__filter {
+  min-width: 14rem;
+}
+
+.learn-reviews__filter label {
+  margin-bottom: 0.25rem;
+  font-weight: bold;
+  color: var(--rm-ink);
+}
+
+.learn-reviews__head-note {
+  color: #fff;
+}
+
+.learn-overdue {
+  font-weight: bold;
+  color: var(--rm-ink);
+}
+
+/* Progress page (learn/progress/page.js) */
+.learn-panel__body {
+  padding: 1.25rem;
+  font-size: 1.05rem;
+}
+
+.learn-topic__name .bi {
+  margin-right: 0.35rem;
+}
+
+.learn-progress__level {
+  margin: 0;
+  font-family: var(--rm-display);
+  font-size: 2rem;
+  color: var(--rm-teal-deep);
+}
+
+.learn-progress__level span {
+  color: var(--rm-ink);
+}
+
+.learn-progress__courses {
+  margin-bottom: 2rem;
+}
+
+.learn-progress__course-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.learn-progress__course-row strong {
+  min-width: 11rem;
+  color: var(--rm-ink);
+}
+
+.learn-progress__hint,
+.learn-progress__covers {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+  color: var(--rm-ink-faint);
+}
+
+.learn-progress__hint {
+  text-align: center;
+}
+
+.learn-progress__meta {
+  margin: 0.5rem 0 0.75rem;
+  color: var(--rm-ink-soft);
+}
+
+.learn-progress__facts {
+  margin: 0 0 0.75rem;
+  padding-left: 1.2rem;
+}
+
+.learn-progress__facts a,
+.learn-callout a {
+  color: var(--rm-teal-deep);
+}
+
+.learn-callout {
+  margin: 0 0 0.75rem;
+  padding: 0.65rem 0.9rem;
+  background: var(--rm-teal-wash);
+  border-left: 4px solid var(--rm-teal-deep);
+  border-radius: 4px;
+}
+
+.learn-progress__reviews {
+  margin: 0 0 0.85rem;
+}
+
+.learn-progress__step {
+  display: flex;
+  gap: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.learn-progress__step:last-child {
+  margin-bottom: 0;
+}
+
+.learn-progress__step .bi {
+  font-size: 1.4rem;
+  color: var(--rm-teal-deep);
+}
+
+.learn-progress__step span {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--rm-ink-soft);
+}
+
+.learn-progress__column {
+  margin-bottom: 1rem;
+}
+
+.learn-progress__column-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.3rem;
+  color: var(--rm-ink);
+}
+
+.learn-progress__done {
+  font-weight: bold;
+  color: var(--rm-teal-deep);
+}
+
+/* rows inside a card body: drop the card-edge padding so they line up with the text */
+.learn-progress__list .learn-row {
+  padding-inline: 0.5rem;
+}

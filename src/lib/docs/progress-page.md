@@ -91,7 +91,7 @@ Nothing is stored for the Progress page itself. It's calculated fresh from progr
 
 | File | What it does |
 |---|---|
-| [mastery/specs.js](../mastery/specs.js) | The six courses: their skills (radar corners), which question `topic`s and lesson chapters belong to each skill, the subtopics, and `SUBSCRIBED_COURSES` for the toggle. |
+| [mastery/specs.js](../mastery/specs.js) | The six courses: their skills (radar corners), which question `topic`s and lesson chapters belong to each skill, the subtopics. (The course picker uses the student's own courses, `coursesForUser` in [courses.js](../courses/courses.js), since 25 Oct 2026.) |
 | [mastery/computeMastery.js](../mastery/computeMastery.js) | Pure function: questions + lessons + one student's progress → mastery, level, rank, and per skill its lessons, questions, reviews and insight. No database or React, so it can be tested on its own. |
 | [api/mastery/route.js](../../app/api/mastery/route.js) | `GET /api/mastery?spec=<course id>`. |
 | [progress/ProgressRadar.js](../components/learn/progress/ProgressRadar.js) | The radar as plain SVG, reporting hover (preview) and click (pin) to the page. Also the small `MasteryBar`. |
@@ -208,8 +208,12 @@ Hover previews were removed (14 October): the cards changing as the mouse moved 
 ## 8. The page layout
 
 [page.js](../../app/%28authenticated%29/learn/progress/page.js):
-- **Radar column** (`lg=7`) and **card column** (`lg=5`). On phones they stack: radar first, then the cards.
-- All cards share one `Panel` frame: white, 2px dark border, teal heading, in line with the minimal-CSS preference.
+Redesigned on 25 October 2026 to match the course pages:
+- **Header panel**: the course's exam board and qualification, "Your Progress", the course name, and on the right a ring of overall mastery with **Level n · Rank** and "n of m questions complete".
+- **Course picker**: one row per qualification and year ("A level Maths · Year 12"), one button per course, from the student's own courses (`coursesForUser`). It opens on Year 12 Pure if the student has it, otherwise their first course.
+- **Radar column** (`lg=7`) and **card column** (`lg=5`: Insight, Outstanding reviews, How to improve). On phones they stack: radar first, then the cards.
+- All cards share one `Card` frame, the course pages' look: a teal header band with an icon, 2px ink border. Styles are in the "Learn area" block of `globals.css`.
+- The breakdown's outstanding items are rows like the chapter page's, with a status icon, "In progress · 40%" or "Not started", and a link.
 - **`currentData`** (not `data`) from RTK Query, so the page never shows the previous course's numbers while the new course loads.
 - The **Column** component in the breakdown shows outstanding items first, then "✓ n complete · n coming soon". When everything available is done it shows the green "All relevant … for this skill complete." message. If items exist but none are built yet, it shows a neutral "None available yet." rather than a tick.
 
@@ -256,4 +260,4 @@ On 13 October the real error, which `getQuestions()` used to hide, was `MongoNet
    - `quadratics-graphs` is a duplicate entry in `lesson-data`;
    - "Proof by contradiction" sits in the Year 12 `methods-of-proof` chapter, although it's Year 13 content in the specification.
 6. **Per-subtopic progress**: add a `subtopic` field to questions to show progress per subtopic in the Insight card.
-7. **Real subscriptions**: replace `SUBSCRIBED_COURSES`.
+7. **Real subscriptions**: billing should write the student's course ids to Clerk `publicMetadata.courses`, which `coursesForUser` already reads (the hard-coded `SUBSCRIBED_COURSES` was removed on 25 Oct 2026).

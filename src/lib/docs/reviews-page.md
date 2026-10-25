@@ -10,26 +10,34 @@ How the review cards themselves work (storage, scheduling, the Review tab) is in
 
 ## 1. What the student sees
 
+Redesigned on 25 October 2026 to match the course pages:
+
 ```
-Reviews
-Short, regular reviews stop what you've learned from fading. …
-Year [All years ▾]   Course [All courses ▾]   Skill [Pick a year and course first ▾]
-┌ Questions · 3 ┐ Lessons
-Question                       Course            Skill        Cards due   Due
-Completing the Square …        Pure · Year 12    Algebra …    2           4 days overdue
-Exact Exponential Equation     Pure · Year 12    Exp & logs   1           Due today
+┌──────────────────────────────────────────────────────────────────────┐
+│ SPACED REPETITION                                  ( 5  )  2 questions · 1 lesson
+│ Reviews                                            (cards  [Start with Completing the Square →]
+│ Short, regular reviews stop what you've …          ( due )
+└──────────────────────────────────────────────────────────────────────┘
+[Questions (2)] [Lessons (1)]            Course [All courses ▾]  Skill [Pick a course first ▾]
+┌ Questions to review · 2 questions · most overdue first ──────────────┐
+│ ? Completing the Square …                 [2 cards] 4 days overdue ›  │
+│   Pure Mathematics · Year 12 · Algebra and functions                  │
+│ ? Exact Exponential Equation              [1 card]  Due today      ›  │
+└───────────────────────────────────────────────────────────────────────┘
 ```
 
-- **Filters**: year, course and skill. Skill only unlocks once a single year *and* course are picked, because skills belong to one course. Changing year or course clears the skill.
-- **Questions tab**: one row per question with cards due, **most overdue first**. The tab label shows how many questions have cards due (with the filters applied). Clicking a question opens it on its **Review tab** (`/learn/questions/<title>?tab=review`).
-- **Lessons tab**: one row per lesson with cards due, with the same filters and columns. Clicking a lesson opens it on its Review tab. Lesson cards unlock when the whole lesson is complete (added 20 October 2026, see [lessons.md](lessons.md#7-review-cards)).
+- **Header**: the total cards due (with the filters applied), how many questions and lessons they're in, and **Start with \<most overdue\>**, which opens that question's or lesson's Review tab. "All caught up" when nothing is due.
+- **Filters**: course and skill. The courses are the student's own (`coursesForUser`, [courses.js](../courses/courses.js)). Skill only unlocks once a course is picked, because skills belong to one course. Changing the course clears the skill. (Until 25 October this was separate Year and Course dropdowns from the hard-coded `SUBSCRIBED_COURSES`.)
+- **Questions / Lessons**: a toggle; each button's badge is how many questions or lessons have cards due.
+- **Questions**: one row per question with cards due, **most overdue first**, showing its course and skill underneath. Clicking a question opens it on its **Review tab** (`/learn/questions/<title>?tab=review`).
+- **Lessons**: one row per lesson with cards due, in the same format. Clicking a lesson opens it on its Review tab. Lesson cards unlock when the whole lesson is complete (added 20 October 2026, see [lessons.md](lessons.md#7-review-cards)).
 - **Nothing due**: "All caught up. Next review in 3 days."
 - **Nothing unlocked**: "No review cards yet. Finish a question to unlock its review cards."
 
-**Counts are questions, not cards.** "3" means 3 questions have something due; the Cards due column gives the card count. Each row links to one question, so counting cards would make the number bigger than the list.
+**The badges count questions and lessons, not cards.** "3" means 3 questions have something due; each row's pill gives its card count. Each row links to one question, so counting cards would make the number bigger than the list. The header's big number *is* cards.
 
 **URL options**:
-- `?course=edx-maths-1` opens with that course's year and course selected. The Progress page's link uses this.
+- `?course=edx-maths-1` opens filtered to that course. The Progress page's link uses this.
 - `?tab=lessons` opens on the Lessons tab.
 
 ## 2. Where else the due count appears

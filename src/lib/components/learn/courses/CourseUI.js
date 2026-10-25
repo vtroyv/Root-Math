@@ -20,11 +20,12 @@ const RING_STYLES = buildStyles({
   pathTransitionDuration: 0,
 });
 
-export function ProgressRing({ completed, total, className = '' }) {
-  const percent = percentOf(completed, total);
+// completed / total lessons, or pass `percent` (0-100) and a `label` for anything else (e.g. mastery)
+export function ProgressRing({ completed, total, percent, label, className = '' }) {
+  const value = percent ?? percentOf(completed, total);
   return (
-    <div className={`learn-ring ${className}`} role="img" aria-label={`${percent}% of lessons complete`}>
-      <CircularProgressbar value={percent} text={`${percent}%`} styles={RING_STYLES} />
+    <div className={`learn-ring ${className}`} role="img" aria-label={label ?? `${value}% of lessons complete`}>
+      <CircularProgressbar value={value} text={`${value}%`} styles={RING_STYLES} />
     </div>
   );
 }

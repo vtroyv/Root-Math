@@ -1,69 +1,77 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Row, Col, Alert, Spinner, Button, Badge } from 'reactstrap';
+import { Row, Col, Alert, Button } from 'reactstrap';
+import { useUser } from '@clerk/nextjs';
 import { useGetMasteryQuery, useGetDueReviewsQuery } from '@/lib/redux/slices/apiSlice';
-import { DEFAULT_SPEC_ID, SUBSCRIBED_COURSES } from '@/lib/mastery/specs';
+import { DEFAULT_SPEC_ID } from '@/lib/mastery/specs';
+import { coursesForUser, courseLabel } from '@/lib/courses/courses';
 import { localToday, whenDue } from '@/lib/reviews/localDay';
 import ProgressRadar, { MasteryBar } from '@/lib/components/learn/progress/ProgressRadar';
+import { ProgressRing, StatusIcon, ComingSoon } from '@/lib/components/learn/courses/CourseUI';
 
 /*
-Progress page (/learn/progress, called the Skill Radar until 22 Oct 2026): a game-style stats page.
+Progress page (/learn/progress, called the Skill Radar until 22 Oct 2026): a game-style stats page,
+in the same design as the course pages (25 Oct 2026).
+  top            header panel: overall mastery ring, level and rank; then the student's courses to pick from
   left           the radar (src/lib/components/learn/progress/ProgressRadar.js)
-  right column   How to improve · Insight for the selected skill · Outstanding reviews (a count + link to /learn/reviews)
+  right column   Insight for the selected skill · Outstanding reviews (a count + link to /learn/reviews) · How to improve
   bottom         the selected skill's Lessons | Questions (reviews live in their own card)
 Clicking a radar corner selects that skill (click only: hover previews flickered). The page opens on the weakest skill.
+Courses: the student's own (coursesForUser, src/lib/courses/courses.js).
 Data: GET /api/mastery (src/lib/mastery/computeMastery.js does the maths).
 */
 
-const INK = '#1f3b4d';
-const TEAL_DEEP = '#0e7c8f';
 const pct = (v) => `${Math.round(v * 100)}%`;
 
 export default function ProgressPage() {
-  const [course, setCourse] = useState(DEFAULT_SPEC_ID);
+  const { user } = useUser();
+  const courses = coursesForUser(user);
+  const [chosen, setChosen] = useState(null);
+  // the course picked, else Year 12 Pure if the student has it, else their first course
+  const course = chosen ?? (courses.some((c) => c.id === DEFAULT_SPEC_ID) ? DEFAULT_SPEC_ID : courses[0]?.id ?? DEFAULT_SPEC_ID);
   const [pinned, setPinned] = useState(null); // null = not chosen yet -> weakest skill
   // currentData = the result for the course selected NOW (data would briefly show the previous course)
   const { currentData: data, isFetching, error } = useGetMasteryQuery(course);
 
   const changeCourse = (id) => {
-    setCourse(id);
+    setChosen(id);
     setPinned(null);
   };
 
   const pinnedIndex = pinned ?? (data ? weakestSkill(data.areas) : 0);
   const shown = data?.areas[pinnedIndex];
+  const current = courses.find((c) => c.id === course);
 
   return (
-    // same frame as the question page: white card, 8px corners, soft shadow, padding all round
-    <div
-      style={{
-        maxWidth: '1280px',
-        margin: '1rem auto',
-        padding: '1.5rem',
-        background: '#ffffff',
-        borderRadius: '8px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-        boxSizing: 'border-box',
-      }}
-    >
-      <h1 style={{ color: '#17a2b8', fontWeight: 'bold', marginBottom: '0.25rem' }}>Your Progress</h1>
-      {data && (
-        <p style={{ color: '#6c757d', marginBottom: '1rem' }}>
-          {data.spec.name} · <strong style={{ color: INK }}>Level {data.level.toFixed(1)}</strong> · {data.rank} ·{' '}
-          {pct(data.overall)} overall
-        </p>
-      )}
-
-      <CourseToggle selected={course} onSelect={changeCourse} />
-
-      {isFetching && !data && (
-        <div style={{ textAlign: 'center', padding: '3rem' }}>
-          <Spinner color="info" />
+    <div className="learn-page">
+      <section className="learn-hero">
+        <div>
+          <p className="learn-hero__kicker">{current ? `${current.examBoard} · ${current.qualification}` : 'Your progress'}</p>
+          <h1 className="learn-home__title">Your Progress</h1>
+          <p className="learn-hero__sub">{current ? courseLabel(current) : data?.spec.name}</p>
         </div>
-      )}
+
+        {data && (
+          <div className="learn-hero__progress">
+            <ProgressRing percent={Math.round(data.overall * 100)} label={`${pct(data.overall)} overall mastery`} className="learn-hero__ring" />
+            <div>
+              <p className="learn-progress__level">
+                Level {data.level.toFixed(1)} <span>· {data.rank}</span>
+              </p>
+              <p className="learn-course__note">
+                {pct(data.overall)} overall mastery · {data.totals.completed} of {data.totals.questions} questions complete
+              </p>
+            </div>
+          </div>
+        )}
+      </section>
+
+      <CoursePicker courses={courses} selected={course} onSelect={changeCourse} />
+
+      {isFetching && !data && <div className="learn-hero learn-hero--loading" aria-hidden="true" />}
       {error && !isFetching && (
-        <Alert color="danger" fade={false} style={{ margin: '2rem auto', maxWidth: '700px' }}>
+        <Alert color="danger" fade={false}>
           Your progress couldn&apos;t be loaded. Try refreshing the page.
         </Alert>
       )}
@@ -72,17 +80,15 @@ export default function ProgressPage() {
         <>
           <Row>
             <Col xs="12" lg="7">
-              <Panel title="Your skills">
+              <Card title="Your skills" icon="bi-bullseye">
                 <ProgressRadar areas={data.areas} pinned={pinnedIndex} onPin={setPinned} />
-                <p style={{ textAlign: 'center', fontSize: '0.85rem', color: '#6c757d', margin: '0.25rem 0 0' }}>
-                  Click a skill to see its details.
-                </p>
-              </Panel>
+                <p className="learn-progress__hint">Click a skill to see its details.</p>
+              </Card>
             </Col>
             <Col xs="12" lg="5">
-              <HowToImprove />
               <Insight area={shown} />
               <OutstandingReviews course={course} />
+              <HowToImprove />
             </Col>
           </Row>
 
@@ -107,47 +113,49 @@ function weakestSkill(areas) {
   return best;
 }
 
-// ─── shared card frame ──────────────────────────────────────────────────
+// ─── shared card: teal header band, 2px ink border (same as the course pages) ───
 
-function Panel({ title, children }) {
+function Card({ title, icon, children }) {
   return (
-    <section
-      style={{
-        background: '#ffffff',
-        border: `2px solid ${INK}`,
-        borderRadius: '6px',
-        padding: '1rem 1.25rem',
-        marginBottom: '1.25rem',
-      }}
-    >
-      <h2 style={{ fontSize: '1.1rem', fontWeight: 'bold', color: TEAL_DEEP, margin: '0 0 0.6rem' }}>{title}</h2>
-      {children}
+    <section className="learn-topic">
+      <div className="learn-topic__head">
+        <h2 className="learn-topic__name">
+          {icon && <i className={`bi ${icon}`} aria-hidden="true" />} {title}
+        </h2>
+      </div>
+      <div className="learn-panel__body">{children}</div>
     </section>
   );
 }
 
-// ─── course toggle ──────────────────────────────────────────────────────
+// ─── course picker ──────────────────────────────────────────────────────
 
-// One row per year, one button per course. Selected = filled teal.
-// Courses are hardcoded in SUBSCRIBED_COURSES (specs.js) until subscriptions exist.
-function CourseToggle({ selected, onSelect }) {
+// One row per qualification + year, one button per course. Selected = filled teal.
+function CoursePicker({ courses, selected, onSelect }) {
+  const groups = [];
+  for (const course of courses) {
+    const heading = `${course.qualification} · ${course.year}`;
+    const group = groups.find((g) => g.heading === heading);
+    if (group) group.courses.push(course);
+    else groups.push({ heading, courses: [course] });
+  }
+
   return (
-    <div role="group" aria-label="Choose a course" style={{ marginBottom: '1.5rem' }}>
-      {SUBSCRIBED_COURSES.map((group) => (
-        <div key={group.year} style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.5rem' }}>
-          <strong style={{ minWidth: '4.5rem', color: INK }}>{group.year}</strong>
+    <div role="group" aria-label="Choose a course" className="learn-progress__courses">
+      {groups.map((group) => (
+        <div key={group.heading} className="learn-progress__course-row">
+          <strong>{group.heading}</strong>
           {group.courses.map((c) => {
             const isSelected = c.id === selected;
             return (
               <Button
                 key={c.id}
-                size="sm"
                 color={isSelected ? 'info' : 'secondary'}
                 outline={!isSelected}
                 aria-pressed={isSelected}
                 onClick={() => onSelect(c.id)}
               >
-                {c.label}
+                {c.component}
               </Button>
             );
           })}
@@ -159,49 +167,26 @@ function CourseToggle({ selected, onSelect }) {
 
 // ─── right column ───────────────────────────────────────────────────────
 
-function HowToImprove() {
-  const steps = [
-    { icon: 'bi-book', title: 'Complete the lessons', text: 'Each skill’s lessons teach the ideas its questions test.' },
-    { icon: 'bi-pencil-square', title: 'Answer the questions', text: 'Your radar grows with every mark you earn on a skill’s questions.' },
-    { icon: 'bi-arrow-repeat', title: 'Keep up with reviews', text: 'Short, regular reviews stop what you’ve learned from fading.' },
-  ];
-  return (
-    <Panel title="How to improve your skills">
-      {steps.map((s) => (
-        <div key={s.title} style={{ display: 'flex', gap: '0.75rem', marginBottom: '0.5rem' }}>
-          <i className={`bi ${s.icon}`} style={{ fontSize: '1.3rem', color: TEAL_DEEP }} aria-hidden="true" />
-          <div>
-            <strong>{s.title}</strong>
-            <div style={{ fontSize: '0.9rem', color: '#495057' }}>{s.text}</div>
-          </div>
-        </div>
-      ))}
-    </Panel>
-  );
-}
-
 function Insight({ area }) {
   const { insight } = area;
   const lessonsDone = area.lessons.filter((l) => l.status === 'complete').length;
   const lessonsAvailable = area.lessons.filter((l) => l.status !== 'coming-soon').length;
 
   return (
-    <Panel title={`Insight: ${area.name}`}>
+    <Card title={`Insight: ${area.name}`} icon="bi-lightbulb">
       <MasteryBar value={area.mastery} />
-      <p style={{ fontSize: '0.9rem', color: '#495057', margin: '0.4rem 0 0.6rem' }}>
+      <p className="learn-progress__meta">
         {area.total ? `${pct(area.mastery)} mastery` : 'No questions for this skill yet'}
         {' · '}
         {insight.lastPractised ? `last practised ${timeAgo(insight.lastPractised)}` : 'not started yet'}
       </p>
 
-      <ul style={{ paddingLeft: '1.1rem', margin: '0 0 0.6rem', fontSize: '0.95rem' }}>
+      <ul className="learn-progress__facts">
         <li>
           Questions: {area.completed} of {area.total} complete
           {area.attempted > area.completed ? `, ${area.attempted - area.completed} in progress` : ''}
         </li>
-        <li>
-          Lessons: {lessonsAvailable ? `${lessonsDone} of ${lessonsAvailable} complete` : 'none available yet'}
-        </li>
+        <li>Lessons: {lessonsAvailable ? `${lessonsDone} of ${lessonsAvailable} complete` : 'none available yet'}</li>
         {insight.strongest && (
           <li>
             Strongest: <Link href={insight.strongest.href}>{insight.strongest.label}</Link> ({pct(insight.strongest.score)})
@@ -215,14 +200,14 @@ function Insight({ area }) {
       </ul>
 
       {insight.nextStep && (
-        <p style={{ margin: '0 0 0.6rem', padding: '0.5rem 0.75rem', background: '#e3f4f8', borderLeft: `4px solid ${TEAL_DEEP}` }}>
+        <p className="learn-callout">
           <strong>Next step: </strong>
           {insight.nextStep.href ? <Link href={insight.nextStep.href}>{insight.nextStep.text}</Link> : insight.nextStep.text}
         </p>
       )}
 
-      <div style={{ fontSize: '0.85rem', color: '#6c757d' }}>Covers: {area.subtopics.join(' · ')}</div>
-    </Panel>
+      <p className="learn-progress__covers">Covers: {area.subtopics.join(' · ')}</p>
+    </Card>
   );
 }
 
@@ -243,28 +228,50 @@ function OutstandingReviews({ course }) {
   const breakdown = [questionsDue && plural(questionsDue, 'question'), lessonsDue && plural(lessonsDue, 'lesson')].filter(Boolean).join(' · ');
 
   return (
-    <Panel title="Outstanding reviews">
+    <Card title="Outstanding reviews" icon="bi-arrow-repeat">
       {error && !data ? (
-        <p style={{ margin: 0, color: '#495057' }}>Your reviews couldn&apos;t be loaded.</p>
+        <p className="learn-progress__meta">Your reviews couldn&apos;t be loaded.</p>
       ) : !data ? (
-        <Spinner size="sm" color="info" />
+        <p className="learn-progress__meta">Loading…</p>
       ) : due > 0 ? (
         <>
-          <p style={{ margin: '0 0 0.6rem' }}>
-            <strong style={{ color: INK }}>{plural(due, 'review')} due:</strong> {breakdown}
+          <p className="learn-progress__reviews">
+            <strong>{plural(due, 'review')} due:</strong> {breakdown}
           </p>
-          <Link href={`/learn/reviews?course=${course}${questionsDue === 0 ? '&tab=lessons' : ''}`} className="btn btn-info btn-sm">
-            Go to reviews
-          </Link>
+          <Button tag={Link} href={`/learn/reviews?course=${course}${questionsDue === 0 ? '&tab=lessons' : ''}`} color="info">
+            Go to reviews <i className="bi bi-arrow-right" aria-hidden="true" />
+          </Button>
         </>
       ) : questions.length + lessons.length > 0 ? (
-        <p style={{ margin: 0 }}>
-          You&apos;re all caught up.{nextDue && ` Next review ${whenDue(today, nextDue)}.`}
+        <p className="learn-progress__reviews">
+          <i className="bi bi-check-circle-fill learn-status--complete" aria-hidden="true" /> You&apos;re all caught up.
+          {nextDue && ` Next review ${whenDue(today, nextDue)}.`}
         </p>
       ) : (
-        <p style={{ margin: 0, color: '#495057' }}>No reviews yet. Finish a question or a lesson to unlock its review cards.</p>
+        <p className="learn-progress__meta">No reviews yet. Finish a question or a lesson to unlock its review cards.</p>
       )}
-    </Panel>
+    </Card>
+  );
+}
+
+function HowToImprove() {
+  const steps = [
+    { icon: 'bi-book', title: 'Complete the lessons', text: 'Each skill’s lessons teach the ideas its questions test.' },
+    { icon: 'bi-pencil-square', title: 'Answer the questions', text: 'Your radar grows with every mark you earn on a skill’s questions.' },
+    { icon: 'bi-arrow-repeat', title: 'Keep up with reviews', text: 'Short, regular reviews stop what you’ve learned from fading.' },
+  ];
+  return (
+    <Card title="How to improve your skills" icon="bi-graph-up-arrow">
+      {steps.map((s) => (
+        <div key={s.title} className="learn-progress__step">
+          <i className={`bi ${s.icon}`} aria-hidden="true" />
+          <div>
+            <strong>{s.title}</strong>
+            <span>{s.text}</span>
+          </div>
+        </div>
+      ))}
+    </Card>
   );
 }
 
@@ -273,7 +280,7 @@ function OutstandingReviews({ course }) {
 
 function SkillBreakdown({ area }) {
   return (
-    <Panel title={`${area.name}: what's left`}>
+    <Card title={`${area.name}: what's left`} icon="bi-list-check">
       <Row>
         <Col xs="12" md="6">
           <Column
@@ -292,17 +299,11 @@ function SkillBreakdown({ area }) {
           />
         </Col>
       </Row>
-    </Panel>
+    </Card>
   );
 }
 
-const columnHeading = { fontSize: '1rem', fontWeight: 'bold', color: INK, margin: '0.25rem 0 0.5rem' };
-
-const STATUS = {
-  'in-progress': { color: 'warning', text: 'In progress' },
-  todo: { color: 'secondary', text: 'Not started' },
-  'coming-soon': { color: 'light', text: 'Coming soon' },
-};
+const STATUS_TEXT = { 'in-progress': 'In progress', todo: 'Not started' };
 
 // outstanding items first (with links), then a one-line summary of what's complete
 function Column({ title, items, emptyText, doneText }) {
@@ -311,45 +312,64 @@ function Column({ title, items, emptyText, doneText }) {
   const complete = items.filter((i) => i.status === 'complete');
 
   return (
-    <div style={{ marginBottom: '1rem' }}>
-      {title && <h3 style={columnHeading}>{title}</h3>}
+    <div className="learn-progress__column">
+      <h3 className="learn-progress__column-title">{title}</h3>
 
-      {items.length === 0 && <p style={{ color: '#495057' }}>{emptyText}</p>}
+      {items.length === 0 && <p className="learn-progress__meta">{emptyText}</p>}
 
-      {/* everything available is done: green tick */}
+      {/* everything available is done: a tick */}
       {outstanding.length === 0 && complete.length > 0 && (
-        <p style={{ color: '#198754', fontWeight: 'bold' }}>
-          <i className="bi bi-check-circle-fill" aria-hidden="true" /> {doneText}
+        <p className="learn-progress__done">
+          <i className="bi bi-check-circle-fill learn-status--complete" aria-hidden="true" /> {doneText}
         </p>
       )}
       {/* items exist but none are available yet (all coming soon): neutral, not a tick */}
       {items.length > 0 && outstanding.length === 0 && complete.length === 0 && (
-        <p style={{ color: '#495057', margin: 0 }}>None available yet.</p>
+        <p className="learn-progress__meta">
+          None available yet. <ComingSoon />
+        </p>
       )}
 
       {outstanding.length > 0 && (
-        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-          {outstanding.map((item) => (
-            <li key={item.href ?? item.title} style={{ padding: '0.35rem 0', borderBottom: '1px solid #e9ecef' }}>
-              {item.href ? <Link href={item.href}>{item.title}</Link> : item.title}{' '}
-              <Badge color={STATUS[item.status].color} pill>
-                {STATUS[item.status].text}
-                {item.status === 'in-progress' && typeof item.score === 'number' ? ` · ${pct(item.score)}` : ''}
-              </Badge>
-            </li>
-          ))}
+        <ul className="learn-list learn-progress__list">
+          {outstanding.map((item) => {
+            const content = (
+              <>
+                <span className="learn-row__lesson">
+                  <StatusIcon status={item.status} />
+                  {item.title}
+                </span>
+                <span className="learn-row__meta">
+                  {STATUS_TEXT[item.status]}
+                  {item.status === 'in-progress' && typeof item.score === 'number' && <span className="learn-pill">{pct(item.score)}</span>}
+                  {item.href && <i className="bi bi-chevron-right" aria-hidden="true" />}
+                </span>
+              </>
+            );
+            return (
+              <li key={item.href ?? item.title}>
+                {item.href ? (
+                  <Link href={item.href} className="learn-row">
+                    {content}
+                  </Link>
+                ) : (
+                  <span className="learn-row">{content}</span>
+                )}
+              </li>
+            );
+          })}
         </ul>
       )}
 
       {(complete.length > 0 || comingSoon.length > 0) && outstanding.length > 0 && (
-        <p style={{ fontSize: '0.85rem', color: '#6c757d', margin: '0.5rem 0 0' }}>
+        <p className="learn-progress__covers">
           {complete.length > 0 && `✓ ${complete.length} complete`}
           {complete.length > 0 && comingSoon.length > 0 && ' · '}
           {comingSoon.length > 0 && `${comingSoon.length} coming soon`}
         </p>
       )}
       {comingSoon.length > 0 && outstanding.length === 0 && (
-        <p style={{ fontSize: '0.85rem', color: '#6c757d', margin: 0 }}>{comingSoon.length} more coming soon.</p>
+        <p className="learn-progress__covers">{comingSoon.length} more coming soon.</p>
       )}
     </div>
   );

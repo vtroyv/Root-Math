@@ -41,6 +41,8 @@ The order tasks make 10 and 11 easier than a written proof would. Swap them for 
 | **Landing** (`/learn`, `LearnCourses.js`) | "Welcome back", a qualification filter, and cards grouped by qualification and year. Each card has a teal header, an icon, a progress ring (% of built lessons complete) and Start/Continue. Courses with no lessons show "Coming soon". |
 | **Course page** (`/learn/<course>`) | Built from the database instead of hand-written cards. A header with a ring and **Continue: \<next lesson\>**, then topic cards with a progress bar and chapter rows ("2 of 4", ✓). Empty chapters are greyed out. Stats, Mechanics and Year 13 show their spec topics as coming soon (before, every course showed Year 12 Pure). |
 | **Chapter page** (`/learn/<course>/<chapter>`) | The same header, then one card per lesson group, with a status icon for each lesson. |
+| **Reviews** (`/learn/reviews`) | The same header panel: the number of cards due and **Start with \<most overdue\>**. A Questions / Lessons toggle with badges, then Course and Skill filters built from the student's own courses (replacing Year + Course). The due list is a card with a row per item (course and skill underneath, a card-count pill and how overdue), replacing the table. See [reviews-page.md](reviews-page.md). |
+| **Progress** (`/learn/progress`) | The same header panel, with an overall mastery ring, **Level · Rank** and questions complete. A course picker built from the student's own courses. Every panel (radar, Insight, Outstanding reviews, How to improve, what's left) is a teal-header card, and the breakdown uses the chapter page's rows and status icons. The hard-coded `SUBSCRIBED_COURSES` list is gone. See [progress-page.md](progress-page.md) section 8. |
 
 **New code**
 - [courses/courses.js](../courses/courses.js): the course list; `coursesForUser` (reads Clerk `publicMetadata.courses`, and anyone without it sees every course); and `courseOutline`, which works out every lesson's status. The landing, course and chapter numbers all come from this one function.
@@ -57,7 +59,6 @@ The order tasks make 10 and 11 easier than a written proof would. Swap them for 
 ## 4. Known issues and next steps
 
 - The **Exam** filter in `QuestionTable.js` (line 357) looks for `"exam"`, but questions use `"Exam"`, so it shows nothing.
-- The **Progress page** still uses the hard-coded `SUBSCRIBED_COURSES`. Switch it to `coursesForUser`.
 - The old chapter API (`/api/lessons/[collection]/[lessonContent]`, `useGetLessonContentQuery`) is now unused and can be deleted.
 - Adding lessons lowers a course's % (it's completed ÷ built lessons).
 - Subscriptions and billing don't exist yet: `publicMetadata.courses` is where billing should write.

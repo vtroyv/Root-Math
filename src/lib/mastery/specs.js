@@ -249,11 +249,5 @@ export const SPECS = {
 
 export const DEFAULT_SPEC_ID = 'edx-maths-1';
 
-/*
-Courses offered in the Progress page toggle, grouped by year.
-TODO: replace with the courses the student is actually subscribed to once subscriptions exist.
-*/
-export const SUBSCRIBED_COURSES = [
-  { year: 'Year 12', courses: [{ id: 'edx-maths-1', label: 'Pure' }, { id: 'edx-stats-1', label: 'Statistics' }, { id: 'edx-mech-1', label: 'Mechanics' }] },
-  { year: 'Year 13', courses: [{ id: 'edx-maths-2', label: 'Pure' }, { id: 'edx-stats-2', label: 'Statistics' }, { id: 'edx-mech-2', label: 'Mechanics' }] },
-];
+// The courses each student sees (the Progress page's course picker included) come from coursesForUser in
+// src/lib/courses/courses.js, which replaced the hard-coded SUBSCRIBED_COURSES list on 25 Oct 2026.
