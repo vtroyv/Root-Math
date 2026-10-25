@@ -1,0 +1,100 @@
+{
+  "title": "Which-Is-Bigger-Without-A-Calculator",
+  "type": "combination",
+  "schemaVersion": 2,
+  "topic": "Binomial Expansion",
+  "difficulty": "Challenge",
+  "branch": "pure",
+  "examBoard": "all",
+  "year": "12",
+  "stem": [
+    { "type": "paragraph", "content": "Without a calculator, determine which is larger: $$1000^{1000} \\quad \\text{or} \\quad 1001^{999}$$" }
+  ],
+  "parts": [
+    {
+      "type": "choice",
+      "label": "(a)",
+      "prompt": "Make your prediction. Which is larger?",
+      "options": [
+        { "id": "A", "content": "$1000^{1000}$", "correct": true, "why": "Correct! Now let's prove it." },
+        { "id": "B", "content": "$1001^{999}$", "why": "It's tempting because $1001$ is the bigger base, but the extra power of $1000$ matters more. The rest of the question proves it." },
+        { "id": "C", "content": "They're equal", "why": "$1000^{1000}$ is even and $1001^{999}$ is odd, so they can't be equal." }
+      ],
+      "hint": [
+        { "type": "paragraph", "content": "Try a smaller version first: which is larger, $10^{10}$ or $11^9$?" }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "$1000^{1000}$ is larger. The rest of the question proves it." }
+      ]
+    },
+    {
+      "type": "answer",
+      "label": "(b)",
+      "prompt": "The proof uses the expansion of $(1+0.001)^{999}$. How many terms does this expansion have?",
+      "template": "\\placeholder[ans]{}\\text{ terms}",
+      "blanks": {
+        "ans": {
+          "answer": "1000",
+          "exactForm": true,
+          "feedback": "The expansion of $(a+b)^n$ has one more term than its power."
+        }
+      },
+      "hint": [
+        { "type": "paragraph", "content": "$(a+b)^n$ has terms for $r = 0, 1, 2, \\ldots, n$." }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "The terms are $\\binom{999}{r}(0.001)^r$ for $r = 0, 1, \\ldots, 999$: that's $1000$ terms." }
+      ]
+    },
+    {
+      "type": "order",
+      "label": "(c)",
+      "prompt": "Build the proof by putting the lines in order. Two of the lines don't belong.",
+      "marks": 3,
+      "lines": [
+        "Compare them by dividing: $\\frac{1001^{999}}{1000^{1000}} = \\frac{1}{1000}\\left(\\frac{1001}{1000}\\right)^{999} = \\frac{1.001^{999}}{1000}$",
+        "Expand $(1+0.001)^{999}$: it has $1000$ terms, $\\binom{999}{r}(0.001)^r$ for $r = 0, 1, \\ldots, 999$",
+        "The $r = 0$ term is $1$. For $r \\geq 1$, $\\binom{999}{r} \\leq \\frac{999^r}{r!}$, so $\\binom{999}{r}(0.001)^r \\leq \\frac{1}{r!}\\left(\\frac{999}{1000}\\right)^r < 1$",
+        "So the $1000$ terms add up to less than $1000$: $1.001^{999} < 1000$",
+        "Therefore $\\frac{1001^{999}}{1000^{1000}} < 1$, so $1000^{1000}$ is larger"
+      ],
+      "distractors": [
+        "Since $1001 > 1000$, $1001^{999} > 1000^{999}$, so $1001^{999}$ is larger",
+        "Every term of the expansion is less than $1$, including the first term"
+      ],
+      "hint": [
+        { "type": "paragraph", "content": "Start by turning the comparison into one number: divide one by the other. Then show that number is less than $1$ using the expansion. How big can each term be?" }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "$$\\frac{1001^{999}}{1000^{1000}} = \\frac{1.001^{999}}{1000}$$ so we need to show $1.001^{999} < 1000$." },
+        { "type": "paragraph", "content": "$(1+0.001)^{999}$ has $1000$ terms. The first is $1$, and for $r \\geq 1$, $\\binom{999}{r} \\leq \\frac{999^r}{r!}$, so each term $\\binom{999}{r}(0.001)^r \\leq \\frac{1}{r!}\\left(\\frac{999}{1000}\\right)^r < 1$." },
+        { "type": "paragraph", "content": "So the $1000$ terms add up to less than $1000$, which means $\\frac{1001^{999}}{1000^{1000}} < 1$ and $1000^{1000}$ is larger." },
+        { "type": "paragraph", "content": "Comparing $1001^{999}$ with $1000^{999}$ is true but doesn't help, because $1000^{1000}$ has an extra factor of $1000$. And the first term of the expansion is exactly $1$, not less than $1$." }
+      ]
+    }
+  ],
+  "review": [
+    {
+      "id": "compare-by-dividing",
+      "type": "flip",
+      "front": [
+        { "type": "paragraph", "content": "How do you compare two huge powers like $1000^{1000}$ and $1001^{999}$ without a calculator?" }
+      ],
+      "back": [
+        { "type": "bold-paragraph", "content": "Divide one by the other and show the result is less than (or more than) $1$." },
+        { "type": "paragraph", "content": "Here $\\frac{1001^{999}}{1000^{1000}} = \\frac{1.001^{999}}{1000}$, and the binomial expansion shows $1.001^{999} < 1000$." }
+      ]
+    },
+    {
+      "id": "terms-bound",
+      "type": "flip",
+      "front": [
+        { "type": "paragraph", "content": "Why is $1.001^{999} < 1000$?" }
+      ],
+      "back": [
+        { "type": "bold-paragraph", "content": "Its expansion has $1000$ terms: the first is $1$ and the rest are each less than $1$." },
+        { "type": "paragraph", "content": "Each term is $\\binom{999}{r}(0.001)^r \\leq \\frac{1}{r!}\\left(\\frac{999}{1000}\\right)^r$." }
+      ]
+    }
+  ]
+}

@@ -9,7 +9,7 @@ GET /api/reviews/due?today=YYYY-MM-DD
 Every question and lesson the signed-in student has unlocked review cards for, across all
 courses, with how many cards are due and the course and skill each belongs to:
   { questions: [...], lessons: [...] }   (entry shapes: src/lib/reviews/due.js)
-The reviews page, the REVIEWS nav count and the Skill Radar's Outstanding reviews card all
+The reviews page, the REVIEWS nav count and the Progress page's Outstanding reviews card all
 read this, filtering in the browser.
 */
 export async function GET(request) {

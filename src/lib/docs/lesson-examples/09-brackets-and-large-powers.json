@@ -1,0 +1,868 @@
+{
+  "slug": "brackets-and-large-powers",
+  "title": "Brackets and Large Powers",
+  "next": "binomial-estimation",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "The Binomial Expansion",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Up until now we've used Pascal's triangle to find the coefficients of $(x+y)^n$, and $\\binom{n}{r}$ to find any number in the triangle directly. Now we'll put the two together into one formula that expands any binomial, however large the power: the binomial expansion."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "The binomial expansion formula"
+        },
+        {
+          "type": "paragraph",
+          "content": "For a positive whole number $n$, the expansion of $(a+b)^n$ is: $$\\small (a+b)^n = a^n + \\binom{n}{1}a^{n-1}b + \\binom{n}{2}a^{n-2}b^2 + \\cdots + \\binom{n}{r}a^{n-r}b^r + \\cdots + b^n$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Each term has two important parts:"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "The powers of $a$ go down from $n$ to $0$ and the powers of $b$ go up from $0$ to $n$. In every term they add up to $n$.",
+            "The coefficient in front of each term is a binomial coefficient, $\\binom{n}{r}$, where $r$ is the power of $b$."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "Remember: $$\\binom{n}{r} = \\frac{n!}{r!\\,(n-r)!}$$ These are exactly the numbers in row $n$ of Pascal's triangle."
+        },
+        {
+          "type": "paragraph",
+          "content": "This formula is in the formula booklet, so you don't have to memorise it, but you do need to be able to use it quickly and accurately."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example 1: expanding $(x+1)^3$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Here $n=3$, $a=x$ and $b=1$."
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "For $r=0$: $\\binom{3}{0}x^3(1)^0 = x^3$",
+            "For $r=1$: $\\binom{3}{1}x^2(1)^1 = 3x^2$",
+            "For $r=2$: $\\binom{3}{2}x^1(1)^2 = 3x$",
+            "For $r=3$: $\\binom{3}{3}x^0(1)^3 = 1$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "So the full expansion is: $$(x+1)^3 = x^3 + 3x^2 + 3x + 1$$"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example 2: expanding $(2x-3)^4$"
+        },
+        {
+          "type": "paragraph",
+          "content": "This time $n=4$, $a=2x$ and $b=-3$. Put brackets around $a$ and $b$, and keep the minus sign with the $3$."
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "For $r=0$: $\\binom{4}{0}(2x)^4(-3)^0 = 1 \\cdot 16x^4 = 16x^4$",
+            "For $r=1$: $\\binom{4}{1}(2x)^3(-3)^1 = 4 \\cdot 8x^3 \\cdot (-3) = -96x^3$",
+            "For $r=2$: $\\binom{4}{2}(2x)^2(-3)^2 = 6 \\cdot 4x^2 \\cdot 9 = 216x^2$",
+            "For $r=3$: $\\binom{4}{3}(2x)^1(-3)^3 = 4 \\cdot 2x \\cdot (-27) = -216x$",
+            "For $r=4$: $\\binom{4}{4}(2x)^0(-3)^4 = 1 \\cdot 81 = 81$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "So the expansion is: $$\\small (2x-3)^4 = 16x^4 - 96x^3 + 216x^2 - 216x + 81$$"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Ascending powers of $x$"
+        },
+        {
+          "type": "paragraph",
+          "content": "For large powers, exam questions usually ask for just the first few terms \"in ascending powers of $x$\". That means starting with the constant term, then $x$, then $x^2$, and so on. Choose $a$ and $b$ so that the number comes first: for $(2+3x)^5$, $a = 2$ and $b = 3x$. $$\\begin{aligned}(2+3x)^5 &= 2^5 + \\binom{5}{1}2^4(3x) + \\binom{5}{2}2^3(3x)^2 + \\cdots \\\\ &= 32 + 240x + 720x^2 + \\cdots\\end{aligned}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Now that you've seen how the binomial expansion works, it's time to work through the following tasks."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "spot-the-term",
+          "type": "choice",
+          "title": "Spot the term",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Which of these is a term in the expansion of $(a+b)^6$?",
+          "options": [
+            {
+              "id": "A",
+              "content": "$15a^4b^2$",
+              "correct": true,
+              "why": "Correct: the powers add up to $6$, and $\\binom{6}{2} = 15$."
+            },
+            {
+              "id": "B",
+              "content": "$15a^4b^3$",
+              "why": "The powers add up to $7$, but in $(a+b)^6$ they must add up to $6$."
+            },
+            {
+              "id": "C",
+              "content": "$6a^4b^2$",
+              "why": "The powers are right, but the coefficient of $a^4b^2$ is $\\binom{6}{2} = 15$, not $6$."
+            },
+            {
+              "id": "D",
+              "content": "$20a^2b^4$",
+              "why": "The powers are right, but the coefficient is $\\binom{6}{4} = 15$. $20$ is $\\binom{6}{3}$, the coefficient of $a^3b^3$."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Check two things: do the powers add up to $6$, and is the coefficient $\\binom{6}{r}$, where $r$ is the power of $b$?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "The term with $b^2$ is $\\binom{6}{2}a^4b^2 = 15a^4b^2$."
+            }
+          ]
+        },
+        {
+          "id": "expand-x-plus-2",
+          "type": "answer",
+          "title": "A full expansion",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Use the binomial expansion to expand $(x+2)^4$.",
+          "template": "(x+2)^4=x^4+\\placeholder[a]{}x^3+\\placeholder[b]{}x^2+\\placeholder[c]{}x+\\placeholder[d]{}",
+          "blanks": {
+            "a": {
+              "answer": "8"
+            },
+            "b": {
+              "answer": "24"
+            },
+            "c": {
+              "answer": "32"
+            },
+            "d": {
+              "answer": "16",
+              "feedback": "The last term is $\\binom{4}{4}(2)^4$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "$a = x$ and $b = 2$. The terms are $\\binom{4}{r}x^{4-r}(2)^r$ for $r = 0, 1, 2, 3, 4$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\begin{aligned}(x+2)^4 &= x^4 + \\binom{4}{1}x^3(2) + \\binom{4}{2}x^2(2)^2 + \\binom{4}{3}x(2)^3 + (2)^4 \\\\ &= x^4 + 8x^3 + 24x^2 + 32x + 16\\end{aligned}$$"
+            }
+          ]
+        },
+        {
+          "id": "ascending-3-plus-2x",
+          "type": "answer",
+          "title": "Ascending powers",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Find the first three terms, in ascending powers of $x$, of the expansion of $(3+2x)^5$.",
+          "template": "(3+2x)^5=\\placeholder[a]{}+\\placeholder[b]{}x+\\placeholder[c]{}x^2+\\cdots",
+          "blanks": {
+            "a": {
+              "answer": "243"
+            },
+            "b": {
+              "answer": "810",
+              "feedback": "The $x$ term is $\\binom{5}{1}(3)^4(2x)$."
+            },
+            "c": {
+              "answer": "1080",
+              "feedback": "The $x^2$ term is $\\binom{5}{2}(3)^3(2x)^2$. Did you square the $2$ as well as the $x$?"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Here $a = 3$ and $b = 2x$. Work out the terms for $r = 0$, $1$ and $2$, and remember $(2x)^2 = 4x^2$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\begin{aligned}(3+2x)^5 &= 3^5 + \\binom{5}{1}3^4(2x) + \\binom{5}{2}3^3(2x)^2 + \\cdots \\\\ &= 243 + 5 \\cdot 81 \\cdot 2x + 10 \\cdot 27 \\cdot 4x^2 + \\cdots \\\\ &= 243 + 810x + 1080x^2 + \\cdots\\end{aligned}$$"
+            }
+          ]
+        },
+        {
+          "id": "ascending-fraction",
+          "type": "answer",
+          "title": "Fractions and minus signs",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Find the first three terms, in ascending powers of $x$, of the expansion of $\\left(1-\\frac{x}{2}\\right)^8$.",
+          "template": "\\left(1-\\frac{x}{2}\\right)^8=1+\\placeholder[b]{}x+\\placeholder[c]{}x^2+\\cdots",
+          "blanks": {
+            "b": {
+              "answer": "-4",
+              "feedback": "$\\binom{8}{1}\\left(-\\frac{x}{2}\\right) = 8 \\times \\left(-\\frac{x}{2}\\right)$. Keep the minus sign."
+            },
+            "c": {
+              "answer": "7",
+              "feedback": "$\\left(-\\frac{x}{2}\\right)^2 = \\frac{x^2}{4}$, and $\\binom{8}{2} = 28$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Here $a = 1$ and $b = -\\frac{x}{2}$. Powers of $1$ are always $1$, so each term is just $\\binom{8}{r}\\left(-\\frac{x}{2}\\right)^r$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\begin{aligned}\\left(1-\\tfrac{x}{2}\\right)^8 &= 1 + \\binom{8}{1}\\left(-\\tfrac{x}{2}\\right) + \\binom{8}{2}\\left(-\\tfrac{x}{2}\\right)^2 + \\cdots \\\\ &= 1 + 8\\left(-\\tfrac{x}{2}\\right) + 28\\left(\\tfrac{x^2}{4}\\right) + \\cdots \\\\ &= 1 - 4x + 7x^2 + \\cdots\\end{aligned}$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "The General Term",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "In part 1 we used the full formula to expand $(a+b)^n$. But often we don't need the entire expansion, just one specific term or coefficient. To do this, we use the general term."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "The general term"
+        },
+        {
+          "type": "paragraph",
+          "content": "In the expansion of $(a+b)^n$, the general term is: $$\\binom{n}{r} a^{n-r}b^r$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Here $r$ starts from $0$, so the 1st term has $r=0$ (all $a$'s), the 2nd term has $r = 1$, and the last term has $r=n$ (all $b$'s). The term with $b^r$ in it is always the $(r+1)^{\\text{th}}$ term."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Why does this formula work?"
+        },
+        {
+          "type": "paragraph",
+          "content": "When expanding $(a+b)^n$, we are multiplying $n$ identical brackets. To get a term with $b^r$, we choose $b$ from exactly $r$ brackets and $a$ from the remaining $n-r$ brackets. The number of ways to choose which brackets give $b$ is $\\binom{n}{r}$, which is why it's the coefficient."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example 1: the 3rd term in $(x+2)^5$"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "General term: $\\binom{n}{r} a^{n-r} b^r$",
+            "Here $n=5$, $a=x$ and $b=2$",
+            "For the 3rd term, $r=2$ (remember we start from $r=0$, so $r=2$ is the 3rd term)",
+            "$\\binom{5}{2}x^{5-2}(2)^2 = 10x^3 \\cdot 4 = 40x^3$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "So the 3rd term in the expansion of $(x+2)^5$ is $40x^3$."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example 2: finding an unknown"
+        },
+        {
+          "type": "paragraph",
+          "content": "Exam questions often turn this around. In the expansion of $(1+kx)^5$, the coefficient of $x^2$ is $40$. Find the possible values of $k$."
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "The $x^2$ term has $r = 2$: $\\binom{5}{2}(1)^3(kx)^2 = 10k^2x^2$",
+            "So the coefficient is $10k^2$, and $10k^2 = 40$",
+            "$k^2 = 4$, so $k = 2$ or $k = -2$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "Notice that $(kx)^2 = k^2x^2$: the $k$ is squared too. Forgetting this is one of the most common mistakes."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "which-r",
+          "type": "choice",
+          "title": "Which value of r?",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Using the general term $\\binom{8}{r}2^{8-r}x^r$ for $(2+x)^8$, which value of $r$ gives the term in $x^5$?",
+          "options": [
+            {
+              "id": "A",
+              "content": "$r = 5$",
+              "correct": true,
+              "why": "Correct: $r$ is the power of $b = x$, so the $x^5$ term has $r = 5$."
+            },
+            {
+              "id": "B",
+              "content": "$r = 3$",
+              "why": "$r = 3$ makes the power of $2$ equal to $5$, but you want the power of $x$ to be $5$."
+            },
+            {
+              "id": "C",
+              "content": "$r = 6$",
+              "why": "The $x^5$ term is the 6th term, but $r$ starts at $0$, so it has $r = 5$."
+            },
+            {
+              "id": "D",
+              "content": "$r = 4$",
+              "why": "The power of $x$ is $r$, so $r = 4$ gives the $x^4$ term."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "In $\\binom{n}{r}a^{n-r}b^r$, the power of $b$ is $r$. What is $b$ here?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$b = x$ and its power is $r$, so the $x^5$ term has $r = 5$: $\\binom{8}{5}2^3x^5 = 448x^5$."
+            }
+          ]
+        },
+        {
+          "id": "fourth-term",
+          "type": "answer",
+          "title": "Find a term",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Find the 4th term in the expansion of $(x+3)^6$.",
+          "template": "\\text{4th term}=\\placeholder[k]{}x^3",
+          "blanks": {
+            "k": {
+              "answer": "540",
+              "feedback": "The 4th term has $r = 3$: $\\binom{6}{3}x^3(3)^3$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "The 4th term has $r = 3$, because $r$ starts at $0$. Use $\\binom{6}{3}x^{6-3}(3)^3$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\binom{6}{3}x^3(3)^3 = 20 \\times 27x^3 = 540x^3$$"
+            }
+          ]
+        },
+        {
+          "id": "coefficient-x3",
+          "type": "answer",
+          "title": "An exam favourite",
+          "instructions": "Fill in the box, then press Submit. You may use a calculator.",
+          "prompt": "Find the coefficient of the $x^3$ term in the expansion of $(2-3x)^7$.",
+          "template": "\\text{coefficient of }x^3=\\placeholder[k]{}",
+          "blanks": {
+            "k": {
+              "answer": "-15120",
+              "feedback": "The $x^3$ term is $\\binom{7}{3}(2)^4(-3x)^3$. Check the sign: $(-3)^3$ is negative."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "$a = 2$, $b = -3x$ and $r = 3$. Cube all of $-3x$, including the minus sign."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\binom{7}{3}(2)^4(-3x)^3 = 35 \\times 16 \\times (-27x^3) = -15120x^3$$ So the coefficient is $-15120$."
+            }
+          ]
+        },
+        {
+          "id": "find-k",
+          "type": "answer",
+          "title": "Find the unknown",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "In the expansion of $(1+kx)^6$, where $k$ is a positive constant, the coefficient of $x^2$ is $135$. Find $k$.",
+          "template": "k=\\placeholder[k]{}",
+          "blanks": {
+            "k": {
+              "answer": "3",
+              "feedback": "The $x^2$ term is $\\binom{6}{2}(kx)^2 = 15k^2x^2$, so $15k^2 = 135$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Write down the $x^2$ term in terms of $k$, then set its coefficient equal to $135$. Remember $(kx)^2 = k^2x^2$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "The $x^2$ term is $\\binom{6}{2}(1)^4(kx)^2 = 15k^2x^2$. So $15k^2 = 135$, $k^2 = 9$, and since $k$ is positive, $k = 3$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Products and Harder Questions",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Sometimes the binomial is multiplied by another bracket, or the bracket has an $x$ on the bottom of a fraction. The general term still does all the work: you just have to think about which terms you need."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example 1: find the coefficient of $x^3$ in $(7+2x)(4-5x)^8$"
+        },
+        {
+          "type": "paragraph",
+          "content": "When we multiply out, an $x^3$ term can come from two places, so we need both and then add them."
+        },
+        {
+          "type": "paragraph",
+          "content": "$\\textcolor{#17a2b8}{\\textbf{Step 1:}}$ Which terms of $(4-5x)^8$ do we need? The $7$ multiplied by the $x^3$ term gives $x^3$, and the $2x$ multiplied by the $x^2$ term also gives $x^3$. Using the general term with $n=8$, $a=4$ and $b=-5x$:"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "$x^2$ term ($r=2$): $\\binom{8}{2} (4)^{6} (-5x)^{2} = 2867200x^2$",
+            "$x^3$ term ($r=3$): $\\binom{8}{3}(4)^{5}(-5x)^3 = -7168000x^3$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "$\\textcolor{#17a2b8}{\\textbf{Step 2:}}$ Multiply by the matching terms of $(7+2x)$:"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "$7 \\times (-7168000x^3) = -50176000x^3$",
+            "$2x \\times 2867200x^2 = 5734400x^3$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "$\\textcolor{#17a2b8}{\\textbf{Step 3:}}$ Add them together: $$-50176000x^3 + 5734400x^3 = -44441600x^3$$ So the coefficient of $x^3$ is $-44441600$."
+        },
+        {
+          "type": "paragraph",
+          "content": "If this felt hard to follow, don't worry. You'd get exactly the same answer by fully expanding $(4-5x)^8$ and multiplying through by $(7+2x)$. We only skipped that to save time: the $x^4, x^5, x^6, \\ldots$ terms can't make an $x^3$, so we don't need them."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example 2: the term independent of $x$"
+        },
+        {
+          "type": "paragraph",
+          "content": "\"Independent of $x$\" means the constant term: the term with no $x$ in it. Find it for $\\left(x+\\frac{2}{x}\\right)^6$."
+        },
+        {
+          "type": "paragraph",
+          "content": "The general term is $\\binom{6}{r}x^{6-r}\\left(\\frac{2}{x}\\right)^r = \\binom{6}{r}2^r x^{6-r}x^{-r} = \\binom{6}{r}2^r x^{6-2r}$."
+        },
+        {
+          "type": "paragraph",
+          "content": "There's no $x$ when the power is $0$: $6 - 2r = 0$, so $r = 3$. The term is $\\binom{6}{3}2^3 = 20 \\times 8 = 160$."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "product-1",
+          "type": "answer",
+          "title": "Two places to look",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Find the coefficient of $x^2$ in the expansion of $(1+2x)(1-x)^6$.",
+          "template": "\\text{coefficient of }x^2=\\placeholder[k]{}",
+          "blanks": {
+            "k": {
+              "answer": "3",
+              "feedback": "You need two terms of $(1-x)^6$: the $x^2$ term (times $1$) and the $x$ term (times $2x$)."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "$(1-x)^6 = 1 - 6x + 15x^2 + \\cdots$. Which pairs of terms multiply to give $x^2$?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$(1-x)^6 = 1 - 6x + 15x^2 + \\cdots$"
+            },
+            {
+              "type": "paragraph",
+              "content": "$1 \\times 15x^2 = 15x^2$ and $2x \\times (-6x) = -12x^2$. Adding them: $15 - 12 = 3$."
+            }
+          ]
+        },
+        {
+          "id": "product-2",
+          "type": "answer",
+          "title": "Your turn",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Find the coefficient of $x^2$ in the expansion of $(3-x)(1+2x)^5$.",
+          "template": "\\text{coefficient of }x^2=\\placeholder[k]{}",
+          "blanks": {
+            "k": {
+              "answer": "110",
+              "feedback": "From $(1+2x)^5$ you need the $x$ term, $10x$, and the $x^2$ term, $40x^2$. Watch the minus sign on the $-x$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Find the $x$ and $x^2$ terms of $(1+2x)^5$ first. Then the $3$ goes with the $x^2$ term and the $-x$ goes with the $x$ term."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$(1+2x)^5 = 1 + \\binom{5}{1}(2x) + \\binom{5}{2}(2x)^2 + \\cdots = 1 + 10x + 40x^2 + \\cdots$"
+            },
+            {
+              "type": "paragraph",
+              "content": "$3 \\times 40x^2 = 120x^2$ and $-x \\times 10x = -10x^2$. Adding them: $120 - 10 = 110$."
+            }
+          ]
+        },
+        {
+          "id": "independent-term",
+          "type": "answer",
+          "title": "Independent of x",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Find the term independent of $x$ in the expansion of $\\left(2x+\\frac{1}{x}\\right)^4$.",
+          "template": "\\text{term independent of }x=\\placeholder[k]{}",
+          "blanks": {
+            "k": {
+              "answer": "24",
+              "feedback": "The general term is $\\binom{4}{r}(2x)^{4-r}\\left(\\frac{1}{x}\\right)^r$. The power of $x$ is $4 - 2r$, which is $0$ when $r = 2$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Write the general term and simplify the power of $x$. Which $r$ makes it $0$? Don't forget $2x$ is raised to a power too."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "The general term is $\\binom{4}{r}(2x)^{4-r}x^{-r} = \\binom{4}{r}2^{4-r}x^{4-2r}$. The power is $0$ when $r = 2$:"
+            },
+            {
+              "type": "paragraph",
+              "content": "$$\\binom{4}{2}2^2 = 6 \\times 4 = 24$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Binomial Probabilities",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "The binomial expansion is also very important in statistics and probability. Why? Because the same numbers we've been using as coefficients also appear in probability problems."
+        },
+        {
+          "type": "paragraph",
+          "content": "Imagine you flip a coin $n$ times. Each flip is either a Head (H) or a Tail (T). To find the probability of getting exactly $r$ Heads, you need to count how many different ways $r$ Heads can appear in $n$ flips."
+        },
+        {
+          "type": "paragraph",
+          "content": "That's exactly what $\\binom{n}{r}$ tells us: the number of ways of choosing which $r$ of the $n$ flips are Heads."
+        },
+        {
+          "type": "paragraph",
+          "content": "If the probability of a Head is $p$, the probability of a Tail is $1-p$. One particular order with $r$ Heads and $n-r$ Tails, like HHTTT, has probability $p^r(1-p)^{n-r}$. There are $\\binom{n}{r}$ different orders, so:"
+        },
+        {
+          "type": "bold-paragraph",
+          "content": "$$P(\\text{exactly } r \\text{ Heads}) = \\binom{n}{r} p^r (1-p)^{n-r}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Notice that this is exactly a term in the expansion of $\\left((1-p) + p\\right)^n$. The binomial expansion and binomial probabilities are the same idea, seen in different contexts."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example 1"
+        },
+        {
+          "type": "paragraph",
+          "content": "You flip a fair coin 4 times. What is the probability of getting exactly 2 Heads? Here $n=4$, $r=2$ and $p=0.5$: $$P(2 \\text{ Heads}) = \\binom{4}{2}(0.5)^2(0.5)^2 = 6 \\times 0.25 \\times 0.25 = 0.375$$ So there's a $37.5\\%$ chance of exactly 2 Heads."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example 2: it works for any probability"
+        },
+        {
+          "type": "paragraph",
+          "content": "You roll a fair dice 5 times. What is the probability of getting exactly 2 sixes? A six is a \"success\", so $p = \\frac{1}{6}$ and $1 - p = \\frac{5}{6}$: $$P(2 \\text{ sixes}) = \\binom{5}{2}\\left(\\frac{1}{6}\\right)^2\\left(\\frac{5}{6}\\right)^3 = 10 \\times \\frac{1}{36} \\times \\frac{125}{216} = 0.161 \\text{ (3 s.f.)}$$"
+        },
+        {
+          "type": "accordion",
+          "title": "If you're interested in why this works",
+          "children": [
+            {
+              "type": "paragraph",
+              "content": "Each trial (success or failure) is like picking either the $p$ or the $(1-p)$ from one bracket of $\\left((1-p) + p\\right)^n$. The coefficient $\\binom{n}{r}$ counts how many ways you can pick $p$ from exactly $r$ brackets, and the powers of $p$ and $(1-p)$ track the probabilities of the successes and failures. And because $(1-p) + p = 1$, all the probabilities add up to $1^n = 1$, as they should!"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "If this feels confusing right now, that's completely okay! You'll study the binomial distribution in detail in statistics. For now, just remember:"
+        },
+        {
+          "type": "bold-paragraph",
+          "content": "The same coefficients from Pascal's triangle also count the number of ways successes can happen in probability problems."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "coin-flips",
+          "type": "answer",
+          "title": "Coin flips",
+          "instructions": "Fill in the box with a fraction or an exact decimal, then press Submit.",
+          "prompt": "A fair coin is flipped 5 times. Find the probability of getting exactly 2 Heads.",
+          "template": "P(2\\text{ Heads})=\\placeholder[p]{}",
+          "blanks": {
+            "p": {
+              "answer": "\\frac{5}{16}",
+              "feedback": "There are $\\binom{5}{2} = 10$ orders, and each one has probability $(0.5)^5 = \\frac{1}{32}$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Use $\\binom{n}{r}p^r(1-p)^{n-r}$ with $n = 5$, $r = 2$ and $p = 0.5$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\binom{5}{2}(0.5)^2(0.5)^3 = 10 \\times \\frac{1}{32} = \\frac{5}{16} = 0.3125$$"
+            }
+          ]
+        },
+        {
+          "id": "which-expression",
+          "type": "choice",
+          "title": "Choose the expression",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "A fair dice is rolled 10 times. Which expression gives the probability of getting exactly 3 sixes?",
+          "options": [
+            {
+              "id": "A",
+              "content": "$\\binom{10}{3}\\left(\\frac{1}{6}\\right)^3\\left(\\frac{5}{6}\\right)^7$",
+              "correct": true,
+              "why": "Correct: 3 sixes with probability $\\frac{1}{6}$ each, 7 non-sixes with probability $\\frac{5}{6}$ each, and $\\binom{10}{3}$ ways to arrange them."
+            },
+            {
+              "id": "B",
+              "content": "$\\left(\\frac{1}{6}\\right)^3\\left(\\frac{5}{6}\\right)^7$",
+              "why": "This is the probability of one particular order, like the first 3 rolls being sixes. You need to multiply by the number of orders, $\\binom{10}{3}$."
+            },
+            {
+              "id": "C",
+              "content": "$\\binom{10}{3}\\left(\\frac{1}{6}\\right)^7\\left(\\frac{5}{6}\\right)^3$",
+              "why": "The powers are swapped: this would be 7 sixes and 3 non-sixes."
+            },
+            {
+              "id": "D",
+              "content": "$\\binom{10}{3}\\left(\\frac{1}{6}\\right)^3$",
+              "why": "This leaves out the other 7 rolls, which must not be sixes."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Use $\\binom{n}{r}p^r(1-p)^{n-r}$. What are $n$, $r$ and $p$ here?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$n = 10$, $r = 3$ and $p = \\frac{1}{6}$, so the probability is $\\binom{10}{3}\\left(\\frac{1}{6}\\right)^3\\left(\\frac{5}{6}\\right)^7$."
+            }
+          ]
+        },
+        {
+          "id": "seeds",
+          "type": "answer",
+          "title": "Not just coins and dice",
+          "instructions": "Fill in the box with an exact decimal or fraction, then press Submit. You may use a calculator.",
+          "prompt": "The probability that a seed grows is $0.8$. Four seeds are planted. Find the probability that exactly 3 of them grow.",
+          "template": "P(\\text{exactly 3 grow})=\\placeholder[p]{}",
+          "blanks": {
+            "p": {
+              "answer": "0.4096",
+              "feedback": "Use $\\binom{4}{3}(0.8)^3(0.2)^1$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "A seed growing is a success, so $p = 0.8$ and $1 - p = 0.2$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\binom{4}{3}(0.8)^3(0.2) = 4 \\times 0.512 \\times 0.2 = 0.4096$$"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "review": [
+    {
+      "id": "general-term",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "What is the general term in the expansion of $(a+b)^n$?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "$\\binom{n}{r}a^{n-r}b^r$"
+        },
+        {
+          "type": "paragraph",
+          "content": "$r$ is the power of $b$ and starts at $0$, so it's the $(r+1)^{\\text{th}}$ term."
+        }
+      ]
+    },
+    {
+      "id": "a-and-b",
+      "type": "choice",
+      "prompt": "To expand $(2-3x)^7$ with $\\binom{n}{r}a^{n-r}b^r$, what are $a$ and $b$?",
+      "options": [
+        {
+          "id": "A",
+          "content": "$a = 2$, $b = -3x$",
+          "correct": true,
+          "why": "Correct: the minus sign belongs to the $3x$."
+        },
+        {
+          "id": "B",
+          "content": "$a = 2$, $b = 3x$",
+          "why": "The minus sign belongs to $b$: $b = -3x$. Otherwise every sign in the expansion is positive."
+        },
+        {
+          "id": "C",
+          "content": "$a = 2$, $b = -3$",
+          "why": "$b$ is the whole second term, including the $x$."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$b$ is the whole second term with its sign, so powers of $b$ are $(-3x)^r$."
+        }
+      ]
+    },
+    {
+      "id": "which-r",
+      "type": "answer",
+      "prompt": "Which value of $r$ gives the $x^3$ term of $(2+x)^9$, using $\\binom{9}{r}2^{9-r}x^r$?",
+      "template": "r=\\placeholder[r]{}",
+      "blanks": {
+        "r": {
+          "answer": "3"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$r$ is the power of $b = x$, so the $x^3$ term has $r = 3$."
+        }
+      ]
+    },
+    {
+      "id": "product-terms",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "To find the coefficient of $x^3$ in $(7+2x)(4-5x)^8$, which terms of $(4-5x)^8$ do you need?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "The $x^3$ term and the $x^2$ term."
+        },
+        {
+          "type": "paragraph",
+          "content": "$7 \\times$ (the $x^3$ term) and $2x \\times$ (the $x^2$ term) both give $x^3$. Add them together."
+        }
+      ]
+    },
+    {
+      "id": "probability",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "There are $n$ trials, each with probability $p$ of success. What is the probability of exactly $r$ successes?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "$\\binom{n}{r}p^r(1-p)^{n-r}$"
+        },
+        {
+          "type": "paragraph",
+          "content": "$\\binom{n}{r}$ counts the orders, and $p^r(1-p)^{n-r}$ is the probability of each one."
+        }
+      ]
+    }
+  ]
+}

@@ -1,8 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Modal } from 'reactstrap';
 import Link from 'next/link';
-import ReactPlayer from 'react-player';
 
 import Reveal from './Reveal';
 import Facts from './Facts';
@@ -11,6 +9,7 @@ import Courses from './Courses';
 import Faq from './Faq';
 import CallToAction from './CallToAction';
 import Footer from './Footer';
+import HowItWorks from './HowItWorks';
 
 const replaces = ['£40/hr tutors', '£30 textbooks', '20 open browser tabs'];
 
@@ -46,17 +45,9 @@ const LandingPage = () => {
 
   return (
     <div className="rm-landing">
-      <Modal isOpen={modalOpen} toggle={toggle} size="lg" centered>
-        <div style={{ aspectRatio: '16 / 9', width: '100%' }}>
-          <ReactPlayer
-            url="https://takamotoyagami.wistia.com/medias/2ci7172egn"
-            controls
-            playing
-            width="100%"
-            height="100%"
-          />
-        </div>
-      </Modal>
+      {/* "See how it works": a feature carousel for now, instead of a promotional video.
+          The Wistia video it used to play is https://takamotoyagami.wistia.com/medias/2ci7172egn */}
+      <HowItWorks isOpen={modalOpen} toggle={toggle} />
 
       {/* ---------------------------------------------------------------- hero */}
       <header className="rm-hero">

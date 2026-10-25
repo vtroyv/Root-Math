@@ -1,0 +1,659 @@
+{
+  "slug": "factorial-notation",
+  "title": "Factorial Notation",
+  "next": "brackets-and-large-powers",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "What is a Factorial?",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "So far we've seen how Pascal's triangle gives us the coefficients of $(x+y)^n$. But to expand something like $(x+2)^{20}$ you'd need to build the triangle all the way down to row 20, which is slow. Luckily, there's a shortcut that finds any number in the triangle directly, and it uses factorials."
+        },
+        {
+          "type": "paragraph",
+          "content": "A factorial means you multiply a number by every whole number below it, down to 1. It's written with an exclamation mark: $$n! = n \\times (n-1) \\times (n-2) \\times \\cdots \\times 2 \\times 1$$"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "$5! = 5 \\times 4 \\times 3 \\times 2 \\times 1 = 120$",
+            "$3! = 3 \\times 2 \\times 1 = 6$",
+            "$1! = 1$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "And here's an important special case: $0! = 1$. This is a definition mathematicians agreed on, and it makes all the formulas work out nicely. One way to see why it makes sense: $n! = n \\times (n-1)!$, so $1! = 1 \\times 0!$. Since $1! = 1$, that only works if $0! = 1$."
+        },
+        {
+          "type": "paragraph",
+          "content": "Factorials get big very quickly: $10! = 3\\,628\\,800$. Your calculator has an $x!$ button for them."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Dividing factorials"
+        },
+        {
+          "type": "paragraph",
+          "content": "When you divide one factorial by another, most of the numbers cancel, so you can often work it out without a calculator: $$\\frac{7!}{5!} = \\frac{7 \\times 6 \\times \\cancel{5 \\times 4 \\times 3 \\times 2 \\times 1}}{\\cancel{5 \\times 4 \\times 3 \\times 2 \\times 1}} = 7 \\times 6 = 42$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "You'll use this trick a lot in the rest of this lesson. Have a go at the tasks below, no calculators!"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "four-factorial",
+          "type": "answer",
+          "title": "Warm up",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Work out $4!$",
+          "template": "4!=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "24",
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "$4! = 4 \\times 3 \\times 2 \\times 1$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$4! = 4 \\times 3 \\times 2 \\times 1 = 24$"
+            }
+          ]
+        },
+        {
+          "id": "zero-factorial",
+          "type": "choice",
+          "title": "The special case",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "What is $0!$?",
+          "options": [
+            {
+              "id": "A",
+              "content": "$1$",
+              "correct": true,
+              "why": "Correct: $0! = 1$ by definition, which keeps $n! = n \\times (n-1)!$ true when $n = 1$."
+            },
+            {
+              "id": "B",
+              "content": "$0$",
+              "why": "It's tempting, but $0! = 1$. If it were $0$, then $1! = 1 \\times 0!$ would be $0$."
+            },
+            {
+              "id": "C",
+              "content": "It isn't defined",
+              "why": "It is defined: mathematicians agreed that $0! = 1$."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Use $1! = 1 \\times 0!$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$0! = 1$. It's a definition, and it's the only value that makes $1! = 1 \\times 0!$ true."
+            }
+          ]
+        },
+        {
+          "id": "divide-factorials",
+          "type": "answer",
+          "title": "Let them cancel",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Work out $\\frac{8!}{6!}$",
+          "template": "\\frac{8!}{6!}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "56",
+              "exactForm": true,
+              "feedback": "Everything from $6$ downwards cancels, leaving $8 \\times 7$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Write out $8! = 8 \\times 7 \\times 6 \\times 5 \\times \\cdots \\times 1$. Which part of it is $6!$?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{8!}{6!} = \\frac{8 \\times 7 \\times 6!}{6!} = 8 \\times 7 = 56$$"
+            }
+          ]
+        },
+        {
+          "id": "preview",
+          "type": "answer",
+          "title": "A preview",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Work out $\\frac{10!}{8! \\times 2!}$",
+          "template": "\\frac{10!}{8!\\times2!}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "45",
+              "exactForm": true,
+              "feedback": "$\\frac{10!}{8!} = 10 \\times 9 = 90$. Now divide by $2!$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Cancel the $8!$ first, then divide by $2! = 2$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{10!}{8! \\times 2!} = \\frac{10 \\times 9}{2 \\times 1} = \\frac{90}{2} = 45$$ You'll see why this calculation matters in the next part."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "n Choose r",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "So how do factorials connect to Pascal's triangle? Remember that the rows of Pascal's triangle match the coefficients in the expansion of $(x+y)^n$:"
+        },
+        {
+          "type": "paragraph",
+          "content": "$$\\begin{array}{rccccccccccccc} \\textcolor{gray}{\\text{row }0} &  &  &  &  &  & 1 &  &  &  &  &  &  &  \\\\ \\textcolor{gray}{\\text{row }1} &  &  &  &  & 1 &  & 1 &  &  &  &  &  &  \\\\ \\textcolor{gray}{\\text{row }2} &  &  &  & 1 &  & 2 &  & 1 &  &  &  &  &  \\\\ \\textcolor{gray}{\\text{row }3} &  &  & 1 &  & 3 &  & 3 &  & 1 &  &  &  &  \\\\ \\textcolor{gray}{\\text{row }4} &  & 1 &  & 4 &  & 6 &  & 4 &  & 1 &  &  &  \\\\ \\textcolor{gray}{\\text{row }5} & 1 &  & 5 &  & \\textcolor{#17a2b8}{10} &  & 10 &  & 5 &  & 1 &  &  \\\\ \\end{array}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "At first we said these numbers were just coefficients. But they have another meaning: they count how many different ways there are to make a choice."
+        },
+        {
+          "type": "paragraph",
+          "content": "When you expand $(x+y)^3 = (x+y)(x+y)(x+y)$, you pick an $x$ or a $y$ from each bracket and multiply. To get $xy^2$, you pick $y$ from 2 of the 3 brackets: brackets 1 and 2, 1 and 3, or 2 and 3. That's 3 ways, which is why the coefficient of $xy^2$ is 3."
+        },
+        {
+          "type": "paragraph",
+          "content": "In the same way, the highlighted $10$ in row 5 tells us there are 10 different ways to choose 2 brackets (to give a $y$) out of the 5 brackets in $(x+y)^5$. So each entry in Pascal's triangle is really counting the number of ways to choose."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "The formula"
+        },
+        {
+          "type": "paragraph",
+          "content": "The number of ways of choosing $r$ items from $n$ is written $^nC_r$ or $\\binom{n}{r}$, and is given by:"
+        },
+        {
+          "type": "bold-paragraph",
+          "content": "$$^nC_r = \\binom{n}{r} = \\frac{n!}{r!\\,(n-r)!}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "We read both as \"$n$ choose $r$\". They mean exactly the same thing. You'll see $\\binom{n}{r}$ a lot in the next lesson, so it's worth getting used to both."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example"
+        },
+        {
+          "type": "paragraph",
+          "content": "Let's check the $10$ in row 5 without using Pascal's triangle. We're choosing $2$ from $5$: $$^5C_2 = \\frac{5!}{2!\\,(5-2)!} = \\frac{5!}{2!\\,3!} = \\frac{120}{2 \\times 6} = 10$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Exactly what we expected! You can also cancel first, like in part 1: $\\frac{5!}{2!\\,3!} = \\frac{5 \\times 4}{2 \\times 1} = 10$."
+        },
+        {
+          "type": "paragraph",
+          "content": "On a calculator, look for the $nCr$ button (on many Casio models it's SHIFT then $\\div$). Type $n$, then $nCr$, then $r$. In these tasks, though, try it by hand first."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "four-choose-two",
+          "type": "answer",
+          "title": "Use the formula",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Work out $^4C_2$.",
+          "template": "{}^4C_2=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "6",
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "$^4C_2 = \\frac{4!}{2!\\,2!}$. Work out each factorial, then divide."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$^4C_2 = \\frac{4!}{2!\\,2!} = \\frac{24}{2 \\times 2} = 6$$ which matches the middle of row 4: $1, 4, 6, 4, 1$."
+            }
+          ]
+        },
+        {
+          "id": "six-choose-three",
+          "type": "answer",
+          "title": "The other notation",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Work out $\\binom{6}{3}$.",
+          "template": "\\binom{6}{3}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "20",
+              "exactForm": true,
+              "feedback": "$\\binom{6}{3} = \\frac{6!}{3!\\,3!}$. Cancel one $3!$ to get $\\frac{6 \\times 5 \\times 4}{3 \\times 2 \\times 1}$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "$\\binom{6}{3}$ means the same as $^6C_3 = \\frac{6!}{3!\\,3!}$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\binom{6}{3} = \\frac{6!}{3!\\,3!} = \\frac{6 \\times 5 \\times 4}{3 \\times 2 \\times 1} = \\frac{120}{6} = 20$$"
+            }
+          ]
+        },
+        {
+          "id": "what-it-counts",
+          "type": "choice",
+          "title": "What does it mean?",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "What does $^7C_3$ count?",
+          "options": [
+            {
+              "id": "A",
+              "content": "The number of ways to choose 3 items from 7",
+              "correct": true,
+              "why": "Correct: $^nC_r$ is the number of ways of choosing $r$ items from $n$."
+            },
+            {
+              "id": "B",
+              "content": "The number of ways to choose 7 items from 3",
+              "why": "The top number, $n$, is how many there are to choose from, so it's 3 from 7."
+            },
+            {
+              "id": "C",
+              "content": "The number of ways to arrange 7 items in a row",
+              "why": "That's $7!$. $^7C_3$ counts choices, where the order doesn't matter."
+            },
+            {
+              "id": "D",
+              "content": "$7 \\times 3$",
+              "why": "$^7C_3$ isn't a multiplication of 7 and 3. It's $\\frac{7!}{3!\\,4!} = 35$."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Read it out loud: \"7 choose 3\"."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$^7C_3$ is \"7 choose 3\": the number of ways to choose 3 items from 7. It equals $\\frac{7!}{3!\\,4!} = 35$."
+            }
+          ]
+        },
+        {
+          "id": "edges",
+          "type": "answer",
+          "title": "The edges of the triangle",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Work out $\\binom{9}{0}$ and $\\binom{9}{1}$.",
+          "template": "\\binom{9}{0}=\\placeholder[a]{},\\quad\\binom{9}{1}=\\placeholder[b]{}",
+          "blanks": {
+            "a": {
+              "answer": "1",
+              "exactForm": true,
+              "feedback": "$\\binom{9}{0} = \\frac{9!}{0!\\,9!}$, and remember $0! = 1$."
+            },
+            "b": {
+              "answer": "9",
+              "exactForm": true
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Use the formula and remember $0! = 1$. Or think: how many ways are there to choose nothing? How many ways to choose just one of 9 items?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$\\binom{9}{0} = \\frac{9!}{0!\\,9!} = 1$: there's only one way to choose nothing. $\\binom{9}{1} = \\frac{9!}{1!\\,8!} = 9$: there are 9 ways to choose one item."
+            },
+            {
+              "type": "paragraph",
+              "content": "That's why every row of Pascal's triangle starts $1, n, \\ldots$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Any Entry in Pascal's Triangle",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Putting it together: if we count the positions in each row from 0, just like the rows, then the numbers in row $n$ are $$\\binom{n}{0},\\ \\binom{n}{1},\\ \\binom{n}{2},\\ \\ldots,\\ \\binom{n}{n}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "For example, row 4:"
+        },
+        {
+          "type": "table",
+          "header": [
+            "$r$",
+            "$0$",
+            "$1$",
+            "$2$",
+            "$3$",
+            "$4$"
+          ],
+          "rows": [
+            [
+              "$\\binom{4}{r}$",
+              "$1$",
+              "$4$",
+              "$6$",
+              "$4$",
+              "$1$"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "So if we want a number from row $n$ of Pascal's triangle, we don't need to build the whole triangle: we just use the formula."
+        },
+        {
+          "type": "paragraph",
+          "content": "Be careful counting from 0. The 1st number in a row is $\\binom{n}{0}$, so the 3rd number in row 6 is $\\binom{6}{2} = 15$, not $\\binom{6}{3} = 20$."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example"
+        },
+        {
+          "type": "paragraph",
+          "content": "Find the 4th number in row 10 of Pascal's triangle. The 4th number is $r = 3$, so: $$\\binom{10}{3} = \\frac{10!}{3!\\,7!} = \\frac{10 \\times 9 \\times 8}{3 \\times 2 \\times 1} = \\frac{720}{6} = 120$$"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Symmetry"
+        },
+        {
+          "type": "paragraph",
+          "content": "We saw that every row of the triangle is symmetrical. In $\\binom{n}{r}$ notation: $$\\binom{n}{r} = \\binom{n}{n-r}$$ This makes sense: choosing 3 items to take from 10 is the same as choosing the 7 items to leave behind, so $\\binom{10}{3} = \\binom{10}{7} = 120$."
+        },
+        {
+          "type": "paragraph",
+          "content": "In the next lesson you'll use $\\binom{n}{r}$ to expand brackets like $(2x-3)^{10}$ without drawing the triangle at all."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "which-entry",
+          "type": "choice",
+          "title": "Count from zero",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Which of these gives the 3rd number in row 7 of Pascal's triangle?",
+          "options": [
+            {
+              "id": "A",
+              "content": "$\\binom{7}{2}$",
+              "correct": true,
+              "why": "Correct: the positions start at $r = 0$, so the 3rd number has $r = 2$."
+            },
+            {
+              "id": "B",
+              "content": "$\\binom{7}{3}$",
+              "why": "The positions start at $r = 0$, so $\\binom{7}{3}$ is the 4th number."
+            },
+            {
+              "id": "C",
+              "content": "$\\binom{3}{7}$",
+              "why": "The row number goes on top: $\\binom{n}{r}$ with $n = 7$."
+            },
+            {
+              "id": "D",
+              "content": "$\\binom{8}{3}$",
+              "why": "Rows are counted from 0 too, so row 7 has $n = 7$."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "The 1st number in row $n$ is $\\binom{n}{0}$, the 2nd is $\\binom{n}{1}$..."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "The numbers in row 7 are $\\binom{7}{0}, \\binom{7}{1}, \\binom{7}{2}, \\ldots$, so the 3rd one is $\\binom{7}{2} = 21$."
+            }
+          ]
+        },
+        {
+          "id": "row-8-entry",
+          "type": "answer",
+          "title": "Find an entry",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Find the 3rd number in row 8 of Pascal's triangle.",
+          "template": "\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "28",
+              "exactForm": true,
+              "feedback": "The 3rd number is $\\binom{8}{2} = \\frac{8 \\times 7}{2 \\times 1}$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "The 3rd number has $r = 2$, so work out $\\binom{8}{2} = \\frac{8!}{2!\\,6!}$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\binom{8}{2} = \\frac{8!}{2!\\,6!} = \\frac{8 \\times 7}{2 \\times 1} = 28$$"
+            }
+          ]
+        },
+        {
+          "id": "use-symmetry",
+          "type": "answer",
+          "title": "Use the symmetry",
+          "instructions": "Fill in the box, then press Submit.",
+          "prompt": "Fill in the box so that both sides are equal, without working either of them out.",
+          "template": "\\binom{12}{9}=\\binom{12}{\\placeholder[r]{}}",
+          "blanks": {
+            "r": {
+              "answer": "3",
+              "exactForm": true,
+              "feedback": "Use $\\binom{n}{r} = \\binom{n}{n-r}$ with $n = 12$ and $r = 9$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Choosing 9 items to take from 12 is the same as choosing how many to leave behind?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$\\binom{n}{r} = \\binom{n}{n-r}$, so $\\binom{12}{9} = \\binom{12}{12-9} = \\binom{12}{3}$."
+            }
+          ]
+        },
+        {
+          "id": "big-coefficient",
+          "type": "answer",
+          "title": "Back to expanding",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Find the coefficient of $x^7y^3$ in the expansion of $(x+y)^{10}$.",
+          "template": "\\text{coefficient}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "120",
+              "exactForm": true,
+              "feedback": "The coefficient is $\\binom{10}{3}$: the number of ways of choosing 3 brackets (to give a $y$) out of 10."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "To get $y^3$ you choose $y$ from 3 of the 10 brackets. How many ways are there to do that?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Choosing $y$ from 3 of the 10 brackets can be done in $\\binom{10}{3}$ ways: $$\\binom{10}{3} = \\frac{10 \\times 9 \\times 8}{3 \\times 2 \\times 1} = 120$$ So the coefficient is $120$. That's the 4th number in row 10, found without drawing the triangle."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "review": [
+    {
+      "id": "factorial-meaning",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "What does $n!$ mean?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "$n! = n \\times (n-1) \\times \\cdots \\times 2 \\times 1$"
+        },
+        {
+          "type": "paragraph",
+          "content": "For example, $4! = 4 \\times 3 \\times 2 \\times 1 = 24$."
+        }
+      ]
+    },
+    {
+      "id": "zero-factorial",
+      "type": "answer",
+      "prompt": "Fill in the box.",
+      "template": "0!=\\placeholder[a]{}",
+      "blanks": {
+        "a": {
+          "answer": "1",
+          "exactForm": true
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$0! = 1$ by definition. It keeps $1! = 1 \\times 0!$ true."
+        }
+      ]
+    },
+    {
+      "id": "ncr-formula",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "What is the formula for $^nC_r$, and what does it count?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "$^nC_r = \\binom{n}{r} = \\frac{n!}{r!\\,(n-r)!}$"
+        },
+        {
+          "type": "paragraph",
+          "content": "The number of ways of choosing $r$ items from $n$. It's also the number in position $r$ of row $n$ of Pascal's triangle, counting both from 0."
+        }
+      ]
+    },
+    {
+      "id": "symmetry",
+      "type": "answer",
+      "prompt": "Fill in the box.",
+      "template": "\\binom{n}{r}=\\binom{n}{\\placeholder[a]{}}",
+      "blanks": {
+        "a": {
+          "answer": "n-r"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "Choosing $r$ items to take is the same as choosing the $n-r$ items to leave behind. It's why each row of Pascal's triangle is symmetrical."
+        }
+      ]
+    },
+    {
+      "id": "third-entry",
+      "type": "choice",
+      "prompt": "Which gives the 3rd number in row 6 of Pascal's triangle?",
+      "options": [
+        {
+          "id": "A",
+          "content": "$\\binom{6}{2}$",
+          "correct": true,
+          "why": "Correct: positions are counted from 0, so the 3rd number is $r = 2$."
+        },
+        {
+          "id": "B",
+          "content": "$\\binom{6}{3}$",
+          "why": "That's the 4th number, because the positions start at $r = 0$."
+        },
+        {
+          "id": "C",
+          "content": "$\\binom{2}{6}$",
+          "why": "The row number goes on top."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "Row 6 is $\\binom{6}{0}, \\binom{6}{1}, \\binom{6}{2}, \\ldots = 1, 6, 15, \\ldots$"
+        }
+      ]
+    }
+  ]
+}

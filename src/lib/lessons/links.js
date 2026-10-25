@@ -19,7 +19,7 @@ export function findChapter(chapters, slug) {
 
 export const lessonHref = (courseId, chapter, slug) => (courseId && chapter ? `/learn/${courseId}/${chapter}/${slug}` : null);
 
-// the Skill Radar skill (area) a chapter belongs to, from the course's `lessons.chaptersByArea`
+// the Progress page skill (area) a chapter belongs to, from the course's `lessons.chaptersByArea`
 export function skillForChapter(courseId, chapter) {
   const spec = SPECS[courseId];
   const areaId = Object.entries(spec?.lessons?.chaptersByArea ?? {}).find(([, chapters]) => chapters.includes(chapter))?.[0];

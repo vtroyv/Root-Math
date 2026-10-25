@@ -79,6 +79,9 @@ Then open `/learn/questions/<title>`, for example `/learn/questions/Vectors-On-T
 | 06 | Vectors-On-The-Grid | place (vector), place (point), answer |
 | 07 | Consecutive-Odd-Numbers-Proof | order (with distractors), answer |
 | 08 | Exact-Exponential-Equation | answer |
+| 09 | Integer-Part-Of-Two-Plus-Root-Three (Challenge) | answer, working, explain, answer |
+| 10 | Which-Is-Bigger-Without-A-Calculator (Challenge) | choice, answer, order (with distractors) |
+| 11 | Sum-Of-Squared-Binomial-Coefficients (Challenge) | answer, choice, order (with distractors) |
 
 ---
 

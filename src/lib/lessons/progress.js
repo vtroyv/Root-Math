@@ -18,7 +18,7 @@ a student's answer to the wrong task.
 
 export const PROGRESS_VERSION = 2;
 
-// e.g. 'edx-maths-1' -> 'edx-maths-1-lesson-progress' (the collection the Skill Radar reads too)
+// e.g. 'edx-maths-1' -> 'edx-maths-1-lesson-progress' (the collection the Progress page reads too)
 export const progressCollection = (lesson) => `${lesson.collection}-lesson-progress`;
 
 export const taskKey = (partId, taskId) => `${partId}:${taskId}`;

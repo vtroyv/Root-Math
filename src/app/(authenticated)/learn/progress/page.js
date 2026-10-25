@@ -5,11 +5,11 @@ import { Row, Col, Alert, Spinner, Button, Badge } from 'reactstrap';
 import { useGetMasteryQuery, useGetDueReviewsQuery } from '@/lib/redux/slices/apiSlice';
 import { DEFAULT_SPEC_ID, SUBSCRIBED_COURSES } from '@/lib/mastery/specs';
 import { localToday, whenDue } from '@/lib/reviews/localDay';
-import SkillRadar, { MasteryBar } from '@/lib/components/learn/skillRadar/SkillRadar';
+import ProgressRadar, { MasteryBar } from '@/lib/components/learn/progress/ProgressRadar';
 
 /*
-Skill Radar: a game-style stats page.
-  left           the radar (src/lib/components/learn/skillRadar/SkillRadar.js)
+Progress page (/learn/progress, called the Skill Radar until 22 Oct 2026): a game-style stats page.
+  left           the radar (src/lib/components/learn/progress/ProgressRadar.js)
   right column   How to improve · Insight for the selected skill · Outstanding reviews (a count + link to /learn/reviews)
   bottom         the selected skill's Lessons | Questions (reviews live in their own card)
 Clicking a radar corner selects that skill (click only: hover previews flickered). The page opens on the weakest skill.
@@ -20,7 +20,7 @@ const INK = '#1f3b4d';
 const TEAL_DEEP = '#0e7c8f';
 const pct = (v) => `${Math.round(v * 100)}%`;
 
-export default function SkillRadarPage() {
+export default function ProgressPage() {
   const [course, setCourse] = useState(DEFAULT_SPEC_ID);
   const [pinned, setPinned] = useState(null); // null = not chosen yet -> weakest skill
   // currentData = the result for the course selected NOW (data would briefly show the previous course)
@@ -47,7 +47,7 @@ export default function SkillRadarPage() {
         boxSizing: 'border-box',
       }}
     >
-      <h1 style={{ color: '#17a2b8', fontWeight: 'bold', marginBottom: '0.25rem' }}>Skill Radar</h1>
+      <h1 style={{ color: '#17a2b8', fontWeight: 'bold', marginBottom: '0.25rem' }}>Your Progress</h1>
       {data && (
         <p style={{ color: '#6c757d', marginBottom: '1rem' }}>
           {data.spec.name} · <strong style={{ color: INK }}>Level {data.level.toFixed(1)}</strong> · {data.rank} ·{' '}
@@ -64,7 +64,7 @@ export default function SkillRadarPage() {
       )}
       {error && !isFetching && (
         <Alert color="danger" fade={false} style={{ margin: '2rem auto', maxWidth: '700px' }}>
-          Your Skill Radar couldn&apos;t be loaded. Try refreshing the page.
+          Your progress couldn&apos;t be loaded. Try refreshing the page.
         </Alert>
       )}
 
@@ -73,7 +73,7 @@ export default function SkillRadarPage() {
           <Row>
             <Col xs="12" lg="7">
               <Panel title="Your skills">
-                <SkillRadar areas={data.areas} pinned={pinnedIndex} onPin={setPinned} />
+                <ProgressRadar areas={data.areas} pinned={pinnedIndex} onPin={setPinned} />
                 <p style={{ textAlign: 'center', fontSize: '0.85rem', color: '#6c757d', margin: '0.25rem 0 0' }}>
                   Click a skill to see its details.
                 </p>

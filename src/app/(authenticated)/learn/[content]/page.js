@@ -1,491 +1,102 @@
 "use client";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useGetCourseOutlineQuery } from "@/lib/redux/slices/apiSlice";
+import { courseLabel } from "@/lib/courses/courses";
+import { CourseHero, ProgressBar, StatusIcon, ComingSoon, OutlineState } from "@/lib/components/learn/courses/CourseUI";
 
-/* 
-IMPORTANT
-----------
-You're going to have to rewrite this entire component so that it fetches the titles and everything from the database, unless it is suitable to keep these topic titles, 
-and then just render dynamically things like the exam board name, and other exam board specific things like the specific subtopics because currently this is only suitable for 
-year12 maths and doesn't account for any other years or examboards (aside from edexcel)
-
+/*
+Course page (/learn/<course id>): the course's progress ring and Continue button, then one card per topic
+(the spec's areas), each listing its chapters with their progress. Chapters with no lessons built yet are
+greyed out and not clickable. Topics with no chapters yet list their spec subtopics as coming soon.
+Data: GET /api/courses/<course id> (courseOutline in src/lib/courses/courses.js).
 */
-
-import React from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  CardBody,
-  CardHeader,
-  ListGroup,
-  ListGroupItem,
-} from "reactstrap";
-import { useRouter } from "next/navigation";
-
-export default function EdxPm1() {
-  const router = useRouter();
-
-  
-
-  // Helper for navigation
-  const navigate = (path) => {
-    router.push(path);
-  };
-
-  const preUrl = "/learn/edx-maths-1";
+export default function CoursePage() {
+  const { content } = useParams();
+  // refetch on every visit, so a lesson finished a minute ago shows up
+  const { data, error, isLoading } = useGetCourseOutlineQuery(content, { refetchOnMountOrArgChange: true });
 
   return (
-    <div
-      className="Edxpm1-container"
-      style={{ backgroundColor: "#f7f9fc", minHeight: "100vh" }}
-    >
-      <Container style={{ paddingTop: "2rem", paddingBottom: "2rem" }}>
-        {/* TOP SECTION - Title and "My Progress" */}
-        <Card
-          body
-          className="mb-4 shadow-sm"
-          style={{
-            borderRadius: "15px",
-            boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-            border: "none",
-          }}
-        >
-          <Row>
-            <Col md={8}>
-              <CardHeader
-                style={{
-                  border: "none",
-                  background: "transparent",
-                  padding: "0",
-                }}
-              >
-                <h1
-                  style={{
-                    fontSize: "2.5rem",
-                    margin: "0 0 0.5rem 0",
-                    fontFamily: "Georgia, serif",
-                  }}
-                >
-                  <strong>Edexcel Mathematics</strong> – Pure Mathematics
-                </h1>
-                <h2 style={{ margin: 0, color: "#666" }}>Year 12</h2>
-              </CardHeader>
-            </Col>
-            <Col md={4} className="d-flex align-items-center">
-              <CardBody
-                className="text-md-right text-center"
-                style={{ padding: "0" }}
-              >
-                <h5 style={{ fontWeight: "bold", marginBottom: "0.5rem" }}>
-                  My Progress
-                </h5>
-                <div
-                  style={{
-                    backgroundColor: "#fff",
-                    borderRadius: "5px",
-                    padding: "0.5rem 1rem",
-                    border: "1px solid #ddd",
-                  }}
-                >
-                  {/* You can replace this with a progress bar or more dynamic data */}
-                  <span style={{ color: "#17a2b8", fontWeight: "bold" }}>0%</span>
-                </div>
-              </CardBody>
-            </Col>
-          </Row>
-        </Card>
+    <div className="learn-page">
+      <OutlineState isLoading={isLoading} error={error} />
 
-        {/* MAIN TOPICS */}
-        <Row>
-          {/* Proof */}
-          <Col lg={6} className="mb-4">
-            <Card
-              className="shadow-sm"
-              style={{
-                borderRadius: "15px",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                border: "none",
-              }}
-            >
-              <CardHeader
-                style={{
-                  backgroundColor: "#17a2b8",
-                  borderRadius: "15px 15px 0 0",
-                  border: "none",
-                }}
-              >
-                <h3 style={{ color: "#fff" }}>Proof</h3>
-              </CardHeader>
-              <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/what-is-proof")}
-                  style={{ cursor: "pointer" }}
-                >
-                  What is Proof?
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/methods-of-proof")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Methods of Proof
-                </ListGroupItem>
-              </ListGroup>
-            </Card>
-          </Col>
+      {data && (
+        <>
+          <CourseHero
+            kicker={`${data.course.examBoard} · ${data.course.qualification}`}
+            title={data.course.component}
+            subtitle={data.course.year}
+            completed={data.completed}
+            total={data.total}
+            next={data.next}
+            emptyText="Lessons for this course are coming soon."
+          />
 
-          {/* Coordinate Geometry */}
-          <Col lg={6} className="mb-4">
-            <Card
-              className="shadow-sm"
-              style={{
-                borderRadius: "15px",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                border: "none",
-              }}
-            >
-              <CardHeader
-                style={{
-                  backgroundColor: "#17a2b8",
-                  borderRadius: "15px 15px 0 0",
-                  border: "none",
-                }}
-              >
-                <h3 style={{ color: "#fff" }}>
-                  Coordinate Geometry in the (x,y) Plane
-                </h3>
-              </CardHeader>
-              <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/straight-lines")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Straight Lines
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/circles")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Circles
-                </ListGroupItem>
-              </ListGroup>
-            </Card>
-          </Col>
-        </Row>
-
-        <Row>
-          {/* Algebra & Functions */}
-          <Col lg={6} className="mb-4">
-            <Card
-              className="shadow-sm"
-              style={{
-                borderRadius: "15px",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                border: "none",
-              }}
-            >
-              <CardHeader
-                style={{
-                  backgroundColor: "#17a2b8",
-                  borderRadius: "15px 15px 0 0",
-                  border: "none",
-                }}
-              >
-                <h3 style={{ color: "#fff" }}>Algebra &amp; Functions</h3>
-              </CardHeader>
-              <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/algebraic-expressions")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Algebraic Expressions
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/quadratic-functions")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Quadratic Functions
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/simultaneous-equations")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Simultaneous Equations
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/inequalities")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Inequalities
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/graphs-and-transformations")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Graphs &amp; Transformations
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/algebraic-methods")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Algebraic Methods
-                </ListGroupItem>
-              </ListGroup>
-            </Card>
-          </Col>
-
-          {/* Trigonometry */}
-          <Col lg={6} className="mb-4">
-            <Card
-              className="shadow-sm"
-              style={{
-                borderRadius: "15px",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                border: "none",
-              }}
-            >
-              <CardHeader
-                style={{
-                  backgroundColor: "#17a2b8",
-                  borderRadius: "15px 15px 0 0",
-                  border: "none",
-                }}
-              >
-                <h3 style={{ color: "#fff" }}>Trigonometry</h3>
-              </CardHeader>
-              <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl+ "/trigonometry-and-triangles")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Trigonometry &amp; Triangles
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl+ "/trignometric-graphs")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Trignometric Graphs
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/ratios-identities-and-equations")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Ratios, Identities and Equations
-                </ListGroupItem>
-              </ListGroup>
-            </Card>
-          </Col>
-        </Row>
-
-        <Row>
-          {/* Sequences & Series */}
-          <Col lg={6} className="mb-4">
-            <Card
-              className="shadow-sm"
-              style={{
-                borderRadius: "15px",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                border: "none",
-              }}
-            >
-              <CardHeader
-                style={{
-                  backgroundColor: "#17a2b8",
-                  borderRadius: "15px 15px 0 0",
-                  border: "none",
-                }}
-              >
-                <h3 style={{ color: "#fff" }}>Sequences &amp; Series</h3>
-              </CardHeader>
-              <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/binomial-expansion")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Binomial Expansion
-                </ListGroupItem>
-              </ListGroup>
-            </Card>
-          </Col>
-
-          {/* Exponentials & Logarithms */}
-          <Col lg={6} className="mb-4">
-            <Card
-              className="shadow-sm"
-              style={{
-                borderRadius: "15px",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                border: "none",
-              }}
-            >
-              <CardHeader
-                style={{
-                  backgroundColor: "#17a2b8",
-                  borderRadius: "15px 15px 0 0",
-                  border: "none",
-                }}
-              >
-                <h3 style={{ color: "#fff" }}>Exponentials &amp; Logarithms</h3>
-              </CardHeader>
-              <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/exponential-functions")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Exponential Functions
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/logarithms")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Logarithms
-                </ListGroupItem>
-              </ListGroup>
-            </Card>
-          </Col>
-        </Row>
-
-        <Row>
-          {/* Differentiation */}
-          <Col lg={6} className="mb-4">
-            <Card
-              className="shadow-sm"
-              style={{
-                borderRadius: "15px",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                border: "none",
-              }}
-            >
-              <CardHeader
-                style={{
-                  backgroundColor: "#17a2b8",
-                  borderRadius: "15px 15px 0 0",
-                  border: "none",
-                }}
-              >
-                <h3 style={{ color: "#fff" }}>Differentiation</h3>
-              </CardHeader>
-              <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/gradients-and-lines")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Gradients and Lines 
-                </ListGroupItem>
-                
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/rates-of-change-and-modelling")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Rates of Change &amp; Modelling
-                </ListGroupItem>
-              </ListGroup>
-            </Card>
-          </Col>
-
-          {/* Integration */}
-          <Col lg={6} className="mb-4">
-            <Card
-              className="shadow-sm"
-              style={{
-                borderRadius: "15px",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                border: "none",
-              }}
-            >
-              <CardHeader
-                style={{
-                  backgroundColor: "#17a2b8",
-                  borderRadius: "15px 15px 0 0",
-                  border: "none",
-                }}
-              >
-                <h3 style={{ color: "#fff" }}>Integration</h3>
-              </CardHeader>
-              <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate( preUrl + "/indefinite-integrals")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Indefinite Integrals 
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate(preUrl + "/definite-integrals-and-areas")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Definite Integrals and Areas
-                </ListGroupItem>
-              </ListGroup>
-            </Card>
-          </Col>
-        </Row>
-
-        <Row>
-          {/* Vectors */}
-          <Col lg={12}>
-            <Card
-              className="shadow-sm"
-              style={{
-                borderRadius: "15px",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                border: "none",
-              }}
-            >
-              <CardHeader
-                style={{
-                  backgroundColor: "#17a2b8",
-                  borderRadius: "15px 15px 0 0",
-                  border: "none",
-                }}
-              >
-                <h3 style={{ color: "#fff" }}>Vectors</h3>
-              </CardHeader>
-              <ListGroup flush style={{ borderRadius: "0 0 15px 15px" }}>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate("")}
-                  style={{ cursor: "pointer" }}
-                >
-                  What Are Vectors?
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate("")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Vectors In Geometry
-                </ListGroupItem>
-                <ListGroupItem
-                  action
-                  onClick={() => navigate("")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Modelling With Vectors
-                </ListGroupItem>
-              </ListGroup>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+          <h2 className="learn-home__group">Topics in {courseLabel(data.course)}</h2>
+          <div className="learn-topics">
+            {data.areas.map((area) => (
+              <TopicCard key={area.id} courseId={data.course.id} area={area} />
+            ))}
+          </div>
+        </>
+      )}
     </div>
+  );
+}
+
+function TopicCard({ courseId, area }) {
+  const hasLessons = area.total > 0;
+
+  return (
+    <section className={`learn-topic${hasLessons ? "" : " learn-topic--soon"}`}>
+      <div className="learn-topic__head">
+        <h3 className="learn-topic__name">{area.name}</h3>
+        {hasLessons ? (
+          <div className="learn-topic__progress">
+            <ProgressBar completed={area.completed} total={area.total} />
+            <span>
+              {area.completed} of {area.total} lessons
+            </span>
+          </div>
+        ) : (
+          <p className="learn-topic__note">Coming soon</p>
+        )}
+      </div>
+
+      <ul className="learn-list">
+        {area.chapters.map((chapter) => (
+          <li key={chapter.slug}>
+            {chapter.total > 0 ? (
+              <Link href={`/learn/${courseId}/${chapter.slug}`} className="learn-row">
+                <span>{chapter.title}</span>
+                <span className="learn-row__meta">
+                  {chapter.completed === chapter.total ? (
+                    <StatusIcon status="complete" />
+                  ) : (
+                    `${chapter.completed} of ${chapter.total}`
+                  )}
+                  <i className="bi bi-chevron-right" aria-hidden="true" />
+                </span>
+              </Link>
+            ) : (
+              <span className="learn-row learn-row--soon">
+                <span>{chapter.title}</span>
+                <ComingSoon />
+              </span>
+            )}
+          </li>
+        ))}
+
+        {area.chapters.length === 0 &&
+          area.subtopics.map((subtopic) => (
+            <li key={subtopic}>
+              <span className="learn-row learn-row--soon">
+                <span>{subtopic}</span>
+                <ComingSoon />
+              </span>
+            </li>
+          ))}
+      </ul>
+    </section>
   );
 }

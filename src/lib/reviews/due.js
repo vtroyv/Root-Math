@@ -4,7 +4,7 @@ import { findChapter, lessonHref, skillForChapter } from '../lessons/links.js';
 
 /*
 What the reviews page (/learn/reviews) lists: one student's review schedules grouped by
-question, each tagged with the course and skill it counts towards on the Skill Radar.
+question, each tagged with the course and skill it counts towards on the Progress page.
 Pure (no database), so it can be tested on its own. See src/lib/docs/reviews-page.md.
 
   states     [{ cardKey, source: { kind, title }, due }]   from reviewStates
@@ -42,7 +42,7 @@ The same for lesson review cards (source { kind: 'lesson', slug }), one entry pe
   { slug, label, href, courseId, skillId, skillName, cardsDue, dueSince, nextDue }
   lessons           [{ slug, title, collection }]   collection = the course id, e.g. 'edx-maths-1'
   chaptersByCourse  { [courseId]: [{ name, subsections }] }, to find the lesson's chapter,
-                    which gives its URL and its Skill Radar skill
+                    which gives its URL and its Progress page skill
 */
 export function summariseLessonReviews(states, lessons, chaptersByCourse, today) {
   const bySlug = new Map(lessons.map((l) => [l.slug, l]));

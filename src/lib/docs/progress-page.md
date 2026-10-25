@@ -1,10 +1,10 @@
-# Skill Radar: how it works
+# Progress page: how it works
 
 A game-style stats page that shows how far a student has got in each skill (area) of a course as a radar chart. Next to it are cards explaining how to improve, an insight for the selected skill, and the reviews due. Underneath is everything left to do for that skill.
 
-Built 13 October 2026, and reworked the same day: the avatar card was replaced by these cards.
+Built 13 October 2026 as the **Skill Radar**, and reworked the same day: the avatar card was replaced by these cards. Renamed **Progress** on 22 October 2026: the page moved from `/learn/skill-radar` to `/learn/progress` (the old URL redirects, in `next.config.mjs`), and the chart component became `ProgressRadar`.
 
-Open it from **SKILL RADAR** in the learn navigation, or go to `/learn/skill-radar`.
+Open it from **PROGRESS** in the learn navigation, or go to `/learn/progress`.
 
 ---
 
@@ -28,7 +28,7 @@ Open it from **SKILL RADAR** in the learn navigation, or go to `/learn/skill-rad
 ## 1. What the student sees
 
 ```
-Skill Radar
+Progress page
 Edexcel Pure Maths · Year 12 · Level 2.2 · Adept · 44% overall
 Year 12  [Pure] [Statistics] [Mechanics]
 Year 13  [Pure] [Statistics] [Mechanics]
@@ -61,7 +61,7 @@ Year 13  [Pure] [Statistics] [Mechanics]
 ## 2. How it fits together
 
 ```
-/learn/skill-radar  (page.js)
+/learn/progress  (page.js)
    │  course toggle → useGetMasteryQuery(courseId)          (RTK Query, cached per course)
    ▼
 GET /api/mastery?spec=edx-maths-1                            (api/mastery/route.js)
@@ -81,7 +81,7 @@ GET /api/mastery?spec=edx-maths-1                            (api/mastery/route.
 Outstanding reviews card → useGetDueReviewsQuery(today) → GET /api/reviews/due (reviews-page.md)
 ```
 
-Nothing is stored for the Skill Radar itself. It's calculated fresh from progress on every visit.
+Nothing is stored for the Progress page itself. It's calculated fresh from progress on every visit.
 
 ---
 
@@ -94,8 +94,8 @@ Nothing is stored for the Skill Radar itself. It's calculated fresh from progres
 | [mastery/specs.js](../mastery/specs.js) | The six courses: their skills (radar corners), which question `topic`s and lesson chapters belong to each skill, the subtopics, and `SUBSCRIBED_COURSES` for the toggle. |
 | [mastery/computeMastery.js](../mastery/computeMastery.js) | Pure function: questions + lessons + one student's progress → mastery, level, rank, and per skill its lessons, questions, reviews and insight. No database or React, so it can be tested on its own. |
 | [api/mastery/route.js](../../app/api/mastery/route.js) | `GET /api/mastery?spec=<course id>`. |
-| [skillRadar/SkillRadar.js](../components/learn/skillRadar/SkillRadar.js) | The radar as plain SVG, reporting hover (preview) and click (pin) to the page. Also the small `MasteryBar`. |
-| [learn/skill-radar/page.js](../../app/%28authenticated%29/learn/skill-radar/page.js) | The page: summary line, toggle, radar, the right-hand cards, and the bottom breakdown. |
+| [progress/ProgressRadar.js](../components/learn/progress/ProgressRadar.js) | The radar as plain SVG, reporting hover (preview) and click (pin) to the page. Also the small `MasteryBar`. |
+| [learn/progress/page.js](../../app/%28authenticated%29/learn/progress/page.js) | The page: summary line, toggle, radar, the right-hand cards, and the bottom breakdown. |
 
 ### Changed
 
@@ -103,7 +103,7 @@ Nothing is stored for the Skill Radar itself. It's calculated fresh from progres
 |---|---|
 | [mongodb/utils.js](../mongodb/utils.js) | New `getUserProgressForCollection` (question progress incl. `updatedAt`), `getChapters`, `getBuiltLessons` and `getUserLessonProgressList`. `getQuestions()` now logs the real error. |
 | [redux/slices/apiSlice.js](../redux/slices/apiSlice.js) | New `getMastery` query → `useGetMasteryQuery(courseId)`. |
-| [learn/LearnNav.js](../components/learn/LearnNav.js) | **SKILL RADAR** link between QUESTIONS and COURSES. |
+| [learn/LearnNav.js](../components/learn/LearnNav.js) | **PROGRESS** link between QUESTIONS and COURSES. |
 
 ---
 
@@ -195,11 +195,11 @@ For every skill, `computeMastery` returns two lists and an insight. (Reviews com
 
 ## 7. The radar chart and selecting a skill
 
-[SkillRadar.js](../components/learn/skillRadar/SkillRadar.js) draws one SVG with a 500 × 500 coordinate system. Corner `i` of `n` is at angle `-90° + i × 360°/n`, so the first skill is at the top and the rest go clockwise. That works for any number of corners. The student's shape places each corner at `radius × mastery` along its spoke, with a 4% minimum so a new student still sees a small shape.
+[ProgressRadar.js](../components/learn/progress/ProgressRadar.js) draws one SVG with a 500 × 500 coordinate system. Corner `i` of `n` is at angle `-90° + i × 360°/n`, so the first skill is at the top and the rest go clockwise. That works for any number of corners. The student's shape places each corner at `radius × mastery` along its spoke, with a 4% minimum so a new student still sees a small shape.
 
 **Selection is click only and owned by the page**, as one piece of state: `pinned`, the skill clicked, tapped, or chosen with Enter/Space. It starts as `null`, which means "the weakest skill". The selected corner has a larger filled-teal dot and a bold teal label. There are no transitions or animations.
 
-Hover previews were removed (14 October): the cards changing as the mouse moved across the chart flickered. **Keyboard users** still see where they are: tabbing to a corner draws a dashed teal ring around it, kept as local state inside `SkillRadar`, without changing the cards until they press Enter or Space.
+Hover previews were removed (14 October): the cards changing as the mouse moved across the chart flickered. **Keyboard users** still see where they are: tabbing to a corner draws a dashed teal ring around it, kept as local state inside `ProgressRadar`, without changing the cards until they press Enter or Space.
 
 **Switching course** resets both, so the page opens on that course's weakest skill.
 
@@ -207,7 +207,7 @@ Hover previews were removed (14 October): the cards changing as the mouse moved 
 
 ## 8. The page layout
 
-[page.js](../../app/%28authenticated%29/learn/skill-radar/page.js):
+[page.js](../../app/%28authenticated%29/learn/progress/page.js):
 - **Radar column** (`lg=7`) and **card column** (`lg=5`). On phones they stack: radar first, then the cards.
 - All cards share one `Panel` frame: white, 2px dark border, teal heading, in line with the minimal-CSS preference.
 - **`currentData`** (not `data`) from RTK Query, so the page never shows the previous course's numbers while the new course loads.
@@ -240,7 +240,7 @@ Hover previews were removed (14 October): the cards changing as the mouse moved 
 
 ## 11. Troubleshooting
 
-**"Skill Radar failed: Error: Failed to fetch questions!" (500)**
+**"Progress page failed: Error: Failed to fetch questions!" (500)**
 
 On 13 October the real error, which `getQuestions()` used to hide, was `MongoNetworkError: read ECONNRESET`. Your public IP had changed, and **MongoDB Atlas** only accepts IPs on its **Network Access** list. **Fix:** Atlas → Network Access → Add IP Address → **Add Current IP Address**, wait for Active, then refresh. `getQuestions()` now logs the real error in the terminal.
 

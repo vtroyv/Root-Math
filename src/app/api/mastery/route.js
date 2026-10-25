@@ -9,7 +9,7 @@ import {
 import { SPECS, DEFAULT_SPEC_ID } from '@/lib/mastery/specs';
 import { computeMastery } from '@/lib/mastery/computeMastery';
 
-// GET /api/mastery?spec=a-level-maths-y12-pure  ->  Skill Radar data for the signed-in student.
+// GET /api/mastery?spec=a-level-maths-y12-pure  ->  Progress page data for the signed-in student.
 // The user comes from Clerk's session (auth/currentUser), never from the query string.
 export async function GET(request) {
   const { userId } = await auth();
@@ -42,7 +42,7 @@ export async function GET(request) {
 
     return Response.json(computeMastery(spec, questions, progress, lessonData));
   } catch (error) {
-    console.error('Skill Radar failed:', error);
+    console.error('Progress page failed:', error);
     return Response.json({ error: error.message }, { status: 500 });
   }
 }

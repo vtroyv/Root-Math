@@ -38,7 +38,7 @@ Each one takes seconds. Cards come back on a spaced schedule (like Anki): soon a
 | What | Where | Why |
 |---|---|---|
 | **Card content** (front, back, answers) | the question document, in a `review: [...]` array | It's the same for every student and is written alongside the question, so it's one paste in Compass. The `review` field was reserved in the parts schema for this. |
-| **Each student's schedule** (when each card is next due, how well they know it) | a new **`reviewStates`** collection, one document per student per card | It's different for every student. It must **not** go in the question document, which is shared by everyone. It also needs to be searchable on its own: "what's due for this student, across everything?" is one fast query here. The question page needs that now; the Skill Radar's Outstanding reviews card and a future "review everything due" page will need it later. |
+| **Each student's schedule** (when each card is next due, how well they know it) | a new **`reviewStates`** collection, one document per student per card | It's different for every student. It must **not** go in the question document, which is shared by everyone. It also needs to be searchable on its own: "what's due for this student, across everything?" is one fast query here. The question page needs that now; the Progress page's Outstanding reviews card and a future "review everything due" page will need it later. |
 
 A `reviewStates` document:
 
@@ -120,7 +120,7 @@ Unlocking happens when the Review tab is opened. The server sees the question is
 
 **A fix needed for this:** *Reveal solution* used to mark the question complete **only in the browser**; nothing was saved. It now saves **`solutionRevealed: true`** to the student's progress instead, and that also unlocks the cards.
 
-It deliberately **doesn't** set `status: 'complete'`. The Skill Radar counts a complete question as 100% mastery, and revealing the answer shouldn't earn that.
+It deliberately **doesn't** set `status: 'complete'`. The Progress page counts a complete question as 100% mastery, and revealing the answer shouldn't earn that.
 
 Once a student has schedules for a question's cards, they **stay unlocked**, even if the student resets the question. Cards added to a question later are unlocked automatically for students who already have the others.
 
@@ -256,7 +256,7 @@ Question page → Review tab → ReviewPane
 
 ## 10. Not in this version
 
-Built since (19 October): the **reviews page** (`/learn/reviews`), the **REVIEWS · n** nav count and the Skill Radar's **Outstanding reviews** count, all from `GET /api/reviews/due`. See [reviews-page.md](reviews-page.md). A link with `?tab=review` opens a question on its Review tab.
+Built since (19 October): the **reviews page** (`/learn/reviews`), the **REVIEWS · n** nav count and the Progress page's **Outstanding reviews** count, all from `GET /api/reviews/due`. See [reviews-page.md](reviews-page.md). A link with `?tab=review` opens a question on its Review tab.
 
 These come later and build on the same `reviewStates` collection:
 - **A "Review" column in the questions table** (Locked / Due · 2 / Next in 3 days).

@@ -264,7 +264,7 @@ export async function getUserQuestionProgress(data) {
 
 }
 
-// NEW 13 Oct 2026 (Skill Radar): every question-progress document for one user in one
+// NEW 13 Oct 2026 (Progress page): every question-progress document for one user in one
 // progress collection. collectionData needs { userId, examBoard, branch, year }.
 export async function getUserProgressForCollection(collectionData) {
     await init()
@@ -275,19 +275,19 @@ export async function getUserProgressForCollection(collectionData) {
         .toArray()
 }
 
-// NEW 13 Oct 2026 (Skill Radar): chapter documents ({ name, subsections: { group: [lesson titles] } })
+// NEW 13 Oct 2026 (Progress page): chapter documents ({ name, subsections: { group: [lesson titles] } })
 export async function getChapters(collectionName) {
     await init()
     return db.collection(collectionName).find({}).project({ _id: 0, name: 1, subsections: 1 }).toArray()
 }
 
-// NEW 13 Oct 2026 (Skill Radar): which lessons are actually built (have content in lesson-data)
+// NEW 13 Oct 2026 (Progress page): which lessons are actually built (have content in lesson-data)
 export async function getBuiltLessons() {
     await init()
     return db.collection('lesson-data').find({}).project({ _id: 0, slug: 1, title: 1, collection: 1 }).toArray()
 }
 
-// NEW 13 Oct 2026 (Skill Radar): one student's lesson progress ({ lessonSlug, completed, updatedAt })
+// NEW 13 Oct 2026 (Progress page): one student's lesson progress ({ lessonSlug, completed, updatedAt })
 export async function getUserLessonProgressList(collectionName, userId) {
     await init()
     return db.collection(collectionName).find({ userId }).project({ _id: 0, lessonSlug: 1, completed: 1, updatedAt: 1 }).toArray()

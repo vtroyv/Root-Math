@@ -27,7 +27,7 @@ export default function QuestionSolutionPane({ solution , markScheme}) {
 
   // CHANGED 14 Oct 2026: revealing sets `solutionRevealed` instead of `status: 'complete'`.
   // QuestionParts saves it to MongoDB, which unlocks the question's review cards, but it
-  // doesn't count as completing the question, so the Skill Radar isn't given 100% for it.
+  // doesn't count as completing the question, so the Progress page isn't given 100% for it.
   const handleReveal = () => {
     setShowSolution(true);
     updateProgress({ solutionRevealed: true });

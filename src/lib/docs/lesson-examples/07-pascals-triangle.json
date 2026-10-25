@@ -1,0 +1,672 @@
+{
+  "slug": "pascals-triangle",
+  "title": "Pascal's Triangle",
+  "next": "factorial-notation",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "Pascal and his Triangle",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "A binomial expression has exactly two terms joined by $+$ or $-$, for example $(x+3)$ or $(2y-5)$."
+        },
+        {
+          "type": "paragraph",
+          "content": "Often in mathematics we need to expand these expressions when they're raised to a power. For low powers, like $(x+2)^2$, it's straightforward. But as the power gets larger, for instance $(x+2)^9$, multiplying out one bracket at a time becomes very time consuming."
+        },
+        {
+          "type": "paragraph",
+          "content": "Luckily, there's a pattern that gives us all the coefficients straight away. We arrange the numbers in a triangle called Pascal's triangle, after the French mathematician Blaise Pascal, who studied it in the 1650s (mathematicians in China, Persia and India had found it centuries earlier): $$\\begin{array}{rccccccccccccc} \\textcolor{gray}{\\text{row }0} &  &  &  &  &  & 1 &  &  &  &  &  &  &  \\\\ \\textcolor{gray}{\\text{row }1} &  &  &  &  & 1 &  & 1 &  &  &  &  &  &  \\\\ \\textcolor{gray}{\\text{row }2} &  &  &  & 1 &  & 2 &  & 1 &  &  &  &  &  \\\\ \\textcolor{gray}{\\text{row }3} &  &  & 1 &  & 3 &  & 3 &  & 1 &  &  &  &  \\\\ \\textcolor{gray}{\\text{row }4} &  & 1 &  & 4 &  & 6 &  & 4 &  & 1 &  &  &  \\\\ \\textcolor{gray}{\\text{row }5} & \\textcolor{#17a2b8}{1} &  & \\textcolor{#17a2b8}{5} &  & \\textcolor{#17a2b8}{10} &  & \\textcolor{#17a2b8}{10} &  & \\textcolor{#17a2b8}{5} &  & \\textcolor{#17a2b8}{1} &  &  \\\\ \\end{array}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Now let's expand $(x+y)^n$ for different values of $n$ to see where Pascal's triangle comes into play: $$\\footnotesize \\begin{array}{c} \\boldsymbol{(x+y)^0 =} 1 \\\\ \\boldsymbol{(x+y)^1 =} x+y \\\\ \\boldsymbol{(x+y)^2 =} x^2+2xy+y^2 \\\\ \\boldsymbol{(x+y)^3 =} x^3+3x^2y+3xy^2+y^3 \\\\ \\boldsymbol{(x+y)^4 =} x^4+4x^3y+6x^2y^2+4xy^3+y^4 \\\\ \\boldsymbol{(x+y)^5 =} \\textcolor{#17a2b8}{1}x^5+\\textcolor{#17a2b8}{5}x^4y+\\textcolor{#17a2b8}{10}x^3y^2+\\textcolor{#17a2b8}{10}x^2y^3+\\textcolor{#17a2b8}{5}xy^4+\\textcolor{#17a2b8}{1}y^5 \\\\ \\end{array}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Notice how the coefficients in $(x+y)^5$ are exactly the numbers in row 5 of Pascal's triangle. This is no coincidence. We count the rows from 0, so the single $1$ at the top is row 0. In general:"
+        },
+        {
+          "type": "bold-paragraph",
+          "content": "Row $n$ of Pascal's triangle gives the coefficients in the expansion of $(x+y)^n$."
+        },
+        {
+          "type": "paragraph",
+          "content": "Some textbooks count the top row as row 1 and call this the $(n+1)^{\\text{th}}$ row. It's the same row, just labelled differently. In these lessons we always start from row 0."
+        },
+        {
+          "type": "paragraph",
+          "content": "Notice too that the powers of $x$ go down by one each term while the powers of $y$ go up, and in every term they add up to $n$. Row $n$ has $n+1$ numbers, so the expansion of $(x+y)^n$ has $n+1$ terms."
+        },
+        {
+          "type": "paragraph",
+          "content": "Try the tasks below to check you've got it."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "spot-binomial",
+          "type": "choice",
+          "title": "Spot the binomial",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Which of these is a binomial expression?",
+          "options": [
+            {
+              "id": "A",
+              "content": "$3x-7$",
+              "correct": true,
+              "why": "Correct: two terms, $3x$ and $-7$, joined by a minus sign."
+            },
+            {
+              "id": "B",
+              "content": "$x^2+2x+1$",
+              "why": "This has three terms, so it isn't a binomial."
+            },
+            {
+              "id": "C",
+              "content": "$5x$",
+              "why": "This is a single term."
+            },
+            {
+              "id": "D",
+              "content": "$x+y+z$",
+              "why": "This has three terms, so it isn't a binomial."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Count the terms. A binomial has exactly two."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$3x-7$ has exactly two terms, so it's a binomial. The others have one or three terms."
+            }
+          ]
+        },
+        {
+          "id": "row-4",
+          "type": "answer",
+          "title": "Read the triangle",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "Use Pascal's triangle to fill in the coefficients of $(x+y)^4$.",
+          "template": "(x+y)^4=x^4+\\placeholder[a]{}x^3y+\\placeholder[b]{}x^2y^2+\\placeholder[c]{}xy^3+y^4",
+          "blanks": {
+            "a": {
+              "answer": "4"
+            },
+            "b": {
+              "answer": "6"
+            },
+            "c": {
+              "answer": "4"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Use row 4 of the triangle. Remember the top $1$ is row 0."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Row 4 is $1, 4, 6, 4, 1$, so $$(x+y)^4 = x^4 + 4x^3y + 6x^2y^2 + 4xy^3 + y^4$$"
+            }
+          ]
+        },
+        {
+          "id": "which-power",
+          "type": "choice",
+          "title": "Which expansion?",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "The coefficients $1, 3, 3, 1$ come from the expansion of:",
+          "options": [
+            {
+              "id": "A",
+              "content": "$(x+y)^3$",
+              "correct": true,
+              "why": "Correct: $1, 3, 3, 1$ is row 3, which gives $(x+y)^3$."
+            },
+            {
+              "id": "B",
+              "content": "$(x+y)^4$",
+              "why": "$1, 3, 3, 1$ has four numbers, but the rows start at row 0. It's row 3."
+            },
+            {
+              "id": "C",
+              "content": "$(x+y)^2$",
+              "why": "Row 2 is $1, 2, 1$."
+            },
+            {
+              "id": "D",
+              "content": "$(x+y)^1$",
+              "why": "Row 1 is $1, 1$."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Find $1, 3, 3, 1$ in the triangle and read off its row number, counting the top $1$ as row 0."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$1, 3, 3, 1$ is row 3, so it gives $(x+y)^3 = x^3 + 3x^2y + 3xy^2 + y^3$."
+            }
+          ]
+        },
+        {
+          "id": "number-of-terms",
+          "type": "answer",
+          "title": "How many terms?",
+          "instructions": "Fill in the box, then press Submit.",
+          "prompt": "How many terms are there in the expansion of $(x+y)^9$?",
+          "template": "\\placeholder[n]{}\\text{ terms}",
+          "blanks": {
+            "n": {
+              "answer": "10",
+              "feedback": "Row 0 has 1 number, row 1 has 2, row 2 has 3... how many does row 9 have?"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "$(x+y)^n$ has one more term than its power."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Row $n$ has $n+1$ numbers, so $(x+y)^9$ has $9 + 1 = 10$ terms."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Building the Triangle",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "How the triangle grows is simple. Every inside number is the sum of the two numbers directly above it, and the edges are always $1$s:"
+        },
+        {
+          "type": "paragraph",
+          "content": "$$\\begin{array}{rccccccccccccc}  &  &  &  &  &  & 1 &  &  &  &  &  &  & \\\\  &  &  &  &  & 1 &  & 1 &  &  &  &  &  & \\\\  &  &  &  & 1 &  & 2 &  & 1 &  &  &  &  & \\\\  &  &  & 1 &  & 3 &  & 3 &  & 1 &  &  &  & \\\\  &  & 1 &  & \\textcolor{#17a2b8}{4} &  & \\textcolor{#17a2b8}{6} &  & 4 &  & 1 &  &  & \\\\  &  &  &  &  &  \\downarrow \\tiny + &  &  &  &  &  &  &  & \\\\  & 1 &  & 5 &  & \\textcolor{#17a2b8}{10} &  & 10 &  & 5 &  & 1 &  & \\\\ \\end{array}$$"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example: building row 6"
+        },
+        {
+          "type": "paragraph",
+          "content": "Row 5 is $1, 5, 10, 10, 5, 1$. Row 6 starts and ends with $1$, and each number in between is the sum of a neighbouring pair from row 5:"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "$1 + 5 = 6$",
+            "$5 + 10 = 15$",
+            "$10 + 10 = 20$",
+            "$10 + 5 = 15$",
+            "$5 + 1 = 6$"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "So row 6 is $1, 6, 15, 20, 15, 6, 1$, and $(x+y)^6 = x^6 + 6x^5y + 15x^4y^2 + 20x^3y^3 + 15x^2y^4 + 6xy^5 + y^6$."
+        },
+        {
+          "type": "paragraph",
+          "content": "Notice that every row is symmetrical: it reads the same forwards and backwards. That's a handy check, and it means you only ever need to work out the first half of a row."
+        },
+        {
+          "type": "paragraph",
+          "content": "See, it's pretty easy! Work through the tasks below. If you're interested in why the adding rule works, have a look at the deep dive (it's optional)."
+        },
+        {
+          "type": "accordion",
+          "title": "Pascal's triangle deep dive: click here",
+          "children": [
+            {
+              "type": "paragraph",
+              "content": "When you expand $(x+y)^n$, you pick either $x$ or $y$ from each of the $n$ brackets and multiply. Each term looks like $x^{n-k}y^k$, where $k$ is how many times you picked $y$."
+            },
+            {
+              "type": "paragraph",
+              "content": "The same term can appear more than once, because there are many ways to pick which brackets give you a $y$."
+            },
+            {
+              "type": "paragraph",
+              "content": "For example, in $(x+y)^3$ the term $xy^2$ happens if you pick $y$ from 2 brackets and $x$ from the other 1. There are 3 different ways to do this (brackets 1 and 2, 1 and 3, or 2 and 3), so the coefficient is 3."
+            },
+            {
+              "type": "paragraph",
+              "content": "Why does the adding rule work? Imagine building $(x+y)^n$ from $(x+y)^{n-1}$ by multiplying by one more bracket. To make a term with $k$ $y$'s, you either: (a) take a term with $k-1$ $y$'s from the previous row and multiply by $y$, or (b) take a term with $k$ $y$'s from the previous row and multiply by $x$. The total number of ways is the sum of these two cases. That's why each number is the sum of the two numbers above it."
+            },
+            {
+              "type": "paragraph",
+              "content": "For example, in row 5 the coefficient $10$ of $x^3y^2$ comes from the $4$ ways of making $x^3y$ in row 4 (then multiplying by $y$) plus the $6$ ways of making $x^2y^2$ in row 4 (then multiplying by $x$). Together, $4 + 6 = 10$."
+            }
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "id": "build-row-6",
+          "type": "answer",
+          "title": "Finish row 6",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "Row 5 is $1, 5, 10, 10, 5, 1$. Fill in the missing numbers in row 6.",
+          "template": "1\\quad 6\\quad \\placeholder[a]{}\\quad \\placeholder[b]{}\\quad \\placeholder[c]{}\\quad 6\\quad 1",
+          "blanks": {
+            "a": {
+              "answer": "15"
+            },
+            "b": {
+              "answer": "20"
+            },
+            "c": {
+              "answer": "15"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Add neighbouring pairs from row 5: $5 + 10$, then $10 + 10$, then $10 + 5$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$5 + 10 = 15$, $10 + 10 = 20$ and $10 + 5 = 15$, so row 6 is $1, 6, 15, 20, 15, 6, 1$."
+            }
+          ]
+        },
+        {
+          "id": "build-row-7",
+          "type": "answer",
+          "title": "Now row 7",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "Use row 6, $1, 6, 15, 20, 15, 6, 1$, to fill in the missing numbers in row 7.",
+          "template": "1\\quad 7\\quad \\placeholder[a]{}\\quad \\placeholder[b]{}\\quad \\placeholder[c]{}\\quad \\placeholder[d]{}\\quad 7\\quad 1",
+          "blanks": {
+            "a": {
+              "answer": "21"
+            },
+            "b": {
+              "answer": "35"
+            },
+            "c": {
+              "answer": "35"
+            },
+            "d": {
+              "answer": "21"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Add neighbouring pairs from row 6. Row 7 is symmetrical, so once you have the first two boxes you know the last two."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$6 + 15 = 21$ and $15 + 20 = 35$. By symmetry the row is $1, 7, 21, 35, 35, 21, 7, 1$."
+            }
+          ]
+        },
+        {
+          "id": "symmetry",
+          "type": "choice",
+          "title": "Use the symmetry",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Row 8 starts $1, 8, 28, 56, 70, \\ldots$ What is the next number?",
+          "options": [
+            {
+              "id": "A",
+              "content": "$56$",
+              "correct": true,
+              "why": "Correct: row 8 has 9 numbers, so $70$ is the middle one and the row then mirrors itself: $1, 8, 28, 56, 70, 56, 28, 8, 1$."
+            },
+            {
+              "id": "B",
+              "content": "$126$",
+              "why": "$56 + 70 = 126$ is a number in row 9. Within a row you don't add neighbours together."
+            },
+            {
+              "id": "C",
+              "content": "$70$",
+              "why": "Row 8 has 9 numbers, so there's only one middle number."
+            },
+            {
+              "id": "D",
+              "content": "$84$",
+              "why": "Each row is symmetrical. Which number comes just before $70$?"
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "How many numbers are in row 8? Where's the middle? Every row reads the same forwards and backwards."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Row 8 has 9 numbers, so $70$ is the middle one. The row is symmetrical, so it continues $56, 28, 8, 1$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Expanding Brackets with Pascal's Triangle",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Pascal's triangle doesn't just work for $(x+y)^n$. It gives the coefficients for any binomial: we just replace $x$ and $y$ with the two terms in our bracket."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "The method"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "To expand $(a+b)^n$, write down row $n$ of Pascal's triangle.",
+            "Multiply each number by a power of $a$ and a power of $b$. The powers of $a$ go down from $n$ to $0$, and the powers of $b$ go up from $0$ to $n$.",
+            "Put brackets around each term, including its sign, then simplify."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example 1: $(x+2)^3$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Row 3 is $1, 3, 3, 1$. Here $a = x$ and $b = 2$: $$\\begin{aligned}(x+2)^3 &= 1(x)^3 + 3(x)^2(2) + 3(x)(2)^2 + 1(2)^3 \\\\ &= x^3 + 6x^2 + 12x + 8\\end{aligned}$$"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example 2: $(2-x)^4$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Row 4 is $1, 4, 6, 4, 1$. Here $a = 2$ and $b = -x$. Keep the minus sign inside the bracket: $$\\begin{aligned}(2-x)^4 &= 1(2)^4 + 4(2)^3(-x) + 6(2)^2(-x)^2 + 4(2)(-x)^3 + 1(-x)^4 \\\\ &= 16 - 32x + 24x^2 - 8x^3 + x^4\\end{aligned}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Odd powers of $-x$ are negative and even powers are positive, so the signs alternate."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example 3: finding one coefficient"
+        },
+        {
+          "type": "paragraph",
+          "content": "Sometimes you only need one term. To find the coefficient of $x^2$ in $(1+3x)^5$, use row 5 ($1, 5, 10, 10, 5, 1$). The $x^2$ term is the one with $(3x)^2$, which is the third term: $$10(1)^3(3x)^2 = 10 \\times 9x^2 = 90x^2$$ So the coefficient of $x^2$ is $90$."
+        },
+        {
+          "type": "paragraph",
+          "content": "A common mistake is to write $3x^2$ instead of $(3x)^2 = 9x^2$. The brackets matter!"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "expand-x-plus-3",
+          "type": "answer",
+          "title": "Your first expansion",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "Use Pascal's triangle to expand $(x+3)^3$.",
+          "template": "(x+3)^3=x^3+\\placeholder[a]{}x^2+\\placeholder[b]{}x+\\placeholder[c]{}",
+          "blanks": {
+            "a": {
+              "answer": "9"
+            },
+            "b": {
+              "answer": "27"
+            },
+            "c": {
+              "answer": "27",
+              "feedback": "The last term is $1 \\times (3)^3$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Row 3 is $1, 3, 3, 1$. Write $1(x)^3 + 3(x)^2(3) + 3(x)(3)^2 + 1(3)^3$, then simplify each term."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\begin{aligned}(x+3)^3 &= 1(x)^3 + 3(x)^2(3) + 3(x)(3)^2 + 1(3)^3 \\\\ &= x^3 + 9x^2 + 27x + 27\\end{aligned}$$"
+            }
+          ]
+        },
+        {
+          "id": "expand-steps",
+          "type": "order",
+          "title": "Put the steps in order",
+          "instructions": "Add the steps in the right order, then press Submit. Not every line belongs!",
+          "prompt": "Put the steps for expanding $(x-1)^3$ in order.",
+          "lines": [
+            "Write down row 3 of Pascal's triangle: $1, 3, 3, 1$",
+            "Write $1(x)^3 + 3(x)^2(-1) + 3(x)(-1)^2 + 1(-1)^3$",
+            "Simplify: $x^3 - 3x^2 + 3x - 1$"
+          ],
+          "distractors": [
+            "Write down row 4 of Pascal's triangle: $1, 4, 6, 4, 1$",
+            "Cube each term: $x^3 + (-1)^3 = x^3 - 1$"
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "The power is 3, so which row do you need? Then pair each number with powers of $x$ and $-1$, then simplify."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Row 3 is $1, 3, 3, 1$, so $(x-1)^3 = 1(x)^3 + 3(x)^2(-1) + 3(x)(-1)^2 + 1(-1)^3 = x^3 - 3x^2 + 3x - 1$."
+            },
+            {
+              "type": "paragraph",
+              "content": "Row 4 is for a power of 4. Cubing each term separately is a very common mistake: $(x-1)^3$ is not $x^3 - 1$, because it misses out the middle terms."
+            }
+          ]
+        },
+        {
+          "id": "expand-1-minus-2x",
+          "type": "answer",
+          "title": "Watch the signs",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "Expand $(1-2x)^4$.",
+          "template": "(1-2x)^4=1+\\placeholder[a]{}x+\\placeholder[b]{}x^2+\\placeholder[c]{}x^3+\\placeholder[d]{}x^4",
+          "blanks": {
+            "a": {
+              "answer": "-8",
+              "feedback": "Keep the minus sign in the bracket: $4(1)^3(-2x) = -8x$."
+            },
+            "b": {
+              "answer": "24",
+              "feedback": "$6(1)^2(-2x)^2 = 6 \\times 4x^2$."
+            },
+            "c": {
+              "answer": "-32",
+              "feedback": "$(-2x)^3 = -8x^3$, so the term is $4 \\times (-8x^3)$."
+            },
+            "d": {
+              "answer": "16",
+              "feedback": "$(-2x)^4 = 16x^4$: an even power is positive."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Row 4 is $1, 4, 6, 4, 1$. Here $a = 1$ and $b = -2x$, so the terms are $1(1)^4 + 4(1)^3(-2x) + 6(1)^2(-2x)^2 + 4(1)(-2x)^3 + 1(-2x)^4$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\begin{aligned}(1-2x)^4 &= 1 + 4(-2x) + 6(-2x)^2 + 4(-2x)^3 + (-2x)^4 \\\\ &= 1 - 8x + 24x^2 - 32x^3 + 16x^4\\end{aligned}$$"
+            }
+          ]
+        },
+        {
+          "id": "one-coefficient",
+          "type": "answer",
+          "title": "Just one term",
+          "instructions": "Fill in the box, then press Submit.",
+          "prompt": "Find the coefficient of $x^3$ in the expansion of $(2+x)^5$.",
+          "template": "\\text{coefficient of }x^3=\\placeholder[k]{}",
+          "blanks": {
+            "k": {
+              "answer": "40",
+              "feedback": "Don't forget the power of 2: the $x^3$ term is $10(2)^2(x)^3$."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Row 5 is $1, 5, 10, 10, 5, 1$. The $x^3$ term has $(x)^3$, so the power of $2$ is $5 - 3 = 2$. Which number in row 5 goes with it?"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "The terms go $1(2)^5$, $5(2)^4(x)$, $10(2)^3(x)^2$, $10(2)^2(x)^3$, ... so the $x^3$ term is $$10(2)^2(x)^3 = 10 \\times 4x^3 = 40x^3$$ The coefficient is $40$."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "review": [
+    {
+      "id": "which-row",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "Which row of Pascal's triangle gives the coefficients of $(a+b)^n$?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "Row $n$, counting the top $1$ as row 0."
+        },
+        {
+          "type": "paragraph",
+          "content": "For example, $(a+b)^4$ uses row 4: $1, 4, 6, 4, 1$."
+        }
+      ]
+    },
+    {
+      "id": "adding-rule",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "How do you build the next row of Pascal's triangle?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "Each number is the sum of the two numbers directly above it."
+        },
+        {
+          "type": "paragraph",
+          "content": "The edges are always $1$, and every row is symmetrical."
+        }
+      ]
+    },
+    {
+      "id": "row-4-middle",
+      "type": "answer",
+      "prompt": "Fill in the missing number in row 4 of Pascal's triangle.",
+      "template": "1\\quad 4\\quad \\placeholder[m]{}\\quad 4\\quad 1",
+      "blanks": {
+        "m": {
+          "answer": "6"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "Row 3 is $1, 3, 3, 1$, and $3 + 3 = 6$."
+        }
+      ]
+    },
+    {
+      "id": "number-of-terms",
+      "type": "answer",
+      "prompt": "How many terms are there in the expansion of $(a+b)^n$?",
+      "template": "\\placeholder[t]{}\\text{ terms}",
+      "blanks": {
+        "t": {
+          "answer": "n+1"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "Row $n$ has $n+1$ numbers, one for each term."
+        }
+      ]
+    },
+    {
+      "id": "keep-brackets",
+      "type": "choice",
+      "prompt": "Using row 3 ($1, 3, 3, 1$), what is the second term of $(x+2)^3$?",
+      "options": [
+        {
+          "id": "A",
+          "content": "$6x^2$",
+          "correct": true,
+          "why": "Correct: $3(x)^2(2) = 6x^2$."
+        },
+        {
+          "id": "B",
+          "content": "$3x^2$",
+          "why": "You also need to multiply by the power of $2$: $3(x)^2(2)$."
+        },
+        {
+          "id": "C",
+          "content": "$12x^2$",
+          "why": "The power of $2$ in the second term is $1$, not $2$."
+        },
+        {
+          "id": "D",
+          "content": "$3x$",
+          "why": "The powers of $x$ go down from $3$, so the second term has $x^2$."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "The terms are $1(x)^3$, $3(x)^2(2)$, $3(x)(2)^2$, $1(2)^3$."
+        }
+      ]
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 import LearnCourses from "@/lib/components/learn/LearnCourses";
 export default function LearnDashboard() {
     /*
-    NOTE ALTHOUGH THE INFORMATION DISPLAYED IN THE LearnCourses component is dynamic, we'll need to ensure that the links are aswell., e.g. 
-    having an array or object that generates the correct links conditionally dependent on the students examboard
+    The courses, their links and their progress come from GET /api/courses, which reads the course list in
+    src/lib/courses/courses.js. Add other exam boards' courses there as they're built.
     */
     return (
         <div>

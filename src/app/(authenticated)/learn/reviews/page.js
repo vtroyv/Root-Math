@@ -9,7 +9,7 @@ import { localToday, daysBetween, whenDue } from '@/lib/reviews/localDay';
 
 /*
 Reviews: everything with review cards due, across all courses (src/lib/docs/reviews-page.md).
-  ?course=edx-maths-1   opens filtered to that course (the Skill Radar's link does this)
+  ?course=edx-maths-1   opens filtered to that course (the Progress page's link does this)
   ?tab=lessons          opens on the Lessons tab
 Questions | Lessons tabs, filtered by year, course and skill. Each row links to the question's
 or lesson's Review tab (?tab=review). Lesson cards unlock once the whole lesson is complete.
@@ -62,7 +62,7 @@ export default function ReviewsPage({ searchParams }) {
   const due = tab === 'lessons' ? lessonsDue : questionsDue;
 
   return (
-    // same frame as the Skill Radar: white card, 8px corners, soft shadow
+    // same frame as the Progress page: white card, 8px corners, soft shadow
     <div
       style={{
         maxWidth: '1280px',

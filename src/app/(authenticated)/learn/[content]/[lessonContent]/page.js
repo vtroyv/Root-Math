@@ -1,155 +1,106 @@
 'use client'
-import React from 'react'
+import Link from 'next/link'
 import { useParams } from 'next/navigation'
-import { useGetLessonContentQuery } from '@/lib/redux/slices/apiSlice'
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  CardBody
-} from 'reactstrap'
-import { useRouter, usePathname} from 'next/navigation'
-// YOU NEED TO CHANGE THIS CODE SO THAT THE CARD ITSELF IS A LINK, AS WE DON"T ACTUALLY NEED
-//CUSTOM LINKS FOR SUBTOPICS AT THIS POINT
+import { Alert } from 'reactstrap'
+import { useGetCourseOutlineQuery } from '@/lib/redux/slices/apiSlice'
+import { courseLabel } from '@/lib/courses/courses'
+import { CourseHero, ProgressBar, StatusIcon, ComingSoon, OutlineState } from '@/lib/components/learn/courses/CourseUI'
 
-export default function LessonContent() {
+/*
+Chapter page (/learn/<course id>/<chapter>): the chapter's progress ring and Continue button, then one card per
+group of lessons (the chapter document's subsections, e.g. "Binomial Building Blocks"), each lesson with its
+status. Lessons that aren't built yet are greyed out and not clickable.
+Data: the same course outline as the course page (GET /api/courses/<course id>), so the numbers always agree.
+*/
+
+const STATUS_TEXT = { 'in-progress': 'In progress', todo: 'Start' }
+
+export default function ChapterPage() {
   const { content, lessonContent } = useParams()
-  const router = useRouter()
-  const pathName = usePathname()
+  // refetch on every visit, so a lesson finished a minute ago shows up
+  const { data, error, isLoading } = useGetCourseOutlineQuery(content, { refetchOnMountOrArgChange: true })
 
-
-  const navigation = (item) => {
-    const url = item.toLowerCase().split(' ').join('-') //Note this is due to to the topics not containing '-' to separate words which makes the url invalid
-    router.push(`${pathName}/${url}`) // Use proper string interpolation
-  }
-
-  // Example: pick the correct DB collection
-  const selectCollection = (collection) => {
-    if (collection === 'edx-maths-1') return 'edx-pure-y1-subsections'
-    // Add more conditions if needed
-    return ''
-  }
-
-  const collection = selectCollection(content)
-  const apiParams = { collection, lessonContent }
-
-  // Fetch data
-  const { data, isLoading } = useGetLessonContentQuery(apiParams)
-
-  if (isLoading) {
-    return (
-      <Container style={{ minHeight: '80vh' }} className="d-flex justify-content-center align-items-center">
-        <h2>Loading...</h2>
-      </Container>
-    )
-  }
-
-  // Assume `data?.subsections` might be an object like:
-  // {
-  //   "Proof": ["What is Proof?", "Methods of Proof"],
-  //   "Algebra & Functions": ["Algebraic Expressions", "Quadratic Functions", ... ],
-  //   ...
-  // }
-  const lessons = data?.subsections || {}
-  console.log('The lessons being fetched on this page are ', lessons)
-
-  // Title (optional "Edexcel Mathematics – Pure Mathematics Year 12" or similar)
-  const pageTitle = data?.name
-    ? data.name
-        .split('-')
-        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-        .join(' ')
-    : 'Lesson Content'
+  const area = data?.areas.find((a) => a.chapters.some((chapter) => chapter.slug === lessonContent))
+  const chapter = area?.chapters.find((c) => c.slug === lessonContent)
 
   return (
-    <Container fluid className="my-4" style={{ minHeight: '80vh' }}>
-      {/* Page Header: e.g., "Edexcel Mathematics – Pure Mathematics Year 12" */}
-      <Row className="mb-3">
-        <Col>
-          <h1 style={{ color: '#17a2b8',  }}>
-            {pageTitle}
-          </h1>
-        </Col>
-      </Row>
+    <div className="learn-page">
+      <OutlineState isLoading={isLoading} error={error} />
 
-      {/* (Optional) “My Progress” or other info bar */}
-      {/* 
-      <Row className="mb-4">
-        <Col md="6">
-          <h5>My Progress</h5>
-          <div className="progress" style={{ height: '20px' }}>
-            <div
-              className="progress-bar"
-              role="progressbar"
-              style={{ width: '0%', backgroundColor: '#17a2b8' }}
-              aria-valuenow="0"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              0%
-            </div>
+      {data && !chapter && (
+        <Alert color="warning">
+          We couldn&apos;t find that chapter. <Link href={`/learn/${content}`}>Back to the course</Link>
+        </Alert>
+      )}
+
+      {chapter && (
+        <>
+          <CourseHero
+            kicker={`${courseLabel(data.course)} · ${area.name}`}
+            title={chapter.title}
+            completed={chapter.completed}
+            total={chapter.total}
+            next={chapter.next}
+            emptyText="Lessons for this chapter are coming soon."
+          />
+
+          <div className="learn-topics">
+            {chapter.groups.map((group) => (
+              <LessonGroup key={group.heading} group={group} />
+            ))}
           </div>
-        </Col>
-      </Row>
-      */}
+        </>
+      )}
+    </div>
+  )
+}
 
-      {/* Render main subsections as cards with teal “headers” */}
-      <Row>
-        {Object.entries(lessons).map(([sectionTitle, subItems], index) => (
-          <Col key={index} sm="12" md="6" lg="4" className="mb-4">
-            <Card
-              style={{
-                borderRadius: '8px',
-                border: '2px solid #333',
-                boxShadow: '2px 2px 5px rgba(0,0,0,0.15)'
-              }}
-            >
-              {/* “Header” bar in teal */}
-              <div
-                style={{
-                  backgroundColor: '#17a2b8',
-                  color: '#fff',
-                  padding: '0.75rem 1rem',
-                  borderTopLeftRadius: '6px',
-                  borderTopRightRadius: '6px',
-                 
-                }}
-              >
-                <h4 className="mb-0" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.2)' }}>
-                  {sectionTitle} 
-                </h4>
-              </div>
+function LessonGroup({ group }) {
+  const built = group.lessons.filter((lesson) => lesson.status !== 'coming-soon')
+  const completed = built.filter((lesson) => lesson.status === 'complete').length
 
-              {/* Sub‐items in white “body” with a stylized border */}
-              <CardBody style={{ backgroundColor: '#fff' }}>
-                {Array.isArray(subItems) && subItems.map((item, idx) => (
-                  <div
-                    key={idx}
-                    style={{
-                      padding: '0.5rem 0',
-                      borderBottom: idx < subItems.length - 1 ? '1px solid #ccc' : 'none',
-                      cursor: 'pointer'
-                    }}
-                    // If you need to navigate on click:
-                    onClick={()=> navigation(item)}
-                    // () => console.log(`Clicked on: ${item}`)
-                  >
-                    <span
-                      style={{
-                        fontFamily: "'Trebuchet MS', sans-serif",
-                        color: '#333'
-                      }}
-                    >
-                      {item}
-                    </span>
-                  </div>
-                ))}
-              </CardBody>
-            </Card>
-          </Col>
+  return (
+    <section className={`learn-topic${built.length ? '' : ' learn-topic--soon'}`}>
+      <div className="learn-topic__head">
+        <h2 className="learn-topic__name">{group.heading}</h2>
+        {built.length ? (
+          <div className="learn-topic__progress">
+            <ProgressBar completed={completed} total={built.length} />
+            <span>
+              {completed} of {built.length} lessons
+            </span>
+          </div>
+        ) : (
+          <p className="learn-topic__note">Coming soon</p>
+        )}
+      </div>
+
+      <ul className="learn-list">
+        {group.lessons.map((lesson) => (
+          <li key={lesson.slug}>
+            {lesson.href ? (
+              <Link href={lesson.href} className="learn-row">
+                <span className="learn-row__lesson">
+                  <StatusIcon status={lesson.status} />
+                  {lesson.title}
+                </span>
+                <span className="learn-row__meta">
+                  {STATUS_TEXT[lesson.status]}
+                  <i className="bi bi-chevron-right" aria-hidden="true" />
+                </span>
+              </Link>
+            ) : (
+              <span className="learn-row learn-row--soon">
+                <span className="learn-row__lesson">
+                  <StatusIcon status="coming-soon" />
+                  {lesson.title}
+                </span>
+                <ComingSoon />
+              </span>
+            )}
+          </li>
         ))}
-      </Row>
-    </Container>
+      </ul>
+    </section>
   )
 }

@@ -1,0 +1,129 @@
+{
+  "title": "Integer-Part-Of-Two-Plus-Root-Three",
+  "type": "combination",
+  "schemaVersion": 2,
+  "topic": "Binomial Expansion",
+  "difficulty": "Challenge",
+  "branch": "pure",
+  "examBoard": "all",
+  "year": "12",
+  "stem": [
+    { "type": "paragraph", "content": "In this question, $n$ is a positive whole number. No calculators!" }
+  ],
+  "parts": [
+    {
+      "type": "answer",
+      "label": "(a)",
+      "prompt": "Use the binomial expansion to work out $(2+\\sqrt{3})^3 + (2-\\sqrt{3})^3$.",
+      "template": "(2+\\sqrt{3})^3+(2-\\sqrt{3})^3=\\placeholder[ans]{}",
+      "blanks": {
+        "ans": {
+          "answer": "52",
+          "exactForm": true,
+          "feedback": "$(2+\\sqrt{3})^3 = 26 + 15\\sqrt{3}$ and $(2-\\sqrt{3})^3 = 26 - 15\\sqrt{3}$. What happens to the surds when you add them?"
+        }
+      },
+      "hint": [
+        { "type": "paragraph", "content": "Expand $(2+\\sqrt{3})^3$ with row 3 of Pascal's triangle, using $(\\sqrt{3})^2 = 3$ and $(\\sqrt{3})^3 = 3\\sqrt{3}$. Then do the same with $-\\sqrt{3}$." }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "$$(2+\\sqrt{3})^3 = 8 + 3(4)\\sqrt{3} + 3(2)(3) + 3\\sqrt{3} = 26 + 15\\sqrt{3}$$" },
+        { "type": "paragraph", "content": "In the same way, $(2-\\sqrt{3})^3 = 26 - 15\\sqrt{3}$. Adding, the surds cancel: $26 + 26 = 52$." }
+      ]
+    },
+    {
+      "type": "working",
+      "label": "(b)",
+      "prompt": "Prove that $(2+\\sqrt{3})^n + (2-\\sqrt{3})^n$ is an even integer for every positive whole number $n$.",
+      "markScheme": [
+        { "code": "M1", "marks": 1, "text": "Writes both expansions using the binomial expansion, with general terms $\\binom{n}{r}2^{n-r}(\\sqrt{3})^r$ and $\\binom{n}{r}2^{n-r}(-\\sqrt{3})^r$" },
+        { "code": "M1", "marks": 1, "text": "States that the terms with odd $r$ have opposite signs and cancel when the expansions are added" },
+        { "code": "A1", "marks": 1, "text": "States that for even $r$, $(\\sqrt{3})^r = 3^{r/2}$ is an integer, so each remaining term is an integer" },
+        { "code": "A1", "marks": 1, "text": "Concludes that each remaining term appears twice, so the sum is $2 \\times$ (an integer), which is even" }
+      ],
+      "llm": {
+        "context": "This must hold for every positive whole number n, so checking particular values of n (e.g. n = 1, 2, 3) earns no marks. Proof by induction is not expected but is acceptable if correct. The student must explain why the odd-power terms cancel AND why the remaining terms are integers."
+      },
+      "modelAnswer": {
+        "latex": "\\displaylines{(2+\\sqrt{3})^n=\\sum\\binom{n}{r}2^{n-r}(\\sqrt{3})^r,\\quad(2-\\sqrt{3})^n=\\sum\\binom{n}{r}2^{n-r}(-\\sqrt{3})^r\\\\\\text{For odd }r\\text{, }(-\\sqrt{3})^r=-(\\sqrt{3})^r\\text{, so these terms cancel when added.}\\\\\\text{For even }r\\text{, }(\\sqrt{3})^r=3^{r/2}\\text{ is an integer, and the term appears in both expansions.}\\\\\\text{So the sum}=2\\left(2^n+\\binom{n}{2}2^{n-2}\\cdot3+\\binom{n}{4}2^{n-4}\\cdot3^2+\\cdots\\right)\\text{, which is even.}}"
+      },
+      "hint": [
+        { "type": "paragraph", "content": "Write out the general term of each expansion. What's the difference between $(\\sqrt{3})^r$ and $(-\\sqrt{3})^r$ when $r$ is odd? And when $r$ is even?" }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "The general terms of the two expansions are $\\binom{n}{r}2^{n-r}(\\sqrt{3})^r$ and $\\binom{n}{r}2^{n-r}(-\\sqrt{3})^r$." },
+        { "type": "paragraph", "content": "When $r$ is odd, $(-\\sqrt{3})^r = -(\\sqrt{3})^r$, so these terms cancel when the expansions are added." },
+        { "type": "paragraph", "content": "When $r$ is even, $(-\\sqrt{3})^r = (\\sqrt{3})^r = 3^{r/2}$, which is an integer, so each of these terms is an integer and appears in both expansions:" },
+        { "type": "paragraph", "content": "$$(2+\\sqrt{3})^n + (2-\\sqrt{3})^n = 2\\left(2^n + \\binom{n}{2}2^{n-2} \\cdot 3 + \\binom{n}{4}2^{n-4} \\cdot 3^2 + \\cdots\\right)$$ The bracket is an integer, so the sum is an even integer." }
+      ]
+    },
+    {
+      "type": "explain",
+      "label": "(c)",
+      "prompt": "Hence show that the integer part of $(2+\\sqrt{3})^n$ is always odd.",
+      "markScheme": [
+        { "code": "M1", "marks": 1, "text": "Shows that $0 < 2-\\sqrt{3} < 1$ (e.g. since $1 < \\sqrt{3} < 2$), so $0 < (2-\\sqrt{3})^n < 1$" },
+        { "code": "A1", "marks": 1, "text": "Uses part (b): $(2+\\sqrt{3})^n = E - (2-\\sqrt{3})^n$ for an even integer $E$, so it lies strictly between $E-1$ and $E$, and its integer part is $E - 1$, which is odd" }
+      ],
+      "llm": {
+        "context": "The key facts are 0 < (2 - sqrt3)^n < 1 (with a reason, e.g. 1 < sqrt3 < 2) and that (2 + sqrt3)^n is therefore just below an even integer E, so its integer part is E - 1. Numerical checks for particular n earn no marks."
+      },
+      "modelAnswer": {
+        "latex": "\\displaylines{1<\\sqrt{3}<2\\text{, so }0<2-\\sqrt{3}<1\\text{ and }0<(2-\\sqrt{3})^n<1.\\\\\\text{By (b), }(2+\\sqrt{3})^n=E-(2-\\sqrt{3})^n\\text{ for an even integer }E.\\\\\\text{So }E-1<(2+\\sqrt{3})^n<E\\text{, and its integer part is }E-1\\text{, which is odd.}}"
+      },
+      "hint": [
+        { "type": "paragraph", "content": "How big is $2-\\sqrt{3}$? What does that tell you about $(2-\\sqrt{3})^n$? Then rearrange the result of part (b)." }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "Since $1 < \\sqrt{3} < 2$, we have $0 < 2-\\sqrt{3} < 1$, so $0 < (2-\\sqrt{3})^n < 1$." },
+        { "type": "paragraph", "content": "By part (b), $(2+\\sqrt{3})^n = E - (2-\\sqrt{3})^n$ for some even integer $E$. So $E - 1 < (2+\\sqrt{3})^n < E$, and the integer part of $(2+\\sqrt{3})^n$ is $E - 1$, which is odd." }
+      ]
+    },
+    {
+      "type": "answer",
+      "label": "(d)",
+      "prompt": "Without a calculator, find the integer part of $(2+\\sqrt{3})^4$.",
+      "template": "\\text{integer part}=\\placeholder[ans]{}",
+      "blanks": {
+        "ans": {
+          "answer": "193",
+          "exactForm": true,
+          "feedback": "First work out $(2+\\sqrt{3})^4 + (2-\\sqrt{3})^4$. The integer part is one less than that."
+        }
+      },
+      "hint": [
+        { "type": "paragraph", "content": "Work out $(2+\\sqrt{3})^4 + (2-\\sqrt{3})^4$ using only the even-$r$ terms, then use part (c)." }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "$$(2+\\sqrt{3})^4 + (2-\\sqrt{3})^4 = 2\\left(2^4 + \\binom{4}{2}2^2 \\cdot 3 + 3^2\\right) = 2(16 + 72 + 9) = 194$$" },
+        { "type": "paragraph", "content": "Since $0 < (2-\\sqrt{3})^4 < 1$, $(2+\\sqrt{3})^4$ is just under $194$, so its integer part is $193$." }
+      ]
+    }
+  ],
+  "review": [
+    {
+      "id": "conjugate-trick",
+      "type": "flip",
+      "front": [
+        { "type": "paragraph", "content": "Why is $(a+\\sqrt{b})^n + (a-\\sqrt{b})^n$ always an integer (for whole numbers $a$, $b$ and $n$)?" }
+      ],
+      "back": [
+        { "type": "bold-paragraph", "content": "The odd powers of $\\sqrt{b}$ cancel." },
+        { "type": "paragraph", "content": "Only the even powers of $\\sqrt{b}$ survive, and they're whole numbers." }
+      ]
+    },
+    {
+      "id": "small-conjugate",
+      "type": "choice",
+      "prompt": "Which of these is between $0$ and $1$?",
+      "options": [
+        { "id": "A", "content": "$2-\\sqrt{3}$", "correct": true, "why": "Correct: $\\sqrt{3} \\approx 1.73$, so $2-\\sqrt{3} \\approx 0.27$." },
+        { "id": "B", "content": "$1-\\sqrt{3}$", "why": "$1-\\sqrt{3}$ is negative." },
+        { "id": "C", "content": "$3-\\sqrt{3}$", "why": "$3-\\sqrt{3} \\approx 1.27$, which is more than $1$." }
+      ],
+      "explanation": [
+        { "type": "paragraph", "content": "Because $0 < 2-\\sqrt{3} < 1$, its powers get very small, which is what makes $(2+\\sqrt{3})^n$ sit just below an integer." }
+      ]
+    }
+  ]
+}

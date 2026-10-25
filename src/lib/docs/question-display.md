@@ -7,7 +7,7 @@ First written October 2026 to explain the original code. **Updated 17 October 20
 Related docs:
 - [question-parts.md](question-parts.md): the parts schema, every part type, marking, and the build report.
 - [question-reviews.md](question-reviews.md): review flashcards.
-- [skill-radar.md](skill-radar.md): the stats page that reads question progress.
+- [progress-page.md](progress-page.md): the stats page that reads question progress.
 
 ---
 
@@ -73,7 +73,7 @@ Three things to keep in mind:
 
 **[middleware.ts](../../middleware.ts)**: `clerkMiddleware()` with **no `auth.protect()`**. Clerk is attached to every request (so `auth()` works in route handlers), but **no page is protected**: `/learn/...` is reachable while logged out.
 
-**[learn/layout.js](../../app/%28authenticated%29/learn/layout.js)**: wraps every `/learn/*` page with `LearnNav` (which now includes **SKILL RADAR**), `Breadcrumbs` and the floating `MyTutor` widget. `(authenticated)` is only a route group: it doesn't change the URL and does no auth itself.
+**[learn/layout.js](../../app/%28authenticated%29/learn/layout.js)**: wraps every `/learn/*` page with `LearnNav` (which now includes **PROGRESS**), `Breadcrumbs` and the floating `MyTutor` widget. `(authenticated)` is only a route group: it doesn't change the URL and does no auth itself.
 
 **How users get here:** [QuestionTable.js](../components/questions/QuestionTable.js) links to `questions/<title>`, or the **Next** drawer on a question does. The URL slug **is the question's `title`** in MongoDB, so titles must be unique.
 
@@ -100,7 +100,7 @@ File: [redux/slices/apiSlice.js](../redux/slices/apiSlice.js). Redux is only a t
 | `useGetQuestionReviewsQuery` | `GET /api/reviews/question/:title?today=` | the Review tab and its "Review · 2" label |
 | `useCheckReviewCardMutation` | `POST /api/reviews/check` | review cards with an answer to check |
 | `useRateReviewCardMutation` | `POST /api/reviews/rate` | every review card |
-| `useGetMasteryQuery` | `GET /api/mastery?spec=` | the Skill Radar page |
+| `useGetMasteryQuery` | `GET /api/mastery?spec=` | the Progress page |
 | `useGradeQuestionMutation`, `useGradeSketchQuestionMutation` | `POST /api/feedback`, `/api/feedback/sketch` (FastAPI) | legacy components only |
 | `useAskTutorMutation` | `POST /api/tutor/asktutor` | MyTutor |
 
@@ -122,7 +122,7 @@ It exports **`getMongoClient()`**, which shares one MongoDB connection, cached o
 - `getQuestions()` and `getSpecificQuestion(title)` read `quizzes`. `getQuestions()` now logs the real error instead of hiding it.
 - `identifyQuesProg({ examBoard, branch, year })` builds the progress collection name: `` `${examBoard}-questions-${branch}-${year == '12' ? 'y1' : 'y2'}-progress` ``, e.g. `edexcel-questions-pure-y1-progress`.
 - `getUserQuestionProgress`, `createUserQuestionProgress` (unique on `{userId, title}`) and `updateUserQuestionProgress`. The last one does **`replaceOne`**, so whatever the browser sends becomes the whole document.
-- **Added for the Skill Radar:** `getUserProgressForCollection`, `getChapters`, `getBuiltLessons`, `getUserLessonProgressList`.
+- **Added for the Progress page:** `getUserProgressForCollection`, `getChapters`, `getBuiltLessons`, `getUserLessonProgressList`.
 - **Added for reviews:** `getReviewStates`, `createReviewStates` and `saveReviewState`, all on the `reviewStates` collection.
 
 ### The routes this page uses

@@ -1858,3 +1858,491 @@
     transform: none;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Learn area: nav bar, breadcrumbs and landing page
+   (LearnNav.js, Breadcrumbs.js, LearnCourses.js). Like the home nav, hovers
+   only swap colours: no movement, transitions or animation.
+   Everything lines up on one 1600px column, the same width as the home nav.
+   -------------------------------------------------------------------------- */
+
+/* Nav: the home nav (.rm-nav) in teal */
+.rm-nav--learn {
+  background: var(--rm-teal);
+}
+
+.rm-nav--learn .rm-nav__inner {
+  max-width: 1600px;
+}
+
+.rm-nav--learn .rm-nav__brand,
+.rm-nav--learn .rm-nav__brand:hover,
+.rm-nav--learn .rm-nav__toggle {
+  color: #fff;
+}
+
+.rm-nav--learn .rm-nav__toggle {
+  border-color: #fff;
+}
+
+.rm-nav--learn .rm-nav__link {
+  color: #fff;
+}
+
+.rm-nav--learn .rm-nav__link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* the page you're on: a filled white pill */
+.rm-nav--learn .rm-nav__link[aria-current="page"] {
+  color: var(--rm-teal-deep);
+  background: #fff;
+  border-color: var(--rm-ink);
+}
+
+.rm-nav--learn span.rm-nav__link {
+  cursor: default;
+}
+
+.rm-nav--learn .rm-nav__menu {
+  min-width: 17rem;
+}
+
+.rm-nav__count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.4rem;
+  height: 1.4rem;
+  padding: 0 0.35rem;
+  font-size: 0.85rem;
+  color: var(--rm-teal-deep);
+  background: #fff;
+  border: 1.5px solid var(--rm-ink);
+  border-radius: 999px;
+}
+
+.rm-nav__menu button {
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  text-align: left;
+  color: var(--rm-ink);
+  background: none;
+  border: none;
+  border-radius: var(--rm-pill);
+  cursor: pointer;
+}
+
+.rm-nav__menu button:hover {
+  background: var(--rm-teal-wash);
+  color: var(--rm-teal-deep);
+}
+
+.rm-nav__menu-label {
+  padding: 0.35rem 0.75rem 0.15rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--rm-ink-faint);
+}
+
+.rm-nav__menu-note {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  color: var(--rm-ink-faint);
+}
+
+/* desktop: brand left, every link in one row on the right (the home nav centres its 3 links instead) */
+@media (min-width: 901px) {
+  .rm-nav--learn .rm-nav__inner {
+    display: flex;
+  }
+
+  .rm-nav--learn .rm-nav__links {
+    display: flex;
+  }
+
+  .rm-nav--learn .rm-nav__brand {
+    margin-right: auto;
+  }
+}
+
+/* phones: the open menu is on paper, so the links go back to ink */
+@media (max-width: 900px) {
+  .rm-nav--learn .rm-nav__link,
+  .rm-nav--learn .rm-nav__link:hover {
+    color: var(--rm-ink);
+  }
+
+  .rm-nav--learn .rm-nav__link[aria-current="page"] {
+    background: var(--rm-teal-wash);
+    border-color: var(--rm-teal-soft);
+  }
+}
+
+/* Breadcrumbs: a pale-teal box under the nav, as wide as its crumbs,
+   lined up with the page content on the 1600px column */
+.learn-crumbs-bar {
+  max-width: 1600px;
+  padding-block: 1.5rem 0.5rem;
+}
+
+.learn-crumbs {
+  --bs-breadcrumb-divider: "›";
+  --bs-breadcrumb-divider-color: var(--rm-ink-faint);
+  --bs-breadcrumb-item-active-color: var(--rm-ink);
+  --bs-breadcrumb-item-padding-x: 0.6rem;
+  display: inline-flex;
+  margin-bottom: 0;
+  padding: 0.65rem 1.25rem;
+  font-family: var(--rm-body);
+  font-size: 1.15rem;
+  background: var(--rm-teal-wash);
+  border: 2px solid var(--rm-teal-soft);
+  border-radius: 10px;
+}
+
+.learn-crumbs a {
+  color: var(--rm-teal-deep);
+  text-decoration: none;
+}
+
+.learn-crumbs a:hover {
+  text-decoration: underline;
+}
+
+.learn-crumbs .active {
+  font-weight: bold;
+}
+
+.learn-crumbs .bi {
+  margin-right: 0.35rem;
+}
+
+/* Landing, course and chapter pages: the 1600px column, without the outlet's own margins */
+.learn-outlet:has(.learn-home),
+.learn-outlet:has(.learn-page) {
+  margin: 0;
+  padding: 0;
+}
+
+.learn-home,
+.learn-page {
+  max-width: 1600px;
+  margin-inline: auto;
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 4vw, 2.5rem) 3rem;
+}
+
+.learn-home__title {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  color: var(--rm-teal);
+  margin-bottom: 0.25rem;
+}
+
+.learn-home__lead {
+  font-size: 1.25rem;
+  color: var(--rm-ink-soft);
+  margin-bottom: 1.5rem;
+}
+
+.learn-home__filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.learn-home__group {
+  font-size: 1.6rem;
+  color: var(--rm-ink);
+  margin: 0.5rem 0 1rem;
+}
+
+/* Cards: course cards (landing) and topic / lesson-group cards (course + chapter pages).
+   A teal header band and a 2px ink border. */
+.learn-course,
+.learn-topic {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 1.75rem);
+  margin-bottom: 1.75rem;
+  overflow: hidden;
+  background: #fff;
+  border: 2px solid var(--rm-ink);
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.learn-course--loading {
+  min-height: 16rem;
+  background: #f0f0f0;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.learn-course__head,
+.learn-topic__head {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 1.25rem;
+  background: var(--rm-teal);
+  border-bottom: 2px solid var(--rm-ink);
+}
+
+.learn-course__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.4rem;
+  color: var(--rm-teal-deep);
+  background: #fff;
+  border: 2px solid var(--rm-ink);
+  border-radius: 50%;
+}
+
+.learn-course__name {
+  margin: 0;
+  font-size: 1.7rem;
+  color: #fff;
+}
+
+.learn-course__sub {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #fff;
+}
+
+/* coming soon: a pale header, so the ones you can use stand out */
+.learn-course--soon .learn-course__head,
+.learn-topic--soon .learn-topic__head {
+  background: var(--rm-teal-soft);
+}
+
+.learn-course--soon .learn-course__name,
+.learn-course--soon .learn-course__sub,
+.learn-topic--soon .learn-topic__name,
+.learn-topic--soon .learn-topic__note {
+  color: var(--rm-teal-deep);
+}
+
+.learn-course__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem 1.25rem 1.25rem;
+}
+
+.learn-course__stats {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.learn-ring {
+  flex-shrink: 0;
+  width: 6.5rem;
+  height: 6.5rem;
+}
+
+.learn-ring--soon {
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  color: var(--rm-teal);
+  border: 2px dashed var(--rm-teal-soft);
+  border-radius: 50%;
+}
+
+.learn-course__count {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--rm-ink);
+}
+
+.learn-course__note {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--rm-ink-soft);
+}
+
+.learn-course .btn {
+  margin-top: auto;
+  font-size: 1.15rem;
+}
+
+/* Course + chapter page header: title left, progress ring + Continue right */
+.learn-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 3rem;
+  margin-bottom: 2.25rem;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  background: #fff;
+  border: 2px solid var(--rm-ink);
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.learn-hero--loading {
+  min-height: 12rem;
+  background: #f0f0f0;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.learn-hero__kicker {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--rm-ink-faint);
+}
+
+.learn-hero__sub {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--rm-ink-soft);
+}
+
+.learn-hero__progress {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.learn-hero__ring {
+  width: 8rem;
+  height: 8rem;
+}
+
+.learn-hero__cta {
+  margin-top: 0.85rem;
+  font-size: 1.1rem;
+}
+
+/* Topic / lesson-group cards: a masonry of columns, so short cards don't leave gaps */
+.learn-topics {
+  columns: 24rem 3;
+  column-gap: 1.75rem;
+}
+
+.learn-topic {
+  height: auto;
+  break-inside: avoid;
+}
+
+.learn-topic__head {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.learn-topic__name {
+  margin: 0;
+  font-size: 1.55rem;
+  color: #fff;
+}
+
+.learn-topic__progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.learn-topic__note {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* a progress bar on the teal header */
+.learn-bar {
+  flex: 1;
+  height: 0.65rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1.5px solid var(--rm-ink);
+  border-radius: 999px;
+}
+
+.learn-bar span {
+  display: block;
+  height: 100%;
+  background: #fff;
+}
+
+/* chapter / lesson rows */
+.learn-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.learn-list li + li {
+  border-top: 1px solid var(--rm-teal-soft);
+}
+
+.learn-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.25rem;
+  font-size: 1.15rem;
+  color: var(--rm-ink);
+  text-decoration: none;
+}
+
+a.learn-row:hover {
+  color: var(--rm-teal-deep);
+  background: var(--rm-teal-wash);
+}
+
+.learn-row--soon {
+  color: var(--rm-ink-faint);
+}
+
+.learn-row__lesson {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.learn-row__meta {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  color: var(--rm-ink-soft);
+}
+
+.learn-pill {
+  flex-shrink: 0;
+  padding: 0.1rem 0.6rem;
+  font-size: 0.85rem;
+  color: var(--rm-teal-deep);
+  background: var(--rm-teal-wash);
+  border: 1.5px solid var(--rm-teal-soft);
+  border-radius: 999px;
+}
+
+.learn-status {
+  font-size: 1.15rem;
+  color: var(--rm-ink-faint);
+}
+
+.learn-status--complete,
+.learn-status--in-progress {
+  color: var(--rm-teal-deep);
+}

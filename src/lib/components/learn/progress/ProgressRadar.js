@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 /*
-Radar chart for the Skill Radar page: one vertex per specification area, with the
+Radar chart for the Progress page: one vertex per specification area, with the
 shaded shape reaching further towards a vertex the higher the student's mastery there.
 
 Click only (no hover): the page's cards change when a corner is clicked / tapped, or
@@ -49,7 +49,7 @@ function labelLines(label) {
 const toPoints = (pts) => pts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
 const pct = (v) => `${Math.round(v * 100)}%`;
 
-export default function SkillRadar({ areas, pinned, onPin }) {
+export default function ProgressRadar({ areas, pinned, onPin }) {
   const [focused, setFocused] = useState(null); // keyboard focus ring only
   const [hovered, setHovered] = useState(null); // colour cue only: shows a corner is clickable, never changes the cards
   const n = areas.length;
@@ -58,16 +58,16 @@ export default function SkillRadar({ areas, pinned, onPin }) {
 
   return (
     <div style={{ width: '100%', maxWidth: `${WIDTH}px`, margin: '0 auto' }}>
-      <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} width="100%" role="group" aria-label="Skill radar: choose a skill to see its details">
+      <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} width="100%" role="group" aria-label="Progress radar chart: choose a skill to see its details">
         <defs>
-          <radialGradient id="skill-radar-bg">
+          <radialGradient id="progress-radar-bg">
             <stop offset="0%" stopColor="#ffffff" />
             <stop offset="100%" stopColor="#8fd3e8" />
           </radialGradient>
         </defs>
 
         {/* background shape, quarter rings and spokes */}
-        <polygon points={ring(1)} fill="url(#skill-radar-bg)" stroke={INK} strokeWidth="3" strokeLinejoin="round" />
+        <polygon points={ring(1)} fill="url(#progress-radar-bg)" stroke={INK} strokeWidth="3" strokeLinejoin="round" />
         {[0.25, 0.5, 0.75].map((f) => (
           <polygon key={f} points={ring(f)} fill="none" stroke="#ffffff" strokeOpacity="0.8" strokeWidth="1.5" />
         ))}

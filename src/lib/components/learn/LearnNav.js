@@ -1,100 +1,163 @@
 'use client'
-import React,{useEffect, useState} from 'react'
-import { Nav, Navbar, NavbarBrand,NavLink, UncontrolledDropdown, DropdownToggle, DropdownItem,DropdownMenu, Button } from 'reactstrap';
-
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useGetDueReviewsQuery } from '@/lib/redux/slices/apiSlice';
+import { usePathname } from 'next/navigation';
+import { useClerk } from '@clerk/nextjs';
+import { useGetCoursesQuery, useGetDueReviewsQuery } from '@/lib/redux/slices/apiSlice';
 import { localToday } from '@/lib/reviews/localDay';
+import { courseLabel } from '@/lib/courses/courses';
 
-// "REVIEWS · 3": questions + lessons with review cards due, across all courses (src/lib/docs/reviews-page.md)
-function ReviewsLink() {
+/*
+The learn area's nav bar. Same markup and `rm-nav` classes as the home nav (src/lib/components/home/Navigation.js),
+in teal (.rm-nav--learn in globals.css). The page you're on is a filled white pill (aria-current="page").
+COURSES lists the student's own courses (GET /api/courses), grouped by qualification.
+On phones the links fold into the ☰ menu, as on the home page.
+*/
+
+// questions + lessons with review cards due, across all courses (src/lib/docs/reviews-page.md)
+function useReviewsDue() {
   const [today] = useState(localToday)
   const { data } = useGetDueReviewsQuery(today)
-  const due = [...(data?.questions ?? []), ...(data?.lessons ?? [])].filter((entry) => entry.cardsDue > 0).length
-  return <Link href='/learn/reviews' style={{textDecoration:"none"}}>REVIEWS{due > 0 && ` · ${due}`}</Link>
+  return [...(data?.questions ?? []), ...(data?.lessons ?? [])].filter((entry) => entry.cardsDue > 0).length
 }
 
-
 export default function LearnNav() {
-    
-//   const {logout} = UserAuth;
-  const router = useRouter()
-  
+  const pathname = usePathname()
+  const { signOut } = useClerk()
+  const { data } = useGetCoursesQuery()
+  const reviewsDue = useReviewsDue()
 
+  const [menuOpen, setMenuOpen] = useState(false)    // the phone menu
+  const [dropdown, setDropdown] = useState(null)     // 'courses' | 'account' | null
+  const navRef = useRef(null)
 
-  
+  // close everything when the page changes
+  useEffect(() => {
+    setMenuOpen(false)
+    setDropdown(null)
+  }, [pathname])
 
+  // close a dropdown on an outside click or Escape (same as the home nav)
+  useEffect(() => {
+    if (!dropdown) return
+    const onPointerDown = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) setDropdown(null)
+    }
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setDropdown(null)
+    }
+    document.addEventListener('mousedown', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [dropdown])
 
+  const isActive = (href) => (href === '/learn' ? pathname === '/learn' : pathname.startsWith(href))
+  const toggle = (name) => setDropdown((open) => (open === name ? null : name))
 
+  const navLink = (href, text) => (
+    <li>
+      <Link href={href} className="rm-nav__link" aria-current={isActive(href) ? 'page' : undefined}>
+        {text}
+      </Link>
+    </li>
+  )
 
+  // [['A level Maths', [course, ...]], ...]
+  const courseGroups = Object.entries(
+    (data?.courses ?? []).reduce((groups, course) => {
+      (groups[course.qualification] ??= []).push(course)
+      return groups
+    }, {})
+  )
+  const inACourse = (data?.courses ?? []).some((course) => pathname.startsWith(`/learn/${course.id}`))
 
-
-  const handleLogout =async ()=>{
-    // In this function add logic from the clerkjs api to handle log in's and outs
-    // await logout()
-    router.push('/')
-  }
   return (
-    <div className='home-nav'>
-          <Navbar color="info" light={true} fixed='top' expand='md' style={{borderRadius:'0px'}}>
-         < NavbarBrand className='px-2'><Link href="/" style={{textDecoration: 'none', fontWeight:'bold', color:'white'}}>RootMath</Link></NavbarBrand>
-            <Nav light>
-             <NavLink>
-              EXAMS
-             </NavLink>
+    <nav className="rm-nav rm-nav--learn" ref={navRef}>
+      <div className="rm-container rm-nav__inner">
+        <Link href="/" className="rm-nav__brand">
+          RootMath
+        </Link>
 
-              <NavLink> <Link href='/learn/questions' style={{textDecoration:"none"}}>QUESTIONS</Link></NavLink>
+        <button
+          type="button"
+          className="rm-nav__toggle"
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-expanded={menuOpen}
+          aria-label="Toggle navigation menu"
+        >
+          <i className={menuOpen ? 'bi bi-x' : 'bi bi-list'} />
+        </button>
 
-              <NavLink> <Link href='/learn/skill-radar' style={{textDecoration:"none"}}>SKILL RADAR</Link></NavLink>
+        <ul className="rm-nav__links" data-open={menuOpen}>
+          {navLink('/learn', 'Learn')}
+          <li>
+            <span className="rm-nav__link">Exams</span>
+          </li>
+          {navLink('/learn/questions', 'Questions')}
+          {navLink('/learn/progress', 'Progress')}
+          {navLink('/learn/reviews', <>Reviews{reviewsDue > 0 && <span className="rm-nav__count">{reviewsDue}</span>}</>)}
 
-              <NavLink> <ReviewsLink /></NavLink>
+          <li className="rm-nav__dropdown">
+            <button
+              type="button"
+              className="rm-nav__link"
+              onClick={() => toggle('courses')}
+              aria-expanded={dropdown === 'courses'}
+              aria-current={inACourse ? 'page' : undefined}
+            >
+              Courses <i className="bi bi-chevron-down" style={{ fontSize: '0.7rem' }} />
+            </button>
+            {dropdown === 'courses' && (
+              <ul className="rm-nav__menu">
+                {!data && <li className="rm-nav__menu-note">Loading your courses…</li>}
+                {courseGroups.map(([qualification, courses], i) => (
+                  <Fragment key={qualification}>
+                    {i > 0 && <li className="rm-nav__divider" aria-hidden="true" />}
+                    <li className="rm-nav__menu-label">{qualification}</li>
+                    {courses.map((course) => (
+                      <li key={course.id}>
+                        {course.lessons.total > 0 ? (
+                          <Link href={`/learn/${course.id}`}>{courseLabel(course)}</Link>
+                        ) : (
+                          <span className="rm-nav__menu-note">{courseLabel(course)} · coming soon</span>
+                        )}
+                      </li>
+                    ))}
+                  </Fragment>
+                ))}
+              </ul>
+            )}
+          </li>
 
-
-             
-              <UncontrolledDropdown nav inNavbar>
-
-                <DropdownToggle nav caret>
-                  COURSES 
-
-                </DropdownToggle>
-
-              <DropdownMenu right>
-
-                <DropdownItem onClick={()=>router.push('/learn/edx-maths-1')}>Edexcel Pure Maths year 12</DropdownItem>
-                <DropdownItem onClick={()=> router.push('/learn/edx-stats-1')}> Edexcel Statistics year 12</DropdownItem>
-                <DropdownItem onClick={()=> router.push('/learn/edx-mech-1')}>Edexcel Mechanics year 12</DropdownItem>
-                  <DropdownItem onClick={()=> router.push('/learn/edx-maths-2')}>Edexcel Pure Maths year 13</DropdownItem>
-                <DropdownItem onClick={()=> router.push('/learn/edx-stats-2')}>Edexcel Statistics year 13</DropdownItem>
-                <DropdownItem onClick={()=> router.push('/learn/edx-mech-2')}>Edexcel Mechanics year 13</DropdownItem>
-
-                <DropdownItem divider />
-                <DropdownItem>Add Course</DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                ACCOUNT
-              </DropdownToggle>
-              <DropdownMenu right>
-
-                
-                  <Link href='/learn/account' style={{textDecoration: 'none'}}>
-                  <DropdownItem>
-                    Profile
-                    </DropdownItem>
-                    </Link>
-                  
-                <DropdownItem>Option 2</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem ><button onClick={handleLogout}>Logout</button> </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-           
-            
-            </Nav>
-        </Navbar>
-    </div>
+          <li className="rm-nav__dropdown">
+            <button
+              type="button"
+              className="rm-nav__link"
+              onClick={() => toggle('account')}
+              aria-expanded={dropdown === 'account'}
+              aria-current={isActive('/learn/account') ? 'page' : undefined}
+            >
+              Account <i className="bi bi-chevron-down" style={{ fontSize: '0.7rem' }} />
+            </button>
+            {dropdown === 'account' && (
+              <ul className="rm-nav__menu">
+                <li>
+                  <Link href="/learn/account">Profile</Link>
+                </li>
+                <li className="rm-nav__divider" aria-hidden="true" />
+                <li>
+                  <button type="button" onClick={() => signOut({ redirectUrl: '/' })}>
+                    Sign out
+                  </button>
+                </li>
+              </ul>
+            )}
+          </li>
+        </ul>
+      </div>
+    </nav>
   )
 }

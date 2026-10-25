@@ -8,21 +8,15 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 export default function LearnLayout({ children }) {
   return (
     <>
-      <div className="learn-container">
-        <br />
-        <br />
-        
-        <div className="learnBar-container">
-          <LearnNav />
-        </div>
+      {/* The nav is a direct child (no wrapper div) so its `position: sticky` works, as in the (public) layout.
+          It takes up its own space, so the page needs no spacers under it. */}
+      <LearnNav />
 
-        <div className="breadcrumb-nav">
-          <Breadcrumbs />
-        </div>
+      {/* A full-width strip under the nav; renders nothing on /learn itself */}
+      <Breadcrumbs />
 
-        <div className="learn-outlet">
-          <main>{children}</main>
-        </div>
+      <div className="learn-outlet">
+        <main>{children}</main>
       </div>
 
       {/* Place your chat widget here so it appears on every page */}
@@ -30,4 +24,3 @@ export default function LearnLayout({ children }) {
     </>
   )
 }
-

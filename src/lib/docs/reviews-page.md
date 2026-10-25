@@ -2,7 +2,7 @@
 
 One place to see every review that's due, across all courses. Built 19 October 2026.
 
-Open it from **REVIEWS** in the learn navigation, from **Go to reviews** on the Skill Radar, or go to `/learn/reviews`.
+Open it from **REVIEWS** in the learn navigation, from **Go to reviews** on the Progress page, or go to `/learn/reviews`.
 
 How the review cards themselves work (storage, scheduling, the Review tab) is in [question-reviews.md](question-reviews.md).
 
@@ -29,7 +29,7 @@ Exact Exponential Equation     Pure · Year 12    Exp & logs   1           Due t
 **Counts are questions, not cards.** "3" means 3 questions have something due; the Cards due column gives the card count. Each row links to one question, so counting cards would make the number bigger than the list.
 
 **URL options**:
-- `?course=edx-maths-1` opens with that course's year and course selected. The Skill Radar's link uses this.
+- `?course=edx-maths-1` opens with that course's year and course selected. The Progress page's link uses this.
 - `?tab=lessons` opens on the Lessons tab.
 
 ## 2. Where else the due count appears
@@ -37,12 +37,12 @@ Exact Exponential Equation     Pure · Year 12    Exp & logs   1           Due t
 | Place | Shows | Scope |
 |---|---|---|
 | Nav: **REVIEWS · 3** | questions + lessons with cards due | all courses |
-| Skill Radar: **Outstanding reviews** | "8 reviews due: 3 questions · 5 lessons" + **Go to reviews** (links with `?course=`), or "You're all caught up. Next review tomorrow." | the course selected on the radar |
+| Progress page: **Outstanding reviews** | "8 reviews due: 3 questions · 5 lessons" + **Go to reviews** (links with `?course=`), or "You're all caught up. Next review tomorrow." | the course selected on the radar |
 
 ## 3. How it fits together
 
 ```
-/learn/reviews, LearnNav, Skill Radar card
+/learn/reviews, LearnNav, Progress page card
    │  useGetDueReviewsQuery(today)                      (one cached RTK query, shared by all three)
    ▼
 GET /api/reviews/due?today=2026-10-19                    (api/reviews/due/route.js)
@@ -56,13 +56,13 @@ GET /api/reviews/due?today=2026-10-19                    (api/reviews/due/route.
 ```
 
 - **Filtering happens in the browser.** A student has about 3 cards per finished question, so the whole list is small.
-- **Course and skill** use the same matching as the Skill Radar (`branch` + `year` pick the course, `topic` picks the skill; see [skill-radar.md](skill-radar.md) section 4). A question whose topic matches no skill still appears, with "–" as its skill, when the skill filter is off.
+- **Course and skill** use the same matching as the Progress page (`branch` + `year` pick the course, `topic` picks the skill; see [progress-page.md](progress-page.md) section 4). A question whose topic matches no skill still appears, with "–" as its skill, when the skill filter is off.
 - Cards whose question has been deleted are left out.
 
 **Keeping the count fresh** (RTK Query tag `{ type: 'Reviews', id: 'DUE' }`):
 - rating a card refreshes it;
 - the question route returns `newlyUnlocked: true` when it has just created schedules (a question finished), and the browser then refreshes it, because new cards are due today;
-- the reviews page and the Skill Radar refetch every time they're opened, because cards turn due overnight without anything else changing.
+- the reviews page and the Progress page refetch every time they're opened, because cards turn due overnight without anything else changing.
 
 ## 4. Files
 
@@ -74,8 +74,8 @@ GET /api/reviews/due?today=2026-10-19                    (api/reviews/due/route.
 | [mongodb/utils.js](../mongodb/utils.js) | New `getAllReviewStates` and `getQuestionSummaries`. |
 | [redux/slices/apiSlice.js](../redux/slices/apiSlice.js) | New `getDueReviews` query; `rateReviewCard` and newly unlocked cards refresh it. |
 | [api/reviews/question/[title]/route.js](../../app/api/reviews/question/%5Btitle%5D/route.js) | Returns `newlyUnlocked`. |
-| [learn/LearnNav.js](../components/learn/LearnNav.js) | **REVIEWS · n** link after SKILL RADAR. |
-| [learn/skill-radar/page.js](../../app/%28authenticated%29/learn/skill-radar/page.js) | Outstanding reviews card is now a count + link. |
+| [learn/LearnNav.js](../components/learn/LearnNav.js) | **REVIEWS · n** link after PROGRESS. |
+| [learn/progress/page.js](../../app/%28authenticated%29/learn/progress/page.js) | Outstanding reviews card is now a count + link. |
 | [mastery/computeMastery.js](../mastery/computeMastery.js) | Dropped the placeholder `reviews` fields; exports `normalise` and `formatTitle` for `due.js`. |
 | [questions/feedback/index.js](../components/questions/feedback/index.js) + the question page | `?tab=review` opens the Review tab. |
 | [learn/Breadcrumbs.js](../components/learn/Breadcrumbs.js) | "Reviews" crumb. |

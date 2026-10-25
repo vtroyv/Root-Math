@@ -59,7 +59,6 @@
           "options": [
             {
               "id": "A",
-              "content": "Graph A",
               "image": {
                 "url": "/images/quartic-case.png",
                 "alt": "Graph A"
@@ -68,7 +67,6 @@
             },
             {
               "id": "B",
-              "content": "Graph B",
               "image": {
                 "url": "/images/cubic-case.png",
                 "alt": "Graph B"
@@ -77,7 +75,6 @@
             },
             {
               "id": "C",
-              "content": "Graph C",
               "image": {
                 "url": "/images/quadratic-case.png",
                 "alt": "Graph C"
@@ -87,7 +84,6 @@
             },
             {
               "id": "D",
-              "content": "Graph D",
               "image": {
                 "url": "/images/reciprocal-case.png",
                 "alt": "Graph D"
@@ -476,7 +472,6 @@
           "options": [
             {
               "id": "A",
-              "content": "Graph A",
               "image": {
                 "url": "/images/how-many-roots-a.png",
                 "alt": "Graph A"
@@ -485,7 +480,6 @@
             },
             {
               "id": "B",
-              "content": "Graph B",
               "image": {
                 "url": "/images/how-many-roots-b.png",
                 "alt": "Graph B"
@@ -494,7 +488,6 @@
             },
             {
               "id": "C",
-              "content": "Graph C",
               "image": {
                 "url": "/images/how-many-roots-c.png",
                 "alt": "Graph C"
@@ -978,7 +971,6 @@
           "options": [
             {
               "id": "A",
-              "content": "Graph A",
               "image": {
                 "url": "/images/true.png",
                 "alt": "Graph A"
@@ -988,7 +980,6 @@
             },
             {
               "id": "B",
-              "content": "Graph B",
               "image": {
                 "url": "/images/optionB.png",
                 "alt": "Graph B"
@@ -997,7 +988,6 @@
             },
             {
               "id": "C",
-              "content": "Graph C",
               "image": {
                 "url": "/images/optionC.png",
                 "alt": "Graph C"
@@ -1006,7 +996,6 @@
             },
             {
               "id": "D",
-              "content": "Graph D",
               "image": {
                 "url": "/images/optionD.png",
                 "alt": "Graph D"

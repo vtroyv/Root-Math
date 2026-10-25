@@ -1,5 +1,5 @@
 /*
-Turns a student's progress into Skill Radar numbers, per-skill to-do lists and insights.
+Turns a student's progress into Progress page numbers, per-skill to-do lists and insights.
 
 How mastery is worked out (questions only, unchanged):
   - each question scores 0..1:
@@ -126,7 +126,7 @@ export function computeMastery(spec, questions, progressList, lessonData = null)
       questions: areas.reduce((sum, a) => sum + a.total, 0),
       completed: areas.reduce((sum, a) => sum + a.completed, 0),
     },
-    // reviews aren't part of this: the Skill Radar reads them from /api/reviews/due
+    // reviews aren't part of this: the Progress page reads them from /api/reviews/due
   };
 }
 

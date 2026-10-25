@@ -1,5 +1,5 @@
 /*
-Courses shown on the Skill Radar page. Each `area` becomes one vertex of the radar.
+Courses shown on the Progress page. Each `area` becomes one vertex of the radar.
 
 Course keys match the existing course slugs (/learn/edx-maths-1 etc.).
   branch, year   which questions belong to the course: questions with this `branch` and `year`
@@ -39,6 +39,18 @@ export const SPECS = {
         differentiation: ['gradients-and-lines', 'rates-of-change-and-modelling'],
         integration: ['indefinite-integrals', 'definite-integrals-and-areas'],
         vectors: [],
+      },
+      // display names for chapters whose slug doesn't title-case nicely (src/lib/courses/courses.js chapterTitle)
+      chapterTitles: {
+        'what-is-proof': 'What is Proof?',
+        'methods-of-proof': 'Methods of Proof',
+        'graphs-and-transformations': 'Graphs & Transformations',
+        'trigonometry-and-triangles': 'Trigonometry & Triangles',
+        'trignometric-graphs': 'Trigonometric Graphs',
+        'ratios-identities-and-equations': 'Ratios, Identities and Equations',
+        'gradients-and-lines': 'Gradients and Lines',
+        'rates-of-change-and-modelling': 'Rates of Change & Modelling',
+        'definite-integrals-and-areas': 'Definite Integrals and Areas',
       },
     },
     areas: [
@@ -238,7 +250,7 @@ export const SPECS = {
 export const DEFAULT_SPEC_ID = 'edx-maths-1';
 
 /*
-Courses offered in the Skill Radar toggle, grouped by year.
+Courses offered in the Progress page toggle, grouped by year.
 TODO: replace with the courses the student is actually subscribed to once subscriptions exist.
 */
 export const SUBSCRIBED_COURSES = [

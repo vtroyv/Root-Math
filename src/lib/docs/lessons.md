@@ -2,7 +2,7 @@
 
 How lessons work since they were rebuilt on 20 October 2026: the lesson format, what the student sees, how saving and marking work, the review cards, how to load the rewritten lessons into MongoDB, and every fix made to the lesson content.
 
-Related docs: [question-parts.md](question-parts.md) (the task types are question part types), [question-reviews.md](question-reviews.md) (review cards and scheduling), [reviews-page.md](reviews-page.md), [skill-radar.md](skill-radar.md).
+Related docs: [question-parts.md](question-parts.md) (the task types are question part types), [question-reviews.md](question-reviews.md) (review cards and scheduling), [reviews-page.md](reviews-page.md), [progress-page.md](progress-page.md).
 
 ---
 
@@ -33,7 +33,7 @@ Related docs: [question-parts.md](question-parts.md) (the task types are questio
 - **Everything persists**, in Zustand and MongoDB. A correct task stays correct and locked until Reset. Refreshing brings back every answer and result, and reopens the part you were on.
 - **Solution** asks "Have another go first?" (**Keep trying** / **Reveal solution anyway**). Revealing fills the open task in with the correct answer and shows the worked solution in Feedback.
 - **Videos:** a part with a `video` field shows the 🎥 button, which plays it in a pop-up the same way **See how it works** does on the home page. Every part currently has that same placeholder video.
-- **Review cards:** each lesson has 5 or 6 flashcards. They unlock when the whole lesson is complete, come in a random order, and appear in the lesson's Review tab, on the reviews page's **Lessons** tab, in the **REVIEWS · n** nav count and in the Skill Radar's Outstanding reviews box.
+- **Review cards:** each lesson has 5 or 6 flashcards. They unlock when the whole lesson is complete, come in a random order, and appear in the lesson's Review tab, on the reviews page's **Lessons** tab, in the **REVIEWS · n** nav count and in the Progress page's Outstanding reviews box.
 - **Five lessons rewritten**, ready to paste into Compass: [lesson-examples/](lesson-examples/). The maths and wording errors found are fixed and listed in [section 9](#9-fixes-made-to-the-lesson-content), and First Principles has 8 new tasks.
 - **Old-format lessons still work**: any `lesson-data` document without `schemaVersion: 2` uses the original lesson page, unchanged.
 
@@ -44,7 +44,7 @@ Related docs: [question-parts.md](question-parts.md) (the task types are questio
 | Question | Your answer | What that meant |
 |---|---|---|
 | How do tasks open up? | One at a time | Task 2 opens once task 1 is correct or revealed. **Next** needs every task in the part done. Submit marks the open task. |
-| What does a revealed task count as? | Complete | Revealed counts as done for moving on **and** for lesson completion (and so the Skill Radar). It shows as "Revealed", not green. |
+| What does a revealed task count as? | Complete | Revealed counts as done for moving on **and** for lesson completion (and so the Progress page). It shows as "Revealed", not green. |
 | Solution for working/explain/sketch? | Fill in a model answer | Those tasks have a `modelAnswer`: LaTeX working, or curve handle points. |
 | When do review cards unlock? | When the whole lesson is complete | Cards are lesson-wide, so they can be asked in any order rather than following the parts. Each session is shuffled. |
 | Errors in the old tasks? | Fix them and list each fix | [Section 9](#9-fixes-made-to-the-lesson-content). |
@@ -68,6 +68,13 @@ The files are in [lesson-examples/](lesson-examples/), one per lesson:
 | `03-introduction-to-surds.json` | Introduction to Surds | 3 | 9 | 6 |
 | `04-quadratic-graphs.json` | Quadratic Graphs | 4 | 17 | 6 |
 | `05-first-principles.json` | First Principles | 3 | 8 | 5 |
+| `06-rationalising-the-denominator.json` | Rationalising the Denominator (**new**, 22 Oct 2026) | 4 | 16 | 6 |
+| `07-pascals-triangle.json` | Pascal's Triangle (**new**, 23 Oct 2026) | 3 | 11 | 5 |
+| `08-factorial-notation.json` | Factorial Notation (**new**, 23 Oct 2026) | 3 | 12 | 5 |
+| `09-brackets-and-large-powers.json` | Brackets and Large Powers (**new**, 23 Oct 2026) | 4 | 14 | 5 |
+| `10-binomial-estimation.json` | Binomial Estimation (**new**, 23 Oct 2026) | 3 | 11 | 5 |
+
+`06` is a new lesson, so there's no existing document to replace: use **Add Data → Insert Document**. Its slug matches "Rationalising the Denominator" in the `algebraic-expressions` chapter, so the course page and the Progress page pick it up as soon as it's inserted, and Introduction to Surds' **Next lesson** link starts working. Its own `next` is `what-are-quadratic-equations`, the first lesson of the quadratics chapter, which shows as a link once that lesson exists.
 
 **For each file:** in MongoDB Compass, open `RootMath` → `lesson-data`, find the document with that `slug`, switch to the JSON view and replace its contents with the file, **keeping the `_id` line**. Alternatively, delete the old document and use **Add Data → Insert Document**. The page looks lessons up by `slug`, so there must be only one document per slug.
 
@@ -177,7 +184,7 @@ POST /api/lesson/<slug>/progress  ─ the student from auth(), `completed` worke
   completed: true, completedAt, createdAt, updatedAt }
 ```
 
-Tasks are keyed by `partId:taskId`, not by position, so reordering or adding tasks can't attach an answer to the wrong task. The Skill Radar already reads `completed` and `updatedAt` from this collection: opening a lesson makes it "In progress" there, and completing it makes it "Complete".
+Tasks are keyed by `partId:taskId`, not by position, so reordering or adding tasks can't attach an answer to the wrong task. The Progress page already reads `completed` and `updatedAt` from this collection: opening a lesson makes it "In progress" there, and completing it makes it "Complete".
 
 **What's different from questions:** every lesson route uses Clerk's `auth()` for the student, never an id from the request. Lesson progress is saved for every student, whatever their exam board; before, it was only saved when `examBoard` was `edexcel`.
 
@@ -191,7 +198,7 @@ Tasks are keyed by `partId:taskId`, not by position, so reordering or adding tas
 - **Keys:** a lesson card's schedule is a normal `reviewStates` document with `cardKey: 'lesson:<slug>#<card id>'` and `source: { kind: 'lesson', slug }`. The existing check and rate routes recognise the `lesson:` prefix and load the card from the lesson.
 - **Unlocking:** `GET /api/reviews/lesson/<slug>` creates the schedules (due today) once the lesson's progress is `completed`. Once a student has schedules, the cards stay unlocked, even after a Reset.
 - **Random order:** the Review tab shuffles the cards for every session, so they don't follow the order of the parts.
-- **Reviews page:** the **Lessons** tab lists lessons with cards due. It has the same year, course and skill filters as questions, and links to the lesson's Review tab. A lesson's chapter (for its link and its Skill Radar skill) comes from the course's chapter collection. The nav count and the Skill Radar box count lessons too ("8 reviews due: 3 questions · 5 lessons").
+- **Reviews page:** the **Lessons** tab lists lessons with cards due. It has the same year, course and skill filters as questions, and links to the lesson's Review tab. A lesson's chapter (for its link and its Progress page skill) comes from the course's chapter collection. The nav count and the Progress page box count lessons too ("8 reviews due: 3 questions · 5 lessons").
 
 ---
 
@@ -203,7 +210,7 @@ Tasks are keyed by `partId:taskId`, not by position, so reordering or adding tas
 |---|---|
 | [lessons/progress.js](../lessons/progress.js) | The rules, shared by the page and the server: task keys, which task is open or locked, done (correct or revealed), part done, lesson complete, fresh progress. |
 | [lessons/sanitize.js](../lessons/sanitize.js) | `toClientLesson`: each task sanitised like a question part, review cards removed. |
-| [lessons/links.js](../lessons/links.js) | A lesson's chapter, URL and Skill Radar skill. |
+| [lessons/links.js](../lessons/links.js) | A lesson's chapter, URL and Progress page skill. |
 | [lessons/server.js](../lessons/server.js) | Shared lookups for the lesson API routes. |
 | [marking/solutions.js](../marking/solutions.js) | `solutionResponse(part)`: the correct response for any part type (used by Solution). |
 | [api/lesson/[slug]/route.js](../../app/api/lesson/%5Bslug%5D/route.js), `mark/`, `solution/`, `progress/` | The four lesson routes. |
@@ -224,7 +231,7 @@ Tasks are keyed by `partId:taskId`, not by position, so reordering or adding tas
 | [reviews/ReviewPane.js](../components/questions/reviews/ReviewPane.js) | `lessonSlug` prop: lesson cards, shuffled sessions, lesson wording. |
 | [reviews/cards.js](../reviews/cards.js), [reviews/server.js](../reviews/server.js), [reviews/scheduler.js](../reviews/scheduler.js) | The `lesson:<slug>` card keys and a `source` for new schedules. |
 | [reviews/due.js](../reviews/due.js), [api/reviews/due/route.js](../../app/api/reviews/due/route.js) | Lesson entries alongside questions. |
-| [learn/reviews/page.js](../../app/%28authenticated%29/learn/reviews/page.js), [skill-radar/page.js](../../app/%28authenticated%29/learn/skill-radar/page.js), [LearnNav.js](../components/learn/LearnNav.js) | The Lessons tab, and lesson counts. |
+| [learn/reviews/page.js](../../app/%28authenticated%29/learn/reviews/page.js), [progress/page.js](../../app/%28authenticated%29/learn/progress/page.js), [LearnNav.js](../components/learn/LearnNav.js) | The Lessons tab, and lesson counts. |
 | [redux/slices/apiSlice.js](../redux/slices/apiSlice.js) | `getLesson`, `markLessonTask`, `getLessonSolution`, `saveLessonProgress`, `getLessonReviews`. |
 | [mongodb/utils.js](../mongodb/utils.js) | `getLessonBySlug`, `getLessonSummaries`, `getLessonProgressDoc`, `saveLessonProgressDoc`. |
 
@@ -314,7 +321,7 @@ Tasks are keyed by `partId:taskId`, not by position, so reordering or adding tas
 ## 11. Known limitations and next steps
 
 - **Results are saved from the browser**, as with questions: the progress route trusts the `result`s it's sent (it does work out `completed` itself). A student who edits requests could mark their own tasks correct. It only affects their own progress. If that matters later, save each result on the server in the mark route instead.
-- **Lessons still don't count towards Skill Radar mastery** (see [skill-radar.md](skill-radar.md) section 12, item 2). They only appear in its lesson lists.
+- **Lessons still don't count towards Progress page mastery** (see [progress-page.md](progress-page.md) section 12, item 2). They only appear in its lesson lists.
 - **Notes and Comments** are unchanged: notes aren't saved, and Comments has no content.
 - **Every part's video is the placeholder.** Replace each part's `video` URL as you record them, or remove the field to hide the button.
 - **Once every lesson is in the new format**, these can be deleted:

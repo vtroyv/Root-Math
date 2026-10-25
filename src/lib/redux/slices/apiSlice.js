@@ -171,7 +171,16 @@ export const apiSlice = createApi({
             }
         }),
 
-        // Skill Radar: mastery per specification area for the signed-in student
+        // Learn landing page + nav: the signed-in student's courses, each with lessons { total, completed }
+        getCourses: builder.query({
+            query: () => '/courses'
+        }),
+        // Course + chapter pages: one course's topics, chapters and lessons, each with the student's status
+        getCourseOutline: builder.query({
+            query: (courseId) => `/courses/${courseId}`
+        }),
+
+        // Progress page: mastery per specification area for the signed-in student
         getMastery: builder.query({
             query: (spec) => ({
                 url: '/mastery',
@@ -234,6 +243,8 @@ export const {
     useAskTutorMutation,
     useUpdateQuestionNotesMutation,
     useMarkQuestionMutation,
+    useGetCoursesQuery,
+    useGetCourseOutlineQuery,
     useGetMasteryQuery,
     useGetQuestionReviewsQuery,
     useGetDueReviewsQuery,

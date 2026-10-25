@@ -1,0 +1,816 @@
+{
+  "slug": "rationalising-the-denominator",
+  "title": "Rationalising the Denominator",
+  "next": "what-are-quadratic-equations",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "Why Rationalise?",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "In our last lesson we learned how to simplify and multiply surds. But what happens when a surd ends up on the bottom of a fraction, like $\\frac{1}{\\sqrt{2}}$?"
+        },
+        {
+          "type": "paragraph",
+          "content": "A fraction like this is perfectly correct, but it's awkward to work with. It's hard to estimate ($1$ divided by $1.414...$?), hard to add to other fractions, and in an exam you'll usually be asked to write it without the surd on the bottom."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Rationalising the denominator"
+        },
+        {
+          "type": "paragraph",
+          "content": "Rationalising the denominator means rewriting a fraction so that its denominator is a rational number: a whole number or a fraction, with no surds. The value of the fraction doesn't change, only how it's written."
+        },
+        {
+          "type": "paragraph",
+          "content": "Recall that a rational number is one that can be written as $\\frac{a}{b}$ where $a$ and $b$ are integers. Surds like $\\sqrt{2}$ are irrational, so they are what we want to remove from the bottom."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "The key fact"
+        },
+        {
+          "type": "paragraph",
+          "content": "Everything in this lesson relies on one fact you already know: $$\\sqrt{a} \\times \\sqrt{a} = a$$ Multiplying a surd by itself gives a whole number. For example, $\\sqrt{5} \\times \\sqrt{5} = 5$ and $\\sqrt{7} \\times \\sqrt{7} = 7$."
+        },
+        {
+          "type": "paragraph",
+          "content": "And remember, we can multiply the top and bottom of a fraction by the same thing without changing its value, because that's the same as multiplying by $1$: $$\\frac{1}{\\sqrt{2}} = \\frac{1}{\\sqrt{2}} \\times \\frac{\\sqrt{2}}{\\sqrt{2}} = \\frac{\\sqrt{2}}{2}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Now the denominator is $2$: rational! That's the whole idea. Try the warm-up tasks below."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "which-rational",
+          "type": "choice",
+          "title": "Spot the rational denominator",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Which of these fractions already has a rational denominator?",
+          "options": [
+            {
+              "id": "A",
+              "content": "$\\frac{\\sqrt{3}}{4}$",
+              "correct": true,
+              "why": "Correct: the surd is on the top. The denominator, 4, is rational."
+            },
+            {
+              "id": "B",
+              "content": "$\\frac{4}{\\sqrt{3}}$",
+              "why": "$\\sqrt{3}$ is irrational, so this denominator still needs rationalising."
+            },
+            {
+              "id": "C",
+              "content": "$\\frac{1}{2+\\sqrt{3}}$",
+              "why": "The denominator contains $\\sqrt{3}$, so it is irrational."
+            },
+            {
+              "id": "D",
+              "content": "$\\frac{2}{3\\sqrt{5}}$",
+              "why": "$3\\sqrt{5}$ is irrational, so this needs rationalising."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "It only matters what is on the bottom of the fraction. A surd on the top is fine."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Only $\\frac{\\sqrt{3}}{4}$ has no surd in its denominator. The others all have $\\sqrt{3}$ or $\\sqrt{5}$ on the bottom."
+            }
+          ]
+        },
+        {
+          "id": "key-fact",
+          "type": "answer",
+          "title": "The key fact",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Work out $\\sqrt{11} \\times \\sqrt{11}$.",
+          "template": "\\sqrt{11}\\times\\sqrt{11}=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "11"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "$\\sqrt{a} \\times \\sqrt{a} = a$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "A square root multiplied by itself gives the number inside: $$\\sqrt{11} \\times \\sqrt{11} = 11$$"
+            }
+          ]
+        },
+        {
+          "id": "first-go",
+          "type": "answer",
+          "title": "Your first rationalisation",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Rationalise the denominator of $\\frac{1}{\\sqrt{3}}$.",
+          "template": "\\frac{1}{\\sqrt{3}}=\\frac{\\sqrt{3}}{\\placeholder[d]{}}",
+          "blanks": {
+            "d": {
+              "answer": "3",
+              "feedback": "Multiply the top and bottom by $\\sqrt{3}$. What is $\\sqrt{3} \\times \\sqrt{3}$?"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Multiply the top and bottom by $\\sqrt{3}$, just like the $\\frac{1}{\\sqrt{2}}$ example."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{1}{\\sqrt{3}} \\times \\frac{\\sqrt{3}}{\\sqrt{3}} = \\frac{\\sqrt{3}}{3}$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Denominators of the Form $\\sqrt{a}$",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "When the denominator is a single surd, $\\sqrt{a}$, multiply the top and bottom of the fraction by $\\sqrt{a}$: $$\\frac{k}{\\sqrt{a}} = \\frac{k}{\\sqrt{a}} \\times \\frac{\\sqrt{a}}{\\sqrt{a}} = \\frac{k\\sqrt{a}}{a}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Then simplify if you can. Let's see some examples."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example 1"
+        },
+        {
+          "type": "paragraph",
+          "content": "$$\\frac{6}{\\sqrt{2}} = \\frac{6}{\\sqrt{2}} \\times \\frac{\\sqrt{2}}{\\sqrt{2}} = \\frac{6\\sqrt{2}}{2} = 3\\sqrt{2}$$ The $6$ and the $2$ cancel, so always check whether you can simplify at the end."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example 2: a number in front of the surd"
+        },
+        {
+          "type": "paragraph",
+          "content": "If the denominator is $k\\sqrt{a}$, you only need to multiply by $\\sqrt{a}$, not by the whole $k\\sqrt{a}$: $$\\frac{5}{2\\sqrt{5}} = \\frac{5}{2\\sqrt{5}} \\times \\frac{\\sqrt{5}}{\\sqrt{5}} = \\frac{5\\sqrt{5}}{2 \\times 5} = \\frac{5\\sqrt{5}}{10} = \\frac{\\sqrt{5}}{2}$$"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example 3: simplify first"
+        },
+        {
+          "type": "paragraph",
+          "content": "Sometimes it's quicker to simplify before you rationalise: $$\\frac{\\sqrt{2}}{\\sqrt{10}} = \\sqrt{\\frac{2}{10}} = \\sqrt{\\frac{1}{5}} = \\frac{1}{\\sqrt{5}} = \\frac{\\sqrt{5}}{5}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Now it's your turn. Remember: no calculators!"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "single-1",
+          "type": "answer",
+          "title": "Warm up",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Rationalise the denominator of $\\frac{1}{\\sqrt{5}}$.",
+          "template": "\\frac{1}{\\sqrt{5}}=\\frac{\\sqrt{5}}{\\placeholder[d]{}}",
+          "blanks": {
+            "d": {
+              "answer": "5"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Multiply the top and bottom by $\\sqrt{5}$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{1}{\\sqrt{5}} \\times \\frac{\\sqrt{5}}{\\sqrt{5}} = \\frac{\\sqrt{5}}{5}$$"
+            }
+          ]
+        },
+        {
+          "id": "single-2",
+          "type": "answer",
+          "title": "Don't forget to simplify",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Rationalise the denominator of $\\frac{12}{\\sqrt{3}}$ and simplify fully.",
+          "template": "\\frac{12}{\\sqrt{3}}=\\placeholder[k]{}\\sqrt{3}",
+          "blanks": {
+            "k": {
+              "answer": "4",
+              "feedback": "After multiplying by $\\frac{\\sqrt{3}}{\\sqrt{3}}$ you get $\\frac{12\\sqrt{3}}{3}$. Can you cancel?"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Multiply the top and bottom by $\\sqrt{3}$, then cancel the numbers."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{12}{\\sqrt{3}} \\times \\frac{\\sqrt{3}}{\\sqrt{3}} = \\frac{12\\sqrt{3}}{3} = 4\\sqrt{3}$$"
+            }
+          ]
+        },
+        {
+          "id": "single-3",
+          "type": "answer",
+          "title": "A number in front",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Rationalise the denominator of $\\frac{10}{3\\sqrt{2}}$ and simplify fully.",
+          "template": "\\frac{10}{3\\sqrt{2}}=\\frac{\\placeholder[k]{}\\sqrt{2}}{3}",
+          "blanks": {
+            "k": {
+              "answer": "5"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "You only need to multiply the top and bottom by $\\sqrt{2}$. The bottom becomes $3 \\times 2 = 6$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{10}{3\\sqrt{2}} \\times \\frac{\\sqrt{2}}{\\sqrt{2}} = \\frac{10\\sqrt{2}}{6} = \\frac{5\\sqrt{2}}{3}$$"
+            }
+          ]
+        },
+        {
+          "id": "single-4",
+          "type": "answer",
+          "title": "Simplify first",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Simplify $\\frac{\\sqrt{2}}{\\sqrt{6}}$, giving your answer with a rational denominator.",
+          "template": "\\frac{\\sqrt{2}}{\\sqrt{6}}=\\frac{\\sqrt{3}}{\\placeholder[d]{}}",
+          "blanks": {
+            "d": {
+              "answer": "3"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Write it as one square root first: $\\frac{\\sqrt{2}}{\\sqrt{6}} = \\sqrt{\\frac{2}{6}} = \\sqrt{\\frac{1}{3}}$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{\\sqrt{2}}{\\sqrt{6}} = \\sqrt{\\frac{1}{3}} = \\frac{1}{\\sqrt{3}} = \\frac{\\sqrt{3}}{3}$$"
+            }
+          ]
+        },
+        {
+          "id": "single-order",
+          "type": "order",
+          "title": "Put the steps in order",
+          "instructions": "Add the steps in the right order, then press Submit. Not every line belongs!",
+          "prompt": "Put the steps for rationalising $\\frac{6}{\\sqrt{2}}$ in order.",
+          "lines": [
+            "Multiply the top and bottom by $\\sqrt{2}$: $\\frac{6}{\\sqrt{2}} \\times \\frac{\\sqrt{2}}{\\sqrt{2}}$",
+            "Multiply out: $\\frac{6\\sqrt{2}}{2}$",
+            "Cancel the numbers: $3\\sqrt{2}$"
+          ],
+          "distractors": [
+            "Multiply the top and bottom by $2$",
+            "Square the top and bottom: $\\frac{36}{2} = 18$"
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Which number do you multiply by so the bottom becomes rational? Then multiply out, then simplify."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Multiply by $\\frac{\\sqrt{2}}{\\sqrt{2}}$ to get $\\frac{6\\sqrt{2}}{2}$, then cancel to $3\\sqrt{2}$. Squaring the top and bottom changes the value of the fraction, and multiplying by 2 leaves the surd on the bottom."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Denominators of the Form $a \\pm \\sqrt{b}$",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "What about $\\frac{1}{3+\\sqrt{2}}$? Multiplying by $\\sqrt{2}$ won't work this time: $(3+\\sqrt{2})\\sqrt{2} = 3\\sqrt{2} + 2$, which still has a surd."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "The difference of two squares"
+        },
+        {
+          "type": "paragraph",
+          "content": "Instead we use a result you've seen with brackets: $$(a+b)(a-b) = a^2 - b^2$$ The middle terms cancel. If $b$ is a surd, then $b^2$ is a whole number, so the surds disappear completely: $$(3+\\sqrt{2})(3-\\sqrt{2}) = 9 - 3\\sqrt{2} + 3\\sqrt{2} - 2 = 7$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "So to rationalise a denominator like $a + \\sqrt{b}$, multiply the top and bottom by $a - \\sqrt{b}$, the same terms with the opposite sign in the middle. And for $a - \\sqrt{b}$, multiply by $a + \\sqrt{b}$. This is sometimes called multiplying by the conjugate."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Example"
+        },
+        {
+          "type": "paragraph",
+          "content": "$$\\frac{1}{3+\\sqrt{2}} \\times \\frac{3-\\sqrt{2}}{3-\\sqrt{2}} = \\frac{3-\\sqrt{2}}{(3+\\sqrt{2})(3-\\sqrt{2})} = \\frac{3-\\sqrt{2}}{9-2} = \\frac{3-\\sqrt{2}}{7}$$"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Another example"
+        },
+        {
+          "type": "paragraph",
+          "content": "$$\\frac{4}{3-\\sqrt{5}} \\times \\frac{3+\\sqrt{5}}{3+\\sqrt{5}} = \\frac{4(3+\\sqrt{5})}{9-5} = \\frac{4(3+\\sqrt{5})}{4} = 3+\\sqrt{5}$$"
+        },
+        {
+          "type": "paragraph",
+          "content": "A useful shortcut: the new denominator is always $a^2 - b$. Work it out first, because it often cancels with the numerator."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "conjugate-choice",
+          "type": "choice",
+          "title": "What do you multiply by?",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "To rationalise the denominator of $\\frac{1}{5+\\sqrt{3}}$, multiply the top and bottom by:",
+          "options": [
+            {
+              "id": "A",
+              "content": "$5-\\sqrt{3}$",
+              "correct": true,
+              "why": "Correct: $(5+\\sqrt{3})(5-\\sqrt{3}) = 25 - 3 = 22$, which is rational."
+            },
+            {
+              "id": "B",
+              "content": "$\\sqrt{3}$",
+              "why": "$(5+\\sqrt{3})\\sqrt{3} = 5\\sqrt{3} + 3$ still has a surd."
+            },
+            {
+              "id": "C",
+              "content": "$5+\\sqrt{3}$",
+              "why": "$(5+\\sqrt{3})^2 = 28 + 10\\sqrt{3}$ still has a surd. You need the opposite sign."
+            },
+            {
+              "id": "D",
+              "content": "$5$",
+              "why": "$5(5+\\sqrt{3}) = 25 + 5\\sqrt{3}$ still has a surd."
+            }
+          ],
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Use the difference of two squares: keep the same terms, but change the sign in the middle."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Multiply by $5 - \\sqrt{3}$, because $(5+\\sqrt{3})(5-\\sqrt{3}) = 5^2 - 3 = 22$ is rational."
+            }
+          ]
+        },
+        {
+          "id": "dots-1",
+          "type": "answer",
+          "title": "The new denominator",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Work out $(4+\\sqrt{7})(4-\\sqrt{7})$.",
+          "template": "(4+\\sqrt{7})(4-\\sqrt{7})=\\placeholder[ans]{}",
+          "blanks": {
+            "ans": {
+              "answer": "9"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "It's $a^2 - b$ with $a = 4$ and $b = 7$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$(4+\\sqrt{7})(4-\\sqrt{7}) = 16 - 4\\sqrt{7} + 4\\sqrt{7} - 7 = 9$$"
+            }
+          ]
+        },
+        {
+          "id": "conjugate-1",
+          "type": "answer",
+          "title": "Your turn",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Rationalise the denominator of $\\frac{1}{1+\\sqrt{2}}$, giving your answer in the form $a + b\\sqrt{2}$.",
+          "template": "\\frac{1}{1+\\sqrt{2}}=\\placeholder[a]{}+\\placeholder[b]{}\\sqrt{2}",
+          "blanks": {
+            "a": {
+              "answer": "-1",
+              "feedback": "Check the sign: the new denominator is $1 - 2 = -1$."
+            },
+            "b": {
+              "answer": "1"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Multiply the top and bottom by $1 - \\sqrt{2}$. The new denominator is $1^2 - 2$, which is negative!"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{1}{1+\\sqrt{2}} \\times \\frac{1-\\sqrt{2}}{1-\\sqrt{2}} = \\frac{1-\\sqrt{2}}{1-2} = \\frac{1-\\sqrt{2}}{-1} = -1 + \\sqrt{2}$$ so $a = -1$ and $b = 1$."
+            }
+          ]
+        },
+        {
+          "id": "conjugate-2",
+          "type": "answer",
+          "title": "Look for cancelling",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Rationalise the denominator of $\\frac{4}{3-\\sqrt{5}}$, giving your answer in the form $a + b\\sqrt{5}$.",
+          "template": "\\frac{4}{3-\\sqrt{5}}=\\placeholder[a]{}+\\placeholder[b]{}\\sqrt{5}",
+          "blanks": {
+            "a": {
+              "answer": "3"
+            },
+            "b": {
+              "answer": "1"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Multiply the top and bottom by $3 + \\sqrt{5}$. Work out the new denominator first: it cancels nicely with the 4."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{4}{3-\\sqrt{5}} \\times \\frac{3+\\sqrt{5}}{3+\\sqrt{5}} = \\frac{4(3+\\sqrt{5})}{9-5} = 3 + \\sqrt{5}$$ so $a = 3$ and $b = 1$."
+            }
+          ]
+        },
+        {
+          "id": "conjugate-3",
+          "type": "answer",
+          "title": "Surds on the top too",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Rationalise the denominator of $\\frac{\\sqrt{3}+1}{\\sqrt{3}-1}$, giving your answer in the form $a + b\\sqrt{3}$.",
+          "template": "\\frac{\\sqrt{3}+1}{\\sqrt{3}-1}=\\placeholder[a]{}+\\placeholder[b]{}\\sqrt{3}",
+          "blanks": {
+            "a": {
+              "answer": "2"
+            },
+            "b": {
+              "answer": "1"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Multiply the top and bottom by $\\sqrt{3} + 1$. The top becomes $(\\sqrt{3}+1)^2$: expand it carefully."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Top: $(\\sqrt{3}+1)^2 = 3 + 2\\sqrt{3} + 1 = 4 + 2\\sqrt{3}$. Bottom: $(\\sqrt{3}-1)(\\sqrt{3}+1) = 3 - 1 = 2$."
+            },
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{4 + 2\\sqrt{3}}{2} = 2 + \\sqrt{3}$$ so $a = 2$ and $b = 1$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Exam-Style Questions",
+      "video": "https://takamotoyagami.wistia.com/medias/2ci7172egn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "content": "Exam questions on rationalising usually ask you to give your answer in a particular form, such as $a + b\\sqrt{3}$ where $a$ and $b$ are integers, or to \"show that\" one expression equals another."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Exam tips"
+        },
+        {
+          "type": "bullet-points",
+          "points": [
+            "Write down what you're multiplying by: $\\times \\frac{2+\\sqrt{3}}{2+\\sqrt{3}}$. It earns method marks.",
+            "Work out the new denominator first, using $a^2 - b$.",
+            "Expand the numerator carefully: there are four terms to multiply when both brackets have two terms.",
+            "Simplify fully, and check your answer is in the form the question asks for."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "content": "Worked example"
+        },
+        {
+          "type": "paragraph",
+          "content": "Express $\\frac{3+\\sqrt{2}}{4-\\sqrt{2}}$ in the form $a + b\\sqrt{2}$."
+        },
+        {
+          "type": "paragraph",
+          "content": "Denominator: $(4-\\sqrt{2})(4+\\sqrt{2}) = 16 - 2 = 14$. Numerator: $(3+\\sqrt{2})(4+\\sqrt{2}) = 12 + 3\\sqrt{2} + 4\\sqrt{2} + 2 = 14 + 7\\sqrt{2}$."
+        },
+        {
+          "type": "paragraph",
+          "content": "$$\\frac{14 + 7\\sqrt{2}}{14} = 1 + \\frac{1}{2}\\sqrt{2}$$ so $a = 1$ and $b = \\frac{1}{2}$."
+        },
+        {
+          "type": "paragraph",
+          "content": "Time to put it all together."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "exam-1",
+          "type": "answer",
+          "title": "In the form a + b√3",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Express $\\frac{5+\\sqrt{3}}{2-\\sqrt{3}}$ in the form $a + b\\sqrt{3}$, where $a$ and $b$ are integers.",
+          "template": "\\frac{5+\\sqrt{3}}{2-\\sqrt{3}}=\\placeholder[a]{}+\\placeholder[b]{}\\sqrt{3}",
+          "blanks": {
+            "a": {
+              "answer": "13"
+            },
+            "b": {
+              "answer": "7"
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Multiply the top and bottom by $2 + \\sqrt{3}$. The new denominator is $4 - 3 = 1$, which makes the last step easy!"
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "Denominator: $(2-\\sqrt{3})(2+\\sqrt{3}) = 4 - 3 = 1$."
+            },
+            {
+              "type": "paragraph",
+              "content": "Numerator: $(5+\\sqrt{3})(2+\\sqrt{3}) = 10 + 5\\sqrt{3} + 2\\sqrt{3} + 3 = 13 + 7\\sqrt{3}$."
+            },
+            {
+              "type": "paragraph",
+              "content": "So the answer is $13 + 7\\sqrt{3}$: $a = 13$, $b = 7$."
+            }
+          ]
+        },
+        {
+          "id": "exam-2",
+          "type": "answer",
+          "title": "In the form a√7 + b",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Express $\\frac{6}{\\sqrt{7}+2}$ in the form $a\\sqrt{7} + b$, where $a$ and $b$ are integers.",
+          "template": "\\frac{6}{\\sqrt{7}+2}=\\placeholder[a]{}\\sqrt{7}+\\placeholder[b]{}",
+          "blanks": {
+            "a": {
+              "answer": "2"
+            },
+            "b": {
+              "answer": "-4",
+              "feedback": "Check the sign of your constant term."
+            }
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Multiply the top and bottom by $\\sqrt{7} - 2$. The new denominator is $7 - 4$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{6}{\\sqrt{7}+2} \\times \\frac{\\sqrt{7}-2}{\\sqrt{7}-2} = \\frac{6(\\sqrt{7}-2)}{7-4} = 2(\\sqrt{7}-2) = 2\\sqrt{7} - 4$$ so $a = 2$ and $b = -4$."
+            }
+          ]
+        },
+        {
+          "id": "exam-show",
+          "type": "working",
+          "title": "Show that",
+          "instructions": "Write your working line by line in the box (press Enter for a new line), then press Submit.",
+          "prompt": "Show that $\\frac{2}{\\sqrt{5}-\\sqrt{3}} = \\sqrt{5}+\\sqrt{3}$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "text": "Multiplies the numerator and denominator by $\\sqrt{5}+\\sqrt{3}$"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "text": "Shows the denominator $(\\sqrt{5}-\\sqrt{3})(\\sqrt{5}+\\sqrt{3}) = 5 - 3 = 2$"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "text": "Cancels to reach $\\sqrt{5}+\\sqrt{3}$ with a concluding statement"
+            }
+          ],
+          "llm": {
+            "context": "This is a \"show that\" question: the working must be shown and the final line must match the given answer. A calculator check (both sides about 3.968) earns no marks."
+          },
+          "modelAnswer": {
+            "latex": "\\displaylines{\\frac{2}{\\sqrt{5}-\\sqrt{3}}\\times\\frac{\\sqrt{5}+\\sqrt{3}}{\\sqrt{5}+\\sqrt{3}}=\\frac{2(\\sqrt{5}+\\sqrt{3})}{(\\sqrt{5}-\\sqrt{3})(\\sqrt{5}+\\sqrt{3})}\\\\(\\sqrt{5}-\\sqrt{3})(\\sqrt{5}+\\sqrt{3})=5-3=2\\\\\\frac{2(\\sqrt{5}+\\sqrt{3})}{2}=\\sqrt{5}+\\sqrt{3}\\text{ as required}}"
+          },
+          "hint": [
+            {
+              "type": "paragraph",
+              "content": "Both terms in the denominator are surds, but the method is the same: multiply the top and bottom by $\\sqrt{5} + \\sqrt{3}$."
+            }
+          ],
+          "solution": [
+            {
+              "type": "paragraph",
+              "content": "$$\\frac{2}{\\sqrt{5}-\\sqrt{3}} \\times \\frac{\\sqrt{5}+\\sqrt{3}}{\\sqrt{5}+\\sqrt{3}} = \\frac{2(\\sqrt{5}+\\sqrt{3})}{(\\sqrt{5}-\\sqrt{3})(\\sqrt{5}+\\sqrt{3})}$$"
+            },
+            {
+              "type": "paragraph",
+              "content": "The denominator is $(\\sqrt{5})^2 - (\\sqrt{3})^2 = 5 - 3 = 2$, so $$\\frac{2(\\sqrt{5}+\\sqrt{3})}{2} = \\sqrt{5} + \\sqrt{3}$$ as required."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "review": [
+    {
+      "id": "key-fact",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "Which fact makes rationalising work?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "$\\sqrt{a} \\times \\sqrt{a} = a$"
+        },
+        {
+          "type": "paragraph",
+          "content": "Multiplying a surd by itself gives a whole number, so the surd disappears from the denominator."
+        }
+      ]
+    },
+    {
+      "id": "one-over-root-two",
+      "type": "answer",
+      "prompt": "Rationalise the denominator.",
+      "template": "\\frac{1}{\\sqrt{2}}=\\frac{\\sqrt{2}}{\\placeholder[d]{}}",
+      "blanks": {
+        "d": {
+          "answer": "2"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "Multiply the top and bottom by $\\sqrt{2}$: $\\frac{1}{\\sqrt{2}} = \\frac{\\sqrt{2}}{2}$."
+        }
+      ]
+    },
+    {
+      "id": "three-over-root-three",
+      "type": "answer",
+      "prompt": "Rationalise and simplify.",
+      "template": "\\frac{3}{\\sqrt{3}}=\\sqrt{\\placeholder[n]{}}",
+      "blanks": {
+        "n": {
+          "answer": "3"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "$\\frac{3}{\\sqrt{3}} = \\frac{3\\sqrt{3}}{3} = \\sqrt{3}$."
+        }
+      ]
+    },
+    {
+      "id": "conjugate",
+      "type": "choice",
+      "prompt": "To rationalise $\\frac{1}{2-\\sqrt{7}}$, multiply the top and bottom by:",
+      "options": [
+        {
+          "id": "A",
+          "content": "$2+\\sqrt{7}$",
+          "correct": true,
+          "why": "Correct: $(2-\\sqrt{7})(2+\\sqrt{7}) = 4 - 7 = -3$."
+        },
+        {
+          "id": "B",
+          "content": "$2-\\sqrt{7}$",
+          "why": "Squaring the denominator keeps a surd in it. Change the sign in the middle."
+        },
+        {
+          "id": "C",
+          "content": "$\\sqrt{7}$",
+          "why": "$(2-\\sqrt{7})\\sqrt{7} = 2\\sqrt{7} - 7$ still has a surd."
+        },
+        {
+          "id": "D",
+          "content": "$-2$",
+          "why": "Multiplying by a number never removes a surd."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "Use the difference of two squares: same terms, opposite sign in the middle."
+        }
+      ]
+    },
+    {
+      "id": "dots",
+      "type": "answer",
+      "prompt": "Fill in the box.",
+      "template": "(a+\\sqrt{b})(a-\\sqrt{b})=a^2-\\placeholder[t]{}",
+      "blanks": {
+        "t": {
+          "answer": "b"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "The middle terms cancel and $\\sqrt{b} \\times \\sqrt{b} = b$, leaving $a^2 - b$."
+        }
+      ]
+    },
+    {
+      "id": "meaning",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "What does \"rationalising the denominator\" mean?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "Rewriting a fraction so there are no surds on the bottom."
+        },
+        {
+          "type": "paragraph",
+          "content": "The fraction's value doesn't change: you multiply the top and bottom by the same thing."
+        }
+      ]
+    }
+  ]
+}
