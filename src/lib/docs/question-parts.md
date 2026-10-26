@@ -182,6 +182,8 @@ The template is read-only LaTeX. Only the `\placeholder[id]{}` boxes are editabl
   - Decimals only count if you set `tolerance`. Without it, `0.8047` is **not** accepted for `½ ln 5`, which is right for "exact form" questions.
   - Set `exactForm: true` when the form matters. For example, with `answer: '2^9'` the answer `512` is rejected.
   - If a student types `b = 12` into a box whose answer is `12`, only the part after `=` is compared.
+  - **`equation: true`** (added 25 October 2026) for answers that are whole equations in $x$ and $y$. The box accepts any rearrangement or multiple of the right equation: for `y=2x+3`, the answers `2x-y+3=0`, `y-5=2(x-1)` and `4x-2y+6=0` all match, and an expanded circle equation matches `(x-2)^2+(y+1)^2=9`. It works by checking that (left − right) of the student's equation is a constant multiple of the answer's at six sample points. Without it, a rearranged equation is marked wrong.
+  - **`form`** (with `equation: true`) also checks how it's written: `'y=mx+c'` needs $y$ on its own on the left and no $y$ on the right; `'ax+by+c=0'` needs the right-hand side to be $0$ and whole-number coefficients. Use it when the question says "in the form …".
 - **After marking:** boxes turn green and lock, or turn red until the student edits them.
 
 ### `choice`: multiple choice
@@ -231,8 +233,22 @@ The template is read-only LaTeX. Only the `\placeholder[id]{}` boxes are editabl
     { kind: 'point', label: 'M', start: [0, -4], answer: { at: [1, 2] } } ] }
 ```
 
+**Circles and lines** (added 25 October 2026):
+
+```js
+given: [
+  { kind: 'line', through: [[0, 1], [2, 5]], label: 'L' },        // a fixed grey line through two points
+  { kind: 'circle', centre: [0, 0], radius: 3 } ],                 // a fixed grey circle
+objects: [
+  { kind: 'circle', label: 'C', start: { centre: [-3, 2], radius: 1 },
+    answer: { centre: [1, -2], radius: 3 },   // leave out centre or radius to check only the other
+    feedback: '...' } ]
+```
+
+The student drags the circle's centre to move it (the radius stays the same) and the small handle on its edge to resize it. With `snap`, both snap to the grid. Marking: the centre within `tolerance` of `answer.centre`, and the radius within `tolerance` of `answer.radius`.
+
 - **Marks default:** one per object.
-- **Response:** `{ objects: [{ from, to } | { at }] }`.
+- **Response:** `{ objects: [{ from, to } | { at } | { centre, edge }] }` (a circle saves its centre and the edge handle's position; the radius is the distance between them).
 - **After marking:** each object turns green or red.
 
 Make sure `start` isn't already a correct answer. A part only counts as answered once the student has dragged something.

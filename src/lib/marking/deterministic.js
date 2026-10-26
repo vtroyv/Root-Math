@@ -36,12 +36,78 @@ function cleanLatex(latex) {
     .trim();
 }
 
+/*
+`equation: true` blanks: the student's equation in x and y is right if it's the same line or curve as the answer,
+however it's rearranged: y = 2x + 3, 2x − y + 3 = 0 and 4x − 2y + 6 = 0 all match, and so does a circle
+equation expanded out. Two equations L = R are the same when (L − R) for one is a constant multiple of the
+other, which is checked at a handful of sample points.
+Optional `form` also checks how it's written:
+  'y=mx+c'      y on its own on the left, no y on the right
+  'ax+by+c=0'   right-hand side 0, and the left is linear with whole-number coefficients
+*/
+const SAMPLE_POINTS = [[0.37, -1.21], [1.93, 0.48], [-2.6, 2.15], [3.1, -0.83], [-0.71, -2.94], [2.47, 3.36]];
+
+function parseEquation(latex) {
+  const e = ce.parse(latex);
+  if (!e.isValid || e.head !== 'Equal' || e.ops?.length !== 2) return null;
+  const [lhs, rhs] = e.ops;
+  return { lhs, rhs, f: ce.box(['Subtract', lhs, rhs]) };
+}
+
+function valueAt(expr, x, y) {
+  const v = expr.subs({ x: ce.number(x), y: ce.number(y) }).N().value;
+  return typeof v === 'number' && Number.isFinite(v) ? v : null;
+}
+
+const near = (a, b) => Math.abs(a - b) <= 1e-7 * Math.max(1, Math.abs(a), Math.abs(b));
+
+function sameEquation(student, expected) {
+  const pairs = SAMPLE_POINTS.map(([x, y]) => [valueAt(student.f, x, y), valueAt(expected.f, x, y)]);
+  if (pairs.some(([s, e]) => s === null || e === null)) return false;
+  const [s0, e0] = pairs.find(([, e]) => Math.abs(e) > 1e-9) ?? [];
+  if (e0 === undefined) return false;
+  const k = s0 / e0;
+  if (Math.abs(k) < 1e-9) return false; // e.g. "0 = 0"
+  return pairs.every(([s, e]) => near(s, k * e));
+}
+
+function inForm(equation, form) {
+  const { lhs, rhs, f } = equation;
+  if (form === 'y=mx+c') {
+    return lhs.symbol === 'y' && SAMPLE_POINTS.every(([x, y]) => {
+      const a = valueAt(rhs, x, y);
+      const b = valueAt(rhs, x, y + 1);
+      return a !== null && b !== null && near(a, b);
+    });
+  }
+  if (form === 'ax+by+c=0') {
+    const zero = SAMPLE_POINTS.every(([x, y]) => near(valueAt(rhs, x, y) ?? NaN, 0));
+    const c = valueAt(f, 0, 0);
+    const a = valueAt(f, 1, 0) - c;
+    const b = valueAt(f, 0, 1) - c;
+    const whole = [a, b, c].every((n) => Number.isFinite(n) && near(n, Math.round(n)));
+    const linear = SAMPLE_POINTS.every(([x, y]) => near(valueAt(f, x, y) ?? NaN, a * x + b * y + c));
+    return zero && whole && linear;
+  }
+  return true;
+}
+
+function equationMatches(studentLatex, candidates, form) {
+  const student = parseEquation(studentLatex);
+  if (!student || !inForm(student, form)) return false;
+  return candidates.some((candidate) => {
+    const expected = parseEquation(candidate);
+    return expected !== null && sameEquation(student, expected);
+  });
+}
+
 // true if the student's LaTeX matches the blank spec
 export function blankMatches(studentLatex, spec) {
   let student = cleanLatex(studentLatex);
   if (!student) return false;
 
   const candidates = [spec.answer, ...(spec.accept ?? [])].map(String);
+  if (spec.equation) return equationMatches(student, candidates, spec.form);
 
   // "b = 12" typed into a blank whose answer is "12" -> just compare the right-hand side
   if (student.includes('=') && !candidates.some((c) => c.includes('='))) {
@@ -165,6 +231,14 @@ export function markPlace(part, response) {
     const answer = object.answer;
     if (!got || !answer) return false;
     if (object.kind === 'point') return close(got.at, answer.at ?? answer, tol);
+    // circles: answer { centre, radius }, either can be left out to check only the other
+    if (object.kind === 'circle') {
+      if (!got.centre || !got.edge) return false;
+      const radius = Math.hypot(got.edge[0] - got.centre[0], got.edge[1] - got.centre[1]);
+      const centreOk = !answer.centre || close(got.centre, answer.centre, tol);
+      const radiusOk = typeof answer.radius !== 'number' || Math.abs(radius - answer.radius) <= tol;
+      return centreOk && radiusOk;
+    }
     // vectors: either a free vector (components) or a fixed one (from/to)
     if (answer.components) {
       const comps = [got.to[0] - got.from[0], got.to[1] - got.from[1]];

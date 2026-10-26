@@ -1,0 +1,182 @@
+{
+  "slug": "triangles-and-circles",
+  "title": "Triangles and Circles",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "The Angle in a Semicircle",
+      "blocks": [
+        { "type": "paragraph", "content": "Here's a circle theorem you'll use a lot:" },
+        { "type": "bold-paragraph", "content": "The angle in a semicircle is a right angle." },
+        { "type": "paragraph", "content": "If $AB$ is a diameter and $C$ is any other point on the circle, then angle $ACB = 90°$." },
+        { "type": "paragraph", "content": "It works the other way round too: if angle $ACB = 90°$, then $AB$ is a diameter of the circle through $A$, $B$ and $C$. So the hypotenuse of a right-angled triangle is a diameter of its circle." },
+        { "type": "heading", "level": 4, "content": "Checking a right angle with gradients" },
+        { "type": "paragraph", "content": "$A(-3, 0)$ and $B(3, 0)$ are the ends of a diameter of $x^2 + y^2 = 9$, and $C(0, 3)$ is on the circle. The gradient of $AC$ is $\\frac{3 - 0}{0 - (-3)} = 1$ and the gradient of $BC$ is $\\frac{3 - 0}{0 - 3} = -1$. Since $1 \\times (-1) = -1$, $AC$ is perpendicular to $BC$: angle $ACB$ is $90°$, as the theorem says." },
+        { "type": "heading", "level": 4, "content": "A circle from its diameter" },
+        { "type": "paragraph", "content": "If you know the ends of a diameter, the centre is their midpoint and the radius is half the distance between them." }
+      ],
+      "tasks": [
+        {
+          "id": "diameter-centre",
+          "type": "answer",
+          "title": "Centre and radius from a diameter",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "$A(1, 1)$ and $B(7, 9)$ are the ends of a diameter of a circle. Find its centre and radius.",
+          "template": "\\text{centre }(\\placeholder[a]{},\\placeholder[b]{}),\\quad r=\\placeholder[r]{}",
+          "blanks": {
+            "a": { "answer": "4" },
+            "b": { "answer": "5" },
+            "r": { "answer": "5", "feedback": "$AB = \\sqrt{6^2 + 8^2} = 10$, and the radius is half of that." }
+          },
+          "hint": [{ "type": "paragraph", "content": "The centre is the midpoint of $AB$. The radius is half of the length $AB$." }],
+          "solution": [{ "type": "paragraph", "content": "Centre: the midpoint, $(4, 5)$. $AB = \\sqrt{36 + 64} = 10$, so the radius is $5$." }]
+        },
+        {
+          "id": "diameter-equation",
+          "type": "answer",
+          "title": "Its equation",
+          "instructions": "Type the equation in the box, then press Submit.",
+          "prompt": "Find the equation of the circle with diameter from $A(1, 1)$ to $B(7, 9)$.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": { "eq": { "answer": "(x-4)^2+(y-5)^2=25", "equation": true, "feedback": "The centre is $(4, 5)$ and the radius is $5$." } },
+          "hint": [{ "type": "paragraph", "content": "Use the centre and radius from the last task." }],
+          "solution": [{ "type": "paragraph", "content": "$$(x - 4)^2 + (y - 5)^2 = 25$$" }]
+        },
+        {
+          "id": "semicircle-angle",
+          "type": "choice",
+          "title": "The angle",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "$C(8, 2)$ also lies on the circle $(x - 4)^2 + (y - 5)^2 = 25$, which has diameter $AB$ from $A(1, 1)$ to $B(7, 9)$. What is angle $ACB$?",
+          "options": [
+            { "id": "A", "content": "$90°$, because $AB$ is a diameter", "correct": true, "why": "Correct: the angle in a semicircle. Check: $m_{AC} = \\frac{1}{7}$ and $m_{BC} = -7$, which multiply to $-1$." },
+            { "id": "B", "content": "$45°$", "why": "The angle in a semicircle is always $90°$." },
+            { "id": "C", "content": "It depends on where $C$ is on the circle", "why": "As long as $C$ is on the circle (and isn't $A$ or $B$), the angle is always $90°$." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "$AB$ is a diameter and $C$ is on the circle. Which theorem applies?" }],
+          "solution": [{ "type": "paragraph", "content": "Angle $ACB = 90°$: the angle in a semicircle. The gradients agree: $m_{AC} = \\frac{2 - 1}{8 - 1} = \\frac{1}{7}$ and $m_{BC} = \\frac{2 - 9}{8 - 7} = -7$, and $\\frac{1}{7} \\times (-7) = -1$." }]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Circumcircles",
+      "blocks": [
+        { "type": "paragraph", "content": "The circumcircle of a triangle is the circle that passes through all three of its corners. Its centre is called the circumcentre." },
+        { "type": "paragraph", "content": "The centre is the same distance from all three corners, so it lies on the perpendicular bisector of every side. To find it:" },
+        { "type": "bullet-points", "points": [
+          "Find the perpendicular bisectors of two of the sides.",
+          "Solve them simultaneously: where they meet is the centre.",
+          "The radius is the distance from the centre to any corner."
+        ] },
+        { "type": "paragraph", "content": "Shortcut: if the triangle has a right angle, its hypotenuse is a diameter, so the centre is the midpoint of the hypotenuse." },
+        { "type": "heading", "level": 4, "content": "Example" },
+        { "type": "paragraph", "content": "Find the circumcircle of $A(-1, 3)$, $B(5, 3)$ and $C(1, -1)$." },
+        { "type": "bullet-points", "points": [
+          "$AB$ is horizontal with midpoint $(2, 3)$, so its perpendicular bisector is the vertical line $x = 2$.",
+          "$AC$ has midpoint $(0, 1)$ and gradient $\\frac{-1 - 3}{1 - (-1)} = -2$, so its perpendicular bisector is $y - 1 = \\frac{1}{2}x$.",
+          "At $x = 2$: $y = 2$. The centre is $(2, 2)$.",
+          "Radius: the distance from $(2, 2)$ to $A(-1, 3)$ is $\\sqrt{9 + 1} = \\sqrt{10}$. So the circle is $(x - 2)^2 + (y - 2)^2 = 10$."
+        ] }
+      ],
+      "tasks": [
+        {
+          "id": "place-circumcircle",
+          "type": "place",
+          "title": "Draw the circumcircle",
+          "instructions": "Drag the orange centre to move the circle and the small handle on its edge to change its size, then press Submit.",
+          "prompt": "The triangle has corners $A(0, 0)$, $B(6, 0)$ and $C(0, 8)$. Draw its circumcircle.",
+          "boundingBox": [-4, 10, 10, -4],
+          "snap": 1,
+          "given": [
+            { "kind": "point", "at": [0, 0], "label": "A" },
+            { "kind": "point", "at": [6, 0], "label": "B" },
+            { "kind": "point", "at": [0, 8], "label": "C" }
+          ],
+          "objects": [
+            {
+              "kind": "circle",
+              "label": "",
+              "start": { "centre": [7, 7], "radius": 1 },
+              "answer": { "centre": [3, 4], "radius": 5 },
+              "feedback": "The right angle is at $A$, so $BC$ is a diameter: the centre is its midpoint and the radius is half of $BC$."
+            }
+          ],
+          "hint": [{ "type": "paragraph", "content": "There's a right angle at $A$. Use the shortcut: the hypotenuse $BC$ is a diameter." }],
+          "solution": [{ "type": "paragraph", "content": "$BC$ is a diameter. Its midpoint is $(3, 4)$, and $BC = \\sqrt{36 + 64} = 10$, so the radius is $5$." }]
+        },
+        {
+          "id": "right-triangle-centre",
+          "type": "answer",
+          "title": "Use the shortcut",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Find the centre and radius of the circle through $P(1, 2)$, $Q(7, 2)$ and $R(1, -6)$.",
+          "template": "\\text{centre }(\\placeholder[a]{},\\placeholder[b]{}),\\quad r=\\placeholder[r]{}",
+          "blanks": {
+            "a": { "answer": "4", "feedback": "$PQ$ is horizontal and $PR$ is vertical, so there's a right angle at $P$ and $QR$ is a diameter." },
+            "b": { "answer": "-2" },
+            "r": { "answer": "5" }
+          },
+          "hint": [{ "type": "paragraph", "content": "Look at $PQ$ and $PR$: is there a right angle?" }],
+          "solution": [{ "type": "paragraph", "content": "The right angle is at $P$, so $QR$ is a diameter. Centre: the midpoint of $QR$, $(4, -2)$. $QR = \\sqrt{36 + 64} = 10$, so the radius is $5$." }]
+        },
+        {
+          "id": "circumcentre-steps",
+          "type": "order",
+          "title": "Put the steps in order",
+          "instructions": "Add the steps in the right order, then press Submit. Not every line belongs!",
+          "prompt": "Put the steps for finding the circumcircle of a triangle $ABC$ (with no right angle) in order.",
+          "lines": [
+            "Find the perpendicular bisector of $AB$",
+            "Find the perpendicular bisector of $AC$",
+            "Solve them simultaneously to find the centre",
+            "Find the radius: the distance from the centre to $A$"
+          ],
+          "distractors": [
+            "The centre is the midpoint of $AB$",
+            "The radius is the length of $AB$"
+          ],
+          "hint": [{ "type": "paragraph", "content": "The centre is the same distance from every corner, so it's on every perpendicular bisector." }],
+          "solution": [{ "type": "paragraph", "content": "Two perpendicular bisectors meet at the centre; the radius is the distance from there to any corner. The midpoint of a side is only the centre when that side is a diameter (a right-angled triangle)." }]
+        },
+        {
+          "id": "circumcircle-equation",
+          "type": "answer",
+          "title": "Exam style",
+          "instructions": "Type the equation in the box, then press Submit.",
+          "prompt": "Find the equation of the circle through $A(2, 1)$, $B(8, 1)$ and $C(4, 5)$.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": { "eq": { "answer": "(x-5)^2+(y-2)^2=10", "equation": true, "feedback": "The perpendicular bisector of $AB$ is $x = 5$. The perpendicular bisector of $AC$ goes through $(3, 3)$ with gradient $-\\frac{1}{2}$." } },
+          "hint": [{ "type": "paragraph", "content": "$AB$ is horizontal, so its perpendicular bisector is a vertical line. Then find the perpendicular bisector of $AC$ and where they meet." }],
+          "solution": [
+            { "type": "paragraph", "content": "$AB$: midpoint $(5, 1)$, so its perpendicular bisector is $x = 5$. $AC$: midpoint $(3, 3)$ and gradient $\\frac{5 - 1}{4 - 2} = 2$, so its perpendicular bisector is $y - 3 = -\\frac{1}{2}(x - 3)$." },
+            { "type": "paragraph", "content": "At $x = 5$: $y = 3 - 1 = 2$, so the centre is $(5, 2)$. The radius squared is $(2 - 5)^2 + (1 - 2)^2 = 10$, so the circle is $(x - 5)^2 + (y - 2)^2 = 10$." }
+          ]
+        }
+      ]
+    }
+  ],
+  "review": [
+    { "id": "semicircle", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "$AB$ is a diameter and $C$ is on the circle. What is angle $ACB$?" }],
+      "back": [{ "type": "bold-paragraph", "content": "$90°$: the angle in a semicircle." }] },
+    { "id": "hypotenuse", "type": "choice", "prompt": "A triangle has a right angle. What can you say about its circumcircle?",
+      "options": [
+        { "id": "A", "content": "The hypotenuse is a diameter", "correct": true, "why": "Correct: so the centre is the midpoint of the hypotenuse." },
+        { "id": "B", "content": "The centre is the right-angled corner", "why": "The right-angled corner is on the circle, not at its centre." },
+        { "id": "C", "content": "The shortest side is a diameter", "why": "It's the hypotenuse, the longest side." }
+      ],
+      "explanation": [{ "type": "paragraph", "content": "The converse of the angle in a semicircle." }] },
+    { "id": "circumcentre", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "How do you find the centre of the circle through three points?" }],
+      "back": [{ "type": "bold-paragraph", "content": "Find where the perpendicular bisectors of two sides meet." }] },
+    { "id": "diameter-centre", "type": "answer", "prompt": "A diameter runs from $(0, 0)$ to $(4, 6)$. Where's the centre?", "template": "(\\placeholder[a]{},\\placeholder[b]{})",
+      "blanks": { "a": { "answer": "2" }, "b": { "answer": "3" } },
+      "explanation": [{ "type": "paragraph", "content": "The centre is the midpoint of any diameter." }] },
+    { "id": "check-right-angle", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "How do you show angle $ACB$ is a right angle using coordinates?" }],
+      "back": [{ "type": "bold-paragraph", "content": "Show $m_{AC} \\times m_{BC} = -1$." }] }
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "slug": "what-is-a-circle",
+  "title": "What is a Circle",
+  "next": "lines-and-circles",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "The Equation of a Circle",
+      "blocks": [
+        { "type": "paragraph", "content": "A circle is every point that's the same distance, the radius $r$, from its centre $(a, b)$." },
+        { "type": "paragraph", "content": "By the distance formula, a point $(x, y)$ is a distance $r$ from $(a, b)$ when $\\sqrt{(x - a)^2 + (y - b)^2} = r$. Squaring both sides gives the equation of a circle:" },
+        { "type": "bold-paragraph", "content": "$$(x - a)^2 + (y - b)^2 = r^2$$" },
+        { "type": "heading", "level": 4, "content": "Example 1: writing the equation" },
+        { "type": "paragraph", "content": "The circle with centre $(3, -2)$ and radius $5$ is $$(x - 3)^2 + (y + 2)^2 = 25$$" },
+        { "type": "heading", "level": 4, "content": "Example 2: reading off the centre and radius" },
+        { "type": "paragraph", "content": "$(x + 1)^2 + (y - 4)^2 = 7$ has centre $(-1, 4)$ and radius $\\sqrt{7}$." },
+        { "type": "paragraph", "content": "Watch the signs: the centre's coordinates have the opposite signs to the numbers in the brackets, because the formula has $x - a$. And the right-hand side is $r^2$, so take the square root to get the radius." }
+      ],
+      "tasks": [
+        {
+          "id": "read-centre-radius",
+          "type": "answer",
+          "title": "Read it off",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "Write down the centre and radius of the circle $(x - 5)^2 + (y + 3)^2 = 16$.",
+          "template": "\\text{centre }(\\placeholder[a]{},\\placeholder[b]{}),\\quad r=\\placeholder[r]{}",
+          "blanks": {
+            "a": { "answer": "5" },
+            "b": { "answer": "-3", "feedback": "$y + 3 = y - (-3)$, so $b = -3$." },
+            "r": { "answer": "4", "feedback": "The right-hand side is $r^2 = 16$." }
+          },
+          "hint": [{ "type": "paragraph", "content": "Compare it with $(x - a)^2 + (y - b)^2 = r^2$." }],
+          "solution": [{ "type": "paragraph", "content": "Centre $(5, -3)$, radius $\\sqrt{16} = 4$." }]
+        },
+        {
+          "id": "centre-choice",
+          "type": "choice",
+          "title": "Watch the signs",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "What is the centre of the circle $(x + 2)^2 + (y - 7)^2 = 9$?",
+          "options": [
+            { "id": "A", "content": "$(-2, 7)$", "correct": true, "why": "Correct: $x + 2 = x - (-2)$ and $y - 7$." },
+            { "id": "B", "content": "$(2, -7)$", "why": "The signs flip: $x + 2$ means $a = -2$, and $y - 7$ means $b = 7$." },
+            { "id": "C", "content": "$(-2, -7)$", "why": "$y - 7$ means $b = 7$." },
+            { "id": "D", "content": "$(2, 7)$", "why": "$x + 2$ means $a = -2$." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "Write each bracket as $x - a$ and $y - b$." }],
+          "solution": [{ "type": "paragraph", "content": "$(x - (-2))^2 + (y - 7)^2 = 3^2$: centre $(-2, 7)$." }]
+        },
+        {
+          "id": "write-equation",
+          "type": "answer",
+          "title": "Write the equation",
+          "instructions": "Type the equation in the box, then press Submit.",
+          "prompt": "Find the equation of the circle with centre $(-1, 2)$ and radius $3$.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": { "eq": { "answer": "(x+1)^2+(y-2)^2=9", "equation": true, "feedback": "Use $(x - a)^2 + (y - b)^2 = r^2$ with $a = -1$, $b = 2$ and $r^2 = 9$." } },
+          "hint": [{ "type": "paragraph", "content": "Remember to square the radius." }],
+          "solution": [{ "type": "paragraph", "content": "$$(x + 1)^2 + (y - 2)^2 = 9$$" }]
+        },
+        {
+          "id": "place-circle",
+          "type": "place",
+          "title": "Draw it",
+          "instructions": "Drag the orange centre to move the circle and the small handle on its edge to change its size, then press Submit.",
+          "prompt": "Draw the circle $(x - 1)^2 + (y + 2)^2 = 9$.",
+          "boundingBox": [-6, 4, 6, -8],
+          "snap": 1,
+          "objects": [
+            {
+              "kind": "circle",
+              "label": "C",
+              "start": { "centre": [-3, 2], "radius": 1 },
+              "answer": { "centre": [1, -2], "radius": 3 },
+              "feedback": "The centre is $(1, -2)$ and the radius is $\\sqrt{9} = 3$."
+            }
+          ],
+          "hint": [{ "type": "paragraph", "content": "Find the centre and the radius first. The radius is the square root of the right-hand side." }],
+          "solution": [{ "type": "paragraph", "content": "Centre $(1, -2)$, radius $3$." }]
+        },
+        {
+          "id": "surd-radius",
+          "type": "answer",
+          "title": "A surd radius",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "Find the radius of the circle $x^2 + (y - 1)^2 = 20$, as a simplified surd.",
+          "template": "r=\\placeholder[a]{}\\sqrt{\\placeholder[b]{}}",
+          "blanks": {
+            "a": { "answer": "2", "exactForm": true, "feedback": "$r = \\sqrt{20}$. Simplify: $20 = 4 \\times 5$." },
+            "b": { "answer": "5", "exactForm": true }
+          },
+          "hint": [{ "type": "paragraph", "content": "$r^2 = 20$, so $r = \\sqrt{20}$." }],
+          "solution": [{ "type": "paragraph", "content": "$r = \\sqrt{20} = \\sqrt{4 \\times 5} = 2\\sqrt{5}$." }]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Completing the Square",
+      "blocks": [
+        { "type": "paragraph", "content": "Circle equations are often given expanded out, like $x^2 + y^2 - 6x + 4y - 3 = 0$. To find the centre and radius, complete the square in $x$ and in $y$." },
+        { "type": "heading", "level": 4, "content": "Example" },
+        { "type": "bullet-points", "points": [
+          "Group the $x$ terms and the $y$ terms: $(x^2 - 6x) + (y^2 + 4y) = 3$",
+          "Complete the square for each: $(x - 3)^2 - 9 + (y + 2)^2 - 4 = 3$",
+          "Tidy up: $(x - 3)^2 + (y + 2)^2 = 16$",
+          "So the centre is $(3, -2)$ and the radius is $4$."
+        ] },
+        { "type": "paragraph", "content": "Remember that $x^2 - 6x = (x - 3)^2 - 9$: halve the coefficient of $x$ for the bracket, then subtract its square." },
+        { "type": "paragraph", "content": "This only gives a circle if the right-hand side ends up positive: it's $r^2$, so it can't be $0$ or negative." }
+      ],
+      "tasks": [
+        {
+          "id": "complete-1",
+          "type": "answer",
+          "title": "Find the centre and radius",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Find the centre and radius of the circle $x^2 + y^2 + 8x - 2y - 8 = 0$.",
+          "template": "\\text{centre }(\\placeholder[a]{},\\placeholder[b]{}),\\quad r=\\placeholder[r]{}",
+          "blanks": {
+            "a": { "answer": "-4", "feedback": "$x^2 + 8x = (x + 4)^2 - 16$." },
+            "b": { "answer": "1", "feedback": "$y^2 - 2y = (y - 1)^2 - 1$." },
+            "r": { "answer": "5", "feedback": "After completing the square, the right-hand side is $8 + 16 + 1$." }
+          },
+          "hint": [{ "type": "paragraph", "content": "Group the terms: $(x^2 + 8x) + (y^2 - 2y) = 8$, then complete the square for each." }],
+          "solution": [{ "type": "paragraph", "content": "$(x + 4)^2 - 16 + (y - 1)^2 - 1 = 8$, so $(x + 4)^2 + (y - 1)^2 = 25$. Centre $(-4, 1)$, radius $5$." }]
+        },
+        {
+          "id": "complete-2",
+          "type": "answer",
+          "title": "Only one to complete",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Find the centre and radius of the circle $x^2 + y^2 - 10y = 0$.",
+          "template": "\\text{centre }(\\placeholder[a]{},\\placeholder[b]{}),\\quad r=\\placeholder[r]{}",
+          "blanks": {
+            "a": { "answer": "0", "feedback": "There's no $x$ term, so the $x$-coordinate of the centre is $0$." },
+            "b": { "answer": "5" },
+            "r": { "answer": "5" }
+          },
+          "hint": [{ "type": "paragraph", "content": "$y^2 - 10y = (y - 5)^2 - 25$. There's nothing to do for $x$." }],
+          "solution": [{ "type": "paragraph", "content": "$x^2 + (y - 5)^2 - 25 = 0$, so $x^2 + (y - 5)^2 = 25$. Centre $(0, 5)$, radius $5$." }]
+        },
+        {
+          "id": "complete-steps",
+          "type": "order",
+          "title": "Put the steps in order",
+          "instructions": "Add the steps in the right order, then press Submit. Not every line belongs!",
+          "prompt": "Put the steps for finding the centre and radius of $x^2 + y^2 - 4x + 6y - 12 = 0$ in order.",
+          "lines": [
+            "Group: $(x^2 - 4x) + (y^2 + 6y) = 12$",
+            "Complete the square: $(x - 2)^2 - 4 + (y + 3)^2 - 9 = 12$",
+            "Tidy up: $(x - 2)^2 + (y + 3)^2 = 25$",
+            "Centre $(2, -3)$, radius $5$"
+          ],
+          "distractors": [
+            "Tidy up: $(x - 2)^2 + (y + 3)^2 = 12$",
+            "Centre $(-2, 3)$, radius $5$"
+          ],
+          "hint": [{ "type": "paragraph", "content": "When you complete the square you subtract $4$ and $9$, so both get added to the right-hand side." }],
+          "solution": [{ "type": "paragraph", "content": "$(x - 2)^2 + (y + 3)^2 = 12 + 4 + 9 = 25$, so the centre is $(2, -3)$ and the radius is $5$." }]
+        },
+        {
+          "id": "find-k",
+          "type": "answer",
+          "title": "Exam style",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "The circle $x^2 + y^2 + 4x - 6y + k = 0$ has radius $5$. Find $k$.",
+          "template": "k=\\placeholder[k]{}",
+          "blanks": { "k": { "answer": "-12", "feedback": "Completing the square gives $(x + 2)^2 + (y - 3)^2 = 13 - k$. Set $13 - k = 25$." } },
+          "hint": [{ "type": "paragraph", "content": "Complete the square, then the right-hand side must equal $r^2 = 25$." }],
+          "solution": [{ "type": "paragraph", "content": "$(x + 2)^2 - 4 + (y - 3)^2 - 9 + k = 0$, so $(x + 2)^2 + (y - 3)^2 = 13 - k$. Then $13 - k = 25$, so $k = -12$." }]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Inside, On or Outside?",
+      "blocks": [
+        { "type": "paragraph", "content": "To see where a point is compared with a circle, find its distance from the centre and compare it with the radius:" },
+        { "type": "bullet-points", "points": [
+          "less than $r$: the point is inside the circle,",
+          "equal to $r$: it's on the circle,",
+          "more than $r$: it's outside."
+        ] },
+        { "type": "paragraph", "content": "It's quicker to compare squares: substitute the point into $(x - a)^2 + (y - b)^2$ and compare the result with $r^2$." },
+        { "type": "paragraph", "content": "For example, for $(4, 1)$ and the circle $(x - 1)^2 + (y + 3)^2 = 25$: $(4 - 1)^2 + (1 + 3)^2 = 9 + 16 = 25$, so the point is on the circle." }
+      ],
+      "tasks": [
+        {
+          "id": "inside-outside",
+          "type": "choice",
+          "title": "Where is it?",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Where is the point $(2, 3)$ compared with the circle $x^2 + y^2 = 10$?",
+          "options": [
+            { "id": "A", "content": "Outside", "correct": true, "why": "Correct: $2^2 + 3^2 = 13 > 10$." },
+            { "id": "B", "content": "On the circle", "why": "$2^2 + 3^2 = 13$, which isn't $10$." },
+            { "id": "C", "content": "Inside", "why": "$13$ is more than $10$, so it's further from the centre than the radius." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "Substitute the point into $x^2 + y^2$ and compare it with $10$." }],
+          "solution": [{ "type": "paragraph", "content": "$4 + 9 = 13 > 10$, so the point is outside the circle." }]
+        },
+        {
+          "id": "on-circle-k",
+          "type": "answer",
+          "title": "On the circle",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "The point $(k, 2)$ lies on the circle $(x - 3)^2 + (y + 1)^2 = 25$, and $k > 3$. Find $k$.",
+          "template": "k=\\placeholder[k]{}",
+          "blanks": { "k": { "answer": "7", "feedback": "$(k - 3)^2 + 9 = 25$, so $(k - 3)^2 = 16$." } },
+          "hint": [{ "type": "paragraph", "content": "Substitute $x = k$ and $y = 2$." }],
+          "solution": [{ "type": "paragraph", "content": "$(k - 3)^2 + 3^2 = 25$, so $(k - 3)^2 = 16$ and $k - 3 = \\pm 4$. Since $k > 3$, $k = 7$." }]
+        }
+      ]
+    }
+  ],
+  "review": [
+    { "id": "circle-equation", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "What's the equation of the circle with centre $(a, b)$ and radius $r$?" }],
+      "back": [{ "type": "bold-paragraph", "content": "$(x - a)^2 + (y - b)^2 = r^2$" }] },
+    { "id": "centre-signs", "type": "choice", "prompt": "Centre of $(x - 4)^2 + (y + 1)^2 = 9$?",
+      "options": [
+        { "id": "A", "content": "$(4, -1)$", "correct": true, "why": "Correct: the signs flip." },
+        { "id": "B", "content": "$(-4, 1)$", "why": "$x - 4$ means $a = 4$." },
+        { "id": "C", "content": "$(4, 1)$", "why": "$y + 1$ means $b = -1$." }
+      ],
+      "explanation": [{ "type": "paragraph", "content": "$x - a$ and $y - b$: the coordinates have the opposite signs to the brackets." }] },
+    { "id": "radius-root", "type": "answer", "prompt": "Radius of $(x - a)^2 + (y - b)^2 = 49$?", "template": "r=\\placeholder[r]{}",
+      "blanks": { "r": { "answer": "7", "exactForm": true } },
+      "explanation": [{ "type": "paragraph", "content": "The right-hand side is $r^2$, so $r = \\sqrt{49} = 7$." }] },
+    { "id": "expanded", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "A circle is given as $x^2 + y^2 - 6x + 4y - 3 = 0$. How do you find its centre and radius?" }],
+      "back": [{ "type": "bold-paragraph", "content": "Complete the square in $x$ and in $y$." }, { "type": "paragraph", "content": "Here $(x - 3)^2 + (y + 2)^2 = 16$." }] },
+    { "id": "centre-quick", "type": "answer", "prompt": "Centre of $x^2 + y^2 - 6x = 0$?", "template": "(\\placeholder[a]{},\\placeholder[b]{})",
+      "blanks": { "a": { "answer": "3" }, "b": { "answer": "0" } },
+      "explanation": [{ "type": "paragraph", "content": "$(x - 3)^2 + y^2 = 9$." }] }
+  ]
+}

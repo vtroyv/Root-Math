@@ -75,7 +75,7 @@ Three things to keep in mind:
 
 **[learn/layout.js](../../app/%28authenticated%29/learn/layout.js)**: wraps every `/learn/*` page with `LearnNav` (which now includes **PROGRESS**), `Breadcrumbs` and the floating `MyTutor` widget. `(authenticated)` is only a route group: it doesn't change the URL and does no auth itself.
 
-**How users get here:** [QuestionTable.js](../components/questions/QuestionTable.js) links to `questions/<title>`, or the **Next** drawer on a question does. The URL slug **is the question's `title`** in MongoDB, so titles must be unique.
+**How users get here:** the Questions page ([QuestionBank.js](../components/learn/questions/QuestionBank.js)) links to `questions/<title>`, or the **Next** drawer on a question does. The URL slug **is the question's `title`** in MongoDB, so titles must be unique.
 
 ---
 
@@ -96,7 +96,7 @@ File: [redux/slices/apiSlice.js](../redux/slices/apiSlice.js). Redux is only a t
 | `useDynamicQuestionDataMutation` | `POST /api/questions/:title` | **page.js**: loads the question + progress |
 | `useMarkQuestionMutation` | `POST /api/mark` | `QuestionParts`: Submit |
 | `useUpdateQuestionProgressMutation` | `POST /api/question-progress` | `QuestionParts`: autosave, Save, Reset, after Submit |
-| `useGetQuestionsQuery` | `GET /api/questions` | `QuestionTable`, the Next drawer in `QuestionParts` |
+| `useGetQuestionsQuery` | `GET /api/questions` | `QuestionBank` (the Questions page), the Next drawer in `QuestionParts` |
 | `useGetQuestionReviewsQuery` | `GET /api/reviews/question/:title?today=` | the Review tab and its "Review · 2" label |
 | `useCheckReviewCardMutation` | `POST /api/reviews/check` | review cards with an answer to check |
 | `useRateReviewCardMutation` | `POST /api/reviews/rate` | every review card |

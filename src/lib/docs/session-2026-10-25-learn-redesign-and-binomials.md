@@ -19,6 +19,16 @@ Four lessons in [lesson-examples/](lesson-examples/), written from the old `intr
 - **Spec coverage:** checked against the Year 12 specs for Edexcel, CIE, AQA, OCR A and OCR B (MEI).
 - **`next`:** Binomial Estimation has none yet. Add it once the next chapter's first lesson exists.
 
+### Straight lines and circles (8 more lessons)
+
+`11`–`18` in [lesson-examples/](lesson-examples/), on the Edexcel Year 1 textbook split (chapters 5 and 6): gradient and equations of lines; parallel and perpendicular; distance, intersections and areas; modelling; midpoints and perpendicular bisectors; the equation of a circle and completing the square; line–circle intersections, tangents and chords; the angle in a semicircle and circumcircles. 70 tasks and 40 review cards, tested with ~2,300 checks.
+
+- **Titles fixed** ("Whats a Straight Line" → "What is a Straight Line", "Inbetween two Points" → "Between Two Points", ...). Paste the corrected chapter documents in [lesson-examples/chapters/](lesson-examples/chapters/) over the `straight-lines` and `circles` documents in `edx-pure-y1-subsections`, keeping each `_id`.
+- **New marking: `equation: true`** on an answer box accepts any rearrangement or multiple of the right equation (and expanded circle equations), with an optional `form: 'y=mx+c' | 'ax+by+c=0'` check. Before, `2x − y + 3 = 0` was marked wrong for `y = 2x + 3`. In `marking/deterministic.js`.
+- **New: draggable circles** in the `place` part (drag the centre, resize from the edge), plus fixed grey `line` and `circle` reference objects. In `PlacePart.js`, `markPlace` and `solutions.js`.
+- **Straight lines are sketched** with the existing sketch part at `degree: 1`.
+- Triangles and Circles has no `next` yet (the next chapter's lessons don't exist).
+
 ## 2. Challenge questions (paste into `quizzes`)
 
 Three `difficulty: "Challenge"`, `topic: "Binomial Expansion"` questions in [question-examples/](question-examples/):

@@ -1,0 +1,158 @@
+{
+  "slug": "lines-and-circles",
+  "title": "Lines and Circles",
+  "next": "triangles-and-circles",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "Where a Line Meets a Circle",
+      "blocks": [
+        { "type": "paragraph", "content": "A line can cross a circle twice, touch it once (a tangent), or miss it completely. To find out which, and where, solve the two equations simultaneously: substitute the line into the circle." },
+        { "type": "heading", "level": 4, "content": "Example" },
+        { "type": "paragraph", "content": "Find where $y = x + 1$ meets $x^2 + y^2 = 13$. Substituting: $$x^2 + (x + 1)^2 = 13 \\implies 2x^2 + 2x - 12 = 0 \\implies x^2 + x - 6 = 0$$ $$(x + 3)(x - 2) = 0 \\implies x = -3 \\text{ or } x = 2$$ Then $y = x + 1$ gives the points $(-3, -2)$ and $(2, 3)$." },
+        { "type": "heading", "level": 4, "content": "Using the discriminant" },
+        { "type": "paragraph", "content": "Substituting always gives a quadratic, and its discriminant $b^2 - 4ac$ tells you how many points there are without solving it:" },
+        { "type": "bullet-points", "points": [
+          "$b^2 - 4ac > 0$: two points, the line crosses the circle.",
+          "$b^2 - 4ac = 0$: one point, the line is a tangent.",
+          "$b^2 - 4ac < 0$: no points, the line misses the circle."
+        ] }
+      ],
+      "tasks": [
+        {
+          "id": "intersections",
+          "type": "answer",
+          "title": "Find the points",
+          "instructions": "Fill in each box, then press Submit. Give the point with the larger x-coordinate first.",
+          "prompt": "Find the points where $y = x - 1$ meets the circle $x^2 + y^2 = 25$.",
+          "template": "(\\placeholder[x1]{},\\placeholder[y1]{})\\text{ and }(\\placeholder[x2]{},\\placeholder[y2]{})",
+          "blanks": {
+            "x1": { "answer": "4", "feedback": "You should get $x^2 - x - 12 = 0$, which factorises as $(x - 4)(x + 3) = 0$." },
+            "y1": { "answer": "3" },
+            "x2": { "answer": "-3" },
+            "y2": { "answer": "-4", "feedback": "Use $y = x - 1$ to find each $y$." }
+          },
+          "hint": [{ "type": "paragraph", "content": "Substitute $y = x - 1$: $x^2 + (x - 1)^2 = 25$. Expand and simplify to a quadratic." }],
+          "solution": [{ "type": "paragraph", "content": "$x^2 + x^2 - 2x + 1 = 25 \\implies 2x^2 - 2x - 24 = 0 \\implies x^2 - x - 12 = 0 \\implies (x - 4)(x + 3) = 0$. So $x = 4$, $y = 3$ and $x = -3$, $y = -4$: the points are $(4, 3)$ and $(-3, -4)$." }]
+        },
+        {
+          "id": "discriminant-choice",
+          "type": "choice",
+          "title": "How many points?",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Substituting $y = 2x + 5$ into $x^2 + y^2 = 5$ gives $x^2 + 4x + 4 = 0$. What does this tell you about the line?",
+          "options": [
+            { "id": "A", "content": "It's a tangent to the circle", "correct": true, "why": "Correct: $b^2 - 4ac = 16 - 16 = 0$, so there's exactly one point, $x = -2$." },
+            { "id": "B", "content": "It crosses the circle at two points", "why": "That needs $b^2 - 4ac > 0$. Here it's $16 - 16 = 0$." },
+            { "id": "C", "content": "It doesn't meet the circle", "why": "That needs $b^2 - 4ac < 0$. Here it's $0$." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "Work out $b^2 - 4ac$ with $a = 1$, $b = 4$ and $c = 4$." }],
+          "solution": [{ "type": "paragraph", "content": "$b^2 - 4ac = 16 - 16 = 0$: one repeated root, so the line touches the circle once. It's a tangent, at $(-2, 1)$." }]
+        },
+        {
+          "id": "tangent-k",
+          "type": "answer",
+          "title": "Exam style",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "The line $y = x + k$, where $k > 0$, is a tangent to the circle $x^2 + y^2 = 8$. Find $k$.",
+          "template": "k=\\placeholder[k]{}",
+          "blanks": { "k": { "answer": "4", "feedback": "The quadratic is $2x^2 + 2kx + k^2 - 8 = 0$. Set its discriminant equal to $0$." } },
+          "hint": [{ "type": "paragraph", "content": "Substitute, simplify to a quadratic in $x$, then use $b^2 - 4ac = 0$ for a tangent." }],
+          "solution": [{ "type": "paragraph", "content": "$x^2 + (x + k)^2 = 8 \\implies 2x^2 + 2kx + k^2 - 8 = 0$. For a tangent, $(2k)^2 - 4(2)(k^2 - 8) = 0$, so $4k^2 - 8k^2 + 64 = 0$, giving $k^2 = 16$. Since $k > 0$, $k = 4$." }]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Tangents and Chords",
+      "blocks": [
+        { "type": "paragraph", "content": "Two circle facts from GCSE do a lot of work here:" },
+        { "type": "bullet-points", "points": [
+          "A tangent is perpendicular to the radius at the point where it touches the circle.",
+          "The perpendicular from the centre to a chord bisects the chord (cuts it in half)."
+        ] },
+        { "type": "heading", "level": 4, "content": "Example: the tangent at a point" },
+        { "type": "paragraph", "content": "Find the tangent to $(x - 1)^2 + (y - 2)^2 = 25$ at the point $(4, 6)$." },
+        { "type": "bullet-points", "points": [
+          "The radius goes from the centre $(1, 2)$ to $(4, 6)$, so its gradient is $\\frac{6 - 2}{4 - 1} = \\frac{4}{3}$.",
+          "The tangent is perpendicular to it, so its gradient is $-\\frac{3}{4}$.",
+          "$y - 6 = -\\frac{3}{4}(x - 4)$, so $4y - 24 = -3x + 12$, which gives $3x + 4y - 36 = 0$."
+        ] },
+        { "type": "heading", "level": 4, "content": "Example: the length of a chord" },
+        { "type": "paragraph", "content": "The line $y = 3$ cuts the circle $x^2 + y^2 = 25$ at $x^2 + 9 = 25$, so $x = \\pm 4$. The chord runs from $(-4, 3)$ to $(4, 3)$, so its length is $8$. The perpendicular from the centre, the $y$-axis, cuts it in half at $(0, 3)$." }
+      ],
+      "tasks": [
+        {
+          "id": "tangent-origin",
+          "type": "answer",
+          "title": "Your first tangent",
+          "instructions": "Type the equation in the box, then press Submit. Any correct form is fine.",
+          "prompt": "Find the equation of the tangent to the circle $x^2 + y^2 = 10$ at the point $(3, 1)$.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": { "eq": { "answer": "y=-3x+10", "equation": true, "feedback": "The radius from $(0, 0)$ to $(3, 1)$ has gradient $\\frac{1}{3}$, so the tangent has gradient $-3$." } },
+          "hint": [{ "type": "paragraph", "content": "Find the gradient of the radius, then use the perpendicular gradient through $(3, 1)$." }],
+          "solution": [{ "type": "paragraph", "content": "The radius has gradient $\\frac{1}{3}$, so the tangent has gradient $-3$: $y - 1 = -3(x - 3)$, so $y = -3x + 10$." }]
+        },
+        {
+          "id": "tangent-exam",
+          "type": "answer",
+          "title": "Exam style",
+          "instructions": "Type the equation in the box, then press Submit.",
+          "prompt": "The point $P(5, 1)$ lies on the circle $(x - 2)^2 + (y + 1)^2 = 13$. Find the tangent to the circle at $P$, in the form $ax + by + c = 0$, where $a$, $b$ and $c$ are integers.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": { "eq": { "answer": "3x+2y-17=0", "equation": true, "form": "ax+by+c=0", "feedback": "The centre is $(2, -1)$, so the radius to $P$ has gradient $\\frac{2}{3}$ and the tangent has gradient $-\\frac{3}{2}$." } },
+          "hint": [{ "type": "paragraph", "content": "Centre first, then the gradient of the radius to $P$, then the perpendicular gradient." }],
+          "solution": [{ "type": "paragraph", "content": "Centre $(2, -1)$; the radius has gradient $\\frac{1 - (-1)}{5 - 2} = \\frac{2}{3}$, so the tangent has gradient $-\\frac{3}{2}$. $y - 1 = -\\frac{3}{2}(x - 5)$, so $2y - 2 = -3x + 15$, which gives $3x + 2y - 17 = 0$." }]
+        },
+        {
+          "id": "chord-fact",
+          "type": "choice",
+          "title": "Circle facts",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "A line is drawn from the centre of a circle, perpendicular to a chord. What does it do to the chord?",
+          "options": [
+            { "id": "A", "content": "It cuts the chord exactly in half", "correct": true, "why": "Correct: the perpendicular from the centre bisects the chord." },
+            { "id": "B", "content": "It's a tangent to the chord", "why": "Tangents touch circles, not chords." },
+            { "id": "C", "content": "It cuts the chord in the ratio 1 : 2", "why": "It always meets the chord at its midpoint." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "Think about symmetry: the circle looks the same on both sides of that line." }],
+          "solution": [{ "type": "paragraph", "content": "The perpendicular from the centre to a chord bisects it, so it meets the chord at its midpoint." }]
+        },
+        {
+          "id": "chord-length",
+          "type": "answer",
+          "title": "The length of a chord",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "The line $y = 4$ cuts the circle $x^2 + y^2 = 25$ at two points. Find the length of the chord between them.",
+          "template": "\\text{length}=\\placeholder[l]{}",
+          "blanks": { "l": { "answer": "6", "exactForm": true, "feedback": "$x^2 + 16 = 25$, so $x = \\pm 3$. The chord runs from $x = -3$ to $x = 3$." } },
+          "hint": [{ "type": "paragraph", "content": "Substitute $y = 4$ to find the two $x$-coordinates." }],
+          "solution": [{ "type": "paragraph", "content": "$x^2 + 16 = 25 \\implies x = \\pm 3$. The chord goes from $(-3, 4)$ to $(3, 4)$, so its length is $6$." }]
+        }
+      ]
+    }
+  ],
+  "review": [
+    { "id": "discriminant", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "After substituting a line into a circle, what does the discriminant tell you?" }],
+      "back": [{ "type": "bold-paragraph", "content": "$> 0$: two points. $= 0$: a tangent. $< 0$: they don't meet." }] },
+    { "id": "tangent-radius", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "What's the angle between a tangent and the radius at the point of contact?" }],
+      "back": [{ "type": "bold-paragraph", "content": "$90°$: they're perpendicular." }, { "type": "paragraph", "content": "So the tangent's gradient is $-\\frac{1}{m_{\\text{radius}}}$." }] },
+    { "id": "tangent-gradient", "type": "answer", "prompt": "The radius to a point has gradient $2$. What's the gradient of the tangent there?", "template": "m=\\placeholder[m]{}",
+      "blanks": { "m": { "answer": "-\\frac{1}{2}" } },
+      "explanation": [{ "type": "paragraph", "content": "Perpendicular: $2 \\times \\left(-\\frac{1}{2}\\right) = -1$." }] },
+    { "id": "no-meet", "type": "choice", "prompt": "Substituting a line into a circle gives a quadratic with $b^2 - 4ac < 0$. So:",
+      "options": [
+        { "id": "A", "content": "The line misses the circle", "correct": true, "why": "Correct: no real solutions, so no points in common." },
+        { "id": "B", "content": "The line is a tangent", "why": "That's $b^2 - 4ac = 0$." },
+        { "id": "C", "content": "The line crosses twice", "why": "That's $b^2 - 4ac > 0$." }
+      ],
+      "explanation": [{ "type": "paragraph", "content": "No real roots means no intersection." }] },
+    { "id": "chord", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "What does the perpendicular from the centre to a chord do?" }],
+      "back": [{ "type": "bold-paragraph", "content": "It bisects the chord." }] }
+  ]
+}

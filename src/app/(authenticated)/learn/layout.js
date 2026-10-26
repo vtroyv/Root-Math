@@ -2,6 +2,7 @@
 import LearnNav from "@/lib/components/learn/LearnNav"
 import Breadcrumbs from "@/lib/components/learn/Breadcrumbs"
 import ChatWidget from "@/lib/components/learn/MyTutor"
+import StudyTimer from "@/lib/components/learn/StudyTimer"
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 
@@ -21,6 +22,9 @@ export default function LearnLayout({ children }) {
 
       {/* Place your chat widget here so it appears on every page */}
       <ChatWidget />
+
+      {/* counts active minutes for the study-time goal on the Questions page; renders nothing */}
+      <StudyTimer />
     </>
   )
 }

@@ -423,3 +423,27 @@ function identifyQuesProg(data) {
     const collection = `${examBoard}-questions-${branch}-${correctYear}-progress`
     return collection
 }
+// NEW 25 Oct 2026 (Questions page activity map, src/lib/activity/goals.js): one document per student per day
+// in `dailyActivity`: { userId, day: 'YYYY-MM-DD', questions: [titles], lessons: [slugs], reviews, minutes }.
+// questions/lessons are sets, so submitting the same question twice in a day counts once.
+export async function recordActivity(userId, day, { question, lesson, reviews, minutes } = {}) {
+    await init()
+    const addToSet = {}
+    const inc = {}
+    if (question) addToSet.questions = question
+    if (lesson) addToSet.lessons = lesson
+    if (reviews) inc.reviews = reviews
+    if (minutes) inc.minutes = minutes
+    if (!Object.keys(addToSet).length && !Object.keys(inc).length) return
+
+    const update = {}
+    if (Object.keys(addToSet).length) update.$addToSet = addToSet
+    if (Object.keys(inc).length) update.$inc = inc
+    await db.collection('dailyActivity').updateOne({ userId, day }, update, { upsert: true })
+}
+
+// one student's days from `from` to `to` (inclusive, 'YYYY-MM-DD'), days with no activity left out
+export async function getActivity(userId, from, to) {
+    await init()
+    return db.collection('dailyActivity').find({ userId, day: { $gte: from, $lte: to } }).project({ _id: 0, userId: 0 }).toArray()
+}

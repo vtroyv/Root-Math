@@ -2,6 +2,7 @@ import { auth } from '@clerk/nextjs/server';
 import { saveReviewState } from '@/lib/mongodb/utils';
 import { loadCardForUser } from '@/lib/reviews/server';
 import { RATINGS, isDay, isDue, schedule, practise } from '@/lib/reviews/scheduler';
+import { logActivity } from '@/lib/activity/log';
 
 /*
 POST /api/reviews/rate  { title, cardId, rating, mode: 'review' | 'practice', today }
@@ -35,6 +36,7 @@ export async function POST(request) {
       if (result.changed) await saveReviewState(result.state);
       next = result.state;
     }
+    await logActivity(userId, today, { reviews: 1 });
 
     return Response.json({ mode: applied, due: next.due, intervalDays: next.intervalDays });
   } catch (error) {

@@ -1,0 +1,161 @@
+{
+  "slug": "between-two-points",
+  "title": "Between Two Points",
+  "next": "modelling-with-straight-lines",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "The Distance Between Two Points",
+      "blocks": [
+        { "type": "paragraph", "content": "To find the distance between two points, draw a right-angled triangle: the horizontal side is the change in $x$, the vertical side is the change in $y$, and the distance is the hypotenuse. Pythagoras' theorem does the rest:" },
+        { "type": "bold-paragraph", "content": "$$d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$" },
+        { "type": "heading", "level": 4, "content": "Example 1" },
+        { "type": "paragraph", "content": "The distance from $(1, 2)$ to $(4, 6)$ is $$\\sqrt{(4 - 1)^2 + (6 - 2)^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$$" },
+        { "type": "heading", "level": 4, "content": "Example 2: leave it as a surd" },
+        { "type": "paragraph", "content": "The distance from $(-2, 1)$ to $(3, 4)$ is $$\\sqrt{(3 - (-2))^2 + (4 - 1)^2} = \\sqrt{25 + 9} = \\sqrt{34}$$ Exam questions usually want an exact answer, so leave it as a simplified surd rather than a decimal." },
+        { "type": "paragraph", "content": "Squaring makes every term positive, so it doesn't matter which point you start from." }
+      ],
+      "tasks": [
+        {
+          "id": "distance-1",
+          "type": "answer",
+          "title": "Your first distance",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Find the distance between $(2, 3)$ and $(8, 11)$.",
+          "template": "d=\\placeholder[d]{}",
+          "blanks": { "d": { "answer": "10", "exactForm": true, "feedback": "$\\sqrt{6^2 + 8^2} = \\sqrt{100}$." } },
+          "hint": [{ "type": "paragraph", "content": "The change in $x$ is $6$ and the change in $y$ is $8$." }],
+          "solution": [{ "type": "paragraph", "content": "$$\\sqrt{(8 - 2)^2 + (11 - 3)^2} = \\sqrt{36 + 64} = \\sqrt{100} = 10$$" }]
+        },
+        {
+          "id": "distance-surd",
+          "type": "answer",
+          "title": "A simplified surd",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Find the distance between $(-1, -2)$ and $(3, 4)$, as a simplified surd.",
+          "template": "d=\\placeholder[a]{}\\sqrt{\\placeholder[b]{}}",
+          "blanks": {
+            "a": { "answer": "2", "exactForm": true, "feedback": "The distance is $\\sqrt{52}$. Take out the biggest square factor: $52 = 4 \\times 13$." },
+            "b": { "answer": "13", "exactForm": true }
+          },
+          "hint": [{ "type": "paragraph", "content": "The changes are $4$ and $6$. Then simplify $\\sqrt{52}$." }],
+          "solution": [{ "type": "paragraph", "content": "$$\\sqrt{4^2 + 6^2} = \\sqrt{52} = \\sqrt{4 \\times 13} = 2\\sqrt{13}$$" }]
+        },
+        {
+          "id": "distance-k",
+          "type": "answer",
+          "title": "Work backwards",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "The distance between $(1, k)$ and $(4, 5)$ is $5$, and $k < 5$. Find $k$.",
+          "template": "k=\\placeholder[k]{}",
+          "blanks": { "k": { "answer": "1", "feedback": "$3^2 + (5 - k)^2 = 25$, so $(5 - k)^2 = 16$. Which value of $k$ is less than $5$?" } },
+          "hint": [{ "type": "paragraph", "content": "Square both sides of the distance formula: $(4 - 1)^2 + (5 - k)^2 = 5^2$." }],
+          "solution": [{ "type": "paragraph", "content": "$9 + (5 - k)^2 = 25$, so $(5 - k)^2 = 16$ and $5 - k = \\pm 4$. That gives $k = 1$ or $k = 9$, and since $k < 5$, $k = 1$." }]
+        },
+        {
+          "id": "distance-choice",
+          "type": "choice",
+          "title": "Which point?",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Which point is a distance of $\\sqrt{20}$ from the origin?",
+          "options": [
+            { "id": "A", "content": "$(2, 4)$", "correct": true, "why": "Correct: $\\sqrt{2^2 + 4^2} = \\sqrt{20}$." },
+            { "id": "B", "content": "$(5, 5)$", "why": "$\\sqrt{25 + 25} = \\sqrt{50}$." },
+            { "id": "C", "content": "$(3, 3)$", "why": "$\\sqrt{9 + 9} = \\sqrt{18}$." },
+            { "id": "D", "content": "$(10, 10)$", "why": "Adding the coordinates doesn't give the distance: $\\sqrt{100 + 100} = \\sqrt{200}$." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "From the origin, the distance to $(x, y)$ is $\\sqrt{x^2 + y^2}$." }],
+          "solution": [{ "type": "paragraph", "content": "$(2, 4)$: $\\sqrt{4 + 16} = \\sqrt{20}$." }]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Where Lines Meet, and Areas",
+      "blocks": [
+        { "type": "paragraph", "content": "Two lines meet where both equations are true at once, so solve them simultaneously." },
+        { "type": "paragraph", "content": "For $y = 2x + 1$ and $y = -x + 7$: $$2x + 1 = -x + 7 \\implies 3x = 6 \\implies x = 2$$ and then $y = 2(2) + 1 = 5$. They meet at $(2, 5)$." },
+        { "type": "heading", "level": 4, "content": "Areas of triangles" },
+        { "type": "paragraph", "content": "A line and the two axes make a right-angled triangle. Find where the line crosses each axis, then use $\\text{area} = \\frac{1}{2} \\times \\text{base} \\times \\text{height}$." },
+        { "type": "paragraph", "content": "For $y = -\\frac{1}{2}x + 4$: it crosses the $y$-axis at $(0, 4)$ and the $x$-axis where $0 = -\\frac{1}{2}x + 4$, so at $(8, 0)$. The area is $\\frac{1}{2} \\times 8 \\times 4 = 16$." },
+        { "type": "paragraph", "content": "If two sides of a triangle are perpendicular (their gradients multiply to $-1$), they make the right angle, so the area is $\\frac{1}{2} \\times$ one of those sides $\\times$ the other. Find each length with the distance formula." }
+      ],
+      "tasks": [
+        {
+          "id": "meet",
+          "type": "answer",
+          "title": "Where they meet",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Find where the lines $y = 3x - 2$ and $y = x + 4$ meet.",
+          "template": "(\\placeholder[x]{},\\placeholder[y]{})",
+          "blanks": { "x": { "answer": "3" }, "y": { "answer": "7", "feedback": "Substitute your $x$ back into either equation." } },
+          "hint": [{ "type": "paragraph", "content": "Set $3x - 2 = x + 4$ and solve for $x$." }],
+          "solution": [{ "type": "paragraph", "content": "$3x - 2 = x + 4 \\implies x = 3$, and $y = 3 + 4 = 7$. They meet at $(3, 7)$." }]
+        },
+        {
+          "id": "place-meet",
+          "type": "place",
+          "title": "Find it on the graph",
+          "instructions": "Drag the orange point to where the two lines meet, then press Submit.",
+          "prompt": "The grey lines are $y = 2x + 1$ and $y = 5 - 2x$. Work out where they meet, then drag the point there.",
+          "boundingBox": [-5, 7, 5, -3],
+          "snap": 0.5,
+          "given": [
+            { "kind": "line", "through": [[0, 1], [2, 5]] },
+            { "kind": "line", "through": [[0, 5], [2, 1]] }
+          ],
+          "objects": [
+            { "kind": "point", "label": "P", "start": [-3, -2], "answer": { "at": [1, 3] }, "feedback": "Solve $2x + 1 = 5 - 2x$ to find the $x$-coordinate." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "Solve $2x + 1 = 5 - 2x$, then find $y$." }],
+          "solution": [{ "type": "paragraph", "content": "$2x + 1 = 5 - 2x \\implies 4x = 4 \\implies x = 1$, and $y = 2(1) + 1 = 3$. They meet at $(1, 3)$." }]
+        },
+        {
+          "id": "axis-area",
+          "type": "answer",
+          "title": "A triangle with the axes",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Find the area of the triangle formed by the line $2x + 3y = 12$ and the coordinate axes.",
+          "template": "\\text{area}=\\placeholder[a]{}",
+          "blanks": { "a": { "answer": "12", "exactForm": true, "feedback": "The line crosses the axes at $(6, 0)$ and $(0, 4)$." } },
+          "hint": [{ "type": "paragraph", "content": "Put $y = 0$ to find where it crosses the $x$-axis, and $x = 0$ for the $y$-axis." }],
+          "solution": [{ "type": "paragraph", "content": "When $y = 0$, $x = 6$; when $x = 0$, $y = 4$. The area is $\\frac{1}{2} \\times 6 \\times 4 = 12$." }]
+        },
+        {
+          "id": "right-angle-area",
+          "type": "answer",
+          "title": "Exam style",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "The points are $A(1, 1)$, $B(5, 3)$ and $C(3, 7)$. $AB$ is perpendicular to $BC$. Find the area of triangle $ABC$.",
+          "template": "\\text{area}=\\placeholder[a]{}",
+          "blanks": { "a": { "answer": "10", "exactForm": true, "feedback": "The right angle is at $B$, so the area is $\\frac{1}{2} \\times AB \\times BC$. Both lengths are $\\sqrt{20}$." } },
+          "hint": [{ "type": "paragraph", "content": "Find the lengths $AB$ and $BC$ with the distance formula. The right angle is between them." }],
+          "solution": [{ "type": "paragraph", "content": "$AB = \\sqrt{4^2 + 2^2} = \\sqrt{20}$ and $BC = \\sqrt{(-2)^2 + 4^2} = \\sqrt{20}$. The area is $\\frac{1}{2} \\times \\sqrt{20} \\times \\sqrt{20} = \\frac{1}{2} \\times 20 = 10$." }]
+        }
+      ]
+    }
+  ],
+  "review": [
+    { "id": "distance-formula", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "How do you find the distance between $(x_1, y_1)$ and $(x_2, y_2)$?" }],
+      "back": [{ "type": "bold-paragraph", "content": "$d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$" }, { "type": "paragraph", "content": "It's Pythagoras' theorem." }] },
+    { "id": "distance-345", "type": "answer", "prompt": "Distance from $(0, 0)$ to $(3, 4)$?", "template": "d=\\placeholder[d]{}",
+      "blanks": { "d": { "answer": "5", "exactForm": true } },
+      "explanation": [{ "type": "paragraph", "content": "$\\sqrt{9 + 16} = 5$." }] },
+    { "id": "intersection", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "How do you find where two lines meet?" }],
+      "back": [{ "type": "bold-paragraph", "content": "Solve their equations simultaneously." }, { "type": "paragraph", "content": "e.g. set the two expressions for $y$ equal to each other." }] },
+    { "id": "axes-triangle", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "How do you find the area of the triangle a line makes with the axes?" }],
+      "back": [{ "type": "bold-paragraph", "content": "Find both intercepts, then $\\frac{1}{2} \\times$ base $\\times$ height." }] },
+    { "id": "exact", "type": "choice", "prompt": "The distance is $\\sqrt{50}$. What's its exact simplified form?",
+      "options": [
+        { "id": "A", "content": "$5\\sqrt{2}$", "correct": true, "why": "Correct: $\\sqrt{50} = \\sqrt{25 \\times 2}$." },
+        { "id": "B", "content": "$2\\sqrt{5}$", "why": "$2\\sqrt{5} = \\sqrt{20}$." },
+        { "id": "C", "content": "$25\\sqrt{2}$", "why": "Take the square root of the $25$: $\\sqrt{25} = 5$." }
+      ],
+      "explanation": [{ "type": "paragraph", "content": "Take out the biggest square factor: $50 = 25 \\times 2$." }] }
+  ]
+}

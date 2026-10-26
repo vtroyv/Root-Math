@@ -1,6 +1,7 @@
 //Import the RTK Query methods form the React-specific entry point
 
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import {localToday} from '@/lib/reviews/localDay'
 /* PURPOSE
 We are no longer using redux as the main UI state management, we will now be using zustand, therefore this file will simply define the RTK queries and mutations
 It will also be responsible for implementing caching.
@@ -158,7 +159,7 @@ export const apiSlice = createApi({
         }),
         // save progress -> { completed, newlyCompleted }. Completing the lesson unlocks its review cards.
         saveLessonProgress: builder.mutation({
-            query: ({slug, progress}) => ({ url: `/lesson/${encodeURIComponent(slug)}/progress`, method: 'POST', body: {progress} }),
+            query: ({slug, progress}) => ({ url: `/lesson/${encodeURIComponent(slug)}/progress`, method: 'POST', body: {progress, today: localToday()} }),
             invalidatesTags: (result, error, {slug}) => (result?.newlyCompleted ? [{type: 'Reviews', id: `lesson:${slug}`}] : [])
         }),
         // a lesson's review cards, same shape as getQuestionReviews
@@ -190,11 +191,17 @@ export const apiSlice = createApi({
 
         // Marks every part of a parts-based question -> { results, marksAwarded, marksAvailable, status, feedback }
         markQuestion: builder.mutation({
+            // today: the student's local date, for the Questions page activity map
             query: ({title, responses}) => ({
                 url: '/mark',
                 method: 'POST',
-                body: {title, responses}
+                body: {title, responses, today: localToday()}
             })
+        }),
+
+        // Questions page activity map: [{ day, questions, reviews, lessons, minutes }] (src/lib/activity/goals.js)
+        getActivity: builder.query({
+            query: ({from, to}) => ({ url: '/activity', params: {from, to} })
         }),
 
         gradeSketchQuestion: builder.mutation({
@@ -246,6 +253,7 @@ export const {
     useGetCoursesQuery,
     useGetCourseOutlineQuery,
     useGetMasteryQuery,
+    useGetActivityQuery,
     useGetQuestionReviewsQuery,
     useGetDueReviewsQuery,
     useCheckReviewCardMutation,

@@ -1,0 +1,187 @@
+{
+  "slug": "parallel-and-perpendicular-lines",
+  "title": "Parallel and Perpendicular Lines",
+  "next": "between-two-points",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "Parallel Lines",
+      "blocks": [
+        { "type": "paragraph", "content": "Parallel lines never meet, because they go in exactly the same direction. That means:" },
+        { "type": "bold-paragraph", "content": "Parallel lines have the same gradient." },
+        { "type": "paragraph", "content": "So $y = 3x - 2$, $y = 3x + 7$ and $y = 3x$ are all parallel: they only differ in where they cross the $y$-axis." },
+        { "type": "heading", "level": 4, "content": "Example" },
+        { "type": "paragraph", "content": "Find the line parallel to $y = 3x - 2$ that passes through $(1, 5)$. It has gradient $3$, so $$y - 5 = 3(x - 1) \\implies y = 3x + 2$$" },
+        { "type": "paragraph", "content": "If the line isn't in the form $y = mx + c$, rearrange it first to find its gradient. For example, $2x + y = 7$ is $y = -2x + 7$, so its gradient is $-2$." }
+      ],
+      "tasks": [
+        {
+          "id": "spot-parallel",
+          "type": "choice",
+          "title": "Spot the parallel line",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Which line is parallel to $y = 4x + 1$?",
+          "options": [
+            { "id": "A", "content": "$y = 4x - 3$", "correct": true, "why": "Correct: same gradient, $4$." },
+            { "id": "B", "content": "$y = -4x + 1$", "why": "This has gradient $-4$: it slopes the other way." },
+            { "id": "C", "content": "$y = \\frac{1}{4}x + 1$", "why": "This has gradient $\\frac{1}{4}$, and it shares the $y$-intercept, not the gradient." },
+            { "id": "D", "content": "$y = x + 4$", "why": "This has gradient $1$." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "Parallel lines have the same gradient. The $y$-intercept doesn't matter." }],
+          "solution": [{ "type": "paragraph", "content": "$y = 4x - 3$ has gradient $4$, the same as $y = 4x + 1$." }]
+        },
+        {
+          "id": "parallel-through",
+          "type": "answer",
+          "title": "Through a point",
+          "instructions": "Type the equation in the box, then press Submit. Any correct form is fine.",
+          "prompt": "Find the equation of the line parallel to $y = -2x + 5$ that passes through $(3, 4)$.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": { "eq": { "answer": "y=-2x+10", "equation": true, "feedback": "The gradient is $-2$. Use $y - 4 = -2(x - 3)$." } },
+          "hint": [{ "type": "paragraph", "content": "Same gradient as $y = -2x + 5$, then use $y - y_1 = m(x - x_1)$." }],
+          "solution": [{ "type": "paragraph", "content": "$$y - 4 = -2(x - 3) \\implies y = -2x + 10$$" }]
+        },
+        {
+          "id": "parallel-rearrange",
+          "type": "answer",
+          "title": "Rearrange first",
+          "instructions": "Type the equation in the box, then press Submit.",
+          "prompt": "Find the equation of the line parallel to $3x + 2y = 6$ that passes through $(2, -1)$. Give your answer in the form $ax + by + c = 0$, where $a$, $b$ and $c$ are integers.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": { "eq": { "answer": "3x+2y-4=0", "equation": true, "form": "ax+by+c=0", "feedback": "$3x + 2y = 6$ rearranges to $y = -\\frac{3}{2}x + 3$, so the gradient is $-\\frac{3}{2}$." } },
+          "hint": [{ "type": "paragraph", "content": "Rearrange $3x + 2y = 6$ to find its gradient. Then use $y - y_1 = m(x - x_1)$ and clear the fraction." }],
+          "solution": [{ "type": "paragraph", "content": "The gradient is $-\\frac{3}{2}$. $y + 1 = -\\frac{3}{2}(x - 2)$, so $2y + 2 = -3x + 6$, which gives $3x + 2y - 4 = 0$." }]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Perpendicular Lines",
+      "blocks": [
+        { "type": "paragraph", "content": "Perpendicular lines meet at a right angle. If one has gradient $m_1$ and the other has gradient $m_2$, then:" },
+        { "type": "bold-paragraph", "content": "$$m_1 \\times m_2 = -1, \\quad \\text{so} \\quad m_2 = -\\frac{1}{m_1}$$" },
+        { "type": "paragraph", "content": "To get a perpendicular gradient, flip the fraction and change the sign (the negative reciprocal):" },
+        { "type": "bullet-points", "points": [
+          "Gradient $2$ → perpendicular gradient $-\\frac{1}{2}$",
+          "Gradient $-\\frac{3}{4}$ → perpendicular gradient $\\frac{4}{3}$",
+          "Gradient $-1$ → perpendicular gradient $1$"
+        ] },
+        { "type": "heading", "level": 4, "content": "Example" },
+        { "type": "paragraph", "content": "Find the line perpendicular to $y = 2x + 1$ through $(4, 3)$. The perpendicular gradient is $-\\frac{1}{2}$, so $$y - 3 = -\\tfrac{1}{2}(x - 4) \\implies y = -\\tfrac{1}{2}x + 5$$" },
+        { "type": "accordion", "title": "Why do the gradients multiply to −1?", "children": [
+          { "type": "paragraph", "content": "Rotating a line by $90°$ turns a step of \"1 right, $m$ up\" into \"$m$ left, 1 up\". That new line has gradient $\\frac{1}{-m} = -\\frac{1}{m}$, and $m \\times \\left(-\\frac{1}{m}\\right) = -1$." }
+        ] }
+      ],
+      "tasks": [
+        {
+          "id": "perp-gradient-1",
+          "type": "answer",
+          "title": "Flip and change sign",
+          "instructions": "Fill in the box, then press Submit.",
+          "prompt": "A line has gradient $3$. What is the gradient of a line perpendicular to it?",
+          "template": "m=\\placeholder[m]{}",
+          "blanks": { "m": { "answer": "-\\frac{1}{3}", "feedback": "Flip $3 = \\frac{3}{1}$ to $\\frac{1}{3}$, then change the sign." } },
+          "hint": [{ "type": "paragraph", "content": "$m_2 = -\\frac{1}{m_1}$." }],
+          "solution": [{ "type": "paragraph", "content": "$-\\frac{1}{3}$. Check: $3 \\times \\left(-\\frac{1}{3}\\right) = -1$." }]
+        },
+        {
+          "id": "perp-gradient-2",
+          "type": "answer",
+          "title": "With a fraction",
+          "instructions": "Fill in the box, then press Submit.",
+          "prompt": "A line has gradient $-\\frac{2}{5}$. What is the gradient of a line perpendicular to it?",
+          "template": "m=\\placeholder[m]{}",
+          "blanks": { "m": { "answer": "\\frac{5}{2}", "feedback": "Flip the fraction and change the sign: the answer is positive." } },
+          "hint": [{ "type": "paragraph", "content": "Flip $\\frac{2}{5}$ and change the sign from negative to positive." }],
+          "solution": [{ "type": "paragraph", "content": "$\\frac{5}{2}$. Check: $-\\frac{2}{5} \\times \\frac{5}{2} = -1$." }]
+        },
+        {
+          "id": "perp-line",
+          "type": "answer",
+          "title": "A perpendicular line",
+          "instructions": "Type the equation in the box, then press Submit.",
+          "prompt": "Find the equation of the line perpendicular to $y = 3x - 4$ that passes through $(6, 1)$. Give your answer in the form $ax + by + c = 0$, where $a$, $b$ and $c$ are integers.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": { "eq": { "answer": "x+3y-9=0", "equation": true, "form": "ax+by+c=0", "feedback": "The perpendicular gradient is $-\\frac{1}{3}$. Use $y - 1 = -\\frac{1}{3}(x - 6)$, then multiply by $3$." } },
+          "hint": [{ "type": "paragraph", "content": "Find the perpendicular gradient, use $y - y_1 = m(x - x_1)$, then clear the fraction." }],
+          "solution": [{ "type": "paragraph", "content": "$m = -\\frac{1}{3}$: $y - 1 = -\\frac{1}{3}(x - 6)$, so $3y - 3 = -x + 6$, which gives $x + 3y - 9 = 0$." }]
+        },
+        {
+          "id": "parallel-perp-neither",
+          "type": "choice",
+          "title": "Parallel, perpendicular or neither?",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "The lines $y = 2x + 1$ and $2y + x = 4$ are:",
+          "options": [
+            { "id": "A", "content": "Perpendicular", "correct": true, "why": "Correct: $2y + x = 4$ is $y = -\\frac{1}{2}x + 2$, and $2 \\times \\left(-\\frac{1}{2}\\right) = -1$." },
+            { "id": "B", "content": "Parallel", "why": "Rearrange $2y + x = 4$ first: its gradient is $-\\frac{1}{2}$, not $2$." },
+            { "id": "C", "content": "Neither", "why": "Multiply the gradients: $2 \\times \\left(-\\frac{1}{2}\\right) = -1$." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "Rearrange $2y + x = 4$ into $y = mx + c$, then compare the gradients." }],
+          "solution": [{ "type": "paragraph", "content": "The gradients are $2$ and $-\\frac{1}{2}$. Their product is $-1$, so the lines are perpendicular." }]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Exam-Style Questions",
+      "blocks": [
+        { "type": "paragraph", "content": "Exam questions often chain these steps together: find one line from two points, then a second line parallel or perpendicular to it, then where that line meets an axis." },
+        { "type": "heading", "level": 4, "content": "Worked example" },
+        { "type": "paragraph", "content": "The line $L_1$ passes through $A(0, 2)$ and $B(4, 10)$. The line $L_2$ is perpendicular to $L_1$ and passes through $A$. Find where $L_2$ crosses the $x$-axis." },
+        { "type": "bullet-points", "points": [
+          "Gradient of $L_1$: $\\frac{10 - 2}{4 - 0} = 2$.",
+          "Gradient of $L_2$: $-\\frac{1}{2}$, and it passes through $(0, 2)$, so $L_2$ is $y = -\\frac{1}{2}x + 2$.",
+          "On the $x$-axis $y = 0$: $0 = -\\frac{1}{2}x + 2 \\implies x = 4$. So $L_2$ crosses at $(4, 0)$."
+        ] }
+      ],
+      "tasks": [
+        {
+          "id": "exam-l2",
+          "type": "answer",
+          "title": "Find L₂",
+          "instructions": "Type the equation in the box, then press Submit.",
+          "prompt": "The line $L_1$ passes through $A(1, 3)$ and $B(5, 11)$. The line $L_2$ is perpendicular to $L_1$ and passes through $B$. Find the equation of $L_2$ in the form $ax + by + c = 0$, where $a$, $b$ and $c$ are integers.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": { "eq": { "answer": "x+2y-27=0", "equation": true, "form": "ax+by+c=0", "feedback": "The gradient of $L_1$ is $2$, so $L_2$ has gradient $-\\frac{1}{2}$ and passes through $B(5, 11)$." } },
+          "hint": [{ "type": "paragraph", "content": "Find the gradient of $L_1$, take the negative reciprocal, then use the point $B$ (not $A$)." }],
+          "solution": [{ "type": "paragraph", "content": "$m_{L_1} = \\frac{11 - 3}{5 - 1} = 2$, so $m_{L_2} = -\\frac{1}{2}$. $y - 11 = -\\frac{1}{2}(x - 5)$, so $2y - 22 = -x + 5$, which gives $x + 2y - 27 = 0$." }]
+        },
+        {
+          "id": "exam-axis",
+          "type": "answer",
+          "title": "Where it crosses",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "$L_2$ is the line $x + 2y - 27 = 0$. Find the point where $L_2$ crosses the $x$-axis.",
+          "template": "(\\placeholder[x]{},\\placeholder[y]{})",
+          "blanks": { "x": { "answer": "27" }, "y": { "answer": "0", "feedback": "Every point on the $x$-axis has $y = 0$." } },
+          "hint": [{ "type": "paragraph", "content": "On the $x$-axis, $y = 0$." }],
+          "solution": [{ "type": "paragraph", "content": "Put $y = 0$: $x - 27 = 0$, so $x = 27$. The point is $(27, 0)$." }]
+        }
+      ]
+    }
+  ],
+  "review": [
+    { "id": "parallel", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "What do parallel lines have in common?" }],
+      "back": [{ "type": "bold-paragraph", "content": "The same gradient." }] },
+    { "id": "perp-rule", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "How are the gradients of perpendicular lines related?" }],
+      "back": [{ "type": "bold-paragraph", "content": "$m_1 \\times m_2 = -1$" }, { "type": "paragraph", "content": "Flip the fraction and change the sign." }] },
+    { "id": "perp-4", "type": "answer", "prompt": "What's the gradient perpendicular to $4$?", "template": "m=\\placeholder[m]{}",
+      "blanks": { "m": { "answer": "-\\frac{1}{4}" } },
+      "explanation": [{ "type": "paragraph", "content": "$4 \\times \\left(-\\frac{1}{4}\\right) = -1$." }] },
+    { "id": "perp-fraction", "type": "choice", "prompt": "What's the gradient perpendicular to $-\\frac{2}{3}$?",
+      "options": [
+        { "id": "A", "content": "$\\frac{3}{2}$", "correct": true, "why": "Correct: flip and change the sign." },
+        { "id": "B", "content": "$-\\frac{3}{2}$", "why": "You've flipped it but not changed the sign." },
+        { "id": "C", "content": "$\\frac{2}{3}$", "why": "You've changed the sign but not flipped it." }
+      ],
+      "explanation": [{ "type": "paragraph", "content": "$-\\frac{2}{3} \\times \\frac{3}{2} = -1$." }] },
+    { "id": "rearrange-first", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "What's the first step to find a line parallel to $3x + 2y = 6$?" }],
+      "back": [{ "type": "bold-paragraph", "content": "Rearrange to $y = mx + c$ to find its gradient." }, { "type": "paragraph", "content": "$y = -\\frac{3}{2}x + 3$, so the gradient is $-\\frac{3}{2}$, not $3$." }] }
+  ]
+}

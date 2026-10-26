@@ -1,0 +1,166 @@
+{
+  "slug": "a-little-more-line-work",
+  "title": "A Little More Line Work",
+  "next": "what-is-a-circle",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "Midpoints",
+      "blocks": [
+        { "type": "paragraph", "content": "Before we get to circles, we need two more tools for working with lines. The first is the midpoint: the point exactly halfway between two points." },
+        { "type": "paragraph", "content": "To find it, take the mean of the $x$-coordinates and the mean of the $y$-coordinates:" },
+        { "type": "bold-paragraph", "content": "$$M = \\left(\\frac{x_1 + x_2}{2}, \\frac{y_1 + y_2}{2}\\right)$$" },
+        { "type": "heading", "level": 4, "content": "Example 1" },
+        { "type": "paragraph", "content": "The midpoint of $(2, 5)$ and $(8, -1)$ is $$\\left(\\frac{2 + 8}{2}, \\frac{5 + (-1)}{2}\\right) = (5, 2)$$" },
+        { "type": "heading", "level": 4, "content": "Example 2: working backwards" },
+        { "type": "paragraph", "content": "$M(4, 5)$ is the midpoint of $A(1, 3)$ and $B$. Getting from $A$ to $M$ is $3$ right and $2$ up, so getting from $M$ to $B$ is the same again: $B = (7, 7)$." }
+      ],
+      "tasks": [
+        {
+          "id": "place-midpoint",
+          "type": "place",
+          "title": "Find it on the grid",
+          "instructions": "Drag the orange point M to the midpoint of A and B, then press Submit.",
+          "prompt": "Place $M$, the midpoint of $A(-3, 1)$ and $B(5, 5)$.",
+          "boundingBox": [-6, 7, 7, -5],
+          "snap": 0.5,
+          "given": [
+            { "kind": "point", "at": [-3, 1], "label": "A" },
+            { "kind": "point", "at": [5, 5], "label": "B" }
+          ],
+          "objects": [
+            { "kind": "point", "label": "M", "start": [-4, -3], "answer": { "at": [1, 3] }, "feedback": "Take the mean of the $x$-coordinates and the mean of the $y$-coordinates." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "$\\frac{-3 + 5}{2}$ and $\\frac{1 + 5}{2}$." }],
+          "solution": [{ "type": "paragraph", "content": "$M = \\left(\\frac{-3 + 5}{2}, \\frac{1 + 5}{2}\\right) = (1, 3)$." }]
+        },
+        {
+          "id": "midpoint-1",
+          "type": "answer",
+          "title": "Without the grid",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "Find the midpoint of $(-2, 7)$ and $(6, -3)$.",
+          "template": "M=(\\placeholder[x]{},\\placeholder[y]{})",
+          "blanks": { "x": { "answer": "2" }, "y": { "answer": "2", "feedback": "$\\frac{7 + (-3)}{2} = \\frac{4}{2}$." } },
+          "hint": [{ "type": "paragraph", "content": "Add the coordinates and halve them." }],
+          "solution": [{ "type": "paragraph", "content": "$$\\left(\\frac{-2 + 6}{2}, \\frac{7 - 3}{2}\\right) = (2, 2)$$" }]
+        },
+        {
+          "id": "midpoint-fraction",
+          "type": "answer",
+          "title": "Not always whole numbers",
+          "instructions": "Fill in each box, then press Submit. Fractions or decimals are fine.",
+          "prompt": "Find the midpoint of $(1, 2)$ and $(4, 7)$.",
+          "template": "M=(\\placeholder[x]{},\\placeholder[y]{})",
+          "blanks": { "x": { "answer": "\\frac{5}{2}" }, "y": { "answer": "\\frac{9}{2}" } },
+          "hint": [{ "type": "paragraph", "content": "$\\frac{1 + 4}{2}$ and $\\frac{2 + 7}{2}$." }],
+          "solution": [{ "type": "paragraph", "content": "$\\left(\\frac{5}{2}, \\frac{9}{2}\\right)$, or $(2.5, 4.5)$." }]
+        },
+        {
+          "id": "endpoint",
+          "type": "answer",
+          "title": "Work backwards",
+          "instructions": "Fill in each box, then press Submit. No calculators!",
+          "prompt": "The midpoint of $AB$ is $(3, -1)$, and $A$ is $(-1, 4)$. Find $B$.",
+          "template": "B=(\\placeholder[x]{},\\placeholder[y]{})",
+          "blanks": {
+            "x": { "answer": "7", "feedback": "From $A$ to the midpoint, $x$ goes up by $4$. It goes up by $4$ again to reach $B$." },
+            "y": { "answer": "-6", "feedback": "From $A$ to the midpoint, $y$ goes down by $5$. It goes down by $5$ again to reach $B$." }
+          },
+          "hint": [{ "type": "paragraph", "content": "Whatever it takes to get from $A$ to the midpoint, do it again to get to $B$." }],
+          "solution": [{ "type": "paragraph", "content": "$A$ to $M$: $+4$ in $x$, $-5$ in $y$. So $B = (3 + 4, -1 - 5) = (7, -6)$. Check: $\\frac{-1 + 7}{2} = 3$ and $\\frac{4 - 6}{2} = -1$. ✓" }]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Perpendicular Bisectors",
+      "blocks": [
+        { "type": "paragraph", "content": "The perpendicular bisector of $AB$ is the line that cuts $AB$ in half at a right angle. So it:" },
+        { "type": "bullet-points", "points": [
+          "passes through the midpoint of $AB$, and",
+          "is perpendicular to $AB$, so its gradient is $-\\frac{1}{m_{AB}}$."
+        ] },
+        { "type": "paragraph", "content": "Every point on the perpendicular bisector is the same distance from $A$ as from $B$. That's why it's so useful with circles: the centre of a circle is the same distance from every point on it." },
+        { "type": "heading", "level": 4, "content": "Example" },
+        { "type": "paragraph", "content": "Find the perpendicular bisector of $A(1, 2)$ and $B(5, 6)$." },
+        { "type": "bullet-points", "points": [
+          "Midpoint: $(3, 4)$.",
+          "Gradient of $AB$: $\\frac{6 - 2}{5 - 1} = 1$, so the perpendicular gradient is $-1$.",
+          "$y - 4 = -1(x - 3)$, so $y = -x + 7$."
+        ] }
+      ],
+      "tasks": [
+        {
+          "id": "perp-bisector",
+          "type": "answer",
+          "title": "Your first perpendicular bisector",
+          "instructions": "Type the equation in the box, then press Submit.",
+          "prompt": "Find the perpendicular bisector of $A(-2, 1)$ and $B(4, 5)$, in the form $ax + by + c = 0$, where $a$, $b$ and $c$ are integers.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": { "eq": { "answer": "3x+2y-9=0", "equation": true, "form": "ax+by+c=0", "feedback": "The midpoint is $(1, 3)$ and the gradient of $AB$ is $\\frac{2}{3}$, so the perpendicular gradient is $-\\frac{3}{2}$." } },
+          "hint": [{ "type": "paragraph", "content": "Find the midpoint and the gradient of $AB$. The bisector goes through the midpoint with the perpendicular gradient." }],
+          "solution": [{ "type": "paragraph", "content": "Midpoint $(1, 3)$; $m_{AB} = \\frac{4}{6} = \\frac{2}{3}$, so the bisector's gradient is $-\\frac{3}{2}$. $y - 3 = -\\frac{3}{2}(x - 1)$, so $2y - 6 = -3x + 3$, which gives $3x + 2y - 9 = 0$." }]
+        },
+        {
+          "id": "bisector-steps",
+          "type": "order",
+          "title": "Put the steps in order",
+          "instructions": "Add the steps in the right order, then press Submit. Not every line belongs!",
+          "prompt": "Put the steps for finding the perpendicular bisector of $P(0, 2)$ and $Q(4, 6)$ in order.",
+          "lines": [
+            "Midpoint of $PQ$: $(2, 4)$",
+            "Gradient of $PQ$: $\\frac{6 - 2}{4 - 0} = 1$",
+            "Perpendicular gradient: $-1$",
+            "$y - 4 = -1(x - 2)$, so $y = -x + 6$"
+          ],
+          "distractors": [
+            "Perpendicular gradient: $1$",
+            "Use the point $P$: $y - 2 = -1(x - 0)$"
+          ],
+          "hint": [{ "type": "paragraph", "content": "The bisector goes through the midpoint, not through $P$ or $Q$, and its gradient is the negative reciprocal." }],
+          "solution": [{ "type": "paragraph", "content": "Midpoint $(2, 4)$, $m_{PQ} = 1$, perpendicular gradient $-1$, so $y = -x + 6$. Using $P$ instead of the midpoint gives a line that's perpendicular but doesn't bisect $PQ$." }]
+        },
+        {
+          "id": "sketch-bisector",
+          "type": "sketch",
+          "title": "Sketch it",
+          "instructions": "Draw the line in one stroke, then drag the orange handles to adjust it. Press Submit when you're happy.",
+          "prompt": "Sketch the perpendicular bisector of $A(-2, -2)$ and $B(2, 2)$.",
+          "degree": 1,
+          "boundingBox": [-4, 4, 4, -4],
+          "keyPoints": [
+            { "label": "passes through the midpoint (0, 0)", "x": 0, "y": 0, "threshold": 0.3 },
+            { "label": "gradient −1, e.g. through (2, −2)", "x": 2, "y": -2, "threshold": 0.3 }
+          ],
+          "modelAnswer": { "points": [{ "x": -3, "y": 3 }, { "x": 3, "y": -3 }] },
+          "hint": [{ "type": "paragraph", "content": "The midpoint is $(0, 0)$ and $AB$ has gradient $1$, so the bisector has gradient $-1$." }],
+          "solution": [{ "type": "paragraph", "content": "The perpendicular bisector is $y = -x$: through $(0, 0)$, going down $1$ for every $1$ to the right." }]
+        }
+      ]
+    }
+  ],
+  "review": [
+    { "id": "midpoint-formula", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "How do you find the midpoint of $(x_1, y_1)$ and $(x_2, y_2)$?" }],
+      "back": [{ "type": "bold-paragraph", "content": "$\\left(\\frac{x_1 + x_2}{2}, \\frac{y_1 + y_2}{2}\\right)$" }, { "type": "paragraph", "content": "The mean of each coordinate." }] },
+    { "id": "midpoint-quick", "type": "answer", "prompt": "Midpoint of $(0, 0)$ and $(6, 4)$?", "template": "(\\placeholder[x]{},\\placeholder[y]{})",
+      "blanks": { "x": { "answer": "3" }, "y": { "answer": "2" } },
+      "explanation": [{ "type": "paragraph", "content": "Halve each coordinate." }] },
+    { "id": "bisector-def", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "What two things define the perpendicular bisector of $AB$?" }],
+      "back": [{ "type": "bold-paragraph", "content": "It goes through the midpoint of $AB$, at right angles to $AB$." }, { "type": "paragraph", "content": "Its gradient is $-\\frac{1}{m_{AB}}$." }] },
+    { "id": "bisector-property", "type": "choice", "prompt": "Every point on the perpendicular bisector of $AB$ is…",
+      "options": [
+        { "id": "A", "content": "the same distance from $A$ as from $B$", "correct": true, "why": "Correct: which is why circle centres lie on them." },
+        { "id": "B", "content": "on the line $AB$", "why": "Only the midpoint is on $AB$." },
+        { "id": "C", "content": "closer to $A$ than to $B$", "why": "It's exactly halfway between them everywhere." }
+      ],
+      "explanation": [{ "type": "paragraph", "content": "Equidistant from $A$ and $B$." }] },
+    { "id": "endpoint-trick", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "You know $A$ and the midpoint $M$ of $AB$. How do you find $B$?" }],
+      "back": [{ "type": "bold-paragraph", "content": "Do the step from $A$ to $M$ again, from $M$." }, { "type": "paragraph", "content": "Or solve $\\frac{x_A + x_B}{2} = x_M$ (and the same for $y$)." }] }
+  ]
+}

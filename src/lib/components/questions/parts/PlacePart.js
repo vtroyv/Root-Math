@@ -3,11 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 import loadJSXGraph from './loadJSXGraph';
 
 /*
-`place` part: drag points and/or vector arrows on a grid.
+`place` part: drag points, vector arrows and/or circles on a grid.
   part.given   - fixed reference objects (grey):  { kind: 'point', at, label } | { kind: 'vector', from, to, label }
+                 | { kind: 'line', through: [[x1, y1], [x2, y2]], label } | { kind: 'circle', centre, radius, label }
   part.objects - objects the student drags (orange): { kind: 'point', start, label } | { kind: 'vector', start: { from, to }, label }
+                 | { kind: 'circle', start: { centre, radius }, label }: drag the centre to move it, the edge handle to resize
   part.snap    - grid step to snap to (e.g. 1 or 0.5), omit for free placement
-Response shape: { objects: [{ at } | { from, to }] }  (same order as part.objects)
+Response shape: { objects: [{ at } | { from, to } | { centre, edge }] }  (same order as part.objects)
 */
 
 const ORANGE = '#e67e22';
@@ -22,7 +24,7 @@ const copy = (value) => (Array.isArray(value) ? value.map(copy) : value);
 export default function PlacePart({ part, response, result, onChange, locked }) {
   const boxRef = useRef(null);
   const boardRef = useRef(null);
-  const objectsRef = useRef([]); // [{ kind, points: [JXG.Point...], arrow }]
+  const objectsRef = useRef([]); // [{ kind, points: [JXG.Point...], shape }]  shape = the arrow or circle
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
   const [loadError, setLoadError] = useState(null);
@@ -49,6 +51,12 @@ export default function PlacePart({ part, response, result, onChange, locked }) 
         (part.given ?? []).forEach((g) => {
           if (g.kind === 'point') {
             board.create('point', copy(g.at), { ...fixedStyle, name: g.label ?? '', size: 3 });
+          } else if (g.kind === 'line') {
+            const [a, b] = copy(g.through);
+            board.create('line', [a, b], { ...fixedStyle, strokeWidth: 2, name: g.label ?? '', withLabel: Boolean(g.label), point1: { visible: false }, point2: { visible: false } });
+          } else if (g.kind === 'circle') {
+            const centre = board.create('point', copy(g.centre), { ...fixedStyle, name: g.label ?? '', size: 2 });
+            board.create('circle', [centre, g.radius], { ...fixedStyle, strokeWidth: 2, fillColor: 'none' });
           } else {
             board.create('arrow', [copy(g.from), copy(g.to)], { ...fixedStyle, strokeWidth: 3, name: g.label ?? '', withLabel: true });
           }
@@ -64,6 +72,32 @@ export default function PlacePart({ part, response, result, onChange, locked }) 
             p.on('up', emit);
             return { kind: 'point', points: [p] };
           }
+          if (object.kind === 'circle') {
+            const c0 = copy(saved?.centre ?? object.start?.centre ?? [0, 0]);
+            const r0 = object.start?.radius ?? 1;
+            const centre = board.create('point', c0, { ...dragStyle, name: object.label ?? '', size: 4 });
+            const edge = board.create('point', copy(saved?.edge ?? [c0[0] + r0, c0[1]]), { ...dragStyle, name: '', size: 3 });
+            // the circle itself is fixed: it's moved and resized only through its two handles
+            const circle = board.create('circle', [centre, edge], {
+              fixed: true,
+              highlight: false,
+              strokeColor: ORANGE,
+              strokeWidth: 3,
+              fillColor: 'none',
+            });
+            // dragging the centre carries the edge handle with it, so the radius stays the same
+            let last = [centre.X(), centre.Y()];
+            centre.on('down', () => {
+              last = [centre.X(), centre.Y()];
+            });
+            centre.on('drag', () => {
+              edge.moveTo([edge.X() + centre.X() - last[0], edge.Y() + centre.Y() - last[1]]);
+              last = [centre.X(), centre.Y()];
+            });
+            centre.on('up', emit);
+            edge.on('up', emit);
+            return { kind: 'circle', points: [centre, edge], shape: circle };
+          }
           const from = copy(saved?.from ?? object.start?.from ?? [0, 0]);
           const to = copy(saved?.to ?? object.start?.to ?? [1, 1]);
           const tail = board.create('point', from, { ...dragStyle, name: '', size: 3 });
@@ -77,20 +111,18 @@ export default function PlacePart({ part, response, result, onChange, locked }) 
           });
           tail.on('up', emit);
           head.on('up', emit);
-          return { kind: 'vector', points: [tail, head], arrow };
+          return { kind: 'vector', points: [tail, head], shape: arrow };
         });
       })
       .catch((error) => setLoadError(error.message));
 
     function emit() {
-      const objects = objectsRef.current.map((o) =>
-        o.kind === 'point'
-          ? { at: [round(o.points[0].X()), round(o.points[0].Y())] }
-          : {
-              from: [round(o.points[0].X()), round(o.points[0].Y())],
-              to: [round(o.points[1].X()), round(o.points[1].Y())],
-            },
-      );
+      const at = (p) => [round(p.X()), round(p.Y())];
+      const objects = objectsRef.current.map((o) => {
+        if (o.kind === 'point') return { at: at(o.points[0]) };
+        if (o.kind === 'circle') return { centre: at(o.points[0]), edge: at(o.points[1]) };
+        return { from: at(o.points[0]), to: at(o.points[1]) };
+      });
       onChangeRef.current({ objects });
     }
 
@@ -114,7 +146,7 @@ export default function PlacePart({ part, response, result, onChange, locked }) 
     objectsRef.current.forEach((o, i) => {
       const colour = states ? (states[i] ? GREEN : RED) : ORANGE;
       o.points.forEach((p) => p.setAttribute({ strokeColor: colour, fillColor: colour }));
-      o.arrow?.setAttribute({ strokeColor: colour });
+      o.shape?.setAttribute({ strokeColor: colour });
     });
     boardRef.current?.update();
   }, [result]);

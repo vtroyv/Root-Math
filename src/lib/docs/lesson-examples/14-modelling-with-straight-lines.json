@@ -1,0 +1,184 @@
+{
+  "slug": "modelling-with-straight-lines",
+  "title": "Modelling with Straight Lines",
+  "next": "a-little-more-line-work",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "Linear Models",
+      "blocks": [
+        { "type": "paragraph", "content": "When one quantity changes at a constant rate as another changes, a straight line is a good model. In a linear model $y = mx + c$:" },
+        { "type": "bullet-points", "points": [
+          "The gradient $m$ is the rate of change: how much $y$ changes for each 1 unit of $x$. It has units, like \"£ per mile\" or \"cm per hour\".",
+          "The intercept $c$ is the starting value: the value of $y$ when $x = 0$."
+        ] },
+        { "type": "heading", "level": 4, "content": "Example 1: a taxi fare" },
+        { "type": "paragraph", "content": "A taxi charges a fixed £3 plus £1.50 per mile. The cost for $d$ miles is $C = 1.5d + 3$. The gradient, $1.5$, is the cost per mile, and the intercept, $3$, is the fixed charge." },
+        { "type": "heading", "level": 4, "content": "Example 2: a model from two readings" },
+        { "type": "paragraph", "content": "A candle is $18$ cm long after $2$ hours and $12$ cm long after $5$ hours. Assuming it burns at a constant rate, the gradient is $$\\frac{12 - 18}{5 - 2} = -2 \\text{ cm per hour}$$ so $L - 18 = -2(t - 2)$, which gives $L = -2t + 22$. The candle started $22$ cm long, and it burns out when $L = 0$: after $11$ hours." }
+      ],
+      "tasks": [
+        {
+          "id": "phone-cost",
+          "type": "answer",
+          "title": "Use a model",
+          "instructions": "Fill in the box, then press Submit.",
+          "prompt": "A phone plan costs £10 a month plus 5p per text, so the monthly cost in pounds is $C = 0.05n + 10$ for $n$ texts. Find the cost of a month with $200$ texts.",
+          "template": "C=\\text{£}\\placeholder[c]{}",
+          "blanks": { "c": { "answer": "20", "feedback": "$0.05 \\times 200 = 10$, plus the £10 fixed cost." } },
+          "hint": [{ "type": "paragraph", "content": "Substitute $n = 200$." }],
+          "solution": [{ "type": "paragraph", "content": "$C = 0.05 \\times 200 + 10 = 10 + 10 = £20$." }]
+        },
+        {
+          "id": "interpret-gradient",
+          "type": "choice",
+          "title": "What does it mean?",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "In the taxi model $C = 1.5d + 3$, what does the $1.5$ represent?",
+          "options": [
+            { "id": "A", "content": "The cost per mile, £1.50", "correct": true, "why": "Correct: the gradient is the rate of change, here pounds per mile." },
+            { "id": "B", "content": "The fixed charge", "why": "That's the intercept, £3: the cost when $d = 0$." },
+            { "id": "C", "content": "The total cost of the journey", "why": "The total cost is $C$, which depends on $d$." },
+            { "id": "D", "content": "The number of miles travelled", "why": "That's $d$." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "The gradient tells you how much $C$ goes up for each extra mile." }],
+          "solution": [{ "type": "paragraph", "content": "The gradient, $1.5$, is how much the cost goes up for each extra mile: £1.50 per mile." }]
+        },
+        {
+          "id": "tank-model",
+          "type": "answer",
+          "title": "Build a model",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "A tank holds $50$ litres of water. It drains at a constant rate, and after $4$ minutes it holds $30$ litres. Find a model for the volume $V$ litres after $t$ minutes.",
+          "template": "V=\\placeholder[m]{}t+\\placeholder[c]{}",
+          "blanks": {
+            "m": { "answer": "-5", "feedback": "The volume drops by $20$ litres in $4$ minutes. The gradient is negative because it's draining." },
+            "c": { "answer": "50" }
+          },
+          "hint": [{ "type": "paragraph", "content": "The starting volume is the intercept. The gradient is the change in $V$ divided by the change in $t$." }],
+          "solution": [{ "type": "paragraph", "content": "The gradient is $\\frac{30 - 50}{4 - 0} = -5$ litres per minute and the intercept is $50$, so $V = -5t + 50$." }]
+        },
+        {
+          "id": "tank-empty",
+          "type": "answer",
+          "title": "When is it empty?",
+          "instructions": "Fill in the box, then press Submit.",
+          "prompt": "Using $V = -5t + 50$, after how many minutes is the tank empty?",
+          "template": "t=\\placeholder[t]{}\\text{ minutes}",
+          "blanks": { "t": { "answer": "10", "feedback": "Empty means $V = 0$: solve $-5t + 50 = 0$." } },
+          "hint": [{ "type": "paragraph", "content": "Set $V = 0$." }],
+          "solution": [{ "type": "paragraph", "content": "$0 = -5t + 50 \\implies t = 10$ minutes." }]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Proportion and Limitations",
+      "blocks": [
+        { "type": "heading", "level": 4, "content": "Direct proportion" },
+        { "type": "paragraph", "content": "If $y$ is directly proportional to $x$ (written $y \\propto x$), then $y = kx$ for a constant $k$. Its graph is a straight line through the origin: double $x$ and you double $y$." },
+        { "type": "paragraph", "content": "Not every straight-line model is proportion. Converting temperatures, $F = 1.8C + 32$, is linear, but $0°$C isn't $0°$F, so it isn't proportional." },
+        { "type": "heading", "level": 4, "content": "Limitations of a model" },
+        { "type": "paragraph", "content": "A model is only a description of the real situation, and it can break down:" },
+        { "type": "bullet-points", "points": [
+          "Outside the range of the data (extrapolation): the candle model $L = -2t + 22$ gives a negative length after $11$ hours, which is impossible.",
+          "When the rate isn't really constant: a candle might burn faster as it gets shorter.",
+          "When real values are rounded or come in steps: taxi fares might be charged per started mile."
+        ] }
+      ],
+      "tasks": [
+        {
+          "id": "proportion-choice",
+          "type": "choice",
+          "title": "Spot the proportion",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Which of these is an example of direct proportion?",
+          "options": [
+            { "id": "A", "content": "The cost of apples at 30p each", "correct": true, "why": "Correct: $C = 0.3n$. No apples cost nothing, and twice as many cost twice as much." },
+            { "id": "B", "content": "A taxi fare with a fixed charge plus a cost per mile", "why": "Linear, but not proportional: a $0$-mile journey still costs the fixed charge." },
+            { "id": "C", "content": "Converting °C to °F", "why": "$F = 1.8C + 32$ doesn't pass through the origin." },
+            { "id": "D", "content": "A person's height and their age", "why": "This isn't even linear: people stop growing." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "Direct proportion means $y = kx$: the line goes through $(0, 0)$." }],
+          "solution": [{ "type": "paragraph", "content": "Only the apples go through the origin: $0$ apples cost £$0$." }]
+        },
+        {
+          "id": "temperature",
+          "type": "answer",
+          "title": "Convert it",
+          "instructions": "Fill in the box, then press Submit.",
+          "prompt": "Use $F = 1.8C + 32$ to convert $25°$C to °F.",
+          "template": "F=\\placeholder[f]{}",
+          "blanks": { "f": { "answer": "77" } },
+          "hint": [{ "type": "paragraph", "content": "Substitute $C = 25$." }],
+          "solution": [{ "type": "paragraph", "content": "$F = 1.8 \\times 25 + 32 = 45 + 32 = 77$." }]
+        },
+        {
+          "id": "plumber-model",
+          "type": "answer",
+          "title": "Exam style: build the model",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "A plumber charges £50 for a 1-hour job and £110 for a 3-hour job. The charge is modelled as $C = mh + c$, where $h$ is the number of hours. Find $m$ and $c$.",
+          "template": "m=\\placeholder[m]{},\\quad c=\\placeholder[c]{}",
+          "blanks": {
+            "m": { "answer": "30", "feedback": "The extra 2 hours cost an extra £60." },
+            "c": { "answer": "20", "feedback": "Use $50 = m(1) + c$ with your value of $m$." }
+          },
+          "hint": [{ "type": "paragraph", "content": "The gradient is $\\frac{110 - 50}{3 - 1}$. Then substitute one of the points to find $c$." }],
+          "solution": [{ "type": "paragraph", "content": "$m = \\frac{110 - 50}{3 - 1} = 30$. Then $50 = 30 + c$, so $c = 20$." }]
+        },
+        {
+          "id": "plumber-interpret",
+          "type": "choice",
+          "title": "Exam style: interpret it",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "In the model $C = 30h + 20$, what does the $20$ represent?",
+          "options": [
+            { "id": "A", "content": "A fixed call-out charge of £20", "correct": true, "why": "Correct: it's what the model charges before any time is spent, at $h = 0$." },
+            { "id": "B", "content": "The charge per hour", "why": "That's the gradient, £30 per hour." },
+            { "id": "C", "content": "The cost of a 20-hour job", "why": "That would be $30 \\times 20 + 20 = £620$." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "What's $C$ when $h = 0$?" }],
+          "solution": [{ "type": "paragraph", "content": "The intercept is the charge when $h = 0$: a fixed £20 call-out fee." }]
+        },
+        {
+          "id": "limitation",
+          "type": "choice",
+          "title": "When does it break?",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Why isn't the candle model $L = -2t + 22$ valid for $t = 15$?",
+          "options": [
+            { "id": "A", "content": "It gives a negative length, which is impossible", "correct": true, "why": "Correct: $L = -2(15) + 22 = -8$. The candle burned out at $t = 11$." },
+            { "id": "B", "content": "The gradient should be positive", "why": "The candle gets shorter, so a negative gradient is right." },
+            { "id": "C", "content": "You can't substitute numbers bigger than 11", "why": "You can substitute any number, but the answer only makes sense while the candle exists." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "Work out $L$ when $t = 15$. Does it make sense?" }],
+          "solution": [{ "type": "paragraph", "content": "At $t = 15$ the model gives $L = -8$ cm, which is impossible: the model only works until the candle burns out at $t = 11$." }]
+        }
+      ]
+    }
+  ],
+  "review": [
+    { "id": "gradient-meaning", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "In a linear model, what does the gradient represent?" }],
+      "back": [{ "type": "bold-paragraph", "content": "The rate of change." }, { "type": "paragraph", "content": "e.g. £ per mile or litres per minute." }] },
+    { "id": "intercept-meaning", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "In a linear model, what does the intercept represent?" }],
+      "back": [{ "type": "bold-paragraph", "content": "The starting value: $y$ when $x = 0$." }, { "type": "paragraph", "content": "e.g. a fixed charge." }] },
+    { "id": "proportion-origin", "type": "answer", "prompt": "A direct proportion graph always passes through which point?", "template": "(\\placeholder[x]{},\\placeholder[y]{})",
+      "blanks": { "x": { "answer": "0" }, "y": { "answer": "0" } },
+      "explanation": [{ "type": "paragraph", "content": "$y = kx$, so $x = 0$ gives $y = 0$." }] },
+    { "id": "extrapolation", "type": "choice", "prompt": "Why can a linear model give silly answers far outside the data?",
+      "options": [
+        { "id": "A", "content": "The real situation may not stay linear there", "correct": true, "why": "Correct: that's the danger of extrapolation." },
+        { "id": "B", "content": "Straight lines eventually curve", "why": "A straight line never curves, but the real data might." },
+        { "id": "C", "content": "The gradient changes", "why": "The model's gradient is constant; the real rate might not be." }
+      ],
+      "explanation": [{ "type": "paragraph", "content": "Models are only reliable near the data they were built from." }] },
+    { "id": "model-two-points", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "How do you build a linear model from two readings?" }],
+      "back": [{ "type": "bold-paragraph", "content": "Find the gradient between them, then use $y - y_1 = m(x - x_1)$." }] }
+  ]
+}

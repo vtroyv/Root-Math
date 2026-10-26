@@ -73,6 +73,16 @@ The files are in [lesson-examples/](lesson-examples/), one per lesson:
 | `08-factorial-notation.json` | Factorial Notation (**new**, 23 Oct 2026) | 3 | 12 | 5 |
 | `09-brackets-and-large-powers.json` | Brackets and Large Powers (**new**, 23 Oct 2026) | 4 | 14 | 5 |
 | `10-binomial-estimation.json` | Binomial Estimation (**new**, 23 Oct 2026) | 3 | 11 | 5 |
+| `11-what-is-a-straight-line.json` | What is a Straight Line (**new**, 25 Oct 2026) | 3 | 12 | 5 |
+| `12-parallel-and-perpendicular-lines.json` | Parallel and Perpendicular Lines (**new**) | 3 | 9 | 5 |
+| `13-between-two-points.json` | Between Two Points (**new**) | 2 | 8 | 5 |
+| `14-modelling-with-straight-lines.json` | Modelling with Straight Lines (**new**) | 2 | 9 | 5 |
+| `15-a-little-more-line-work.json` | A Little More Line Work (**new**) | 2 | 7 | 5 |
+| `16-what-is-a-circle.json` | What is a Circle (**new**) | 3 | 11 | 5 |
+| `17-lines-and-circles.json` | Lines and Circles (**new**) | 2 | 7 | 5 |
+| `18-triangles-and-circles.json` | Triangles and Circles (**new**) | 2 | 7 | 5 |
+
+**Straight lines and circles (11–18) need their chapter documents updated too**, because the lesson titles were corrected (e.g. "Whats a Straight Line" → "What is a Straight Line") and lesson URLs come from the titles. In Compass, open `edx-pure-y1-subsections`, find the `straight-lines` and `circles` documents, and replace each one's contents with [chapters/straight-lines.json](lesson-examples/chapters/straight-lines.json) and [chapters/circles.json](lesson-examples/chapters/circles.json), **keeping the `_id` line**. They use the new `equation: true` answers and draggable circles ([question-parts.md](question-parts.md#5-the-seven-part-types)).
 
 `06` is a new lesson, so there's no existing document to replace: use **Add Data → Insert Document**. Its slug matches "Rationalising the Denominator" in the `algebraic-expressions` chapter, so the course page and the Progress page pick it up as soon as it's inserted, and Introduction to Surds' **Next lesson** link starts working. Its own `next` is `what-are-quadratic-equations`, the first lesson of the quadratics chapter, which shows as a link once that lesson exists.
 

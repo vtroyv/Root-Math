@@ -28,6 +28,11 @@ export function solutionResponse(part) {
         objects: (part.objects ?? []).map((object) => {
           const answer = object.answer ?? {};
           if (object.kind === 'point') return { at: answer.at ?? answer };
+          if (object.kind === 'circle') {
+            const centre = answer.centre ?? object.start?.centre ?? [0, 0];
+            const radius = answer.radius ?? object.start?.radius ?? 1;
+            return { centre, edge: [centre[0] + radius, centre[1]] };
+          }
           if (answer.components) {
             const from = object.start?.from ?? [0, 0];
             return { from, to: [from[0] + answer.components[0], from[1] + answer.components[1]] };

@@ -1,0 +1,250 @@
+{
+  "slug": "what-is-a-straight-line",
+  "title": "What is a Straight Line",
+  "next": "parallel-and-perpendicular-lines",
+  "collection": "edx-maths-1",
+  "schemaVersion": 2,
+  "parts": [
+    {
+      "id": 1,
+      "title": "Gradient",
+      "blocks": [
+        { "type": "paragraph", "content": "A straight line keeps the same steepness all the way along. We measure that steepness with its gradient, usually called $m$." },
+        { "type": "paragraph", "content": "The gradient is how much the line goes up for every 1 you move to the right. Between any two points $(x_1, y_1)$ and $(x_2, y_2)$ on the line:" },
+        { "type": "bold-paragraph", "content": "$$m = \\frac{\\text{change in } y}{\\text{change in } x} = \\frac{y_2 - y_1}{x_2 - x_1}$$" },
+        { "type": "bullet-points", "points": [
+          "A positive gradient slopes up from left to right.",
+          "A negative gradient slopes down from left to right.",
+          "A gradient of $0$ is a horizontal line, like $y = 4$.",
+          "A vertical line, like $x = 4$, has no gradient: the change in $x$ is $0$, and you can't divide by $0$."
+        ] },
+        { "type": "heading", "level": 4, "content": "Example 1" },
+        { "type": "paragraph", "content": "The gradient of the line through $(2, 3)$ and $(6, 11)$ is $$m = \\frac{11 - 3}{6 - 2} = \\frac{8}{4} = 2$$" },
+        { "type": "heading", "level": 4, "content": "Example 2: watch the minus signs" },
+        { "type": "paragraph", "content": "The gradient of the line through $(-1, 4)$ and $(3, -4)$ is $$m = \\frac{-4 - 4}{3 - (-1)} = \\frac{-8}{4} = -2$$ It doesn't matter which point you call $(x_1, y_1)$, as long as you subtract in the same order on the top and the bottom." }
+      ],
+      "tasks": [
+        {
+          "id": "gradient-1",
+          "type": "answer",
+          "title": "Your first gradient",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Find the gradient of the line through $(1, 2)$ and $(4, 11)$.",
+          "template": "m=\\placeholder[m]{}",
+          "blanks": { "m": { "answer": "3", "feedback": "Change in $y$: $11 - 2$. Change in $x$: $4 - 1$." } },
+          "hint": [{ "type": "paragraph", "content": "Use $m = \\frac{y_2 - y_1}{x_2 - x_1}$." }],
+          "solution": [{ "type": "paragraph", "content": "$$m = \\frac{11 - 2}{4 - 1} = \\frac{9}{3} = 3$$" }]
+        },
+        {
+          "id": "gradient-2",
+          "type": "answer",
+          "title": "Negative numbers",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "Find the gradient of the line through $(-2, 5)$ and $(4, -1)$.",
+          "template": "m=\\placeholder[m]{}",
+          "blanks": { "m": { "answer": "-1", "feedback": "Change in $y$: $-1 - 5 = -6$. Change in $x$: $4 - (-2) = 6$." } },
+          "hint": [{ "type": "paragraph", "content": "Subtracting a negative is adding: $4 - (-2) = 6$." }],
+          "solution": [{ "type": "paragraph", "content": "$$m = \\frac{-1 - 5}{4 - (-2)} = \\frac{-6}{6} = -1$$" }]
+        },
+        {
+          "id": "zero-gradient",
+          "type": "choice",
+          "title": "Flat lines",
+          "instructions": "Select your answer, then press Submit.",
+          "prompt": "Which of these lines has a gradient of $0$?",
+          "options": [
+            { "id": "A", "content": "$y = 4$", "correct": true, "why": "Correct: $y$ is always $4$, so the line is horizontal and doesn't go up at all." },
+            { "id": "B", "content": "$x = 4$", "why": "$x = 4$ is a vertical line. It has no gradient, because the change in $x$ is $0$." },
+            { "id": "C", "content": "$y = 4x$", "why": "This line has gradient $4$." },
+            { "id": "D", "content": "$y = x$", "why": "This line has gradient $1$." }
+          ],
+          "hint": [{ "type": "paragraph", "content": "A gradient of $0$ means the line never goes up or down." }],
+          "solution": [{ "type": "paragraph", "content": "$y = 4$ is horizontal: every point on it has $y = 4$, so the change in $y$ is always $0$." }]
+        },
+        {
+          "id": "find-k",
+          "type": "answer",
+          "title": "Work backwards",
+          "instructions": "Fill in the box, then press Submit. No calculators!",
+          "prompt": "The line through $(2, k)$ and $(5, 13)$ has gradient $3$. Find $k$.",
+          "template": "k=\\placeholder[k]{}",
+          "blanks": { "k": { "answer": "4", "feedback": "Set up $\\frac{13 - k}{5 - 2} = 3$ and solve." } },
+          "hint": [{ "type": "paragraph", "content": "Write the gradient using the formula, set it equal to $3$, then solve for $k$." }],
+          "solution": [{ "type": "paragraph", "content": "$$\\frac{13 - k}{5 - 2} = 3 \\implies 13 - k = 9 \\implies k = 4$$" }]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "The Equation y = mx + c",
+      "blocks": [
+        { "type": "paragraph", "content": "Every straight line (except vertical ones) can be written as $$y = mx + c$$" },
+        { "type": "bullet-points", "points": [
+          "$m$ is the gradient.",
+          "$c$ is the $y$-intercept: the line crosses the $y$-axis at $(0, c)$."
+        ] },
+        { "type": "paragraph", "content": "For example, $y = 3x - 5$ has gradient $3$ and crosses the $y$-axis at $(0, -5)$." },
+        { "type": "heading", "level": 4, "content": "Rearranging" },
+        { "type": "paragraph", "content": "If a line isn't in this form, rearrange it to get $y$ on its own: $$4x + 2y - 6 = 0 \\implies 2y = -4x + 6 \\implies y = -2x + 3$$ So its gradient is $-2$ and its $y$-intercept is $(0, 3)$." },
+        { "type": "heading", "level": 4, "content": "The form ax + by + c = 0" },
+        { "type": "paragraph", "content": "Exam questions often ask for a line \"in the form $ax + by + c = 0$, where $a$, $b$ and $c$ are integers\". Move everything to one side and clear any fractions: $$y = \\tfrac{2}{3}x - 1 \\implies 3y = 2x - 3 \\implies 2x - 3y - 3 = 0$$" }
+      ],
+      "tasks": [
+        {
+          "id": "read-mc",
+          "type": "answer",
+          "title": "Read it off",
+          "instructions": "Fill in each box, then press Submit.",
+          "prompt": "Write down the gradient and the $y$-intercept of $y = 5x - 2$.",
+          "template": "m=\\placeholder[m]{},\\quad y\\text{-intercept }=(0,\\placeholder[c]{})",
+          "blanks": {
+            "m": { "answer": "5" },
+            "c": { "answer": "-2", "feedback": "Keep the sign: the line crosses the $y$-axis below the origin." }
+          },
+          "hint": [{ "type": "paragraph", "content": "Compare it with $y = mx + c$." }],
+          "solution": [{ "type": "paragraph", "content": "$m = 5$ and $c = -2$, so the line crosses the $y$-axis at $(0, -2)$." }]
+        },
+        {
+          "id": "rearrange",
+          "type": "answer",
+          "title": "Rearrange first",
+          "instructions": "Type the equation in the box, then press Submit.",
+          "prompt": "Write $3x + 2y - 8 = 0$ in the form $y = mx + c$.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": {
+            "eq": {
+              "answer": "y=-\\frac{3}{2}x+4",
+              "equation": true,
+              "form": "y=mx+c",
+              "feedback": "Get $2y$ on its own first, then divide everything by $2$. Your answer should start with $y =$."
+            }
+          },
+          "hint": [{ "type": "paragraph", "content": "Move $3x$ and $-8$ to the other side: $2y = -3x + 8$. Then divide by $2$." }],
+          "solution": [{ "type": "paragraph", "content": "$$2y = -3x + 8 \\implies y = -\\tfrac{3}{2}x + 4$$" }]
+        },
+        {
+          "id": "sketch-line",
+          "type": "sketch",
+          "title": "Sketch it",
+          "instructions": "Draw the line in one stroke, then drag the orange handles to adjust it. Press Submit when you're happy.",
+          "prompt": "Sketch the line $y = 2x - 1$.",
+          "degree": 1,
+          "boundingBox": [-5, 5, 5, -5],
+          "keyPoints": [
+            { "label": "y-intercept at (0, −1)", "x": 0, "y": -1, "threshold": 0.3 },
+            { "label": "point (2, 3)", "x": 2, "y": 3, "threshold": 0.3 }
+          ],
+          "modelAnswer": { "points": [{ "x": -1, "y": -3 }, { "x": 2, "y": 3 }] },
+          "hint": [{ "type": "paragraph", "content": "Start at the $y$-intercept, $(0, -1)$. A gradient of $2$ means: go 1 right, 2 up." }],
+          "solution": [{ "type": "paragraph", "content": "The line crosses the $y$-axis at $(0, -1)$ and goes up $2$ for every $1$ to the right, so it passes through $(1, 1)$ and $(2, 3)$." }]
+        },
+        {
+          "id": "integer-form",
+          "type": "answer",
+          "title": "Integers only",
+          "instructions": "Type the equation in the box, then press Submit.",
+          "prompt": "Write $y = \\frac{1}{2}x + 3$ in the form $ax + by + c = 0$, where $a$, $b$ and $c$ are integers.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": {
+            "eq": {
+              "answer": "x-2y+6=0",
+              "equation": true,
+              "form": "ax+by+c=0",
+              "feedback": "Multiply by $2$ to clear the fraction, then move everything to one side so the right-hand side is $0$."
+            }
+          },
+          "hint": [{ "type": "paragraph", "content": "Multiply both sides by $2$ first: $2y = x + 6$." }],
+          "solution": [{ "type": "paragraph", "content": "$$2y = x + 6 \\implies x - 2y + 6 = 0$$ ($-x + 2y - 6 = 0$ is also correct.)" }]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Finding the Equation of a Line",
+      "blocks": [
+        { "type": "paragraph", "content": "If you know the gradient $m$ and one point $(x_1, y_1)$ on a line, its equation is:" },
+        { "type": "bold-paragraph", "content": "$$y - y_1 = m(x - x_1)$$" },
+        { "type": "paragraph", "content": "This works because the gradient between $(x_1, y_1)$ and any other point $(x, y)$ on the line is $\\frac{y - y_1}{x - x_1} = m$. Multiply both sides by $x - x_1$ and you get the formula." },
+        { "type": "heading", "level": 4, "content": "Example 1: a gradient and a point" },
+        { "type": "paragraph", "content": "The line with gradient $3$ through $(2, 5)$: $$y - 5 = 3(x - 2) \\implies y = 3x - 1$$" },
+        { "type": "heading", "level": 4, "content": "Example 2: two points" },
+        { "type": "paragraph", "content": "For the line through $(1, 4)$ and $(3, 10)$, find the gradient first: $m = \\frac{10 - 4}{3 - 1} = 3$. Then use either point: $$y - 4 = 3(x - 1) \\implies y = 3x + 1$$ Check with the other point: $3(3) + 1 = 10$. ✓" }
+      ],
+      "tasks": [
+        {
+          "id": "point-gradient",
+          "type": "answer",
+          "title": "A point and a gradient",
+          "instructions": "Type the equation in the box, then press Submit. Any correct form is fine.",
+          "prompt": "Find the equation of the line with gradient $-2$ that passes through $(3, 1)$.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": { "eq": { "answer": "y=-2x+7", "equation": true, "feedback": "Use $y - 1 = -2(x - 3)$, then tidy it up." } },
+          "hint": [{ "type": "paragraph", "content": "Use $y - y_1 = m(x - x_1)$ with $m = -2$ and $(x_1, y_1) = (3, 1)$." }],
+          "solution": [{ "type": "paragraph", "content": "$$y - 1 = -2(x - 3) \\implies y - 1 = -2x + 6 \\implies y = -2x + 7$$" }]
+        },
+        {
+          "id": "two-points",
+          "type": "answer",
+          "title": "Two points",
+          "instructions": "Type the equation in the box, then press Submit. Any correct form is fine.",
+          "prompt": "Find the equation of the line through $(-1, 2)$ and $(3, 14)$.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": { "eq": { "answer": "y=3x+5", "equation": true, "feedback": "Find the gradient first: $\\frac{14 - 2}{3 - (-1)}$." } },
+          "hint": [{ "type": "paragraph", "content": "Find $m$, then use $y - y_1 = m(x - x_1)$ with either point." }],
+          "solution": [{ "type": "paragraph", "content": "$m = \\frac{14 - 2}{3 - (-1)} = \\frac{12}{4} = 3$, so $$y - 2 = 3(x + 1) \\implies y = 3x + 5$$" }]
+        },
+        {
+          "id": "two-points-integer",
+          "type": "answer",
+          "title": "In the exam form",
+          "instructions": "Type the equation in the box, then press Submit.",
+          "prompt": "Find the equation of the line through $(2, -3)$ and $(6, 5)$, giving your answer in the form $ax + by + c = 0$, where $a$, $b$ and $c$ are integers.",
+          "template": "\\placeholder[eq]{}",
+          "blanks": { "eq": { "answer": "2x-y-7=0", "equation": true, "form": "ax+by+c=0", "feedback": "The gradient is $\\frac{5 - (-3)}{6 - 2} = 2$. After finding the equation, move everything to one side so it equals $0$." } },
+          "hint": [{ "type": "paragraph", "content": "Find the gradient, use $y - y_1 = m(x - x_1)$, then rearrange so the right-hand side is $0$." }],
+          "solution": [{ "type": "paragraph", "content": "$m = \\frac{8}{4} = 2$, so $y + 3 = 2(x - 2) \\implies y = 2x - 7 \\implies 2x - y - 7 = 0$." }]
+        },
+        {
+          "id": "steps",
+          "type": "order",
+          "title": "Put the steps in order",
+          "instructions": "Add the steps in the right order, then press Submit. Not every line belongs!",
+          "prompt": "Put the steps for finding the equation of the line through $(2, 1)$ and $(5, 7)$ in order.",
+          "lines": [
+            "Gradient: $m = \\frac{7 - 1}{5 - 2} = 2$",
+            "Use the point $(2, 1)$: $y - 1 = 2(x - 2)$",
+            "Expand: $y - 1 = 2x - 4$",
+            "Rearrange: $y = 2x - 3$"
+          ],
+          "distractors": [
+            "Gradient: $m = \\frac{5 - 2}{7 - 1} = \\frac{1}{2}$",
+            "Use the point $(2, 1)$: $y - 2 = 2(x - 1)$"
+          ],
+          "hint": [{ "type": "paragraph", "content": "Gradient is change in $y$ over change in $x$. In $y - y_1 = m(x - x_1)$, the $y$-coordinate goes with $y$." }],
+          "solution": [{ "type": "paragraph", "content": "$m = \\frac{7 - 1}{5 - 2} = 2$, then $y - 1 = 2(x - 2)$, so $y = 2x - 3$. Flipping the gradient fraction or swapping $x_1$ and $y_1$ are the two most common mistakes." }]
+        }
+      ]
+    }
+  ],
+  "review": [
+    { "id": "gradient-formula", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "How do you find the gradient between $(x_1, y_1)$ and $(x_2, y_2)$?" }],
+      "back": [{ "type": "bold-paragraph", "content": "$m = \\frac{y_2 - y_1}{x_2 - x_1}$" }, { "type": "paragraph", "content": "Change in $y$ over change in $x$." }] },
+    { "id": "read-gradient", "type": "answer", "prompt": "What is the gradient of $y = 7 - 3x$?", "template": "m=\\placeholder[m]{}",
+      "blanks": { "m": { "answer": "-3" } },
+      "explanation": [{ "type": "paragraph", "content": "$y = -3x + 7$: the gradient is the number multiplying $x$, sign included." }] },
+    { "id": "intercept", "type": "answer", "prompt": "Where does $2x + y = 6$ cross the $y$-axis?", "template": "(0,\\placeholder[c]{})",
+      "blanks": { "c": { "answer": "6" } },
+      "explanation": [{ "type": "paragraph", "content": "Put $x = 0$: $y = 6$." }] },
+    { "id": "point-gradient", "type": "flip",
+      "front": [{ "type": "paragraph", "content": "What's the equation of the line with gradient $m$ through $(x_1, y_1)$?" }],
+      "back": [{ "type": "bold-paragraph", "content": "$y - y_1 = m(x - x_1)$" }] },
+    { "id": "vertical", "type": "choice", "prompt": "What is the gradient of the line $x = 2$?",
+      "options": [
+        { "id": "A", "content": "It has no gradient (it's vertical)", "correct": true, "why": "Correct: the change in $x$ is always $0$." },
+        { "id": "B", "content": "$0$", "why": "That's a horizontal line, like $y = 2$." },
+        { "id": "C", "content": "$2$", "why": "$x = 2$ is a vertical line through $(2, 0)$." }
+      ],
+      "explanation": [{ "type": "paragraph", "content": "Lines $x = k$ are vertical; lines $y = k$ are horizontal with gradient $0$." }] }
+  ]
+}

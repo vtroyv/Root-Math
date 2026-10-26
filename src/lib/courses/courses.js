@@ -22,7 +22,35 @@ export const COURSES = [
 ];
 
 export const findCourse = (id) => COURSES.find((course) => course.id === id) ?? null;
-export const courseLabel = (course) => `${course.component} · ${course.year}`;
+export const courseLabel = (course) => [course.component, course.year].filter(Boolean).join(' · ') || course.qualification;
+
+/*
+The nested course checkboxes on the Questions page: qualification › component › year, built from COURSES
+so new courses (Further Maths, TMUA papers...) appear by themselves. A course without a year (or component)
+stops a level early, e.g. { qualification: 'TMUA', component: 'Paper 1' } is TMUA › Paper 1.
+  [{ key, label, children: [...] }], ending in leaves { key, label, courseId }
+*/
+export function courseTree(courses = COURSES) {
+  const root = [];
+  for (const course of courses) {
+    const path = [course.qualification, course.component, course.year].filter(Boolean);
+    let level = root;
+    path.forEach((label, i) => {
+      const isLeaf = i === path.length - 1;
+      const key = isLeaf ? course.id : path.slice(0, i + 1).join(' › ');
+      let node = level.find((n) => n.key === key);
+      if (!node) {
+        node = isLeaf ? { key, label, courseId: course.id } : { key, label, children: [] };
+        level.push(node);
+      }
+      level = node.children;
+    });
+  }
+  return root;
+}
+
+// every course id under a tree node
+export const treeCourseIds = (node) => (node.children ? node.children.flatMap(treeCourseIds) : [node.courseId]);
 
 export function coursesForUser(user) {
   const ids = user?.publicMetadata?.courses;

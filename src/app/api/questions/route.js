@@ -1,5 +1,6 @@
 import { getQuestions, getUserProgForAllQuestions } from "@/lib/mongodb/utils";
 import { toClientQuestion } from "@/lib/marking/sanitize";
+import { locateQuestion } from "@/lib/reviews/due";
 
 export async function GET(request) {
   const {searchParams} = new URL(request.url)
@@ -21,9 +22,12 @@ export async function GET(request) {
     
     //now i merge the status into each question 
 
+    // courseId (25 Oct 2026): the course a question belongs to (src/lib/courses/courses.js), or null.
+    // The Questions page filters by it, and locks questions in courses the student hasn't got.
     const enriched= questions.map(q => ({
       ...toClientQuestion(q),
-      status: statusByTitle.get(q.title) ?? 'Todo'
+      status: statusByTitle.get(q.title) ?? 'Todo',
+      courseId: locateQuestion(q).course?.id ?? null
     }))
 
 
