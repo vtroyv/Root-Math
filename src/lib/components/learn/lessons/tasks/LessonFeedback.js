@@ -17,16 +17,14 @@ are the existing lesson panes. Review = the lesson's flashcards (unlocked once t
 `feedbackSignal` goes up each time a task is marked or revealed, which switches to the Feedback tab.
 */
 
+// no fixed height: the tab area scrolls, so the pane never runs past the bottom of the screen
 const frame = {
   padding: '1.5rem',
-  height: '80vh',
   background: '#f9f9f9',
   borderRadius: '8px',
   boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-  margin: '1rem auto',
+  margin: '0 auto',
   boxSizing: 'border-box',
-  display: 'flex',
-  flexDirection: 'column',
 };
 
 export default function LessonFeedback({ part, states, slug, openReview, feedbackSignal }) {
@@ -47,14 +45,14 @@ export default function LessonFeedback({ part, states, slug, openReview, feedbac
   );
 
   return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ height: '100%', minHeight: 0, display: 'flex', flexDirection: 'column' }}>
       <Nav tabs>
         {tab('feedback', 'Feedback')}
         {tab('notes', 'Your Notes')}
         {tab('comments', 'Comments')}
         {tab('review', <ReviewTabLabel slug={slug} />)}
       </Nav>
-      <TabContent activeTab={activeTab} style={{ padding: '1rem', flex: 1 }}>
+      <TabContent activeTab={activeTab} style={{ padding: '1rem', flex: 1, minHeight: 0, overflowY: 'auto' }}>
         <TabPane tabId="feedback">
           <TaskFeedback states={states} />
         </TabPane>
@@ -87,18 +85,16 @@ function TaskFeedback({ states }) {
   return (
     <div style={frame}>
       <h3 style={{ textAlign: 'center', marginBottom: '1rem' }}>Feedback</h3>
-      <div style={{ flex: 1, overflowY: 'auto', paddingRight: '0.5rem' }}>
-        {states.length === 0 && <p style={{ color: '#495057' }}>There are no tasks in this part.</p>}
-        {states.map((state, i) => (
-          <TaskFeedbackCard key={state.task.id} index={i} state={state} />
-        ))}
-      </div>
+      {states.length === 0 && <p style={{ color: '#495057' }}>There are no tasks in this part.</p>}
+      {states.map((state, i) => (
+        <TaskFeedbackCard key={state.task.id} index={i} state={state} />
+      ))}
     </div>
   );
 }
 
 function TaskFeedbackCard({ index, state }) {
-  const { entry, locked, status, stale } = state;
+  const { entry, status, stale } = state;
   const result = entry.result;
 
   return (
@@ -121,8 +117,7 @@ function TaskFeedbackCard({ index, state }) {
         )}
       </h4>
 
-      {locked && <p style={{ margin: 0, color: '#6c757d' }}>Locked until the task before it is done.</p>}
-      {!locked && !status && <p style={{ margin: 0, color: '#6c757d' }}>No feedback yet for this task.</p>}
+      {!status &&<p style={{ margin: 0, color: '#6c757d' }}>No feedback yet for this task.</p>}
       {stale && <p style={{ margin: '0 0 0.25rem', color: '#6c757d' }}>(You&apos;ve changed your answer since this was marked. Submit again.)</p>}
 
       {status === 'revealed' ? (

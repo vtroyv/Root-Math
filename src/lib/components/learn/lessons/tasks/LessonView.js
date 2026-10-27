@@ -19,14 +19,17 @@ import LessonFeedback from './LessonFeedback';
 /*
 A lesson in the tasks format (src/lib/docs/lessons.md). Three panes:
   left    the part's teaching blocks + a box per task (title, instructions, hint, tick)
-  centre  the tasks themselves (question-part components), coloured once marked,
-          with Save / Submit / Reset / Solution
+  centre  the tasks themselves (question-part components), coloured once marked, each with
+          its own Solution button; Save / Submit / Reset in a row along the bottom
   right   Feedback (Task 1, Task 2, ...), Notes, Comments, Review
+The panes fill the screen under the breadcrumbs (.learn-lesson in globals.css), so the bottom
+row is always in view.
 
 Progress is in Zustand (useLessonProgressStore) and autosaves to MongoDB 1.5 s after an edit.
-Tasks open one at a time; a task that's correct (or revealed) locks until Reset. Submit marks
-the open task, Solution fills it in after asking whether the student would rather keep trying,
-and Reset clears the whole part. Next needs every task in the part done.
+Every task in a part is open at once; a task that's correct (or revealed) locks until Reset.
+Submit marks every task answered since it was last marked (one task or all of them), Solution
+fills one task in after asking whether the student would rather keep trying, and Reset clears
+the whole part. Next needs every task in the part done; Submit becomes Next part once it is.
 */
 
 const AUTOSAVE_MS = 1500;
@@ -38,7 +41,7 @@ export default function LessonView({ lesson, initialProgress, nextLesson, openRe
   const setTaskEntry = useLessonProgressStore((s) => s.setTaskEntry);
   const clearTasks = useLessonProgressStore((s) => s.clearTasks);
 
-  const [markTask, { isLoading: marking }] = useMarkLessonTaskMutation();
+  const [markTask] = useMarkLessonTaskMutation();
   const [getSolution, { isLoading: revealing }] = useGetLessonSolutionMutation();
   const [saveProgress] = useSaveLessonProgressMutation();
 
@@ -46,7 +49,8 @@ export default function LessonView({ lesson, initialProgress, nextLesson, openRe
   const [error, setError] = useState(null);
   const [notice, setNotice] = useState(null); // { color, text, link? }
   const [confirmingReset, setConfirmingReset] = useState(false);
-  const [confirmingReveal, setConfirmingReveal] = useState(false);
+  const [marking, setMarking] = useState(false); // Submit can mark several tasks at once
+  const [confirmingReveal, setConfirmingReveal] = useState(null); // the task id whose Solution was pressed
   const [videoOpen, setVideoOpen] = useState(false);
   const [versions, setVersions] = useState({}); // per task: bumped to remount it with a new answer
   const [feedbackSignal, setFeedbackSignal] = useState(0);
@@ -62,7 +66,8 @@ export default function LessonView({ lesson, initialProgress, nextLesson, openRe
   const partIndex = Math.min(Math.max(current.currentPart ?? 0, 0), parts.length - 1);
   const part = parts[partIndex];
   const states = partTaskStates(part, current.tasks);
-  const openState = states.find((s) => s.open);
+  const pending = states.filter((s) => s.pending);
+  const hasTasks = states.length > 0;
   const partDone = states.every((s) => s.done);
   const lessonComplete = isLessonComplete(lesson, current.tasks);
 
@@ -110,45 +115,49 @@ export default function LessonView({ lesson, initialProgress, nextLesson, openRe
   const remount = (keys) => setVersions((v) => Object.fromEntries([...Object.entries(v), ...keys.map((k) => [k, (v[k] ?? 0) + 1])]));
 
   // ─── marking ───────────────────────────────────────────────────────────
+  // marks every pending task together, so it works for one task at a time or the whole part
   const handleSubmit = async () => {
     setError(null);
     setNotice(null);
-    if (!openState) {
-      setNotice({ color: 'info', text: partDone && states.length ? 'Every task in this part is done. Press Next to carry on.' : 'There is nothing to submit in this part.' });
+    if (!pending.length) {
+      setNotice({
+        color: 'info',
+        text: hasTasks
+          ? 'Answer a task first, then press Submit. A task that has been marked only needs submitting again if you change its answer.'
+          : 'There is nothing to submit in this part.',
+      });
       return;
     }
     clearTimeout(timer.current);
-    const key = taskKey(part.id, openState.task.id);
-    const response = openState.entry.response;
-    try {
-      const { result } = await markTask({ slug: lesson.slug, partId: part.id, taskId: openState.task.id, response }).unwrap();
-      setTaskEntry(key, { result, markedResponse: response });
-      setFeedbackSignal((n) => n + 1);
-      await persist();
-    } catch (e) {
-      console.error('Marking failed:', e);
-      setError(e?.data?.error ?? 'Marking failed. Please try again.');
+    setMarking(true);
+    const outcomes = await Promise.allSettled(
+      pending.map(async ({ task, entry }) => {
+        const { result } = await markTask({ slug: lesson.slug, partId: part.id, taskId: task.id, response: entry.response }).unwrap();
+        setTaskEntry(taskKey(part.id, task.id), { result, markedResponse: entry.response });
+      }),
+    );
+    setMarking(false);
+    const failed = outcomes.filter((o) => o.status === 'rejected');
+    if (failed.length < outcomes.length) setFeedbackSignal((n) => n + 1);
+    if (failed.length) {
+      console.error('Marking failed:', failed.map((o) => o.reason));
+      setError(failed[0].reason?.data?.error ?? `${failed.length === 1 ? 'A task' : `${failed.length} tasks`} couldn't be marked. Please press Submit again.`);
     }
+    await persist();
   };
 
-  // ─── solution ──────────────────────────────────────────────────────────
-  const handleSolution = () => {
-    setNotice(null);
-    if (!openState) {
-      setNotice({ color: 'info', text: 'Every task in this part is already done.' });
-      return;
-    }
-    setConfirmingReveal(true);
-  };
+  // ─── solution (one task) ───────────────────────────────────────────────
+  const revealState = states.find((s) => s.task.id === confirmingReveal);
 
   const revealSolution = async () => {
-    setConfirmingReveal(false);
+    setConfirmingReveal(null);
     setError(null);
-    const task = openState.task;
+    setNotice(null);
+    const task = revealState.task;
     const key = taskKey(part.id, task.id);
     try {
       const { response, solution } = await getSolution({ slug: lesson.slug, partId: part.id, taskId: task.id }).unwrap();
-      const filled = response ?? openState.entry.response ?? null;
+      const filled = response ?? revealState.entry.response ?? null;
       setTaskEntry(key, { response: filled, markedResponse: filled, result: null, revealed: true, solution });
       remount([key]);
       setFeedbackSignal((n) => n + 1);
@@ -200,7 +209,7 @@ export default function LessonView({ lesson, initialProgress, nextLesson, openRe
 
   // ─── render ────────────────────────────────────────────────────────────
   const saveLabel = { saved: 'Saved', unsaved: 'Unsaved changes', saving: 'Saving…', error: 'Save failed' }[saveState];
-  const hasTasks = states.length > 0;
+  const revealIndex = states.indexOf(revealState);
 
   // fade={false} on alerts and modals: no show/hide animation (styling preference)
   const footer = (
@@ -241,14 +250,18 @@ export default function LessonView({ lesson, initialProgress, nextLesson, openRe
           Save
         </Button>
         <span style={{ fontSize: '0.85rem', color: saveState === 'error' ? '#dc3545' : '#6c757d', minWidth: '6.5rem' }}>{saveLabel}</span>
-        <Button color="info" style={{ flex: 1 }} onClick={handleSubmit} disabled={marking || !hasTasks}>
-          {marking ? 'Marking…' : 'Submit'}
-        </Button>
+        {/* once the part is done, the same button moves the student on */}
+        {partDone ? (
+          <Button color="info" style={{ flex: 1 }} onClick={handleNext}>
+            {partIndex < parts.length - 1 ? 'Next part →' : 'Finish'}
+          </Button>
+        ) : (
+          <Button color="info" style={{ flex: 1 }} onClick={handleSubmit} disabled={marking}>
+            {marking ? 'Marking…' : `Submit${pending.length ? ` (${pending.length})` : ''}`}
+          </Button>
+        )}
         <Button color="secondary" outline onClick={() => setConfirmingReset(true)} disabled={!progress || !hasTasks}>
           Reset
-        </Button>
-        <Button color="secondary" outline onClick={handleSolution} disabled={revealing || !hasTasks}>
-          {revealing ? 'Loading…' : 'Solution'}
         </Button>
       </div>
     </>
@@ -256,7 +269,7 @@ export default function LessonView({ lesson, initialProgress, nextLesson, openRe
 
   return (
     <>
-      <div style={{ position: 'relative' }}>
+      <div className="learn-lesson">
         {part.video && (
           <>
             <div
@@ -303,6 +316,7 @@ export default function LessonView({ lesson, initialProgress, nextLesson, openRe
         )}
 
         <ThreePaneResponsive
+          fill
           instructions={
             <LessonInstructions
               part={part}
@@ -313,7 +327,17 @@ export default function LessonView({ lesson, initialProgress, nextLesson, openRe
               onNext={handleNext}
             />
           }
-          mainContent={<LessonTasks part={part} states={states} versions={versions} onChange={handleChange} footer={footer} />}
+          mainContent={
+            <LessonTasks
+              part={part}
+              states={states}
+              versions={versions}
+              onChange={handleChange}
+              onSolution={(taskId) => setConfirmingReveal(taskId)}
+              revealing={revealing}
+              footer={footer}
+            />
+          }
           feedbackData={{
             feedback: <LessonFeedback part={part} states={states} slug={lesson.slug} openReview={openReview} feedbackSignal={feedbackSignal} />,
           }}
@@ -327,8 +351,8 @@ export default function LessonView({ lesson, initialProgress, nextLesson, openRe
         </div>
       </Modal>
 
-      <Modal isOpen={confirmingReveal} toggle={() => setConfirmingReveal(false)} centered fade={false}>
-        <ModalHeader toggle={() => setConfirmingReveal(false)}>Have another go first?</ModalHeader>
+      <Modal isOpen={Boolean(revealState)} toggle={() => setConfirmingReveal(null)} centered fade={false}>
+        <ModalHeader toggle={() => setConfirmingReveal(null)}>Have another go at task {revealIndex + 1} first?</ModalHeader>
         <ModalBody>
           <p>
             You&apos;ll learn much more by working the task out yourself, even if it takes a few tries. Attempting it is what makes sure
@@ -340,7 +364,7 @@ export default function LessonView({ lesson, initialProgress, nextLesson, openRe
           </p>
         </ModalBody>
         <ModalFooter>
-          <Button color="info" onClick={() => setConfirmingReveal(false)}>
+          <Button color="info" onClick={() => setConfirmingReveal(null)}>
             Keep trying
           </Button>
           <Button color="secondary" outline onClick={revealSolution}>

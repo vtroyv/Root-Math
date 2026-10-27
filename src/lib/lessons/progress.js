@@ -33,27 +33,25 @@ export const isDone = (entry) =>
   entry?.revealed === true || (entry?.result?.status === 'correct' && same(entry.response, entry.markedResponse));
 
 /*
-Every task in a part with what the page needs to show it. Tasks open one at a time:
-the first task that isn't done is `open`, and everything after it is `locked`.
+Every task in a part with what the page needs to show it. All of a part's tasks are open at
+once and can be done in any order; the next part waits until every one of them is done.
   status   'correct' | 'partial' | 'incorrect' | 'unanswered' | 'error' | 'revealed' | null (not marked)
   stale    marked, then changed since
+  pending  answered and not marked yet (or changed since): what Submit marks
 */
 export function partTaskStates(part, tasksProgress) {
-  let blocked = false;
   return (part?.tasks ?? []).map((task) => {
     const entry = tasksProgress?.[taskKey(part.id, task.id)] ?? {};
     const done = isDone(entry);
-    const state = {
+    const stale = !entry.revealed && Boolean(entry.result) && !same(entry.response, entry.markedResponse);
+    return {
       task,
       entry,
       done,
-      open: !done && !blocked,
-      locked: !done && blocked,
       status: entry.revealed ? 'revealed' : entry.result?.status ?? null,
-      stale: !entry.revealed && Boolean(entry.result) && !same(entry.response, entry.markedResponse),
+      stale,
+      pending: !done && entry.response != null && (!entry.result || stale),
     };
-    if (!done) blocked = true;
-    return state;
   });
 }
 

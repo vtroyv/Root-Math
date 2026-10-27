@@ -8,7 +8,7 @@ import { statusColour } from './LessonTasks';
 
 /*
 The lesson page's left pane: the part's teaching blocks, then one box per task with its
-title, instructions, a tick / cross / lock, and its hint (hints live here, not in the centre).
+title, instructions, a tick / cross, and its hint (hints live here, not in the centre).
 Back / Next (Finish on the last part) at the bottom.
 */
 
@@ -57,7 +57,7 @@ export default function LessonInstructions({ part, partIndex, totalParts, states
 }
 
 function TaskBox({ index, state }) {
-  const { task, open, locked, status, stale } = state;
+  const { task, status, stale } = state;
   const [hintOpen, setHintOpen] = useState(false);
   const shown = stale ? null : status;
   const hint = typeof task.hint === 'string' ? [{ type: 'paragraph', content: task.hint }] : task.hint ?? [];
@@ -66,18 +66,17 @@ function TaskBox({ index, state }) {
     <div
       style={{
         position: 'relative',
-        border: open ? '2px solid #17a2b8' : '1px solid #dee2e6',
+        border: '1px solid #dee2e6',
         borderRadius: '6px',
         padding: '0.5rem 0.75rem',
         margin: '0.5rem 0',
         background: '#fff',
-        opacity: locked ? 0.5 : 1,
       }}
     >
       <i
-        className={`bi ${locked ? 'bi-lock-fill' : ICONS[shown] ?? 'bi-circle'}`}
-        aria-label={locked ? 'Locked' : shown ?? 'Not answered'}
-        style={{ position: 'absolute', top: '0.5rem', right: '0.75rem', fontSize: '1.2rem', color: locked ? '#adb5bd' : shown ? statusColour(shown) : '#adb5bd' }}
+        className={`bi ${ICONS[shown] ?? 'bi-circle'}`}
+        aria-label={shown ?? 'Not answered'}
+        style={{ position: 'absolute', top: '0.5rem', right: '0.75rem', fontSize: '1.2rem', color: shown ? statusColour(shown) : '#adb5bd' }}
       />
       <h4 style={{ fontSize: '1.05rem', fontWeight: 'bold', margin: '0 2rem 0.25rem 0' }}>
         Task {index + 1}: <Latex>{task.title ?? ''}</Latex>
@@ -87,7 +86,7 @@ function TaskBox({ index, state }) {
           <Latex>{task.instructions}</Latex>
         </p>
       )}
-      {hint.length > 0 && !locked && (
+      {hint.length > 0 && (
         <>
           <Button size="sm" color="secondary" outline={!hintOpen} onClick={() => setHintOpen((v) => !v)} aria-expanded={hintOpen}>
             {hintOpen ? 'Hide hint' : 'Hint'}

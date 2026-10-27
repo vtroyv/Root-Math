@@ -2027,6 +2027,36 @@
   padding: 0;
 }
 
+/* Lesson page (LessonView.js): the page is exactly the window's height, so the three panes
+   fill the space under the breadcrumbs and only the panes scroll, never the page.
+   The nav's mobile menu and the chat widget are positioned, so they aren't clipped. */
+body:has(.learn-lesson) {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+body:has(.learn-lesson) .learn-outlet {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+  margin: 0;
+  padding: 0.5rem clamp(1.25rem, 4vw, 2.5rem) 1rem; /* sides line up with the breadcrumbs */
+}
+
+body:has(.learn-lesson) .learn-outlet > main,
+.learn-lesson {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.learn-lesson {
+  position: relative; /* for the video button above the panes */
+}
+
 .learn-home,
 .learn-page {
   max-width: 1600px;

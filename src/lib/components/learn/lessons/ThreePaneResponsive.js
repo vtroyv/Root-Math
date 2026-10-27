@@ -16,30 +16,29 @@ import useMediaQuery from './useMediaQuery';
  *   instructions - ReactNode (left pane)
  *   mainContent  - ReactNode (center pane)
  *   feedbackData - { feedback, notes, comments } - right pane content
+ *   fill         - fill the parent's height (a flex column) instead of the window's;
+ *                  the tasks-format lesson page uses this to sit exactly under the breadcrumbs
  */
 export default function ThreePaneResponsive({
   instructions,
   mainContent,
   feedbackData,
+  fill = false,
 }) {
   const isMobile = useMediaQuery('(max-width: 768px)');
   // For the entire layout tabs on mobile:
   const [activeMobileTab, setActiveMobileTab] = useState('lesson');
+
+  const frameStyle = fill
+    ? { border: '1px solid #ccc', flex: 1, minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }
+    : { marginTop: '1rem', border: '1px solid #ccc', height: 'calc(100vh - 2rem)', display: 'flex', flexDirection: 'column' };
 
   // -----------------------------------------
   // MOBILE LAYOUT (TABBED)
   // -----------------------------------------
   if (isMobile) {
     return (
-      <div
-        style={{
-          marginTop: '1rem',
-          border: '1px solid #ccc',
-          height: 'calc(100vh - 2rem)',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
+      <div style={frameStyle}>
         {/* Top bar with 3 buttons */}
         <div
           style={{
@@ -68,9 +67,9 @@ export default function ThreePaneResponsive({
           </button>
         </div>
 
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
           {activeMobileTab === 'instructions' && (
-            <div style={{ flex: 1, overflowY: 'auto', padding: '1rem' }}>
+            <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '1rem' }}>
               {instructions}
             </div>
           )}
@@ -78,9 +77,10 @@ export default function ThreePaneResponsive({
             <div
               style={{
                 flex: 1,
+                minHeight: 0,
                 display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                // fill: a column, so the tasks scroll and the bottom row stays in view
+                ...(fill ? { flexDirection: 'column' } : { justifyContent: 'center', alignItems: 'center' }),
                 backgroundColor: '#f8f9fa',
                 padding: '1rem',
               }}
@@ -89,7 +89,7 @@ export default function ThreePaneResponsive({
             </div>
           )}
           {activeMobileTab === 'feedback' && (
-            <div style={{ flex: 1, overflowY: 'auto', padding: '1rem' }}>
+            <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '1rem' }}>
               {feedbackData?.feedback || <p>No feedback component provided.</p>}
             </div>
           )}
@@ -102,15 +102,7 @@ export default function ThreePaneResponsive({
   // DESKTOP LAYOUT (3 SPLIT PANES)
   // -----------------------------------------
   return (
-    <div
-      style={{
-        marginTop: '1rem',
-        border: '1px solid #ccc',
-        height: 'calc(100vh - 2rem)',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
+    <div style={frameStyle}>
       <Split
         direction="horizontal"
         sizes={[35, 65]}
@@ -119,6 +111,7 @@ export default function ThreePaneResponsive({
         gutter={createGutter}
         style={{
           flex: 1,
+          minHeight: 0,
           display: 'flex',
           width: '100%',
           height:'100%'
@@ -170,7 +163,7 @@ export default function ThreePaneResponsive({
 
 
           {/* RIGHT PANE: feedback (tabs are inside the Feedback component) */}
-          <aside style={{ padding: '1rem' }}>
+          <aside style={fill ? { padding: '1rem', display: 'flex', flexDirection: 'column', minHeight: 0 } : { padding: '1rem' }}>
             {feedbackData?.feedback || <p>No feedback component provided.</p>}
           </aside>
         </Split>

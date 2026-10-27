@@ -31,7 +31,7 @@ Related docs: [question-parts.md](question-parts.md) (the task types are questio
   - **Right:** **Feedback** (one card per task: Task 1, Task 2, …), **Your Notes**, **Comments** and **Review**.
 - **Save, Submit, Reset and Solution work.** The Hint button has gone from the centre, because each task box has its own hint. Answers autosave 1.5 s after you stop typing.
 - **Everything persists**, in Zustand and MongoDB. A correct task stays correct and locked until Reset. Refreshing brings back every answer and result, and reopens the part you were on.
-- **Solution** asks "Have another go first?" (**Keep trying** / **Reveal solution anyway**). Revealing fills the open task in with the correct answer and shows the worked solution in Feedback.
+- **Solution** asks "Have another go first?" (**Keep trying** / **Reveal solution anyway**). Each task has its own **Solution** button. Revealing fills that task in with the correct answer and shows the worked solution in Feedback.
 - **Videos:** a part with a `video` field shows the 🎥 button, which plays it in a pop-up the same way **See how it works** does on the home page. Every part currently has that same placeholder video.
 - **Review cards:** each lesson has 5 or 6 flashcards. They unlock when the whole lesson is complete, come in a random order, and appear in the lesson's Review tab, on the reviews page's **Lessons** tab, in the **REVIEWS · n** nav count and in the Progress page's Outstanding reviews box.
 - **Five lessons rewritten**, ready to paste into Compass: [lesson-examples/](lesson-examples/). The maths and wording errors found are fixed and listed in [section 9](#9-fixes-made-to-the-lesson-content), and First Principles has 8 new tasks.
@@ -43,7 +43,7 @@ Related docs: [question-parts.md](question-parts.md) (the task types are questio
 
 | Question | Your answer | What that meant |
 |---|---|---|
-| How do tasks open up? | One at a time | Task 2 opens once task 1 is correct or revealed. **Next** needs every task in the part done. Submit marks the open task. |
+| How do tasks open up? | All at once within a part (changed from one at a time, 27 Oct 2026, after a tester found it unintuitive) | Every task in a part can be answered in any order. **Submit** marks every task answered since it was last marked, so it works one task at a time or for the whole part. **Next** needs every task in the part done. |
 | What does a revealed task count as? | Complete | Revealed counts as done for moving on **and** for lesson completion (and so the Progress page). It shows as "Revealed", not green. |
 | Solution for working/explain/sketch? | Fill in a model answer | Those tasks have a `modelAnswer`: LaTeX working, or curve handle points. |
 | When do review cards unlock? | When the whole lesson is complete | Cards are lesson-wide, so they can be asked in any order rather than following the parts. Each session is shuffled. |
@@ -143,16 +143,18 @@ Every field is described in [question-parts.md section 5](question-parts.md#5-th
 
 | Where | What |
 |---|---|
-| **Left** | "Part 2 of 3", the part title, the teaching text, then **Your tasks**: one box per task with its title, instructions, an icon (✓ correct, eye = revealed, ✗ wrong, – partly right, ○ not answered, lock) and a **Hint** button. The open task's box has a teal border. **Back** / **Next** (**Finish** on the last part) at the bottom. |
-| **Centre** | Each task: "Task n", its prompt, an image if it has one, and its answer area. The open task has a teal border; later tasks are greyed out ("Finish the task above to unlock this one"). After marking, the left edge turns green, amber or red, with "Correct", "Partly correct: see Feedback" or "Not quite: see Feedback". Revealed tasks are teal. Below: **Save** (with "Saved" / "Unsaved changes"), **Submit**, **Reset**, **Solution**. |
+| **Left** | "Part 2 of 3", the part title, the teaching text, then **Your tasks**: one box per task with its title, instructions, an icon (✓ correct, eye = revealed, ✗ wrong, – partly right, ○ not answered, lock) and a **Hint** button. **Back** / **Next** (**Finish** on the last part) at the bottom. |
+| **Centre** | Each task: "Task n", its prompt, an image if it has one, its answer area, a one-line status and a **Solution** button (gone once the task is done). Every task can be answered straight away. The status reads "Answer this task, then press Submit", then "Answered: press Submit to mark it"; after marking, the left edge turns green, amber or red, with "Correct", "Partly correct: see Feedback" or "Not quite: see Feedback". Revealed tasks are teal. Pinned along the bottom: **Save** (with "Saved" / "Unsaved changes"), **Submit (n)** (n = tasks waiting to be marked), **Reset**. Once every task in the part is done, Submit becomes **Next part →** (**Finish** on the last part). |
 | **Right** | **Feedback**: a card per task with its marks and the marker's feedback, or for a revealed task, "You revealed the solution…" and the worked solution. It switches to this tab whenever a task is marked or revealed. **Your Notes** and **Comments**: unchanged. **Review · n**: the lesson's flashcards. |
 | **Top right** | "Are you a visual learner? Watch a video for this part →" and the 🎥 button, on parts with a `video`. |
 
+**Layout:** the panes fill the window under the breadcrumbs (`.learn-lesson` in `globals.css`), so the page never scrolls, only the panes do, and the bottom row is always in view.
+
 **Rules:**
-- **Submit** marks the open task. If it's correct it locks, the next task opens, and its answer can't be changed until Reset.
-- If you change an answer after it's marked but before it's correct, the status says "Changed since marking: submit again".
-- **Solution** shows the "Have another go first?" pop-up. **Reveal solution anyway** fills the open task in, marks it Revealed, opens the next task, and shows the worked solution in Feedback.
-- **Reset** asks "Clear every task in this part?" and clears the part back to task 1.
+- **Submit** marks every task that has an answer and hasn't been marked since it last changed (one request per task, sent together). Blank tasks are skipped, and so are marked tasks that haven't changed. A correct task locks, and its answer can't be changed until Reset.
+- If you change an answer after it's marked but before it's correct, the status says "Changed since marking: press Submit to mark it again".
+- **Solution** (on a task) shows the "Have another go at task n first?" pop-up. **Reveal solution anyway** fills that task in, marks it Revealed, and shows the worked solution in Feedback.
+- **Reset** asks "Clear every task in this part?" and clears the whole part.
 - **Next** says "Finish every task in this part before moving on" until they're all done.
 - **Finishing the lesson** (the save that completes the last task) shows "Lesson complete! Its review cards are now unlocked in the Review tab", plus a **Next lesson** link if that lesson exists. **Finish** on the last part shows the same.
 - **Links:** `?tab=review` opens the lesson on its Review tab. The reviews page links there.
@@ -174,6 +176,7 @@ LessonView ─ progress in Zustand (useLessonProgressStore)
    │  typing / dragging ─► setTaskEntry('<partId>:<taskId>', { response }) ─► autosave after 1.5 s
    │                                                       ─► POST /api/lesson/<slug>/progress
    │  Submit   ─► POST /api/lesson/<slug>/mark { partId, taskId, response }  ─► markQuestion() ─► { result }
+   │             (once per pending task, in parallel)
    │  Solution ─► POST /api/lesson/<slug>/solution { partId, taskId }       ─► { response, solution }
    │  Reset    ─► clear the part's entries ─► save
    │  Next / Back ─► currentPart ─► save
@@ -218,7 +221,7 @@ Tasks are keyed by `partId:taskId`, not by position, so reordering or adding tas
 
 | File | What it does |
 |---|---|
-| [lessons/progress.js](../lessons/progress.js) | The rules, shared by the page and the server: task keys, which task is open or locked, done (correct or revealed), part done, lesson complete, fresh progress. |
+| [lessons/progress.js](../lessons/progress.js) | The rules, shared by the page and the server: task keys, done (correct or revealed), pending (answered, waiting for Submit), part done, lesson complete, fresh progress. |
 | [lessons/sanitize.js](../lessons/sanitize.js) | `toClientLesson`: each task sanitised like a question part, review cards removed. |
 | [lessons/links.js](../lessons/links.js) | A lesson's chapter, URL and Progress page skill. |
 | [lessons/server.js](../lessons/server.js) | Shared lookups for the lesson API routes. |
