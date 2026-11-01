@@ -8,6 +8,8 @@ import QuestionSolutionPane from './questionSolutionPane';
 import QuestionNotesPane from './questionNotesPane';
 import { useQuestionStore } from '@/lib/zustand/providers/question-state-provider';
 import ReviewPane from '../reviews/ReviewPane';
+// a hard-coded demo thread until real comments are built (docs/community-plan.md)
+import DemoComments from '@/lib/components/community/DemoComments';
 import { useGetQuestionReviewsQuery } from '@/lib/redux/slices/apiSlice';
 import { localToday } from '@/lib/reviews/localDay';
 
@@ -52,7 +54,7 @@ export default function Feedback({details, reviewTitle, openReview = false}) {
     return (
 
         
-        <div style={{height:'100%', display:'flex', flexDirection:'column'}}>
+        <div style={{height:'100%', minHeight:0, display:'flex', flexDirection:'column'}}>
             <Nav tabs>
                  <NavItem>
                     <NavLink
@@ -110,23 +112,27 @@ export default function Feedback({details, reviewTitle, openReview = false}) {
                 </NavItem>
             </Nav>
 
-            <TabContent activeTab={activeTab} style={{padding:'1rem', flex:1}}>
-                <TabPane tabId="feedback">
+            {/* minHeight 0 + a definite height for each tab, so each tab's box (height: 100%) fits the pane exactly */}
+            <TabContent activeTab={activeTab} style={{padding:'1rem', flex:1, minHeight:0, overflowY:'auto'}}>
+                <TabPane tabId="feedback" style={{height:'100%'}}>
                     <QuestionFeedbackPane />
 
                 </TabPane>
-                <TabPane tabId='instructions'>
+                <TabPane tabId='instructions' style={{height:'100%'}}>
                     < QuestionInstructionPane instructions={instructions}/>
                 </TabPane>
-                <TabPane tabId='solution-explanation'>
+                <TabPane tabId='solution-explanation' style={{height:'100%'}}>
                     <QuestionSolutionPane solution={solution} markScheme ={markScheme}/>
 
                 </TabPane>
-                 <TabPane tabId='notes'>
+                 <TabPane tabId='notes' style={{height:'100%'}}>
                     <QuestionNotesPane />
 
                 </TabPane>
-                <TabPane tabId='Review'>
+                <TabPane tabId='comments' style={{height:'100%'}}>
+                    <DemoComments variant="question" />
+                </TabPane>
+                <TabPane tabId='Review' style={{height:'100%'}}>
                     {reviewTitle
                         ? <ReviewPane title={reviewTitle} />
                         : <p style={{padding: '1rem'}}>Review cards aren&apos;t available for this question.</p>}

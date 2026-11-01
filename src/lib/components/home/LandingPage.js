@@ -33,7 +33,7 @@ const heroSymbols = [
 ];
 
 const stats = [
-  { value: '4', label: 'Exam boards covered' },
+  { value: '5', label: 'Exam boards covered' },
   { value: '1,000+', label: 'Exam-style questions' },
   { value: 'Instant', label: 'Marking & feedback' },
   { value: '24/7', label: 'AI tutor on hand' },

@@ -7,7 +7,7 @@ const faqs = [
     q: 'How do we get our A/A* guarantee?',
     a: [
       <>
-        RootMath uses machine learning and well-researched study techniques to assess each
+        RadixMaths uses machine learning and well-researched study techniques to assess each
         student&apos;s current working level, then assigns daily and weekly targets aimed at
         an A or A*.
       </>,
@@ -22,7 +22,7 @@ const faqs = [
     ],
   },
   {
-    q: 'Is it worth getting RootMath in year 12?',
+    q: 'Is it worth getting RadixMaths in year 12?',
     a: [
       <>
         Absolutely. You may not sit real exams in year 12, but it is the year your
@@ -30,15 +30,15 @@ const faqs = [
       </>,
       <>
         Getting those grades right matters just as much — and it is far easier with
-        RootMath behind you.
+        RadixMaths behind you.
       </>,
     ],
   },
   {
-    q: 'How do I know RootMath will actually help me?',
+    q: 'How do I know RadixMaths will actually help me?',
     a: [
       <>
-        RootMath is built to cater to every student&apos;s needs, whatever your background or
+        RadixMaths is built to cater to every student&apos;s needs, whatever your background or
         starting knowledge level.
       </>,
       <>
@@ -70,7 +70,7 @@ const faqs = [
     ],
   },
   {
-    q: 'What makes RootMath lessons special?',
+    q: 'What makes RadixMaths lessons special?',
     a: [
       <>
         Our videos use scenarios that relate to your actual life to build concrete

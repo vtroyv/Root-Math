@@ -28,7 +28,7 @@ export default function Blog() {
             </h1>
             <p className="rm-lead">
               Revision that works, how the exam boards actually differ, and what we are
-              learning while we build RootMath.
+              learning while we build RadixMaths.
             </p>
           </div>
         </div>

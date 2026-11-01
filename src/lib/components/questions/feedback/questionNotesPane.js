@@ -89,11 +89,11 @@ export default function QuestionNotesPane() {
   return (
     <div style={{
       padding: '1.5rem',
-      margin: '1rem auto',
+      margin: '0 auto',
       background: '#f9f9f9',
       borderRadius: '8px',
       boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-      height: '80vh',
+      height: '100%', // fills the tab area (Feedback in feedback/index.js)
       display: 'flex',
       flexDirection: 'column',
       boxSizing: 'border-box'

@@ -23,11 +23,11 @@ follow the order of the lesson's parts (src/lib/docs/lessons.md).
 
 const frame = {
   padding: '1.5rem',
-  height: '80vh',
+  height: '100%', // fills the tab it's in (question Feedback or lesson LessonFeedback)
   background: '#f9f9f9',
   borderRadius: '8px',
   boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-  margin: '1rem auto',
+  margin: '0 auto',
   boxSizing: 'border-box',
   overflowY: 'auto',
 };

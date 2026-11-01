@@ -12,7 +12,7 @@ const pillars = [
     tilt: '-1.2deg',
     title: 'Empower Every Student',
     body:
-      'At RootMath, our mission is to democratise top-tier A-Level maths tuition by harnessing technology and Oxford/Cambridge-trained tutors. We believe every student—regardless of background or school—deserves access to high-quality lessons, personalised support, and a community that values excellence. Through targeted video lessons, on-demand tutor support, and interactive quizzes, we guide students from foundational concepts all the way to A* mastery.',
+      'At RadixMaths, our mission is to democratise top-tier A-Level maths tuition by harnessing technology and Oxford/Cambridge-trained tutors. We believe every student—regardless of background or school—deserves access to high-quality lessons, personalised support, and a community that values excellence. Through targeted video lessons, on-demand tutor support, and interactive quizzes, we guide students from foundational concepts all the way to A* mastery.',
   },
   {
     icon: 'bi-lightbulb-fill',
@@ -26,7 +26,7 @@ const pillars = [
     tilt: '-0.8deg',
     title: 'Foster a Collaborative Community',
     body:
-      'We’re more than a platform—we’re a community. From weekly group workshops to an interactive forum, students learn alongside peers who share their academic goals. RootMath’s community encourages knowledge-sharing, peer support, and healthy competition, all in a safe, moderated environment. Our goal is to foster lifelong curiosity and a love for mathematics.',
+      'We’re more than a platform—we’re a community. From weekly group workshops to an interactive forum, students learn alongside peers who share their academic goals. RadixMaths’ community encourages knowledge-sharing, peer support, and healthy competition, all in a safe, moderated environment. Our goal is to foster lifelong curiosity and a love for mathematics.',
   },
 ];
 
@@ -43,7 +43,7 @@ export default function Mission() {
               Our <span className="rm-underline">mission</span>
             </h1>
             <p className="rm-lead">
-              Why RootMath exists and how we empower students to excel in A-Level maths.
+              Why RadixMaths exists and how we empower students to excel in A-Level maths.
             </p>
           </div>
         </div>

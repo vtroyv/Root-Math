@@ -10,7 +10,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const post = getPost(params.slug);
   if (!post) return { title: 'Article not found' };
-  return { title: `${post.title} | RootMath`, description: post.excerpt };
+  return { title: `${post.title} | RadixMaths`, description: post.excerpt };
 }
 
 export default function ArticlePage({ params }: { params: { slug: string } }) {

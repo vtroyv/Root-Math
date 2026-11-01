@@ -128,7 +128,7 @@ export default function QuestionDisplay({ params, searchParams }) {
   // New schema: every question is a list of parts, whatever its `type`
   if (Array.isArray(question.parts)) {
     return (
-      <TwoPaneResponsive
+      <TwoPaneResponsive fill
         question={<QuestionParts question={question} />}
         feedback={<Feedback reviewTitle={question.title} openReview={openReview} details={partsDetails(question)} />}
       />
@@ -139,17 +139,17 @@ export default function QuestionDisplay({ params, searchParams }) {
     if (questionType === 'fullResponse' ) {
       const feedback = <Feedback reviewTitle={question.title} openReview={openReview} details={question.details}/>
       const fullResponse = <NewFullResponse question={question} />
-      return <TwoPaneResponsive question={fullResponse} feedback={feedback} />
+      return <TwoPaneResponsive fill question={fullResponse} feedback={feedback} />
 
     } else if (questionType === 'selection') {
       const feedback = <Feedback reviewTitle={question.title} openReview={openReview} details ={question?.details} />
       const multipleChoice = <Selection question={question} />
-      return <TwoPaneResponsive question={multipleChoice} feedback={feedback}/>
+      return <TwoPaneResponsive fill question={multipleChoice} feedback={feedback}/>
 
     } else if(questionType == 'combination') {
       const combination = <Combination question={question} />
       const feedback = <Feedback reviewTitle={question.title} openReview={openReview} details ={question.details} />
-      return <TwoPaneResponsive question={combination} feedback={feedback}/>
+      return <TwoPaneResponsive fill question={combination} feedback={feedback}/>
     } 
     
     
@@ -157,7 +157,7 @@ export default function QuestionDisplay({ params, searchParams }) {
       const newSketch = <Sketch question={question} />
       const feedback = <Feedback reviewTitle={question.title} openReview={openReview} details={question.details} />
 
-      return <TwoPaneResponsive question={newSketch} feedback ={feedback} />
+      return <TwoPaneResponsive fill question={newSketch} feedback ={feedback} />
     
     } else if (questionType ==='explain') {
       return <Explain />

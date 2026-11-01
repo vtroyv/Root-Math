@@ -3,22 +3,21 @@ import Split from 'react-split';
 import useMediaQuery from './useMediaQuery';
 
 
-export default function TwoPaneResponsive({question, feedback}) {
+// fill: fill the screen under the breadcrumbs (.learn-fit in globals.css) instead of being the
+// window's height, so only the panes scroll. The question page uses this, like the lesson page.
+export default function TwoPaneResponsive({question, feedback, fill = false}) {
   console.log('The question is ', question)
     const title = question.title
     const isMobile = useMediaQuery('(max-width:768px)');
     const [activeMobileTab, setActiveMobileTab] = useState('question');
 
+    const frameStyle = fill
+      ? { border: '1px solid #ccc', overflow: 'hidden' }
+      : { marginTop: '1rem', border: '1px solid #ccc', height: 'calc(100vh - 2rem)', display: 'flex', flexDirection: 'column' };
+
     if (isMobile) {
         return (
-            <div
-            style={{
-              marginTop: '1rem',
-          border: '1px solid #ccc',
-          height: 'calc(100vh - 2rem)',
-          display: 'flex',
-          flexDirection: 'column',  
-            }}>
+            <div className={fill ? 'learn-fit' : undefined} style={frameStyle}>
 
             <div
           style={{
@@ -44,9 +43,9 @@ export default function TwoPaneResponsive({question, feedback}) {
           </button>
             </div>
 
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
           {activeMobileTab === 'question' && (
-            <div style={{ flex: 1, overflowY: 'auto', padding: '1rem' }}>
+            <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '1rem' }}>
               {question}
             </div>
           )}
@@ -54,9 +53,10 @@ export default function TwoPaneResponsive({question, feedback}) {
             <div
               style={{
                 flex: 1,
+                minHeight: 0,
                 display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                // fill: a column, so the tabs sit at the top and their box fills the rest
+                ...(fill ? { flexDirection: 'column' } : { justifyContent: 'center', alignItems: 'center' }),
                 backgroundColor: '#f8f9fa',
                 padding: '1rem',
               }}
@@ -74,15 +74,7 @@ export default function TwoPaneResponsive({question, feedback}) {
     }
 
     return (
-         <div
-      style={{
-        marginTop: '1rem',
-        border: '1px solid #ccc',
-        height: 'calc(100vh - 2rem)',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
+         <div className={fill ? 'learn-fit' : undefined} style={frameStyle}>
        <Split
         direction="horizontal"
         sizes={[50, 50]}
@@ -91,6 +83,7 @@ export default function TwoPaneResponsive({question, feedback}) {
         gutter={createGutter}
         style={{
           flex: 1,
+          minHeight: 0,
           display: 'flex',
           width: '100%',
           height:'100%'

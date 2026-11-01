@@ -8,13 +8,13 @@ export default function QuestionInstructionPane({instructions}) {
     return (
          <div style={{
       padding: '1.5rem',
-      height: '80vh',             // Fixed height for the pane
+      height: '100%',             // fills the tab area (Feedback in feedback/index.js)
       background: '#f9f9f9',
       borderRadius: '8px',
       boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
       display: 'flex',
       flexDirection: 'column',
-      margin: '1rem auto',
+      margin: '0 auto',
       boxSizing: 'border-box',
       overflowY: 'auto', 
  

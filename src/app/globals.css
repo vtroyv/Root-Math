@@ -1,5 +1,5 @@
 /* ==========================================================================
-   RootMath — landing design system
+   RadixMaths — landing design system
    Layered on top of Bootswatch Sketchy (bootstrap.css). Everything here is
    namespaced with `rm-` so it never fights the vendor theme.
    Fonts (Cabin Sketch / Neucha) are already imported by bootstrap.css.
@@ -707,7 +707,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Why RootMath — paper-and-grid section carrying the three-doodle journey.
+   Why RadixMaths — paper-and-grid section carrying the three-doodle journey.
    Replaces the old flat teal band, which was the one part of the page not
    using the card language of every other section.
    -------------------------------------------------------------------------- */
@@ -739,7 +739,7 @@
    to none once it scrolls into view and would otherwise cancel the tilt. */
 /* --------------------------------------------------------------------------
    Pinned-note card — shared shell
-   Used by the "Why RootMath" notes and the "Reasons students stick with us"
+   Used by the "Why RadixMaths" notes and the "Reasons students stick with us"
    cards, so the two sections are one definition rather than two copies.
 
    The shell always lives on an INNER element, never on the .rm-reveal
@@ -786,7 +786,7 @@
   box-shadow: 9px 9px 0 var(--rm-ink);
 }
 
-/* Centred variant — the Why RootMath notes, whose doodle sits above the copy */
+/* Centred variant — the Why RadixMaths notes, whose doodle sits above the copy */
 .rm-notecard--center {
   align-items: center;
   gap: 0.6rem;
@@ -2027,17 +2027,18 @@
   padding: 0;
 }
 
-/* Lesson page (LessonView.js): the page is exactly the window's height, so the three panes
-   fill the space under the breadcrumbs and only the panes scroll, never the page.
-   The nav's mobile menu and the chat widget are positioned, so they aren't clipped. */
-body:has(.learn-lesson) {
+/* Lesson and question pages (LessonView.js, TwoPaneResponsive with `fill`): the page is exactly
+   the window's height, so the panes fill the space under the breadcrumbs and only the panes
+   scroll, never the page. The nav's mobile menu and the chat widget are positioned, so they
+   aren't clipped. The questions route wraps its pages in a <section>, hence the extra selector. */
+body:has(.learn-fit) {
   height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-body:has(.learn-lesson) .learn-outlet {
+body:has(.learn-fit) .learn-outlet {
   flex: 1;
   min-height: 0;
   height: auto;
@@ -2045,16 +2046,56 @@ body:has(.learn-lesson) .learn-outlet {
   padding: 0.5rem clamp(1.25rem, 4vw, 2.5rem) 1rem; /* sides line up with the breadcrumbs */
 }
 
-body:has(.learn-lesson) .learn-outlet > main,
-.learn-lesson {
+body:has(.learn-fit) .learn-outlet > main,
+body:has(.learn-fit) .learn-outlet > main > section,
+.learn-fit {
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
 }
 
-.learn-lesson {
-  position: relative; /* for the video button above the panes */
+.learn-fit {
+  position: relative; /* for the lesson's video button above the panes */
+}
+
+/* Lesson page: "Watch this part's video", in the breadcrumbs' style, on the right of their row.
+   The breadcrumbs end 1rem above the panes (0.5rem bar padding + 0.5rem outlet padding) and
+   this has the same font, padding and border, so the two line up. Hover only swaps colours. */
+.learn-video-btn {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 1rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  font-family: var(--rm-body);
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: var(--rm-teal-deep);
+  background: var(--rm-teal-wash);
+  border: 2px solid var(--rm-teal-soft);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.learn-video-btn:hover {
+  border-color: var(--rm-teal);
+}
+
+.learn-video-btn:focus-visible {
+  outline: 2px solid var(--rm-teal);
+  outline-offset: 2px;
+}
+
+/* phones: the breadcrumbs can fill the row, so the button sits above the panes instead */
+@media (max-width: 768px) {
+  .learn-video-btn {
+    position: static;
+    align-self: flex-end;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .learn-home,

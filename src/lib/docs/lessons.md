@@ -32,7 +32,7 @@ Related docs: [question-parts.md](question-parts.md) (the task types are questio
 - **Save, Submit, Reset and Solution work.** The Hint button has gone from the centre, because each task box has its own hint. Answers autosave 1.5 s after you stop typing.
 - **Everything persists**, in Zustand and MongoDB. A correct task stays correct and locked until Reset. Refreshing brings back every answer and result, and reopens the part you were on.
 - **Solution** asks "Have another go first?" (**Keep trying** / **Reveal solution anyway**). Each task has its own **Solution** button. Revealing fills that task in with the correct answer and shows the worked solution in Feedback.
-- **Videos:** a part with a `video` field shows the 🎥 button, which plays it in a pop-up the same way **See how it works** does on the home page. Every part currently has that same placeholder video.
+- **Videos:** a part with a `video` field shows a **Watch this part’s video** button, which plays it in a pop-up the same way **See how it works** does on the home page. Every part currently has that same placeholder video.
 - **Review cards:** each lesson has 5 or 6 flashcards. They unlock when the whole lesson is complete, come in a random order, and appear in the lesson's Review tab, on the reviews page's **Lessons** tab, in the **REVIEWS · n** nav count and in the Progress page's Outstanding reviews box.
 - **Five lessons rewritten**, ready to paste into Compass: [lesson-examples/](lesson-examples/). The maths and wording errors found are fixed and listed in [section 9](#9-fixes-made-to-the-lesson-content), and First Principles has 8 new tasks.
 - **Old-format lessons still work**: any `lesson-data` document without `schemaVersion: 2` uses the original lesson page, unchanged.
@@ -106,7 +106,7 @@ The files are in [lesson-examples/](lesson-examples/), one per lesson:
   parts: [{
     id: 2,                                // stable: progress is keyed by part id + task id
     title: 'Multiplying Surds',
-    video: 'https://….wistia.com/medias/…',  // optional: shows the 🎥 button
+    video: 'https://….wistia.com/medias/…',  // optional: shows the "Watch this part’s video" button
     blocks: [blocks],                     // the teaching text (BlockRenderer blocks, $maths$)
     tasks: [Task, ...],                   // may be empty: the student just presses Next
   }],
@@ -146,9 +146,9 @@ Every field is described in [question-parts.md section 5](question-parts.md#5-th
 | **Left** | "Part 2 of 3", the part title, the teaching text, then **Your tasks**: one box per task with its title, instructions, an icon (✓ correct, eye = revealed, ✗ wrong, – partly right, ○ not answered, lock) and a **Hint** button. **Back** / **Next** (**Finish** on the last part) at the bottom. |
 | **Centre** | Each task: "Task n", its prompt, an image if it has one, its answer area, a one-line status and a **Solution** button (gone once the task is done). Every task can be answered straight away. The status reads "Answer this task, then press Submit", then "Answered: press Submit to mark it"; after marking, the left edge turns green, amber or red, with "Correct", "Partly correct: see Feedback" or "Not quite: see Feedback". Revealed tasks are teal. Pinned along the bottom: **Save** (with "Saved" / "Unsaved changes"), **Submit (n)** (n = tasks waiting to be marked), **Reset**. Once every task in the part is done, Submit becomes **Next part →** (**Finish** on the last part). |
 | **Right** | **Feedback**: a card per task with its marks and the marker's feedback, or for a revealed task, "You revealed the solution…" and the worked solution. It switches to this tab whenever a task is marked or revealed. **Your Notes** and **Comments**: unchanged. **Review · n**: the lesson's flashcards. |
-| **Top right** | "Are you a visual learner? Watch a video for this part →" and the 🎥 button, on parts with a `video`. |
+| **Top right** | **▶ Watch this part’s video**, styled like the breadcrumbs box and lined up with it (`.learn-video-btn`), on parts with a `video`. Above the panes on phones. |
 
-**Layout:** the panes fill the window under the breadcrumbs (`.learn-lesson` in `globals.css`), so the page never scrolls, only the panes do, and the bottom row is always in view.
+**Layout:** the panes fill the window under the breadcrumbs (`.learn-fit` in `globals.css`), so the page never scrolls, only the panes do, and the bottom row is always in view.
 
 **Rules:**
 - **Submit** marks every task that has an answer and hasn't been marked since it last changed (one request per task, sent together). Blank tasks are skipped, and so are marked tasks that haven't changed. A correct task locks, and its answer can't be changed until Reset.

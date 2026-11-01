@@ -1,7 +1,7 @@
 // import "bootswatch/dist/sketchy/bootstrap.min.css"
 import './bootstrap.css'
 import "bootstrap-icons/font/bootstrap-icons.css";
-// Loaded after the vendor theme so the RootMath design system wins.
+// Loaded after the vendor theme so the RadixMaths design system wins.
 import './globals.css'
 
 
@@ -13,7 +13,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 
 
 export const metadata = {
-  title: "Root Math",
+  title: "RadixMaths",
   description: "Say hello to the end of hefty tuition fees",
 };
 

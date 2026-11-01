@@ -190,7 +190,7 @@ File: [app/(authenticated)/learn/questions/[title]/page.js](../../app/%28authent
 
 Every `<Feedback>` gets `reviewTitle={question.title}` so its Review tab can load that question's cards.
 
-**[TwoPaneResponsive](../components/learn/lessons/TwoPaneResponsive.js)**, shared with lessons: a draggable 50/50 split on desktop, and two tabs at ≤768px.
+**[TwoPaneResponsive](../components/learn/lessons/TwoPaneResponsive.js)**: a draggable 50/50 split on desktop, and two tabs at ≤768px. The question page passes `fill`, so the panes fill the window under the breadcrumbs (`.learn-fit` in `globals.css`, like the lesson page): the page never scrolls, each pane does, and each Feedback tab's box is exactly the height of the right pane.
 
 ---
 
@@ -283,7 +283,7 @@ For parts-based questions, `details` comes from **`partsDetails(question)`**:
 
 ## 11. MyTutor (shown on this page via the layout)
 
-File: [learn/MyTutor.js](../components/learn/MyTutor.js). Unchanged. It's active on question pages, but its `lessonContext` comes from the **lesson** store, so it still can't see the question or the student's answers. `useQuestionStore.getState().userProgress.componentProgress` now holds every part's live answer, ready to add to its prompt. The reply is still faked, because `/api/tutor/asktutor` returns `'succss'`.
+File: [learn/MyTutor.js](../components/learn/MyTutor.js). It was redesigned in the site style (30 Oct 2026). It has a header saying which page it's helping with, plus Chat / Previous chats / Help tabs, hint-labelled tutor bubbles with LaTeX, and quick replies. On `Completing-the-Square-Exam-Style` it opens on a hard-coded hint conversation (`DEMO`) for screenshots. Everywhere else it opens on a welcome screen with suggested questions. The previous chats are hard-coded too. It's active on question pages, but its `lessonContext` comes from the **lesson** store, so it still can't see the question or the student's answers. `useQuestionStore.getState().userProgress.componentProgress` now holds every part's live answer, ready to add to its prompt. The reply is still faked (a stock hint), because `/api/tutor/asktutor` returns `'succss'`.
 
 ---
 

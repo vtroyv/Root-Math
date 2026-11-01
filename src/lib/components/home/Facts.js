@@ -57,7 +57,7 @@ const Facts = () => (
       <span className="rm-eyebrow">What you get</span>
       <h2 className="rm-h2">Reasons students stick with us</h2>
       <p className="rm-lead">
-        RootMath is not another video library. It marks your work, finds your gaps and
+        RadixMaths is not another video library. It marks your work, finds your gaps and
         tells you what to do next.
       </p>
     </Reveal>

@@ -6,7 +6,7 @@ import Footer from './Footer';
 
 /* PLACEHOLDER — set this to the real inbox before the page goes live. It is
    used twice below, so changing it here changes both. */
-const contactEmail = 'hello@rootmath.co.uk';
+const contactEmail = 'hello@radixmaths.co.uk';
 
 /* Margin doodles, as on the register page: fixed positions (Math.random()
    would break hydration), kept in the outer gutters, hidden on narrow
@@ -26,9 +26,9 @@ const marginSymbols = [
    which was placeholder contact details for an office that does not exist. */
 const helpWith = [
   'Which course matches your specification — tell us your exam board and we will point you at the right one.',
-  'Schools and colleges: department trials, licences, and how RootMath fits around a scheme of work.',
+  'Schools and colleges: department trials, licences, and how RadixMaths fits around a scheme of work.',
   'A question marked wrong, or anything on the site misbehaving — send us the question and we will look at it.',
-  'Anything you want RootMath to do that it does not do yet. Most of what we build was asked for.',
+  'Anything you want RadixMaths to do that it does not do yet. Most of what we build was asked for.',
 ];
 
 const subjects = [

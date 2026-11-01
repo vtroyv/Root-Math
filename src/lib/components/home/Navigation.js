@@ -44,7 +44,7 @@ function Navigation() {
     <nav className="rm-nav">
       <div className="rm-container rm-nav__inner">
         <Link href="/" className="rm-nav__brand" onClick={closeAll}>
-          RootMath
+          RadixMaths
         </Link>
 
         <button

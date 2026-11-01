@@ -4,7 +4,7 @@ import Reveal from './Reveal';
 import Footer from './Footer';
 
 /* Titles and descriptions are carried over word for word from the old page —
-   they describe what RootMath is meant to do rather than what it does today,
+   they describe what RadixMaths is meant to do rather than what it does today,
    so they are due a pass once the feature set settles. The `icon` is a
    bootstrap-icons name, replacing the hand-rolled SVGs. */
 const featureItems = [

@@ -55,7 +55,7 @@ const Courses = () => (
       <span className="rm-eyebrow">Our courses</span>
       <h2 className="rm-h2">Find your specification</h2>
       <p className="rm-lead">
-        RootMath fully covers the A Level Maths specification for Edexcel, AQA, OCR and
+        RadixMaths fully covers the A Level Maths specification for Edexcel, AQA, OCR and
         CIE. Course not listed?{' '}
         <Link href="/contact" className="rm-link">
           Get in touch

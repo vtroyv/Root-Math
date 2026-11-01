@@ -13,7 +13,7 @@ import Footer from './Footer';
    `covers`  what sits on the specification.
    `prepare` PLACEHOLDER COPY — this is the part to rewrite in your own words.
              Each bracketed line is a prompt, not finished copy: say how
-             RootMath gets a student ready for that particular course and
+             RadixMaths gets a student ready for that particular course and
              delete the brackets.
    ========================================================================= */
 const courses = [
@@ -32,7 +32,7 @@ const courses = [
       'Exam technique — full past papers marked under real timing',
     ],
     prepare: [
-      '[Your words here — how RootMath prepares a student for A Level Maths. Worth covering: lesson-by-lesson coverage of the whole specification, the question bank running from first principles up to exam standard, and marking that lands the moment a question is submitted.]',
+      '[Your words here — how RadixMaths prepares a student for A Level Maths. Worth covering: lesson-by-lesson coverage of the whole specification, the question bank running from first principles up to exam standard, and marking that lands the moment a question is submitted.]',
       '[Second paragraph — the bit only you can write: what a student who works through this course can expect by results day, and why that beats a weekly tutor.]',
     ],
   },
@@ -51,7 +51,7 @@ const courses = [
       'The step up in pace that makes Further Maths the course students most often fall behind in',
     ],
     prepare: [
-      '[Your words here — how RootMath prepares a student for Further Maths. Worth covering: how the course handles the different optional modules, and how it keeps Further Maths moving alongside the main A Level rather than competing with it.]',
+      '[Your words here — how RadixMaths prepares a student for Further Maths. Worth covering: how the course handles the different optional modules, and how it keeps Further Maths moving alongside the main A Level rather than competing with it.]',
       '[Second paragraph — who this course is for: the student aiming at a STEM degree, and what they get out of it.]',
     ],
   },
@@ -70,7 +70,7 @@ const courses = [
       'Multi-step problem solving, which is where most of the marks are won or lost',
     ],
     prepare: [
-      '[Your words here — how RootMath prepares a student for GCSE Maths. Worth covering: how the course handles both tiers, how it finds the gaps a student has been carrying since Year 9, and the drilling that turns a grade 6 into a grade 8.]',
+      '[Your words here — how RadixMaths prepares a student for GCSE Maths. Worth covering: how the course handles both tiers, how it finds the gaps a student has been carrying since Year 9, and the drilling that turns a grade 6 into a grade 8.]',
       '[Second paragraph — what a parent reading this page needs to hear.]',
     ],
   },
@@ -89,7 +89,7 @@ const courses = [
       'The habit of staying with a problem you cannot immediately see through',
     ],
     prepare: [
-      '[Your words here — how RootMath prepares a student for STEP. Worth covering: how the course teaches problem solving rather than method recall, and what worked solutions and feedback look like for a question this open-ended.]',
+      '[Your words here — how RadixMaths prepares a student for STEP. Worth covering: how the course teaches problem solving rather than method recall, and what worked solutions and feedback look like for a question this open-ended.]',
       '[Second paragraph — why students holding a Cambridge or Warwick offer should start this early rather than after mocks.]',
     ],
   },
@@ -108,7 +108,7 @@ const courses = [
       'Recognising the wrong answers a question has been built to tempt you into',
     ],
     prepare: [
-      '[Your words here — how RootMath prepares a student for the TMUA. Worth covering: timed practice at real exam pace, and how the course drills the reasoning paper, which is unlike anything else a student has sat.]',
+      '[Your words here — how RadixMaths prepares a student for the TMUA. Worth covering: timed practice at real exam pace, and how the course drills the reasoning paper, which is unlike anything else a student has sat.]',
       '[Second paragraph — the score a student should be aiming for and how the course tracks progress towards it.]',
     ],
   },
@@ -150,7 +150,7 @@ export default function CoursesPage() {
             </h1>
             <p className="rm-lead">
               A Level Maths is live today; the rest are being built in the order below.
-              Pick a course to read what it covers and how RootMath gets you through it.
+              Pick a course to read what it covers and how RadixMaths gets you through it.
             </p>
           </div>
 
@@ -226,7 +226,7 @@ export default function CoursesPage() {
                 <span className="rm-card__icon" aria-hidden="true">
                   <i className="bi bi-rocket-takeoff-fill" />
                 </span>
-                <h3 className="rm-h3">How RootMath gets you ready</h3>
+                <h3 className="rm-h3">How RadixMaths gets you ready</h3>
                 {/* Placeholder copy — see the note at the top of this file. */}
                 {course.prepare.map((paragraph) => (
                   <p className="rm-card__body" key={paragraph}>

@@ -78,7 +78,7 @@ export default function LearnNav() {
     <nav className="rm-nav rm-nav--learn" ref={navRef}>
       <div className="rm-container rm-nav__inner">
         <Link href="/" className="rm-nav__brand">
-          RootMath
+          RadixMaths
         </Link>
 
         <button

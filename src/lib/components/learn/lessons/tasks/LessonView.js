@@ -22,7 +22,7 @@ A lesson in the tasks format (src/lib/docs/lessons.md). Three panes:
   centre  the tasks themselves (question-part components), coloured once marked, each with
           its own Solution button; Save / Submit / Reset in a row along the bottom
   right   Feedback (Task 1, Task 2, ...), Notes, Comments, Review
-The panes fill the screen under the breadcrumbs (.learn-lesson in globals.css), so the bottom
+The panes fill the screen under the breadcrumbs (.learn-fit in globals.css), so the bottom
 row is always in view.
 
 Progress is in Zustand (useLessonProgressStore) and autosaves to MongoDB 1.5 s after an edit.
@@ -269,50 +269,13 @@ export default function LessonView({ lesson, initialProgress, nextLesson, openRe
 
   return (
     <>
-      <div className="learn-lesson">
+      <div className="learn-fit">
+        {/* styled like the breadcrumbs box and lined up beside it (.learn-video-btn in globals.css) */}
         {part.video && (
-          <>
-            <div
-              style={{
-                position: 'absolute',
-                top: '-3rem',
-                right: '5rem',
-                textAlign: 'right',
-                lineHeight: 1.2,
-                fontSize: '0.875rem',
-                color: '#17a2b8',
-                fontWeight: '500',
-              }}
-            >
-              <div>Are you a visual learner?</div>
-              <div>
-                Watch a video for this part<span style={{ fontSize: '1.2rem' }}>→</span>
-              </div>
-            </div>
-            <Button
-              color="info"
-              outline
-              className="rounded-circle"
-              onClick={() => setVideoOpen(true)}
-              style={{
-                position: 'absolute',
-                top: '-3.5rem',
-                right: '1rem',
-                width: '3rem',
-                height: '3rem',
-                padding: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '1.25rem',
-                boxShadow: '0 0 8px rgba(23,162,184,0.7)',
-              }}
-              title="Watch a video for this part"
-              aria-label="Watch a video for this part"
-            >
-              🎥
-            </Button>
-          </>
+          <button type="button" className="learn-video-btn" onClick={() => setVideoOpen(true)}>
+            <i className="bi bi-play-circle-fill" aria-hidden="true" />
+            Watch this part&apos;s video
+          </button>
         )}
 
         <ThreePaneResponsive

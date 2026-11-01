@@ -4,7 +4,8 @@ import classnames from 'classnames';
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import BlockRenderer from '@/lib/components/learn/lessons/BlockRenderer';
 import NotesPane from '@/lib/components/learn/lessons/feedback/NotesPane';
-import CommentsPane from '@/lib/components/learn/lessons/feedback/CommentsPane';
+// a hard-coded demo thread until real comments are built (docs/community-plan.md)
+import DemoComments from '@/lib/components/community/DemoComments';
 import ReviewPane from '@/lib/components/questions/reviews/ReviewPane';
 import { useGetLessonReviewsQuery } from '@/lib/redux/slices/apiSlice';
 import { localToday } from '@/lib/reviews/localDay';
@@ -12,8 +13,8 @@ import { STATUS_TEXT, statusColour } from './LessonTasks';
 
 /*
 The lesson page's right pane. Feedback has one card per task of the current part (Task 1,
-Task 2, ...): every task's written feedback is here, not under the task. Notes and Comments
-are the existing lesson panes. Review = the lesson's flashcards (unlocked once the lesson is complete).
+Task 2, ...): every task's written feedback is here, not under the task. Notes is the existing
+lesson pane; Comments is a hard-coded demo thread (DemoComments) until real comments are built. Review = the lesson's flashcards (unlocked once the lesson is complete).
 `feedbackSignal` goes up each time a task is marked or revealed, which switches to the Feedback tab.
 */
 
@@ -60,7 +61,7 @@ export default function LessonFeedback({ part, states, slug, openReview, feedbac
           <NotesPane part={part} />
         </TabPane>
         <TabPane tabId="comments">
-          <CommentsPane part={part} />
+          <DemoComments variant="lesson" />
         </TabPane>
         <TabPane tabId="review">
           <ReviewPane lessonSlug={slug} />

@@ -10,7 +10,7 @@ const CallToAction = () => (
         Start with your <span className="rm-underline">weakest topic</span>
       </h2>
       <p className="rm-lead">
-        Pick your exam board, answer a few questions, and RootMath will begin to adapt to your learning habits, giving you the tailored experience you deserve. It takes a couple minutes.
+        Pick your exam board, answer a few questions, and RadixMaths will begin to adapt to your learning habits, giving you the tailored experience you deserve. It takes a couple minutes.
       </p>
       <div className="rm-btn-row">
         <Link href="/register" className="rm-btn rm-btn--primary rm-btn--lg">

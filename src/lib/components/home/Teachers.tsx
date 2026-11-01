@@ -19,7 +19,7 @@ export default function Teachers() {
     },
     {
       value: '500+',
-      label: 'Schools using RootMath to enhance teaching outcomes',
+      label: 'Schools using RadixMaths to enhance teaching outcomes',
     },
   ];
 
@@ -43,7 +43,7 @@ export default function Teachers() {
           </div>
           <h2 style={{ color: '#17a2b8', fontWeight: 'bold' }}>For Teachers</h2>
           <p style={{ color: '#6c757d', fontSize: '1.1rem', marginTop: '0.5rem' }}>
-            Empower your classroom with RootMath’s comprehensive teaching tools. Streamline lesson planning, track student progress, and foster deeper understanding—all in one intuitive platform.
+            Empower your classroom with RadixMaths’ comprehensive teaching tools. Streamline lesson planning, track student progress, and foster deeper understanding—all in one intuitive platform.
           </p>
         </div>
 
@@ -69,7 +69,7 @@ export default function Teachers() {
               Simplify Your Teaching Workflow
             </h4>
             <p style={{ color: '#495057', fontSize: '1rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
-              RootMath provides a suite of resources tailored for teachers:  
+              RadixMaths provides a suite of resources tailored for teachers:  
               <ul style={{ marginTop: '0.5rem', marginBottom: '1rem', paddingLeft: '1.2rem' }}>
                 <li>Pre-made, syllabus-aligned lesson plans and slides.</li>
                 <li>Auto-generated quizzes with instant marking and feedback.</li>

@@ -46,7 +46,7 @@ const Footer = () => (
     <div className="rm-container">
       <div className="rm-footer__grid">
         <div>
-          <p className="rm-footer__brand">RootMath</p>
+          <p className="rm-footer__brand">RadixMaths</p>
           <p className="rm-footer__tagline">
             Say hello to the end of hefty tuition fees.
           </p>
@@ -74,8 +74,8 @@ const Footer = () => (
       </div>
 
       <p className="rm-footer__legal">
-        Copyright © Root Math Limited {new Date().getFullYear()}. Registered company in
-        England and Wales (number: 10010657). VAT Reg. No GB 249 7670 58.
+        {/* add the company and VAT numbers here once RadixMaths is registered (the old ones were Up Learn's) */}
+        Copyright © RadixMaths {new Date().getFullYear()}.
       </p>
     </div>
   </footer>
