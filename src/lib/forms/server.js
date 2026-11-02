@@ -2,13 +2,14 @@ import { createHash } from 'crypto';
 import getMongoClient from '@/lib/mongodb/db';
 
 /*
-Database code for the public forms (server only). Three collections in RootMath:
-registrations (one per email address), enquiries (one per message) and formRateLimits
-(short-lived counters that MongoDB deletes itself).
+Database code for the public forms (server only). Four collections in RootMath:
+registrations (one per email address), enquiries (one per message), teacherRequests
+(one per request) and formRateLimits (short-lived counters that MongoDB deletes itself).
 */
 
 const REGISTRATIONS = 'registrations';
 const ENQUIRIES = 'enquiries';
+const TEACHER_REQUESTS = 'teacherRequests';
 const RATE_LIMITS = 'formRateLimits';
 
 const getDb = async () => (await getMongoClient()).db('RootMath');
@@ -100,4 +101,23 @@ export async function saveEnquiry(enquiry) {
 export async function markEnquiry(id, fields) {
   const db = await getDb();
   await db.collection(ENQUIRIES).updateOne({ _id: id }, { $set: fields });
+}
+
+// Returns the new request's id, for recording which emails went out.
+export async function saveTeacherRequest({ wantsUpdates, ...request }, updatesWording) {
+  const db = await getDb();
+  const now = new Date();
+  const { insertedId } = await db.collection(TEACHER_REQUESTS).insertOne({
+    ...request,
+    updatesConsent: { given: wantsUpdates, wording: updatesWording, answeredAt: now },
+    createdAt: now,
+    notifiedAt: null,
+    autoReplySentAt: null,
+  });
+  return insertedId;
+}
+
+export async function markTeacherRequest(id, fields) {
+  const db = await getDb();
+  await db.collection(TEACHER_REQUESTS).updateOne({ _id: id }, { $set: fields });
 }

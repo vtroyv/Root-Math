@@ -791,7 +791,7 @@
 
 /* --------------------------------------------------------------------------
    Pinned-note card — shared shell
-   Used by the "Why RadixMaths" notes and the "Reasons students stick with us"
+   Used by the "Why RadixMaths" notes and the "What makes RadixMaths different"
    cards, so the two sections are one definition rather than two copies.
 
    .rm-cardslot is the outer wrapper and carries layout only; the shell lives
@@ -1566,6 +1566,46 @@
 .rm-form__note i {
   color: var(--rm-teal);
   margin-right: 0.4rem;
+}
+
+/* The /teachers form: full page width, stacked on phones and landscape from laptop width up. */
+.rm-form--wide {
+  max-width: none;
+}
+
+.rm-form__ticks {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1.75rem;
+}
+
+.rm-form__ticks .rm-consent {
+  margin-top: 0;
+}
+
+@media (min-width: 992px) {
+  .rm-form__fields {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 1.25rem;
+  }
+
+  .rm-form__fields .rm-field--wide {
+    grid-column: span 2;
+  }
+
+  /* Selects come out slightly shorter than inputs, which shows once they share a line. */
+  .rm-form__fields select.rm-input,
+  .rm-form__fields input.rm-input {
+    height: 3.125rem;
+  }
+
+  .rm-form__ticks,
+  .rm-card__list--columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.25rem;
+  }
 }
 
 /* --------------------------------------------------------------------------

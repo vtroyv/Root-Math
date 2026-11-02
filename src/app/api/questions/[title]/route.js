@@ -1,13 +1,18 @@
 //The purpose of this route should be to createa a userProgress object for users attempting a question by TOPIC if the user has 
 // never attempted that question before, otherwise the purpose should be to fetch it 
 
+import { auth } from "@clerk/nextjs/server";
 import { getSpecificQuestion, getUserQuestionProgress, createUserQuestionProgress } from "@/lib/mongodb/utils";
 import { toClientQuestion } from "@/lib/marking/sanitize";
 
 export async function POST (request, {params}) {
     // const {userProgress } = params
     // console.log('The userProgress is' , userProgress)
-    const {userId, examBoard} = await request.json();
+    // the student comes from their session, never the request, so nobody can open someone else's progress
+    const { userId } = await auth();
+    if (!userId) return Response.json({ error: 'Not signed in' }, { status: 401 });
+
+    const {examBoard} = await request.json();
     console.log('the sure id is ', userId)
 
     // console.log('The body is ', body)

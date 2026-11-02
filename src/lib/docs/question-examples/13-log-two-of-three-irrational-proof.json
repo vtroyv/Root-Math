@@ -1,0 +1,122 @@
+{
+  "title": "Log-Two-Of-Three-Irrational-Proof",
+  "type": "combination",
+  "schemaVersion": 2,
+  "topic": "Proof",
+  "difficulty": "Challenge",
+  "branch": "pure",
+  "examBoard": "all",
+  "year": "12",
+  "stem": [
+    { "type": "paragraph", "content": "Prove by contradiction that $\\log_2 3$ is irrational." }
+  ],
+  "parts": [
+    {
+      "type": "order",
+      "label": "(a)",
+      "prompt": "Build the proof by putting the lines in order. Two of the lines don't belong.",
+      "marks": 3,
+      "lines": [
+        "Assume, for contradiction, that $\\log_2 3$ is rational.",
+        "Since $3 > 1$, $\\log_2 3 > 0$, so $\\log_2 3 = \\dfrac{a}{b}$, where $a$ and $b$ are positive integers.",
+        "Writing this in index form gives $2^{a/b} = 3$.",
+        "Raising both sides to the power $b$ gives $2^a = 3^b$.",
+        "$2^a$ is even, because $a$ is a positive integer, but $3^b$ is odd.",
+        "An even number can't equal an odd number, which is a contradiction.",
+        "So $\\log_2 3$ is irrational."
+      ],
+      "distractors": [
+        "Assume, for contradiction, that $\\log_2 3$ is irrational.",
+        "Raising both sides to the power $b$ gives $2^a = 3b$."
+      ],
+      "hint": [
+        { "type": "paragraph", "content": "A proof by contradiction starts by assuming the opposite of what you want to prove. Rational means it can be written as a fraction of two integers." }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "Assume $\\log_2 3$ is rational. It is positive, so $\\log_2 3 = \\dfrac{a}{b}$ with $a$ and $b$ positive integers. Then $2^{a/b} = 3$, and raising both sides to the power $b$ gives $2^a = 3^b$." },
+        { "type": "paragraph", "content": "The left side is even and the right side is odd, which is a contradiction. So $\\log_2 3$ is irrational." },
+        { "type": "paragraph", "content": "Assuming $\\log_2 3$ is irrational is the statement we're proving, so it can't be the assumption. $2^a = 3b$ is wrong because the power $b$ applies to the whole of $3$: $3^b$, not $3b$." }
+      ]
+    },
+    {
+      "type": "answer",
+      "label": "(b)",
+      "prompt": "Fill in the box, starting from $2^{a/b} = 3$.",
+      "template": "2^{a}=3^{\\placeholder[k]{}}",
+      "blanks": {
+        "k": { "answer": "b", "feedback": "Raise both sides of $2^{a/b} = 3$ to the same power, so that the fraction in the index cancels." }
+      },
+      "solution": [
+        { "type": "paragraph", "content": "Raising both sides to the power $b$ gives $\\left(2^{a/b}\\right)^b = 3^b$, so $2^a = 3^b$." }
+      ]
+    }
+  ],
+  "review": [
+    {
+      "id": "contradiction-start",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "How does a proof by contradiction start?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "Assume the opposite of what you want to prove."
+        },
+        {
+          "type": "paragraph",
+          "content": "Then show that this assumption leads to something impossible."
+        }
+      ]
+    },
+    {
+      "id": "even-odd",
+      "type": "choice",
+      "prompt": "Why is $2^a = 3^b$ impossible when $a$ and $b$ are positive integers?",
+      "options": [
+        {
+          "id": "A",
+          "content": "$2^a$ is even and $3^b$ is odd",
+          "correct": true,
+          "why": "Every positive power of $2$ is even, and every positive power of $3$ is odd, so they can never be equal."
+        },
+        {
+          "id": "B",
+          "content": "$a$ and $b$ must be different",
+          "correct": false,
+          "why": "Different values of $a$ and $b$ don't rule it out on their own. For example, $2^4 = 4^2$."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "Looking at whether each side is even or odd gives the contradiction straight away."
+        }
+      ]
+    },
+    {
+      "id": "proof-skeleton",
+      "type": "order",
+      "prompt": "Put the steps of a proof that a value is irrational in order. One line doesn't belong.",
+      "lines": [
+        "Assume the value is rational",
+        "Write it as a fraction of two integers",
+        "Rearrange to remove the fraction",
+        "Show that this leads to something impossible",
+        "Conclude that the value is irrational"
+      ],
+      "distractors": [
+        "Check that its decimal doesn't repeat on a calculator"
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "A calculator only shows a limited number of digits, so it can never prove that a value is irrational."
+        }
+      ]
+    }
+  ]
+}

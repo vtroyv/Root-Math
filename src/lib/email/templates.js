@@ -116,6 +116,38 @@ The RadixMaths team`,
   };
 }
 
+// Goes to our own inbox, in the same Enquiries folder as the contact form (same subject prefix).
+export function teacherRequestNotification({ name, email, role, school, board, resource, topic, problem, wantsWorkshop, wantsClassTrial, wantsChat, wantsUpdates }) {
+  const rows = [
+    ['Name', name],
+    ['Email', email],
+    ['Role', role],
+    ['School or organisation', school],
+    ['Exam board', board],
+    ['Resource', resource || 'None'],
+    ['What it should cover', topic || 'Not given'],
+    ['Interested in a student workshop', wantsWorkshop ? 'Yes' : 'No'],
+    ['Interested in trying it with one class', wantsClassTrial ? 'Yes' : 'No'],
+    ['Happy to have a 20-minute chat', wantsChat ? 'Yes' : 'No'],
+    ['Email when the teacher version is ready', wantsUpdates ? 'Yes' : 'No'],
+  ];
+  const biggestProblem = problem || 'Not given';
+  return {
+    subject: `enquiry-contact-form: Teacher request, from ${name} at ${school}`,
+    html: layout(`
+      <p style="margin:0 0 16px;font-weight:bold;">New request from the teachers page</p>
+      ${rows.map(([label, value]) => `<p style="margin:0 0 6px;"><strong>${label}:</strong> ${escapeHtml(value)}</p>`).join('')}
+      <p style="margin:16px 0 6px;"><strong>Biggest problem:</strong></p>
+      <p style="margin:0;white-space:pre-wrap;">${escapeHtml(biggestProblem)}</p>`),
+    text: `New request from the teachers page
+
+${rows.map(([label, value]) => `${label}: ${value}`).join('\n')}
+
+Biggest problem:
+${biggestProblem}`,
+  };
+}
+
 // Goes to our own inbox. The subject prefix is what the mailbox's Enquiries folder rule matches.
 export function enquiryNotification({ name, email, mobile, subject, message }) {
   const rows = [

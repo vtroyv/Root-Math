@@ -1,0 +1,145 @@
+{
+  "title": "Sketch-a-Simple-Quadratic",
+  "type": "combination",
+  "schemaVersion": 2,
+  "topic": "Algebra and Functions",
+  "difficulty": "Easy",
+  "branch": "pure",
+  "examBoard": "all",
+  "year": "12",
+  "parts": [
+    {
+      "type": "sketch",
+      "prompt": "Sketch the curve $y = x^2 - 4x + 3$. Make sure it crosses the axes in the right places.",
+      "degree": 2,
+      "boundingBox": [-2, 5, 6, -3],
+      "keyPoints": [
+        {
+          "label": "y-intercept",
+          "x": 0,
+          "y": 3,
+          "threshold": 0.25,
+          "feedback": [
+            { "type": "paragraph", "content": "You have a problem with your y-intercept, let's fix that!" },
+            { "type": "paragraph", "content": "The y-intercept always has $x = 0$, so evaluate the function at $x = 0$ to get its $y$ coordinate." }
+          ]
+        },
+        {
+          "label": "first root",
+          "x": 1,
+          "y": 0,
+          "threshold": 0.25,
+          "feedback": [
+            { "type": "paragraph", "content": "There is an issue with your first root, let's fix it!" },
+            {
+              "type": "accordion",
+              "title": "What's the best way to find the roots here? Think about it, then click the arrow.",
+              "children": [
+                { "type": "paragraph", "content": "This one factorises. Find two numbers that multiply to $3$ and add to $-4$, then set each bracket equal to $0$." }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "second root",
+          "x": 3,
+          "y": 0,
+          "threshold": 0.25,
+          "feedback": [
+            { "type": "paragraph", "content": "There is an issue with your second root, let's fix it!" },
+            {
+              "type": "accordion",
+              "title": "What's the best way to find the roots here? Think about it, then click the arrow.",
+              "children": [
+                { "type": "paragraph", "content": "This one factorises. Find two numbers that multiply to $3$ and add to $-4$, then set each bracket equal to $0$." }
+              ]
+            }
+          ]
+        }
+      ],
+      "correctFeedback": [
+        { "type": "heading", "level": 3, "content": "Well done, this is correct!" },
+        {
+          "type": "bullet-points",
+          "points": [
+            "You found and plotted both roots, $\\bigl(1, 0\\bigr)$ and $\\bigl(3, 0\\bigr)$.",
+            "You also found the y-intercept $\\bigl(0, 3\\bigr)$ and plotted it correctly."
+          ]
+        },
+        { "type": "paragraph", "content": "Keep up the good work." }
+      ],
+      "hint": [
+        { "type": "paragraph", "content": "A quadratic is fixed by its roots and its y-intercept. Work those out first, then drag the points onto them." }
+      ],
+      "solution": [
+        { "type": "paragraph", "content": "y-intercept: $y = 0^2 - 4(0) + 3 = 3$, so $(0, 3)$." },
+        { "type": "paragraph", "content": "Roots: $x^2 - 4x + 3 = (x - 1)(x - 3) = 0$, so $x = 1$ and $x = 3$." },
+        { "type": "paragraph", "content": "The coefficient of $x^2$ is positive, so the curve is a U shape, with its minimum halfway between the roots at $x = 2$, $y = -1$." }
+      ]
+    }
+  ],
+  "review": [
+    {
+      "id": "key-points",
+      "type": "flip",
+      "front": [
+        {
+          "type": "paragraph",
+          "content": "To sketch $y = ax^2 + bx + c$, what do you need to work out?"
+        }
+      ],
+      "back": [
+        {
+          "type": "bold-paragraph",
+          "content": "The roots, the y-intercept and the shape."
+        },
+        {
+          "type": "paragraph",
+          "content": "Roots: where $y = 0$. y-intercept: $(0, c)$. Shape: $\\cup$ if $a > 0$, $\\cap$ if $a < 0$."
+        }
+      ]
+    },
+    {
+      "id": "shape",
+      "type": "choice",
+      "prompt": "Which way does $y = x^2 - 4x + 3$ open?",
+      "options": [
+        {
+          "id": "A",
+          "content": "$\\cup$ (it has a minimum)",
+          "correct": true,
+          "why": "The coefficient of $x^2$ is $1 > 0$, so the curve is a U shape."
+        },
+        {
+          "id": "B",
+          "content": "$\\cap$ (it has a maximum)",
+          "correct": false,
+          "why": "A $\\cap$ shape needs a negative $x^2$ coefficient. Here it's $1$."
+        }
+      ],
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "The sign of the $x^2$ coefficient decides the shape: positive gives $\\cup$, negative gives $\\cap$."
+        }
+      ]
+    },
+    {
+      "id": "y-intercept",
+      "type": "answer",
+      "prompt": "Where does $y = x^2 - 4x + 3$ cross the y-axis?",
+      "template": "\\left(0,\\ \\placeholder[y]{}\\right)",
+      "blanks": {
+        "y": {
+          "answer": "3"
+        }
+      },
+      "explanation": [
+        {
+          "type": "paragraph",
+          "content": "On the y-axis $x = 0$, so $y = c = 3$."
+        }
+      ]
+    }
+  ]
+}

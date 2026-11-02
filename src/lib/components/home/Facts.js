@@ -13,18 +13,18 @@ const pillars = [
     cta: 'See course coverage',
   },
   {
-    icon: 'bi-lightning-charge-fill',
+    icon: 'bi-signpost-split-fill',
     tilt: '0.9deg',
-    kicker: 'Feedback without the wait',
-    title: 'Instant marking',
-    body: 'You get the benefits of one-to-one tuition without the waiting or the cost.',
+    kicker: 'Stuck is where you grow',
+    title: 'Help that doesn’t do it for you',
+    body: 'Most AI hands you the answer, and you don’t find out you can’t do it until you’re alone in the exam. RadixMaths keeps the thinking with you.',
     list: [
-      'Real time marking and custom feedback',
-      'Study plans built around your weak topics',
-      'Ask a question mid-problem, get hints and redirection',
+      'Hints that point the way, without giving the answer away',
+      'Fix your mistakes and try again, keeping the parts you got right',
+      'The full solution stays hidden until you choose to see it',
     ],
-    href: '/features',
-    cta: 'How the marking works',
+    href: '/mission',
+    cta: 'Why we built it this way',
   },
   {
     icon: 'bi-collection-fill',
@@ -55,10 +55,10 @@ const Facts = () => (
   <section className="rm-section rm-container">
     <Reveal className="rm-section-head">
       <span className="rm-eyebrow">What you get</span>
-      <h2 className="rm-h2">Reasons students stick with us</h2>
+      <h2 className="rm-h2">What makes RadixMaths different</h2>
       <p className="rm-lead">
-        RadixMaths is not another video library. It marks your work, finds your gaps and
-        tells you what to do next.
+        RadixMaths is not another video library. You do the maths, get help when you need it,
+        and see exactly what to work on next.
       </p>
     </Reveal>
 

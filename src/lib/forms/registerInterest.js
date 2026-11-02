@@ -5,7 +5,7 @@ The Register Interest form's options and rules, used by the page and by
 /api/register-interest. See docs/register-interest.md.
 */
 
-const A_LEVEL_BOARDS = ['Edexcel', 'AQA', 'OCR', 'OCR (MEI)', 'CIE', 'Other / not sure yet'];
+export const A_LEVEL_BOARDS = ['Edexcel', 'AQA', 'OCR', 'OCR (MEI)', 'CIE', 'Other / not sure yet'];
 const GCSE_BOARDS = ['Edexcel', 'AQA', 'OCR', 'WJEC / Eduqas', 'CIE (IGCSE)', 'Other / not sure yet'];
 
 /* A course carries its own board list, so the exam-board questions are per course: a

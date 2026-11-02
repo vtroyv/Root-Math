@@ -33,10 +33,10 @@ const heroSymbols = [
 ];
 
 const stats = [
-  { value: '5', label: 'Exam boards covered' },
+  { value: 'A/A*', label: 'Guarantee, or your money back' },
   { value: '1,000+', label: 'Exam-style questions' },
-  { value: 'Instant', label: 'Marking & feedback' },
-  { value: '24/7', label: 'Tutor beside every question' },
+  { value: 'Hints first', label: 'Solutions only when you choose' },
+  { value: 'Review cards', label: 'Back just before you’d forget' },
 ];
 
 const LandingPage = () => {

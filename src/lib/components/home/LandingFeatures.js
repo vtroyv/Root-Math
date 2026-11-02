@@ -99,11 +99,12 @@ const LandingFeatures = () => (
     <div className="rm-container">
       <Reveal className="rm-section-head">
         <span className="rm-eyebrow">Why RadixMaths</span>
-        <h2 className="rm-h2">Built by people who found maths hard</h2>
+        <h2 className="rm-h2">Built by people who know what it&apos;s like to find maths hard</h2>
         <p className="rm-lead">
-          We remember what made it hard: getting stuck with no one to ask, forgetting a
-          topic weeks after learning it, and never knowing what to revise next. RadixMaths
-          is built to fix all three.
+          Finding maths hard isn&apos;t the problem. Getting stuck is how you grow. But in this
+          new era of AI, when an answer is only seconds away, deep and critical thinking are
+          at risk. RadixMaths is built to keep you doing the thinking yourself, with other
+          students beside you, reviews that make it stick, and a clear next step.
         </p>
       </Reveal>
 

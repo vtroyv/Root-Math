@@ -129,7 +129,7 @@ It exports **`getMongoClient()`**, which shares one MongoDB connection, cached o
 
 | Route | What it does | Who it trusts |
 |---|---|---|
-| [POST /api/questions/[title]](../../app/api/questions/%5Btitle%5D/route.js) | Returns the question **passed through `toClientQuestion`** (answer keys and `review` cards removed; old-format documents unchanged), plus the progress, created as `{ status: 'Todo', feedback: [], attempts: 0, … }` if new. | `userId` from the request body ⚠️ |
+| [POST /api/questions/[title]](../../app/api/questions/%5Btitle%5D/route.js) | Returns the question **passed through `toClientQuestion`** (answer keys and `review` cards removed; old-format documents unchanged), plus the progress, created as `{ status: 'Todo', feedback: [], attempts: 0, … }` if new. | Clerk `auth()` ✅ |
 | [POST /api/mark](../../app/api/mark/route.js) | Re-reads the full question and marks every part (`src/lib/marking/`). Returns `{ results[], marksAwarded, marksAvailable, status, feedback }`. | Clerk `auth()` ✅ |
 | [POST /api/question-progress](../../app/api/question-progress/route.js) | `replaceOne` of the progress document. | `userId` from the body ⚠️ |
 | [/api/reviews/…](../../app/api/reviews/) | `GET question/[title]`, `POST check`, `POST rate`: see [question-reviews.md](question-reviews.md). | Clerk `auth()` ✅ |
@@ -307,7 +307,7 @@ File: [learn/MyTutor.js](../components/learn/MyTutor.js). It was redesigned in t
 
 ### Still open
 
-- **⚠️ Three routes trust `userId` from the request** (`/api/questions/[title]`, `/api/question-progress`, `GET /api/questions`), so anyone could read or overwrite anyone's progress. They should use `auth()` like the newer routes.
+- **⚠️ Two routes trust `userId` from the request** (`/api/question-progress`, `GET /api/questions`), so anyone could read or overwrite anyone's progress. They should use `auth()` like the newer routes.
 - **Logged out means "Loading..." forever.** The middleware doesn't protect `/learn`. Add `auth.protect()` for `/learn(.*)`, and upgrade Next.js first (below).
 - **Upgrade Next.js** to ≥ 14.2.25. Clerk requires it (installs need `--legacy-peer-deps` until then), and it patches the middleware auth-bypass vulnerability (CVE-2025-29927).
 - **Every Submit re-marks every part.** That's fine while LLM marking is simulated, but it costs a real LLM call per `working`/`explain` part once FastAPI is live.

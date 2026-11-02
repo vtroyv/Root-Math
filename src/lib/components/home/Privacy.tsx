@@ -71,6 +71,11 @@ export default function Privacy() {
               you choose to give it, and your message.
             </li>
             <li>
+              <strong>When you send a request from our teachers page:</strong> your name, work
+              email address, role, school, college or organisation, exam board, the resource you
+              ask for, and anything you tell us about your teaching.
+            </li>
+            <li>
               <strong>When you create an account:</strong> your name, email address and sign-in
               details. Signing in is handled by Clerk, so we never see your password.
             </li>
