@@ -1,32 +1,33 @@
 // components/Mission.tsx — the /mission page.
 import React from 'react';
+import Link from 'next/link';
 import Reveal from './Reveal';
 import Footer from './Footer';
 
-/* The three pillars, carried over word for word from the old page. `tilt` is
-   the resting angle of the note card, as on the landing page — small and
-   alternating, so a row of them looks pinned up rather than printed. */
+/* The mission in Troy's own framing: the point is maths and how people learn it, with AI
+   as the reason it's urgent. `tilt` is the resting angle of the note card, as on the
+   landing page: small and alternating, so a row of them looks pinned up. */
 const pillars = [
   {
-    icon: 'bi-mortarboard-fill',
-    tilt: '-1.2deg',
-    title: 'Empower Every Student',
-    body:
-      'At RadixMaths, our mission is to democratise top-tier A-Level maths tuition by harnessing technology and Oxford/Cambridge-trained tutors. We believe every student—regardless of background or school—deserves access to high-quality lessons, personalised support, and a community that values excellence. Through targeted video lessons, on-demand tutor support, and interactive quizzes, we guide students from foundational concepts all the way to A* mastery.',
-  },
-  {
     icon: 'bi-lightbulb-fill',
-    tilt: '0.9deg',
-    title: 'Build Confidence Through Understanding',
+    tilt: '-1.2deg',
+    title: 'More than a grade',
     body:
-      'More than memorisation, we focus on deep conceptual clarity. Our structured curriculum breaks down complex topics into bite-sized modules, ensuring students understand the “why” behind every theorem and technique. By building that strong foundation, students gain confidence to tackle any exam question—whether it’s pure calculus, mechanics, or statistics.',
+      'Learning maths properly gives you far more than an exam result. It builds the deeper skills underneath: problem solving, intuition, creativity, and the ability to narrow a huge search space of possible solutions down to the few worth trying when you face a hard decision. Those skills last long after the formulas fade.',
   },
   {
-    icon: 'bi-people-fill',
-    tilt: '-0.8deg',
-    title: 'Foster a Collaborative Community',
+    icon: 'bi-exclamation-triangle-fill',
+    tilt: '0.9deg',
+    title: 'Deep thinking is under threat',
     body:
-      'We’re more than a platform—we’re a community. From weekly group workshops to an interactive forum, students learn alongside peers who share their academic goals. RadixMaths’ community encourages knowledge-sharing, peer support, and healthy competition, all in a safe, moderated environment. Our goal is to foster lifelong curiosity and a love for mathematics.',
+      'Certain AI tools can frequently kill learning. Students no longer sit on problems. They get the answer in seconds, it feels like progress, and they don’t find out they can’t do it until they’re alone in the exam. We’re entering a time of little deep thinking, where the motivation to learn, and even the need to, seem to be disappearing.',
+  },
+  {
+    icon: 'bi-signpost-split-fill',
+    tilt: '-0.8deg',
+    title: 'RadixMaths is the bridge',
+    body:
+      'Ignoring these tools and refusing to use them isn’t the right answer either. RadixMaths is here to guide students through this new era. But it doesn’t act like other AI services, handing over the answer straight away and taking away the uncomfortable feeling of being stuck, which is exactly what makes students grow. Instead, we harness the power of AI just enough to help you learn more and solve harder problems than you could have before AI, without taking away the need to get stuck and think deeply or the drive to get yourself unstuck. That’s what mathematics is all about.',
   },
 ];
 
@@ -43,7 +44,8 @@ export default function Mission() {
               Our <span className="rm-underline">mission</span>
             </h1>
             <p className="rm-lead">
-              Why RadixMaths exists and how we empower students to excel in A-Level maths.
+              To foster a new era of mathematical learning, one that builds how you think, at
+              a time when the motivation to learn, and the need to, seem to be under threat.
             </p>
           </div>
         </div>
@@ -66,6 +68,15 @@ export default function Mission() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal className="rm-section-head" style={{ marginTop: 'var(--rm-section-y)', marginBottom: 0 }}>
+          <h2 className="rm-h2">
+            A top grade is the goal. The way of thinking you build getting there is what lasts.
+          </h2>
+          <Link href="/register" className="rm-btn rm-btn--primary rm-btn--lg">
+            Register your interest
+          </Link>
+        </Reveal>
       </section>
 
       <Footer />

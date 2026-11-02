@@ -3,58 +3,56 @@ import React from 'react';
 import Reveal from './Reveal';
 import Footer from './Footer';
 
-/* Titles and descriptions are carried over word for word from the old page —
-   they describe what RadixMaths is meant to do rather than what it does today,
-   so they are due a pass once the feature set settles. The `icon` is a
-   bootstrap-icons name, replacing the hand-rolled SVGs. */
+/* Strongest selling points first. Marking is deliberately not the headline, because
+   every AI tool can do it. The `icon` is a bootstrap-icons name. */
 const featureItems = [
   {
-    title: 'Unlimited Tutor Support',
-    icon: 'bi-chat-dots-fill',
+    title: 'Lessons that check you’ve got it',
+    icon: 'bi-journal-check',
     description:
-      'Connect with our expert tutors 24/7. Get instant help on any question—video calls, chat, or email, whenever you need it.',
+      'Every topic is split into short parts, with questions inside each one. Finish a part’s questions before moving on, so completing a lesson means you can do it, not just that you’ve watched it.',
   },
   {
-    title: 'Comprehensive Video Lessons',
+    title: 'Videos that show you how it works',
     icon: 'bi-play-btn-fill',
     description:
-      'Step-by-step, syllabus-aligned video lessons filmed by A*-achieving instructors. Learn at your own pace, pause/replay as much as you like.',
+      'A short video for every lesson part and question, with moving graphs for every graphical topic. Pause, rewind and rewatch until it clicks.',
   },
   {
-    title: 'Exam-Style Quizzes & Past Papers',
-    icon: 'bi-file-earmark-text-fill',
+    title: 'Answer like you would on paper',
+    icon: 'bi-pencil-fill',
     description:
-      'Test your knowledge with interactive quizzes after every topic. Plus, access fully worked past papers with examiner feedback.',
+      'Sketch curves, plot points, order proof steps and write out your working. Exam-style questions and custom papers you won’t find anywhere else come with feedback on each part, model solutions and mark schemes.',
   },
   {
-    title: 'Personalised Progress Tracking',
-    icon: 'bi-graph-up-arrow',
+    title: 'Reviews that make it stick',
+    icon: 'bi-arrow-repeat',
     description:
-      'Our dashboard highlights your strengths and weaknesses. See your performance over time and receive curated recommendations.',
+      'Finishing a lesson or question unlocks short review cards. Each one comes back just before you’d forget it, so your work is still there on exam day.',
   },
   {
-    title: 'Live Group Workshops',
-    icon: 'bi-camera-video-fill',
+    title: 'Always know what to do next',
+    icon: 'bi-bullseye',
     description:
-      'Participate in weekly live workshops with peers and instructors. Collaborative problem-solving and real-time Q&A sessions.',
+      'Your Progress page shows your strengths and weaknesses in every topic, which lessons to focus on and which reviews are due. Spend your time on the maths, not on planning.',
   },
   {
-    title: 'Personalised Revision Plans',
-    icon: 'bi-calendar-check-fill',
+    title: 'Help where you’re stuck',
+    icon: 'bi-chat-dots-fill',
     description:
-      'Receive a custom revision schedule based on your performance. Focus on weak areas and track completion as you go.',
+      'A tutor beside every question already knows the question and part you’re on, and your weakest topics. Hints move you one step at a time, so you still do the maths yourself.',
   },
   {
-    title: 'Exam Tips & Strategy',
-    icon: 'bi-lightbulb-fill',
-    description:
-      'Learn expert strategies for time management, question approach, and stress reduction to maximise your exam performance.',
-  },
-  {
-    title: 'Community Forum Access',
+    title: 'Learn alongside other students',
     icon: 'bi-people-fill',
     description:
-      'Join our private forum to discuss problems, share resources, and learn from a community of motivated students.',
+      'Every lesson and question has its own comments. See how others solved the same problem, ask about the exact step you’re stuck on and swap shortcuts, with the best answers pinned by our team.',
+  },
+  {
+    title: 'The A/A* guarantee',
+    icon: 'bi-patch-check-fill',
+    description:
+      'Keep your progress high in every topic up to your first exam. If you still fall short of an A or A*, send us your results within 30 days for a full refund.',
   },
 ];
 
@@ -71,14 +69,14 @@ export default function Features() {
               Our key <span className="rm-underline">features</span>
             </h1>
             <p className="rm-lead">
-              Everything you need to reach A*-A grades—available anytime, anywhere.
+              Built for the hours you spend studying on your own, from your first lesson to exam day.
             </p>
           </div>
         </div>
       </header>
 
       <section className="rm-section rm-container">
-        <div className="rm-grid rm-grid--4">
+        <div className="rm-grid rm-grid--2">
           {featureItems.map((feature, index) => (
             <Reveal key={feature.title} className="rm-card" delay={index * 70}>
               <span className="rm-card__icon" aria-hidden="true">

@@ -35,6 +35,8 @@
     "**/*.js"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/lib/cortex/compute-engine-main/test",
+    "src/lib/cortex/compute-engine-main/scripts"
   ]
 }

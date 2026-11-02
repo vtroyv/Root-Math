@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { SOCIALS } from '@/lib/socials';
 
 const columns = [
   {
@@ -28,17 +29,9 @@ const columns = [
     heading: 'Support',
     links: [
       { label: 'Contact us', href: '/contact' },
-  
+      { label: 'Privacy policy', href: '/privacy' },
     ],
   },
-];
-
-const socials = [
-  { label: 'Instagram', icon: 'bi-instagram' },
-  { label: 'Facebook', icon: 'bi-facebook' },
-  { label: 'Twitter', icon: 'bi-twitter' },
-  { label: 'TikTok', icon: 'bi-tiktok' },
-  { label: 'YouTube', icon: 'bi-youtube' },
 ];
 
 const Footer = () => (
@@ -51,8 +44,8 @@ const Footer = () => (
             Say hello to the end of hefty tuition fees.
           </p>
           <div className="rm-footer__socials">
-            {socials.map((social) => (
-              <a key={social.label} href="/" aria-label={social.label}>
+            {SOCIALS.map((social) => (
+              <a key={social.label} href={social.href} aria-label={social.label}>
                 <i className={`bi ${social.icon}`} aria-hidden="true" />
               </a>
             ))}

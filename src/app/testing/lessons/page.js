@@ -1254,7 +1254,7 @@ const stationairypointsAndTheirNature = {
         {type:'paragraph', content:"Testing"}, 
         {
           type:'image', 
-          url:"/Images/repeated-root.png"
+          url:"/images/repeated-root.png"
         }
       ]
     }, 
@@ -2060,7 +2060,7 @@ const whatAreVectors = {
     },
     {
       "type": "image",
-      "url": "/Images/vectorRS.png",
+      "url": "/images/vectorRS.png",
       "alt": "Arrow pointing from P to Q representing vector RS",
       "caption": "A vector starting at R and ending at S is written as $\\overrightarrow{RS}$."
     },
@@ -2074,7 +2074,7 @@ const whatAreVectors = {
     },
     {
       "type": "image",
-      "url": "/Images/vectorSR.png",
+      "url": "/images/vectorSR.png",
       "alt": "Arrow pointing from S to R representing vector SR",
       "caption": "A vector starting at S and ending at R is written as $\\overrightarrow{SR}$."
     },
@@ -2089,7 +2089,7 @@ const whatAreVectors = {
     },
     {
       "type": "image",
-      "url": "/Images/vectorRS-bolda.png",
+      "url": "/images/vectorRS-bolda.png",
       "alt": "Image showing a vector labeled with bold letter a",
       "caption": "The vector $\\mathbf{a}$ shown as a directed arrow."
     },
@@ -2120,7 +2120,7 @@ const whatAreVectors = {
     },
     {
       "type": "image",
-      "url": "/Images/PQequalRS.png",
+      "url": "/images/PQequalRS.png",
       "alt": "Two directed line segments PQ and RS shown as equal in length and direction"
     },
     {
@@ -2138,7 +2138,7 @@ const whatAreVectors = {
     },
     {
       "type": "image",
-      "url": "/Images/EqualOppositeVectors.png",
+      "url": "/images/EqualOppositeVectors.png",
       "alt": "Vector AB and vector BA shown with opposite directions but equal lengths"
     },
     {
@@ -2156,7 +2156,7 @@ const whatAreVectors = {
     },
     {
       "type": "image",
-      "url": "/Images/parallelVectors.png",
+      "url": "/images/parallelVectors.png",
       "alt": "Vector a,  1/2a, -a  shown parallel in the same direction, and -a shown parallel but in the opposite direction"
     },
     {
@@ -3174,7 +3174,7 @@ const priorKnowledge = {
 },
 {
 "type": "image",
-"url": "/Images/right-angled-triangle.png",
+"url": "/images/right-angled-triangle.png",
 "alt": "[A right-angled triangle with a small square marking the right angle; the other acute angle labelled $\theta$; the three sides highlighted]",
 "caption": "[Right-angled triangle with one angle $90^{\\circ}$ and another labelled $\\theta$]"
 },
@@ -3209,7 +3209,7 @@ const priorKnowledge = {
 },
 {
 "type": "image",
-"url": "/Images/different-angle-rh-triangle.png",
+"url": "/images/different-angle-rh-triangle.png",
 "alt": "[Two right-angled triangles sharing the same shape: in the first, $\theta$ at the right-hand corner with sides labelled hypotenuse, opposite, adjacent relative to $\theta$; in the second, $\theta$ at the left-hand corner showing how opposite/adjacent change]",
 "caption": "[Opposite and adjacent are named relative to the chosen angle $\theta$]"
 },
@@ -3225,7 +3225,7 @@ const priorKnowledge = {
         },
         {
           "type": "image",
-          "url": "/Images/right-angled-triangle.png",
+          "url": "/images/right-angled-triangle.png",
           "alt": "[Right-angled triangle with sides labelled hypotenuse, opposite, adjacent relative to angle $\\theta$]",
           "caption": "[Triangle showing hypotenuse, opposite and adjacent relative to $\\theta$]"
         },
@@ -3277,7 +3277,7 @@ const priorKnowledge = {
           "children": [
             {
           "type": "image",
-          "url": "/Images/pythagoras-theorem.png",
+          "url": "/images/pythagoras-theorem.png",
           "alt": "[Right-angled triangle with sides labelled hypotenuse, opposite, adjacent relative to angle $\\theta$]",
           "caption": "[Triangle showing hypotenuse, opposite and adjacent relative to $\\theta$]"
         },
@@ -3331,7 +3331,7 @@ const priorKnowledge = {
         },
         {
           "type": "image",
-          "url": "/Images/isosceles-triangle.png",
+          "url": "/images/isosceles-triangle.png",
           "alt": "[Isosceles triangle with two equal sides marked and base angles labelled as equal]",
           "caption": "[An isosceles triangle showing two equal sides and equal base angles]"
         },
@@ -3346,7 +3346,7 @@ const priorKnowledge = {
         },
         {
           "type": "image",
-          "url": "/Images/equilateral-triangle.png",
+          "url": "/images/equilateral-triangle.png",
           "alt": "[Equilateral triangle with all three sides and all three angles marked equal]",
           "caption": "[An equilateral triangle with all sides and angles equal]"
         },
@@ -3361,7 +3361,7 @@ const priorKnowledge = {
         },
         {
           "type": "image",
-          "url": "/Images/scalene-triangle.png",
+          "url": "/images/scalene-triangle.png",
           "alt": "[Scalene triangle with all three sides of different lengths]",
           "caption": "[A scalene triangle showing three sides of different lengths]"
         },
@@ -3389,7 +3389,7 @@ const priorKnowledge = {
         },
         {
           "type": "image",
-          "url": "/Images/different-triangle-types-question.png",
+          "url": "/images/different-triangle-types-question.png",
           "alt": "[Scalene triangle with vertices A(0,0), B(6,0), C(4,5). A perpendicular from C dropped onto AB to form a right-angled triangle]",
           "caption": "[Triangle $ABC$ with coordinates $A(0,0)$, $B(6,0)$, $C(4,5)$. A perpendicular is drawn from $C$ to meet $AB$ at point $D$, forming a right-angled triangle $ADC$. Angle at $A$ is given as $53^\\circ$. Find $AC$ using trigonometry and Pythagoras.]"
         },
@@ -3399,7 +3399,7 @@ const priorKnowledge = {
           "children": [
             {
           "type": "image",
-          "url": "/Images/pythagoras-theorem.png",
+          "url": "/images/pythagoras-theorem.png",
           "alt": "[Right-angled triangle with sides labelled hypotenuse, opposite, adjacent relative to angle $\\theta$]",
           "caption": "[Triangle showing hypotenuse, opposite and adjacent relative to $\\theta$]"
         },
@@ -3413,7 +3413,7 @@ const priorKnowledge = {
         },
         {
            "type": "image",
-          "url": "/Images/pythagoras-theorem.png",
+          "url": "/images/pythagoras-theorem.png",
           "alt": "[Right-angled triangle with sides labelled hypotenuse, opposite, adjacent relative to angle $\\theta$]",
           "caption": "[Triangle showing hypotenuse, opposite and adjacent relative to $\\theta$]"
         },
@@ -3443,7 +3443,7 @@ const priorKnowledge = {
         },
         {
           "type": "image",
-          "url": "/Images/right-angled-triangle.png",
+          "url": "/images/right-angled-triangle.png",
           "alt": "[Right-angled triangle with angle $\\theta$ labelled and opposite, adjacent, hypotenuse marked]",
           "caption": "[Triangle showing sides and angle $\\theta$ relative to which we apply inverse trig functions]"
         },
@@ -3467,7 +3467,7 @@ const priorKnowledge = {
         },
         {
           "type": "image",
-          "url": "/Images/inverse-trig-example-1.png",
+          "url": "/images/inverse-trig-example-1.png",
           "alt": "[Right-angled triangle with adjacent side 4 units, opposite side 3 units, angle $\\theta$ marked at the base corner]",
           "caption": "[Triangle with adjacent $=4$, opposite $=3$, hypotenuse unknown. Find $\\theta$.]"
         },
@@ -3493,7 +3493,7 @@ const priorKnowledge = {
         },
         {
           "type": "image",
-          "url": "/Images/inverse-trig-example-2.png",
+          "url": "/images/inverse-trig-example-2.png",
           "alt": "[Scalene triangle with vertices $A(0,0)$, $B(5,0)$, $C(2,4)$. A perpendicular is dropped from $C$ to meet $AB$ at point $D$, forming right-angled triangle $BDC$. Angle $ABC$ is highlighted to be found.]",
           "caption": "[Scalene triangle $ABC$ with altitude $CD$ drawn. Use right triangle $BDC$ to find angle $ABC$.]"
         },
@@ -3511,7 +3511,7 @@ const priorKnowledge = {
         }, 
         {
           "type":"image", 
-          "url":"/Images/inverse-trig-example-2a.png", 
+          "url":"/images/inverse-trig-example-2a.png", 
           "alt":"same as the example 2 question image with a perpendicular line drawn down from C to AB to form a right angled triangle"
         },
         {
@@ -3622,7 +3622,7 @@ const cosineRule = {
 },
 {
 "type": "image",
-"url": "/Images/cosine-rule.png",
+"url": "/images/cosine-rule.png",
 "alt": "A triangle with angles A, B and C, with corresponding sides opposite each angle labled a,b and c",
 "caption": "The Cosine Rule "
 },
@@ -3633,7 +3633,7 @@ const cosineRule = {
 }, 
 {
 "type": "image",
-"url": "/Images/cosine-rule-example-1.png",
+"url": "/images/cosine-rule-example-1.png",
 "alt": "A triangle with angles 45°, and surround sides b=8cm and c = 7c,",
 "caption": "The Cosine Rule- Example 1 "
 },
@@ -3647,7 +3647,7 @@ const cosineRule = {
       children:[
         {
 "type": "image",
-"url": "/Images/cosine-rule-example-1.png",
+"url": "/images/cosine-rule-example-1.png",
 "alt": "A triangle with angles 45°, and surround sides b=8cm and c = 7c,",
 "caption": "The Cosine Rule- Example 1 "
 },
@@ -3685,7 +3685,7 @@ const cosineRule = {
         }, 
         {
           "type": "image",
-          "url": "/Images/arbitrary-triangle.png",
+          "url": "/images/arbitrary-triangle.png",
           "alt": "A triangle with angles, and surrounding sides labelled,",
           "caption": "A arbitrary triangle "
         },
@@ -3699,7 +3699,7 @@ const cosineRule = {
         },
         {
           "type": "image",
-          "url": "/Images/arbitrary-triangle-perpendicular-line.png",
+          "url": "/images/arbitrary-triangle-perpendicular-line.png",
           "alt": "A triangle with angles, and surrounding sides labelled,with a perpendicular line from angle C to side c",
           "caption": "A arbitrary triangle with perpendicular line "
         },
@@ -3771,7 +3771,7 @@ const CirclesAndRatios = {
         },
         {
           "type": "image",
-          "url": "/Images/the-unit-circle.png",
+          "url": "/images/the-unit-circle.png",
           "alt": "[A circle centred at the origin with radius 1, labelled as 'unit circle']",
           "caption": "[The unit circle has radius 1 and is centred at the origin]"
         },
@@ -3781,7 +3781,7 @@ const CirclesAndRatios = {
         },
         {
           "type": "image",
-          "url": "/Images/trig-unit-circle.png",
+          "url": "/images/trig-unit-circle.png",
           "alt": "[Unit circle with a point P at angle θ from the positive x-axis. Right-angled triangle drawn with horizontal base, vertical height, and hypotenuse OP labelled. Coordinates of P shown as $(\\cos \\theta, \\sin \\theta)$]",
           "caption": "[Point $P$ on the unit circle with coordinates $(\\cos\\theta, \\sin\\theta)$]"
         },
@@ -3822,7 +3822,7 @@ const CirclesAndRatios = {
         },
         {
           "type": "image",
-          "url": "/Images/unit-circle-anticlockwise.png",
+          "url": "/images/unit-circle-anticlockwise.png",
           "alt": "[Unit circle with an arrow showing a positive angle θ measured anticlockwise from the positive x-axis, and another arrow showing a negative angle measured clockwise]",
           "caption": "[Angles are measured anticlockwise for positive $\\theta$, clockwise for negative $\\theta$]"
         }

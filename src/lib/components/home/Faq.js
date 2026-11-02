@@ -4,100 +4,164 @@ import Reveal from './Reveal';
 
 const faqs = [
   {
-    q: 'How do we get our A/A* guarantee?',
+    // first on purpose: the question most students will have in mind
+    q: 'Why use RadixMaths instead of ChatGPT?',
     a: [
       <>
-        RadixMaths uses machine learning and well-researched study techniques to assess each
-        student&apos;s current working level, then assigns daily and weekly targets aimed at
-        an A or A*.
+        We&apos;ll be honest: ChatGPT, Claude and Gemini are extremely capable. But they&apos;re
+        built to be as general as possible, not to teach A Level Maths.
       </>,
       <>
-        We are confident enough in the platform that any student who fulfils their targets
-        and still falls short of an A/A* gets a full refund. You can read the detail{' '}
-        <Link href="/features" className="rm-link">
-          here
-        </Link>
-        .
+        The catch is that they&apos;re only as good as the instructions you give them. Without
+        careful prompting you usually get a long answer that&apos;s hard to take in when
+        you&apos;re meeting a difficult idea for the first time, and everything stops at the
+        chat window.
+      </>,
+      <>
+        RadixMaths is built around what a chatbot doesn&apos;t give you.{' '}
+        <strong>A course for your exam board</strong>, in short steps with a video for every
+        part. <strong>Questions inside every lesson</strong> that you get right before moving
+        on. <strong>Marking against the mark scheme</strong>, part by part, the moment you
+        submit. <strong>Review cards</strong> that bring each topic back just before
+        you&apos;d forget it. <strong>A Progress page</strong> that tracks your strengths and
+        weaknesses and sets your targets. And <strong>a community</strong> of students on the
+        same questions, sharing tricks and helping each other, with answers checked by our
+        team - something AI models can&apos;t replicate.
+      </>,
+      <>
+        So if you&apos;re paying for a chatbot mainly for A Level Maths, RadixMaths is a more
+        focused option for about the same price or less. But if what you&apos;re doing is
+        already getting you top grades, don&apos;t fix what isn&apos;t broken. We want to help
+        shape how students learn in the age of AI, and that starts with telling you when
+        you don&apos;t need us.
       </>,
     ],
   },
   {
-    q: 'Is it worth getting RadixMaths in year 12?',
+    q: 'Why pay when there are free resources online?',
     a: [
       <>
-        Absolutely. You may not sit real exams in year 12, but it is the year your
-        performance sets the predicted grades you apply to university with.
+        There are some brilliant free resources out there, and if they&apos;re getting you the
+        grades you want, don&apos;t fix what isn&apos;t broken.
       </>,
       <>
-        Getting those grades right matters just as much — and it is far easier with
-        RadixMaths behind you.
+        Free resources work well right up until you get stuck. The video shows the method,
+        the mark scheme shows the answer, and you&apos;re left alone with the gap in between,
+        piecing it together from forum threads and a dozen open tabs.
+      </>,
+      <>
+        RadixMaths is built to step in exactly there. Its lessons, questions and videos are
+        made to match the best free content out there, and around them sit two things free
+        resources can&apos;t offer: a community where you can see how other students solved the
+        same problem, often in a completely different way to you, and a personal tutor that
+        knows every lesson, question and video on the site, as well as your strengths and
+        weaknesses, so wherever you stumble, it can turn that into a path you can walk, one
+        step at a time.
+      </>,
+      <>
+        So if you&apos;d rather switch off the planning and admin part of your brain, and leave
+        what to study, when to study it and how to go about it to us, RadixMaths is for
+        you. You spend your time on the maths, all backed by our A/A* guarantee.
       </>,
     ],
   },
   {
-    q: 'How do I know RadixMaths will actually help me?',
+    q: 'Why use RadixMaths instead of a private tutor?',
     a: [
       <>
-        RadixMaths is built to cater to every student&apos;s needs, whatever your background or
-        starting knowledge level.
+        Most of a student&apos;s learning doesn&apos;t happen in the classroom or in a one-hour
+        tutoring session. It happens on their own: doing homework, revising, and getting
+        stuck on a question at 9pm with nobody to ask.
       </>,
       <>
-        We have drawn on an arsenal of world-class study techniques to help all students
-        reach the highest grades. You can read more about the learning techniques built
-        into the platform{' '}
-        <Link href="/features" className="rm-link">
-          here
-        </Link>
-        .
+        RadixMaths is built on a simple belief: your grade is ultimately in your hands, not
+        your school&apos;s or your tutor&apos;s. So it&apos;s designed to help where you need it most,
+        when you&apos;re working by yourself, marking every answer the moment you submit it,
+        showing you where you went wrong and telling you what to work on next.
+      </>,
+      <>
+        It also costs far less. A good tutor is brilliant, but at around £40 an hour most
+        students get one hour a week, if they can find a good tutor with space at all.
+        RadixMaths costs less than half that for a whole month.
       </>,
     ],
   },
   {
-    q: 'How does the integrated tutor work?',
+    q: 'How does the A/A* guarantee work?',
     a: [
       <>
-        You get an AI-powered tutor you can ask anything you would ask a real one — mid
-        question, at 2am, as many times as you like.
+        Your Progress page shows how well you understand every topic on your course. It
+        rises as you complete lessons, answer questions and keep up with your review cards,
+        and it drops in any topic where you let your reviews slip.
       </>,
       <>
-        It exists to bridge the gap between online learning platforms and traditional
-        tuition: all the benefits, a fraction of the cost.{' '}
-        <Link href="/features" className="rm-link">
-          Learn more
-        </Link>
-        .
+        Keep your progress high in every topic up to the day of your first exam and
+        you&apos;re automatically eligible. If you still fall short of an A or A*, send us your
+        results within 30 days and we&apos;ll refund every payment you&apos;ve made. The exact
+        progress needed will be set out in our full guarantee terms at launch.
       </>,
     ],
   },
   {
-    q: 'What makes RadixMaths lessons special?',
+    q: 'How much does it cost, and can I cancel?',
     a: [
       <>
-        Our videos use scenarios that relate to your actual life to build concrete
-        examples, then use animation and gamification to carry you from those examples
-        into abstract thinking.
+        £17.99 a month per course, and you only pay for the courses you take. Monthly plans
+        can be cancelled any time, or you can pay upfront through to 31 July and save 10%.
       </>,
       <>
-        Quizzes and the AI tutor are built into the lessons themselves, so you are
-        practising as you learn rather than after it.
-      </>,
-    ],
-  },
-  {
-    q: 'Does a course include both year 12 and year 13 content?',
-    a: [
-      <>
-        Yes. When you buy a course you choose how long you have access for — a student
-        starting year 12 can pay through to their exams at the end of year 13, while a
-        year 13 student pays through to that year&apos;s exam season.
-      </>,
-      <>
-        However long you choose, each course contains the relevant year 12 and year 13
-        material.{' '}
+        Every course covers both Year 12 and Year 13, so a Year 12 student can carry on
+        straight through to their exams.{' '}
         <Link href="/pricing" className="rm-link">
           See pricing
         </Link>
         .
+      </>,
+    ],
+  },
+  {
+    q: 'When does RadixMaths launch, and what do I get for registering?',
+    a: [
+      <>
+        All of Year 12 A Level Maths opens on 1 December, and Year 13 follows in January.
+        Further Maths, GCSE, STEP and TMUA come after that.
+      </>,
+      <>
+        Register your interest and we will email you the moment it opens, with
+        the early-access price for everyone who registers before launch and a free trial so
+        you can try it before you pay.{' '}
+        <Link href="/register" className="rm-link">
+          Register interest
+        </Link>
+        .
+      </>,
+    ],
+  },
+  {
+    q: "I'm in Year 13. Is it too late to start?",
+    a: [
+      <>
+        Not at all. Year 12 topics make up roughly half of what&apos;s examined at A Level, and
+        all of Year 12 is ready to revise from 1 December, in time for January mocks. Year
+        13 follows in January.
+      </>,
+      <>
+        Review cards bring each topic back just before you&apos;d forget it, so what you revise
+        now is still there in the summer, and your Progress page shows you which topics to
+        spend your remaining time on.
+      </>,
+    ],
+  },
+  {
+    q: 'Can parents see how their child is doing?',
+    a: [
+      <>
+        Yes. Parents can follow their child&apos;s progress: which topics they are strongest
+        and weakest in, and whether they are keeping up with their targets and reviews.
+      </>,
+      <>
+        It is the same record the A/A* guarantee is based on, so you can see they are on
+        track long before results day.
       </>,
     ],
   },

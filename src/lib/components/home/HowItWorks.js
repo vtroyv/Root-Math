@@ -1,10 +1,18 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
+import Image, { getImageProps } from 'next/image';
 import Link from 'next/link';
+import { Cabin_Sketch } from 'next/font/google';
 import { Modal } from 'reactstrap';
 import ProgressRadar from '@/lib/components/learn/progress/ProgressRadar';
 import { SPECS } from '@/lib/mastery/specs';
+import lessonShot from '../../../../public/images/see-how-it-works-1.png';
+import videoShot from '../../../../public/images/see-how-it-works-3.png';
+import markingShot from '../../../../public/images/see-how-it-works-2.png';
+import communityShot from '../../../../public/images/see-how-it-works-7.png';
+import sketchShot from '../../../../public/images/points-connected.png';
+import reviewShot from '../../../../public/images/see-how-it-works-6.png';
+import tutorShot from '../../../../public/images/see-how-it-works-8.png';
 
 /*
 "See how it works" on the landing page: a carousel of RadixMaths' features in a pop-up
@@ -12,10 +20,15 @@ import { SPECS } from '@/lib/mastery/specs';
 ← → keys move between slides. There's no autoplay and no slide animation (the styling
 preference is plain state changes), and the last slide ends on Register Interest.
 
-Each slide's `visual` is an image (`image`, with a play button over it if `play`) or the real Progress page radar chart drawn with
+Each slide's `visual` is an image (`image`, imported so its size is known and the space is
+reserved before it loads, with a play button over it if `play`) or the real Progress page radar chart drawn with
 example data (`radar`). Most images are screenshots of the feature; keep `alt` describing
 what's in the screenshot when one is swapped.
 */
+
+// Real bold for the slide headings only. The rest of the site's bold text relies on the
+// regular weight loaded in bootstrap.css, so loading bold there would change all of it.
+const headingFont = Cabin_Sketch({ weight: '700', subsets: ['latin'] });
 
 const slides = [
   {
@@ -23,42 +36,42 @@ const slides = [
     title: 'Lessons that teach you step by step',
     body: 'Every topic on your specification, broken into short parts you can finish in one sitting.',
     points: ['Clear explanations with worked examples', 'Complicated concepts made easy to grasp '  ,'Tasks checked as you go, with a hint whenever you get stuck'],
-    visual: { image: { url: '/images/see-how-it-works-1.png', alt: 'A Quadratic Graphs lesson: the explanation and graphs on the left, a proof task in the middle, and feedback for each task on the right' } },
+    visual: { image: { src: lessonShot, alt: 'A Quadratic Graphs lesson: the explanation and graphs on the left, a proof task in the middle, and feedback for each task on the right' } },
   },
   {
     icon: 'bi-play-btn',
     title: 'In depth videos for every lesson and question',
     body: 'Learn best by watching? Each lesson part and question comes with a short video that walks you through the idea, so you can see it done before you try it yourself.',
     points: ['Concepts explained visually, one step at a time', 'Worked solutions you can pause, rewind and rewatch', 'Ideal for visual learners, or whenever you are stuck'],
-    visual: { image: { url: '/images/see-how-it-works-3.png', alt: 'A lesson video playing over the First Principles lesson, showing the chord AB getting closer to the tangent at A' }, play: true },
+    visual: { image: { src: videoShot, alt: 'A lesson video playing over the First Principles lesson, showing the chord AB getting closer to the tangent at A' }, play: true },
   },
   {
     icon: 'bi-check2-circle',
     title: 'Every answer marked the moment you submit',
     body: 'Exam-style questions marked part by part, so you know exactly which step went wrong.',
     points: ['Written feedback on every part', 'Model solutions and mark schemes', 'Your answers save as you type'],
-    visual: { image: { url: '/images/see-how-it-works-2.png', alt: 'A Sum of Squared Binomial Coefficients question: an answer marked 0 / 1 with feedback on the mistake, next to the model solution' } },
+    visual: { image: { src: markingShot, alt: 'A Sum of Squared Binomial Coefficients question: an answer marked 0 / 1 with feedback on the mistake, next to the model solution' } },
   },
   {
     icon: 'bi-people',
     title: 'A community, not just a revision site',
     body: "Every lesson and question has its own comments, so you can ask about the exact step you're stuck on, share a shortcut, or help someone who's where you were last week.",
     points: ['Ask, reply and vote on every lesson and question', 'Tips and answers pinned by the RadixMaths team', 'A friendly, moderated space to learn alongside other students'],
-    visual: { image: { url: '/images/see-how-it-works-7.png', alt: 'The Comments tab on a question, with a pinned hint from the RadixMaths team, upvotes and student replies' } },
+    visual: { image: { src: communityShot, alt: 'The Comments tab on a question, with a pinned hint from the RadixMaths team, upvotes and student replies' } },
   },
   {
     icon: 'bi-bezier2',
     title: 'More than typing in an answer',
     body: 'Show what you know the way you would on paper.',
     points: ['Sketch curves and drag points onto a grid', 'Place vectors and put proof steps in order', 'Write out full working, line by line'],
-    visual: { image: { url: '/images/points-connected.png', alt: 'A quadratic sketched on a grid through its y-intercept, both roots and its minimum point' } },
+    visual: { image: { src: sketchShot, alt: 'A quadratic sketched on a grid through its y-intercept, both roots and its minimum point' } },
   },
   {
     icon: 'bi-arrow-repeat',
     title: "Review cards so you don't forget",
     body: 'Finish a question or lesson and it unlocks short flashcards on the key steps.',
     points: ['They come back just before you would forget them', 'A few seconds each, no calculator needed', 'One reviews page for everything that is due'],
-    visual: { image: { url: '/images/see-how-it-works-6.png', alt: 'A review card asking what four things you find before sketching y = ax² + bx + c, with the answer and Again, Hard, Good and Easy buttons' } },
+    visual: { image: { src: reviewShot, alt: 'A review card asking what four things you find before sketching y = ax² + bx + c, with the answer and Again, Hard, Good and Easy buttons' } },
   },
   {
     icon: 'bi-bullseye',
@@ -69,12 +82,28 @@ const slides = [
   },
   {
     icon: 'bi-chat-dots',
-    title: 'An AI tutor whenever you need one',
-    body: 'Stuck at 11pm the night before a test? Ask the tutor, right next to the question you are on.',
-    points: ['Hints that guide you, rather than just giving the answer', 'Explanations pitched at your level', 'Available 24/7, at no extra cost'],
-    visual: { image: { url: '/images/see-how-it-works-8.png', alt: 'The RadixMaths tutor open beside a Binomial Estimation lesson, giving a hint rather than the answer' } },
+    title: 'A tutor that already knows where you are stuck',
+    body: 'Stuck at 11pm the night before a test? Ask the tutor, right next to the question you are on. Unlike a general chatbot, you never have to paste the question in or explain where you are.',
+    points: ['Knows the question and part you are on', 'Hints that guide you, rather than just giving the answer', 'Knows your weakest topics and the cards you have due'],
+    visual: { image: { src: tutorShot, alt: 'The RadixMaths tutor open beside a Binomial Estimation lesson, giving a hint rather than the answer' } },
   },
 ];
+
+const IMAGE_SIZES = '(max-width: 768px) 90vw, 60vw';
+
+// Fetches every slide's picture once the page has settled, so each one is ready before
+// the pop-up opens. Skipped for visitors who've asked their browser to save data.
+function preloadSlideImages() {
+  if (navigator.connection?.saveData) return;
+  slides.forEach(({ visual }) => {
+    if (!visual.image) return;
+    const { props } = getImageProps({ src: visual.image.src, alt: '', sizes: IMAGE_SIZES });
+    const image = new window.Image();
+    image.sizes = props.sizes;
+    image.srcset = props.srcSet;
+    image.src = props.src;
+  });
+}
 
 // example data for the Progress page slide: Year 12 Pure, with made-up progress
 const exampleMastery = [0.85, 0.7, 0.55, 0.4, 0.62, 0.3, 0.75, 0.5, 0.65];
@@ -84,6 +113,13 @@ export default function HowItWorks({ isOpen, toggle }) {
   const [index, setIndex] = useState(0);
   const slide = slides[index];
   const last = index === slides.length - 1;
+
+  useEffect(() => {
+    const whenIdle = window.requestIdleCallback ?? ((run) => setTimeout(run, 1500));
+    const cancelIdle = window.cancelIdleCallback ?? clearTimeout;
+    const idle = whenIdle(preloadSlideImages);
+    return () => cancelIdle(idle);
+  }, []);
 
   // start from the first slide each time it opens
   useEffect(() => {
@@ -120,7 +156,7 @@ export default function HowItWorks({ isOpen, toggle }) {
           style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(1.25rem, 3vw, 2.5rem)', alignItems: 'center', minHeight: '28rem' }}
         >
           <div style={{ flex: '1 1 300px' }}>
-            <h2 id="how-it-works-title" className="rm-h2" style={{ margin: '0 0 0.75rem' }}>
+            <h2 id="how-it-works-title" className={`rm-h2 ${headingFont.className}`} style={{ margin: '0 0 0.75rem' }}>
               {slide.title}
             </h2>
             <p className="rm-lead" style={{ marginBottom: '1rem' }}>
@@ -152,12 +188,12 @@ export default function HowItWorks({ isOpen, toggle }) {
             ) : (
               <div style={{ position: 'relative' }}>
                 <Image
-                  key={slide.visual.image.url}
-                  src={slide.visual.image.url}
+                  key={slide.visual.image.alt}
+                  src={slide.visual.image.src}
                   alt={slide.visual.image.alt}
-                  width={0}
-                  height={0}
-                  sizes="(max-width: 768px) 90vw, 60vw"
+                  sizes={IMAGE_SIZES}
+                  placeholder="blur"
+                  priority
                   style={{ width: '100%', height: 'auto', maxHeight: '62vh', objectFit: 'contain', display: 'block' }}
                 />
                 {/* `play`: a still play button over the picture, so the slide reads as a video */}

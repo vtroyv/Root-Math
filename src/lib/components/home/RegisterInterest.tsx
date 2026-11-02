@@ -1,7 +1,11 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
+import Link from 'next/link';
 import Footer from './Footer';
+import { FieldError, Honeypot } from './FormBits';
+import { COURSES, MARKETING_WORDING, validateRegistration } from '@/lib/forms/registerInterest';
+import { suggestEmail } from '@/lib/forms/shared';
 
 /* Scribbled-in-the-margin maths, the same idea as the hero: hard-coded
    positions (Math.random() would break hydration), kept in the outer gutters
@@ -21,38 +25,7 @@ const marginSymbols = [
   { text: 'θ = π/3', top: '91%', left: '4%', size: 1.7, rotate: -6 },
 ];
 
-const aLevelBoards = [
-  'Edexcel',
-  'AQA',
-  'OCR',
-  'OCR (MEI)',
-  'CIE',
-  'Other / not sure yet',
-];
-
-const gcseBoards = [
-  'Edexcel',
-  'AQA',
-  'OCR',
-  'WJEC / Eduqas',
-  'CIE (IGCSE)',
-  'Other / not sure yet',
-];
-
-/* A course carries its own board list, so the exam-board questions below the
-   picker are per course — a student doing Edexcel A Level and AQA GCSE can say
-   so. STEP and TMUA have no `boards`: each is set by a single body, so there
-   is nothing to ask. The `id` is what gets submitted, both as a `courses`
-   value and as the `examBoard.<id>` key of its board. */
-const courses = [
-  { id: 'a-level-maths', name: 'A Level Maths', boards: aLevelBoards },
-  { id: 'a-level-further-maths', name: 'A Level Further Maths', boards: aLevelBoards },
-  { id: 'gcse-maths', name: 'GCSE Maths', boards: gcseBoards },
-  { id: 'step', name: 'STEP', boards: null },
-  { id: 'tmua', name: 'TMUA', boards: null },
-];
-
-type School = { name: string; town: string; custom?: boolean };
+type School = { name: string; town: string };
 
 /* -------------------------------------------------------------------------
    PLACEHOLDER DATA — ten institutions purely so the box can be seen filtering.
@@ -79,7 +52,7 @@ type School = { name: string; town: string; custom?: boolean };
         Worth storing the chosen URN alongside the name for that reason.
 
    Anyone the register would miss (international, home-schooled, private
-   candidates) is caught by the "use what I typed" row at the foot of the list.
+   candidates) is caught by the "Other" row pinned to the foot of the list.
    ------------------------------------------------------------------------- */
 const schools: School[] = [
   { name: 'Altrincham Grammar School for Girls', town: 'Altrincham' },
@@ -99,23 +72,80 @@ const schools: School[] = [
 const normalise = (value: string) =>
   value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
+/* Which element to focus for each error key, in the order the fields appear. */
+const fieldIdFor = (key: string) => {
+  if (key === 'courses') return `course-${COURSES[0].id}`;
+  if (key.startsWith('board.')) return `board-${key.slice('board.'.length)}`;
+  return key;
+};
+
 export default function RegisterInterest() {
+  const [details, setDetails] = useState({ firstName: '', lastName: '', email: '', mobile: '' });
   const [chosenCourses, setChosenCourses] = useState<string[]>([]);
+  const [boards, setBoards] = useState<Record<string, string>>({});
   const [schoolQuery, setSchoolQuery] = useState('');
+  const [chosenSchool, setChosenSchool] = useState<School | null>(null);
+  const [schoolIsOther, setSchoolIsOther] = useState(false);
+  const [otherSchool, setOtherSchool] = useState('');
   const [listOpen, setListOpen] = useState(false);
   const [activeOption, setActiveOption] = useState(-1);
+  const [marketingConsent, setMarketingConsent] = useState(false);
+  const [website, setWebsite] = useState(''); // the spam trap, see Honeypot
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [emailSuggestion, setEmailSuggestion] = useState<string | null>(null);
+  const [formError, setFormError] = useState('');
+  const [sending, setSending] = useState(false);
+  const [done, setDone] = useState(false);
 
-  const toggleCourse = (id: string) =>
+  // Everything the API needs, in the shape validateRegistration checks on both sides.
+  const buildPayload = () => ({
+    ...details,
+    courses: chosenCourses.map((id) => ({ id, board: boards[id] ?? null })),
+    // Anything typed without picking from the list is kept, marked as custom.
+    school: chosenSchool
+      ? { name: chosenSchool.name, town: chosenSchool.town, custom: false }
+      : { name: schoolIsOther ? otherSchool : schoolQuery, custom: true },
+    marketingConsent,
+    website,
+  });
+
+  const clearError = (key: string) =>
+    setErrors((current) => {
+      if (!current[key]) return current;
+      const { [key]: _removed, ...rest } = current;
+      return rest;
+    });
+
+  const setDetail = (key: keyof typeof details, value: string) => {
+    setDetails((current) => ({ ...current, [key]: value }));
+    clearError(key);
+  };
+
+  // Email and mobile are checked as soon as the student leaves the field.
+  const checkOnBlur = (key: 'email' | 'mobile') => {
+    if (key === 'email') setEmailSuggestion(suggestEmail(details.email));
+    const message = details[key] ? validateRegistration(buildPayload()).errors[key] : undefined;
+    setErrors((current) => {
+      const { [key]: _removed, ...rest } = current;
+      return message ? { ...rest, [key]: message } : rest;
+    });
+  };
+
+  const toggleCourse = (id: string) => {
     setChosenCourses((current) =>
       current.includes(id)
         ? current.filter((courseId) => courseId !== id)
         : [...current, id],
     );
+    clearError('courses');
+    clearError(`board.${id}`);
+  };
 
   // Kept in the order the courses are listed rather than the order they were
   // ticked, so the board questions never jump around underneath the pills.
-  const selected = courses.filter((course) => chosenCourses.includes(course.id));
-  const needBoard = selected.filter((course) => course.boards);
+  const needBoard = COURSES.filter(
+    (course) => course.boards && chosenCourses.includes(course.id),
+  );
 
   const matches = useMemo(() => {
     const query = normalise(schoolQuery);
@@ -124,26 +154,30 @@ export default function RegisterInterest() {
           normalise(`${school.name} ${school.town}`).includes(query),
         )
       : schools;
-
-    const found = hits.slice(0, 8);
-
-    // Whatever they typed is always offered as the last row, so nobody is
-    // stuck behind a list their school is not on.
-    if (query && !found.some((school) => normalise(school.name) === query)) {
-      found.push({
-        name: schoolQuery.trim(),
-        town: 'Use what I typed — international, home-schooled or private candidate',
-        custom: true,
-      });
-    }
-
-    return found;
+    return hits.slice(0, 8);
   }, [schoolQuery]);
+
+  // "Other" comes straight after the matches, so the arrow keys reach it too.
+  const otherIndex = matches.length;
 
   const chooseSchool = (school: School) => {
     setSchoolQuery(school.name);
+    setChosenSchool(school);
     setListOpen(false);
     setActiveOption(-1);
+  };
+
+  const chooseOther = () => {
+    setSchoolIsOther(true);
+    setChosenSchool(null);
+    setListOpen(false);
+    setActiveOption(-1);
+  };
+
+  const backToSearch = () => {
+    setSchoolIsOther(false);
+    setOtherSchool('');
+    setSchoolQuery('');
   };
 
   const onSchoolKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -153,14 +187,51 @@ export default function RegisterInterest() {
         setListOpen(true);
         return;
       }
-      if (!matches.length) return;
+      const rows = matches.length + 1;
       const step = event.key === 'ArrowDown' ? 1 : -1;
-      setActiveOption((index) => (index + step + matches.length) % matches.length);
-    } else if (event.key === 'Enter' && listOpen && matches[activeOption]) {
+      setActiveOption((index) => (index + step + rows) % rows);
+    } else if (event.key === 'Enter' && listOpen && activeOption >= 0) {
       event.preventDefault();
-      chooseSchool(matches[activeOption]);
+      if (activeOption === otherIndex) chooseOther();
+      else chooseSchool(matches[activeOption]);
     } else if (event.key === 'Escape') {
       setListOpen(false);
+    }
+  };
+
+  const onSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setFormError('');
+
+    const payload = buildPayload();
+    const found = validateRegistration(payload).errors;
+    setErrors(found);
+    const firstError = Object.keys(found)[0];
+    if (firstError) {
+      document.getElementById(fieldIdFor(firstError))?.focus();
+      return;
+    }
+
+    setSending(true);
+    try {
+      const response = await fetch('/api/register-interest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (response.ok) {
+        setDone(true);
+        window.scrollTo(0, 0);
+      } else if (result.errors) {
+        setErrors(result.errors);
+      } else {
+        setFormError(result.error ?? 'Something went wrong.');
+      }
+    } catch {
+      setFormError('We couldn’t reach the server. Check your connection and try again.');
+    } finally {
+      setSending(false);
     }
   };
 
@@ -198,7 +269,29 @@ export default function RegisterInterest() {
             </p>
           </div>
 
-          <form className="rm-form">
+          {done ? (
+            <div className="rm-form rm-form--done" role="status">
+              <span className="rm-card__icon" aria-hidden="true">
+                <i className="bi bi-patch-check-fill" />
+              </span>
+              <h2 className="rm-h3">You’re on the list, thank you!</h2>
+              <p className="rm-lead">
+                A confirmation email is on its way to {details.email.trim()}. If you can’t
+                see it, check your junk folder. In the meantime, have a read of our blog.
+              </p>
+              <div className="rm-btn-row">
+                <Link href="/blog" className="rm-btn rm-btn--primary">
+                  Read the blog
+                </Link>
+                <Link href="/" className="rm-btn rm-btn--ghost">
+                  Back to home
+                </Link>
+              </div>
+            </div>
+          ) : (
+          <form className="rm-form" onSubmit={onSubmit} noValidate>
+            <Honeypot value={website} onChange={setWebsite} />
+
             {/* ------------------------------------------------------ about you */}
             <fieldset>
               <legend>Your details</legend>
@@ -214,9 +307,13 @@ export default function RegisterInterest() {
                     name="firstName"
                     type="text"
                     autoComplete="given-name"
-                    placeholder="Ada"
+                    placeholder="Tommy"
+                    value={details.firstName}
+                    onChange={(event) => setDetail('firstName', event.target.value)}
+                    aria-invalid={Boolean(errors.firstName)}
                     required
                   />
+                  <FieldError id="firstName" message={errors.firstName} />
                 </div>
 
                 <div className="rm-field">
@@ -229,15 +326,19 @@ export default function RegisterInterest() {
                     name="lastName"
                     type="text"
                     autoComplete="family-name"
-                    placeholder="Lovelace"
+                    placeholder="Shelby"
+                    value={details.lastName}
+                    onChange={(event) => setDetail('lastName', event.target.value)}
+                    aria-invalid={Boolean(errors.lastName)}
                     required
                   />
+                  <FieldError id="lastName" message={errors.lastName} />
                 </div>
               </div>
 
               <div className="rm-field">
                 <label className="rm-field__label" htmlFor="email">
-                  Email address
+                  Personal email address
                 </label>
                 <input
                   className="rm-input"
@@ -245,13 +346,34 @@ export default function RegisterInterest() {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  placeholder="ada@example.com"
+                  placeholder="tommy@shelbycompanyltd.co.uk"
+                  value={details.email}
+                  onChange={(event) => {
+                    setDetail('email', event.target.value);
+                    setEmailSuggestion(null);
+                  }}
+                  onBlur={() => checkOnBlur('email')}
+                  aria-invalid={Boolean(errors.email)}
                   required
                 />
-                <p className="rm-field__hint">
-                  Where we will send your invite. A personal address works best —
-                  school inboxes often block us.
-                </p>
+                <FieldError id="email" message={errors.email} />
+                {emailSuggestion && (
+                  <p className="rm-field__hint">
+                    Did you mean{' '}
+                    <button
+                      type="button"
+                      className="rm-link rm-form__linkbtn"
+                      onClick={() => {
+                        setDetail('email', emailSuggestion);
+                        setEmailSuggestion(null);
+                      }}
+                    >
+                      {emailSuggestion}
+                    </button>
+                    ?
+                  </p>
+                )}
+                <p className="rm-field__hint">Where we will send your invite.</p>
               </div>
 
               <div className="rm-field">
@@ -265,7 +387,12 @@ export default function RegisterInterest() {
                   type="tel"
                   autoComplete="tel"
                   placeholder="+44 7123 456 789"
+                  value={details.mobile}
+                  onChange={(event) => setDetail('mobile', event.target.value)}
+                  onBlur={() => checkOnBlur('mobile')}
+                  aria-invalid={Boolean(errors.mobile)}
                 />
+                <FieldError id="mobile" message={errors.mobile} />
               </div>
             </fieldset>
 
@@ -276,9 +403,10 @@ export default function RegisterInterest() {
               <div className="rm-field">
                 <span className="rm-field__label">Courses you are interested in</span>
                 <div className="rm-choices">
-                  {courses.map((course) => (
+                  {COURSES.map((course) => (
                     <label className="rm-choice" key={course.id}>
                       <input
+                        id={`course-${course.id}`}
                         type="checkbox"
                         name="courses"
                         value={course.id}
@@ -290,6 +418,7 @@ export default function RegisterInterest() {
                     </label>
                   ))}
                 </div>
+                <FieldError id="courses" message={errors.courses} />
                 <p className="rm-field__hint">
                   Pick as many as you like — we will ask for the exam board of each
                   one.
@@ -298,7 +427,7 @@ export default function RegisterInterest() {
 
               {/* One board question per course chosen above, so two courses on
                   different boards can both be recorded properly. */}
-              {selected.length > 0 && (
+              {needBoard.length > 0 && (
                 <div className="rm-boards">
                   {needBoard.map((course) => (
                     <div className="rm-field" key={course.id}>
@@ -309,7 +438,12 @@ export default function RegisterInterest() {
                         className="rm-input"
                         id={`board-${course.id}`}
                         name={`examBoard.${course.id}`}
-                        defaultValue=""
+                        value={boards[course.id] ?? ''}
+                        onChange={(event) => {
+                          setBoards((current) => ({ ...current, [course.id]: event.target.value }));
+                          clearError(`board.${course.id}`);
+                        }}
+                        aria-invalid={Boolean(errors[`board.${course.id}`])}
                         required
                       >
                         <option value="" disabled>
@@ -321,15 +455,9 @@ export default function RegisterInterest() {
                           </option>
                         ))}
                       </select>
+                      <FieldError id={`board-${course.id}`} message={errors[`board.${course.id}`]} />
                     </div>
                   ))}
-
-                  {selected.length > needBoard.length && (
-                    <p className="rm-field__hint">
-                      STEP and TMUA are each set by a single board, so there is
-                      nothing to choose for those.
-                    </p>
-                  )}
                 </div>
               )}
             </fieldset>
@@ -338,79 +466,141 @@ export default function RegisterInterest() {
             <fieldset>
               <legend>Your school</legend>
 
-              <div className="rm-field">
-                <label className="rm-field__label" htmlFor="school">
-                  School, sixth form or college
-                </label>
-
-                <div className="rm-combo">
+              {schoolIsOther ? (
+                <div className="rm-field">
+                  <label className="rm-field__label" htmlFor="school">
+                    Type your school, sixth form or college <span>(optional)</span>
+                  </label>
                   <input
                     className="rm-input"
                     id="school"
                     name="school"
                     type="text"
-                    role="combobox"
-                    aria-expanded={listOpen}
-                    aria-controls="school-options"
-                    aria-autocomplete="list"
                     autoComplete="off"
-                    placeholder="Start typing — e.g. Hills Road Sixth Form College"
-                    value={schoolQuery}
-                    onChange={(event) => {
-                      setSchoolQuery(event.target.value);
-                      setListOpen(true);
-                      setActiveOption(-1);
-                    }}
-                    onFocus={() => setListOpen(true)}
-                    onBlur={() => setListOpen(false)}
-                    onKeyDown={onSchoolKeyDown}
-                    required
+                    placeholder="Garrison Lane Sixth Form"
+                    value={otherSchool}
+                    onChange={(event) => setOtherSchool(event.target.value)}
+                    autoFocus
                   />
+                  <p className="rm-field__hint">
+                    International students, home-schoolers and private candidates are
+                    all welcome.{' '}
+                    <button type="button" className="rm-link rm-form__linkbtn" onClick={backToSearch}>
+                      Search the list instead
+                    </button>
+                  </p>
+                </div>
+              ) : (
+                <div className="rm-field">
+                  <label className="rm-field__label" htmlFor="school">
+                    School, sixth form or college <span>(optional)</span>
+                  </label>
 
-                  {listOpen && matches.length > 0 && (
-                    <ul className="rm-combo__list" id="school-options" role="listbox">
-                      {matches.map((school, index) => (
+                  <div className="rm-combo">
+                    <input
+                      className="rm-input"
+                      id="school"
+                      name="school"
+                      type="text"
+                      role="combobox"
+                      aria-expanded={listOpen}
+                      aria-controls="school-options"
+                      aria-autocomplete="list"
+                      autoComplete="off"
+                      placeholder="Start typing — e.g. Hills Road Sixth Form College"
+                      value={schoolQuery}
+                      onChange={(event) => {
+                        setSchoolQuery(event.target.value);
+                        setChosenSchool(null); // typing again un-picks the school
+                        setListOpen(true);
+                        setActiveOption(-1);
+                      }}
+                      onFocus={() => setListOpen(true)}
+                      onBlur={() => setListOpen(false)}
+                      onKeyDown={onSchoolKeyDown}
+                    />
+
+                    {listOpen && (
+                      <ul className="rm-combo__list" id="school-options" role="listbox">
+                        {matches.map((school, index) => (
+                          <li
+                            key={school.name}
+                            id={`school-option-${index}`}
+                            className="rm-combo__option"
+                            role="option"
+                            aria-selected={index === activeOption}
+                            data-active={index === activeOption}
+                            /* mousedown, not click: blur would close the list
+                               before a click ever landed. */
+                            onMouseDown={(event) => {
+                              event.preventDefault();
+                              chooseSchool(school);
+                            }}
+                            onMouseEnter={() => setActiveOption(index)}
+                          >
+                            {school.name}
+                            <small>{school.town}</small>
+                          </li>
+                        ))}
+                        {/* Pinned below the scrolling matches, so nobody is ever stuck
+                            behind a list their school is not on. */}
                         <li
-                          key={school.custom ? 'custom' : school.name}
-                          id={`school-option-${index}`}
-                          className="rm-combo__option"
+                          id={`school-option-${otherIndex}`}
+                          className="rm-combo__option rm-combo__option--other"
                           role="option"
-                          aria-selected={index === activeOption}
-                          data-active={index === activeOption}
-                          /* mousedown, not click: blur would close the list
-                             before a click ever landed. */
+                          aria-selected={activeOption === otherIndex}
+                          data-active={activeOption === otherIndex}
                           onMouseDown={(event) => {
                             event.preventDefault();
-                            chooseSchool(school);
+                            chooseOther();
                           }}
-                          onMouseEnter={() => setActiveOption(index)}
+                          onMouseEnter={() => setActiveOption(otherIndex)}
                         >
-                          {school.name}
-                          <small>{school.town}</small>
+                          Other
+                          <small>Not listed? Click here to type it in</small>
                         </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
+                      </ul>
+                    )}
+                  </div>
 
-                <p className="rm-field__hint">
-                  Type to search. Cannot see yours? Keep typing and pick the last
-                  row — international students, home-schoolers and private
-                  candidates are all welcome.
-                </p>
-              </div>
+                  <p className="rm-field__hint">
+                    Type to search. Cannot see yours? Choose Other at the bottom of the
+                    list.
+                  </p>
+                </div>
+              )}
             </fieldset>
 
+            {/* Unticked by default: PECR needs a clear opt-in for marketing emails. */}
+            <label className="rm-consent">
+              <input
+                type="checkbox"
+                name="marketingConsent"
+                checked={marketingConsent}
+                onChange={(event) => setMarketingConsent(event.target.checked)}
+              />
+              <span>{MARKETING_WORDING}</span>
+            </label>
+
+            {formError && (
+              <p className="rm-field__error" role="alert">
+                {formError} You can also email us at{' '}
+                <a className="rm-link" href="mailto:hello@radixmaths.co.uk">hello@radixmaths.co.uk</a>.
+              </p>
+            )}
+
             <div className="rm-form__foot">
-              <button type="submit" className="rm-btn rm-btn--primary rm-btn--lg">
-                Register my interest
+              <button type="submit" className="rm-btn rm-btn--primary rm-btn--lg" disabled={sending}>
+                {sending ? 'Registering…' : 'Register my interest'}
               </button>
               <p className="rm-form__note">
-                <i className="bi bi-patch-check-fill" /> No card needed. We will only
-                email you about your own course.
+                <i className="bi bi-patch-check-fill" /> No card needed. Unless you tick the
+                box above, we will only email you about your own course. See our{' '}
+                <Link href="/privacy" className="rm-link">privacy policy</Link>.
               </p>
             </div>
           </form>
+          )}
         </div>
       </div>
 

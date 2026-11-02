@@ -1,12 +1,18 @@
-// components/Contact.tsx — the /contact page.
-import React from 'react';
+// components/Contact.tsx — the /contact page. How the form works: docs/contact-form.md.
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Reveal from './Reveal';
 import Footer from './Footer';
+import { FieldError, Honeypot } from './FormBits';
+import { SUBJECTS, validateEnquiry } from '@/lib/forms/contact';
+import { suggestEmail } from '@/lib/forms/shared';
 
-/* PLACEHOLDER — set this to the real inbox before the page goes live. It is
-   used twice below, so changing it here changes both. */
 const contactEmail = 'hello@radixmaths.co.uk';
+const whatsAppLink = 'https://wa.me/447999863387';
+
+const emptyForm = { name: '', email: '', mobile: '', subject: '', message: '' };
 
 /* Margin doodles, as on the register page: fixed positions (Math.random()
    would break hydration), kept in the outer gutters, hidden on narrow
@@ -26,21 +32,75 @@ const marginSymbols = [
    which was placeholder contact details for an office that does not exist. */
 const helpWith = [
   'Which course matches your specification — tell us your exam board and we will point you at the right one.',
-  'Schools and colleges: department trials, licences, and how RadixMaths fits around a scheme of work.',
+  'Schools and colleges: how RadixMaths could work for your department and fit around a scheme of work.',
   'A question marked wrong, or anything on the site misbehaving — send us the question and we will look at it.',
-  'Anything you want RadixMaths to do that it does not do yet. Most of what we build was asked for.',
-];
-
-const subjects = [
-  'A course or specification question',
-  'Schools and departments',
-  'Something is not working',
-  'Feedback or a feature request',
-  'Press or partnerships',
-  'Something else',
+  'Anything you want RadixMaths to do that it does not do yet. We read every request.',
 ];
 
 export default function Contact() {
+  const [form, setForm] = useState(emptyForm);
+  const [website, setWebsite] = useState(''); // the spam trap, see Honeypot
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [emailSuggestion, setEmailSuggestion] = useState<string | null>(null);
+  const [formError, setFormError] = useState('');
+  const [sending, setSending] = useState(false);
+  const [done, setDone] = useState(false);
+
+  const setField = (key: keyof typeof emptyForm, value: string) => {
+    setForm((current) => ({ ...current, [key]: value }));
+    setErrors((current) => {
+      const { [key]: _removed, ...rest } = current;
+      return rest;
+    });
+  };
+
+  // Email and mobile are checked as soon as the visitor leaves the field.
+  const checkOnBlur = (key: 'email' | 'mobile') => {
+    if (key === 'email') setEmailSuggestion(suggestEmail(form.email));
+    const message = form[key] ? validateEnquiry(form).errors[key] : undefined;
+    setErrors((current) => {
+      const { [key]: _removed, ...rest } = current;
+      return message ? { ...rest, [key]: message } : rest;
+    });
+  };
+
+  const onSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setFormError('');
+
+    const found = validateEnquiry(form).errors;
+    setErrors(found);
+    const firstError = Object.keys(found)[0];
+    if (firstError) {
+      document.getElementById(firstError)?.focus();
+      return;
+    }
+
+    setSending(true);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, website }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (response.ok) setDone(true);
+      else if (result.errors) setErrors(result.errors);
+      else setFormError(result.error ?? 'Something went wrong.');
+    } catch {
+      setFormError('We couldn’t reach the server. Check your connection and try again.');
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const sendAnother = () => {
+    setForm(emptyForm);
+    setErrors({});
+    setEmailSuggestion(null);
+    setDone(false);
+  };
+
   return (
     <div className="rm-landing">
       <div className="rm-formpage">
@@ -109,24 +169,43 @@ export default function Contact() {
                 </span>
                 <h2 className="rm-h3">Other ways to reach us</h2>
                 <p className="rm-card__body">
-                  Prefer your own email client? Write to{' '}
+                  Email us at{' '}
                   <a className="rm-link" href={`mailto:${contactEmail}`}>
                     {contactEmail}
                   </a>
                   .
                 </p>
                 <p className="rm-card__body">
-                  Wanting early access rather than an answer?{' '}
-                  <Link href="/register" className="rm-link">
-                    Register your interest
-                  </Link>{' '}
-                  instead — that form tells us which course you need.
+                  Or{' '}
+                  <a className="rm-link" href={whatsAppLink} target="_blank" rel="noopener noreferrer">
+                    message us on WhatsApp
+                  </a>
+                  .
                 </p>
               </Reveal>
             </div>
 
             {/* ------------------------------------------------------------ the form */}
-            <Reveal as="form" className="rm-form" delay={120}>
+            {done ? (
+              <div className="rm-form rm-form--done" role="status">
+                <span className="rm-card__icon" aria-hidden="true">
+                  <i className="bi bi-patch-check-fill" />
+                </span>
+                <h2 className="rm-h3">Thank you, we have received your message</h2>
+                <p className="rm-lead">We will get back to you shortly.</p>
+                <div className="rm-btn-row">
+                  <Link href="/" className="rm-btn rm-btn--primary">
+                    Back to home
+                  </Link>
+                  <button type="button" className="rm-btn rm-btn--ghost" onClick={sendAnother}>
+                    Send another message
+                  </button>
+                </div>
+              </div>
+            ) : (
+            <Reveal as="form" className="rm-form" delay={120} onSubmit={onSubmit} noValidate>
+              <Honeypot value={website} onChange={setWebsite} />
+
               <fieldset>
                 <legend>Send us a message</legend>
 
@@ -140,9 +219,13 @@ export default function Contact() {
                     name="name"
                     type="text"
                     autoComplete="name"
-                    placeholder="Ada Lovelace"
+                    placeholder="Steve Harrington"
+                    value={form.name}
+                    onChange={(event) => setField('name', event.target.value)}
+                    aria-invalid={Boolean(errors.name)}
                     required
                   />
+                  <FieldError id="name" message={errors.name} />
                 </div>
 
                 <div className="rm-field">
@@ -155,9 +238,33 @@ export default function Contact() {
                     name="email"
                     type="email"
                     autoComplete="email"
-                    placeholder="ada@example.com"
+                    placeholder="steve@scoopsahoy.com"
+                    value={form.email}
+                    onChange={(event) => {
+                      setField('email', event.target.value);
+                      setEmailSuggestion(null);
+                    }}
+                    onBlur={() => checkOnBlur('email')}
+                    aria-invalid={Boolean(errors.email)}
                     required
                   />
+                  <FieldError id="email" message={errors.email} />
+                  {emailSuggestion && (
+                    <p className="rm-field__hint">
+                      Did you mean{' '}
+                      <button
+                        type="button"
+                        className="rm-link rm-form__linkbtn"
+                        onClick={() => {
+                          setField('email', emailSuggestion);
+                          setEmailSuggestion(null);
+                        }}
+                      >
+                        {emailSuggestion}
+                      </button>
+                      ?
+                    </p>
+                  )}
                 </div>
 
                 <div className="rm-field">
@@ -171,7 +278,12 @@ export default function Contact() {
                     type="tel"
                     autoComplete="tel"
                     placeholder="+44 7123 456 789"
+                    value={form.mobile}
+                    onChange={(event) => setField('mobile', event.target.value)}
+                    onBlur={() => checkOnBlur('mobile')}
+                    aria-invalid={Boolean(errors.mobile)}
                   />
+                  <FieldError id="mobile" message={errors.mobile} />
                   <p className="rm-field__hint">
                     Only if you would rather we called you back.
                   </p>
@@ -185,18 +297,21 @@ export default function Contact() {
                     className="rm-input"
                     id="subject"
                     name="subject"
-                    defaultValue=""
+                    value={form.subject}
+                    onChange={(event) => setField('subject', event.target.value)}
+                    aria-invalid={Boolean(errors.subject)}
                     required
                   >
                     <option value="" disabled>
                       Choose the closest one
                     </option>
-                    {subjects.map((subject) => (
+                    {SUBJECTS.map((subject) => (
                       <option key={subject} value={subject}>
                         {subject}
                       </option>
                     ))}
                   </select>
+                  <FieldError id="subject" message={errors.subject} />
                 </div>
 
                 <div className="rm-field">
@@ -209,20 +324,32 @@ export default function Contact() {
                     name="message"
                     rows={6}
                     placeholder="Tell us what you need. If it is about a specific question, paste it in and we will work through it."
+                    value={form.message}
+                    onChange={(event) => setField('message', event.target.value)}
+                    aria-invalid={Boolean(errors.message)}
                     required
                   />
+                  <FieldError id="message" message={errors.message} />
                 </div>
               </fieldset>
 
+              {formError && (
+                <p className="rm-field__error" role="alert">
+                  {formError} You can also email us at{' '}
+                  <a className="rm-link" href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+                </p>
+              )}
+
               <div className="rm-form__foot">
-                <button type="submit" className="rm-btn rm-btn--primary rm-btn--lg">
-                  Send message
+                <button type="submit" className="rm-btn rm-btn--primary rm-btn--lg" disabled={sending}>
+                  {sending ? 'Sending…' : 'Send message'}
                 </button>
                 <p className="rm-form__note">
                   <i className="bi bi-clock-fill" /> We reply within one working day.
                 </p>
               </div>
             </Reveal>
+            )}
           </div>
         </div>
       </div>

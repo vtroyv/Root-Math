@@ -1,27 +1,11 @@
-'use client';
 import React from 'react';
-import { useInView } from 'react-intersection-observer';
 
 /*
-Wraps a section so it fades/rises into place the first time it scrolls into
-view. `triggerOnce` means it never animates again once seen, and the CSS
-honours prefers-reduced-motion, so this stays a no-op for anyone who has
-motion turned off.
+Used to fade sections in as they scrolled into view. Removed so a page appears complete
+the moment you arrive, and because scroll animations go against the site's no-animation
+preference. Kept as a plain wrapper so the sections using it don't all have to change;
+`delay` is ignored.
 */
-const Reveal = ({ children, as: Tag = 'div', className = '', delay = 0, ...rest }) => {
-  const { ref, inView } = useInView({ triggerOnce: true, rootMargin: '-60px 0px' });
-
-  return (
-    <Tag
-      ref={ref}
-      className={`rm-reveal ${className}`.trim()}
-      data-visible={inView ? 'true' : 'false'}
-      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
-      {...rest}
-    >
-      {children}
-    </Tag>
-  );
-};
+const Reveal = ({ children, as: Tag = 'div', delay: _delay = 0, ...rest }) => <Tag {...rest}>{children}</Tag>;
 
 export default Reveal;

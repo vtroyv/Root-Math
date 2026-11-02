@@ -159,7 +159,7 @@ export default function Pricing({ today: todayIso }: { today: string }) {
               </div>
               <p className="rm-field__hint">
                 £17.99 per month each. Every course includes the lessons, the full
-                question bank, past papers and the AI tutor.
+                question bank, custom papers and the tutor.
               </p>
             </fieldset>
 

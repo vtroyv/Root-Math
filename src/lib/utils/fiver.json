@@ -22,7 +22,7 @@
 },
 {
 "type": "image",
-"url": "/Images/right-angled-triangle.png",
+"url": "/images/right-angled-triangle.png",
 "alt": "[A right-angled triangle with a small square marking the right angle; the other acute angle labelled $\theta$; the three sides highlighted]",
 "caption": "[Right-angled triangle with one angle $90^{\\circ}$ and another labelled $\\theta$]"
 },
@@ -57,7 +57,7 @@
 },
 {
 "type": "image",
-"url": "/Images/different-angle-rh-triangle.png",
+"url": "/images/different-angle-rh-triangle.png",
 "alt": "[Two right-angled triangles sharing the same shape: in the first, $\theta$ at the right-hand corner with sides labelled hypotenuse, opposite, adjacent relative to $\theta$; in the second, $\theta$ at the left-hand corner showing how opposite/adjacent change]",
 "caption": "[Opposite and adjacent are named relative to the chosen angle $\theta$]"
 }
@@ -73,7 +73,7 @@
         },
         {
           "type": "image",
-          "url": "/Images/right-angled-triangle.png",
+          "url": "/images/right-angled-triangle.png",
           "alt": "[Right-angled triangle with sides labelled hypotenuse, opposite, adjacent relative to angle $\\theta$]",
           "caption": "[Triangle showing hypotenuse, opposite and adjacent relative to $\\theta$]"
         },
@@ -125,7 +125,7 @@
           "children": [
             {
           "type": "image",
-          "url": "/Images/pythagoras-theorem.png",
+          "url": "/images/pythagoras-theorem.png",
           "alt": "[Right-angled triangle with sides labelled hypotenuse, opposite, adjacent relative to angle $\\theta$]",
           "caption": "[Triangle showing hypotenuse, opposite and adjacent relative to $\\theta$]"
         },
@@ -179,7 +179,7 @@
         },
         {
           "type": "image",
-          "url": "/Images/isosceles-triangle.png",
+          "url": "/images/isosceles-triangle.png",
           "alt": "[Isosceles triangle with two equal sides marked and base angles labelled as equal]",
           "caption": "[An isosceles triangle showing two equal sides and equal base angles]"
         },
@@ -194,7 +194,7 @@
         },
         {
           "type": "image",
-          "url": "/Images/equilateral-triangle.png",
+          "url": "/images/equilateral-triangle.png",
           "alt": "[Equilateral triangle with all three sides and all three angles marked equal]",
           "caption": "[An equilateral triangle with all sides and angles equal]"
         },
@@ -209,7 +209,7 @@
         },
         {
           "type": "image",
-          "url": "/Images/scalene-triangle.png",
+          "url": "/images/scalene-triangle.png",
           "alt": "[Scalene triangle with all three sides of different lengths]",
           "caption": "[A scalene triangle showing three sides of different lengths]"
         },
@@ -237,7 +237,7 @@
         },
         {
           "type": "image",
-          "url": "/Images/different-triangle-types-question.png",
+          "url": "/images/different-triangle-types-question.png",
           "alt": "[Scalene triangle with vertices A(0,0), B(6,0), C(4,5). A perpendicular from C dropped onto AB to form a right-angled triangle]",
           "caption": "[Triangle $ABC$ with coordinates $A(0,0)$, $B(6,0)$, $C(4,5)$. A perpendicular is drawn from $C$ to meet $AB$ at point $D$, forming a right-angled triangle $ADC$. Angle at $A$ is given as $53^\\circ$. Find $AC$ using trigonometry and Pythagoras.]"
         },
@@ -247,7 +247,7 @@
           "children": [
             {
           "type": "image",
-          "url": "/Images/pythagoras-theorem.png",
+          "url": "/images/pythagoras-theorem.png",
           "alt": "[Right-angled triangle with sides labelled hypotenuse, opposite, adjacent relative to angle $\\theta$]",
           "caption": "[Triangle showing hypotenuse, opposite and adjacent relative to $\\theta$]"
         },
@@ -261,7 +261,7 @@
         },
         {
            "type": "image",
-          "url": "/Images/pythagoras-theorem.png",
+          "url": "/images/pythagoras-theorem.png",
           "alt": "[Right-angled triangle with sides labelled hypotenuse, opposite, adjacent relative to angle $\\theta$]",
           "caption": "[Triangle showing hypotenuse, opposite and adjacent relative to $\\theta$]"
         },
@@ -291,7 +291,7 @@
         },
         {
           "type": "image",
-          "url": "/Images/right-angled-triangle.png",
+          "url": "/images/right-angled-triangle.png",
           "alt": "[Right-angled triangle with angle $\\theta$ labelled and opposite, adjacent, hypotenuse marked]",
           "caption": "[Triangle showing sides and angle $\\theta$ relative to which we apply inverse trig functions]"
         },
@@ -315,7 +315,7 @@
         },
         {
           "type": "image",
-          "url": "/Images/inverse-trig-example-1.png",
+          "url": "/images/inverse-trig-example-1.png",
           "alt": "[Right-angled triangle with adjacent side 4 units, opposite side 3 units, angle $\\theta$ marked at the base corner]",
           "caption": "[Triangle with adjacent $=4$, opposite $=3$, hypotenuse unknown. Find $\\theta$.]"
         },
@@ -341,7 +341,7 @@
         },
         {
           "type": "image",
-          "url": "/Images/inverse-trig-example-2.png",
+          "url": "/images/inverse-trig-example-2.png",
           "alt": "[Scalene triangle with vertices $A(0,0)$, $B(5,0)$, $C(2,4)$. A perpendicular is dropped from $C$ to meet $AB$ at point $D$, forming right-angled triangle $BDC$. Angle $ABC$ is highlighted to be found.]",
           "caption": "[Scalene triangle $ABC$ with altitude $CD$ drawn. Use right triangle $BDC$ to find angle $ABC$.]"
         },
@@ -359,7 +359,7 @@
         }, 
         {
           "type":"image", 
-          "url":"/Images/inverse-trig-example-2a.png", 
+          "url":"/images/inverse-trig-example-2a.png", 
           "alt":"same as the example 2 question image with a perpendicular line drawn down from C to AB to form a right angled triangle"
         },
         {

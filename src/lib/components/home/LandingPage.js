@@ -36,7 +36,7 @@ const stats = [
   { value: '5', label: 'Exam boards covered' },
   { value: '1,000+', label: 'Exam-style questions' },
   { value: 'Instant', label: 'Marking & feedback' },
-  { value: '24/7', label: 'AI tutor on hand' },
+  { value: '24/7', label: 'Tutor beside every question' },
 ];
 
 const LandingPage = () => {
@@ -79,9 +79,9 @@ const LandingPage = () => {
             </h1>
 
             <p className="rm-lead">
-              Every lesson, question and past paper for your specification in one place —
-              marked the moment you submit. Our AI tutor adapts to how you learn and
-              shows you exactly where you went wrong.
+              Learn it, practise it and still remember it on exam day. Lessons, questions,
+              videos and custom papers for your exam board, so nothing on the paper catches
+              you out.
             </p>
 
             <ul className="rm-replaces">
@@ -97,7 +97,7 @@ const LandingPage = () => {
               <Link href="/register" className="rm-btn rm-btn--primary rm-btn--lg">
                 Register Interest Today
               </Link>
-              <button type="button" className="rm-btn rm-btn--ghost rm-btn--lg" onClick={toggle}>
+              <button type="button" className="rm-btn rm-btn--ghost rm-btn--lg rm-btn--pulse" onClick={toggle}>
                 <i className="bi bi-play-fill" /> See how it works
               </button>
             </div>

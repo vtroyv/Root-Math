@@ -4,23 +4,25 @@ import Link from 'next/link';
 import Footer from './Footer';
 
 /* =========================================================================
-   COURSE CONTENT — everything on this page is generated from this one array,
+   COURSE CONTENT: everything on this page is generated from this one array,
    so a course is added or reworded here and nowhere else.
 
    `id`      the anchor the footer and the availability table link to, e.g.
              /courses#a-level-maths. Also the id the register form submits.
+   `status`  a key of statusInfo below.
    `summary` what the qualification itself is.
    `covers`  what sits on the specification.
-   `prepare` PLACEHOLDER COPY — this is the part to rewrite in your own words.
-             Each bracketed line is a prompt, not finished copy: say how
-             RadixMaths gets a student ready for that particular course and
-             delete the brackets.
+   `prepare` how RadixMaths helps. Unopened courses say "will", because they
+             describe the plan. Change that to the present tense at launch.
+
+   STEP and TMUA rules change often, so check the university and exam board
+   pages each year. Last checked 2 November 2026.
    ========================================================================= */
 const courses = [
   {
     id: 'a-level-maths',
     name: 'A Level Maths',
-    status: 'live',
+    status: 'opening',
     boards: 'Edexcel · AQA · OCR · OCR (MEI) · CIE',
     summary:
       'The full A Level: Pure Maths alongside Statistics and Mechanics, taught across two years and examined at the end of Year 13 — usually three papers, whichever board you sit.',
@@ -29,11 +31,11 @@ const courses = [
       'Calculus — differentiation, integration, parametric and implicit methods, numerical solutions',
       'Statistics — sampling, data presentation, probability, distributions and hypothesis testing',
       'Mechanics — kinematics, forces and Newton’s laws, moments and projectile motion',
-      'Exam technique — full past papers marked under real timing',
+      'Exam technique — custom papers you won’t find anywhere else, under real timing',
     ],
     prepare: [
-      '[Your words here — how RadixMaths prepares a student for A Level Maths. Worth covering: lesson-by-lesson coverage of the whole specification, the question bank running from first principles up to exam standard, and marking that lands the moment a question is submitted.]',
-      '[Second paragraph — the bit only you can write: what a student who works through this course can expect by results day, and why that beats a weekly tutor.]',
+      'Year 12 opens on 1 December and Year 13 follows in January. Every topic is split into short lessons, with a video for each part and questions inside it, so finishing a lesson means you can actually do the maths. Exam-style questions and custom papers you won’t find anywhere else then build from first principles to full exam standard.',
+      'Review cards bring each topic back before you forget it, and your Progress page shows your weakest topics and what to do next. When you get stuck, there’s a tutor beside every question and other students in the comments who have just worked through the same thing.',
     ],
   },
   {
@@ -48,11 +50,11 @@ const courses = [
       'Further calculus — improper integrals, volumes of revolution, differential equations',
       'Further algebra — roots of polynomials, hyperbolic functions, polar coordinates',
       'Optional routes — further statistics, further mechanics or decision maths',
-      'The step up in pace that makes Further Maths the course students most often fall behind in',
+      'Exam technique for the faster pace and harder questions',
     ],
     prepare: [
-      '[Your words here — how RadixMaths prepares a student for Further Maths. Worth covering: how the course handles the different optional modules, and how it keeps Further Maths moving alongside the main A Level rather than competing with it.]',
-      '[Second paragraph — who this course is for: the student aiming at a STEM degree, and what they get out of it.]',
+      'Every Further Maths topic will be split into short lessons, with a video for each part and questions inside it, so you know you can do the maths before moving on. Exam-style practice then builds up to custom papers you won’t find anywhere else. Review cards will bring topics back before you forget them, and a Progress page will show what to focus on, helping you keep up alongside your main A Level.',
+      'It’s for students aiming at degrees like maths, engineering, physics or computer science, where it can be required or give you a real advantage. Register your interest and we’ll email you when it opens.',
     ],
   },
   {
@@ -61,7 +63,7 @@ const courses = [
     status: 'soon',
     boards: 'Edexcel · AQA · OCR · WJEC / Eduqas · CIE (IGCSE)',
     summary:
-      'Foundation and Higher tier GCSE — the qualification every sixth form, apprenticeship and university course asks for. Three papers, one of them non-calculator.',
+      'Foundation and Higher tier GCSE, the qualification most sixth forms, apprenticeships and university courses ask for. Usually three papers, with one of them non-calculator.',
     covers: [
       'Number — fractions, ratio and proportion, percentages, standard form, bounds',
       'Algebra — expressions, equations, simultaneous equations, quadratics and graphs',
@@ -70,51 +72,64 @@ const courses = [
       'Multi-step problem solving, which is where most of the marks are won or lost',
     ],
     prepare: [
-      '[Your words here — how RadixMaths prepares a student for GCSE Maths. Worth covering: how the course handles both tiers, how it finds the gaps a student has been carrying since Year 9, and the drilling that turns a grade 6 into a grade 8.]',
-      '[Second paragraph — what a parent reading this page needs to hear.]',
+      'Every GCSE topic will be split into short lessons, with a video for each part and questions inside it, so you know you can do the maths before moving on. Exam-style practice then builds up to the multi-step problems where marks are won or lost.',
+      'For parents: a Progress page will show which topics are strong and which need work, so you can see how your child is doing without having to ask. Short review cards will bring earlier topics back before they’re forgotten, right up to the exams.',
     ],
   },
   {
     id: 'step',
     name: 'STEP',
     status: 'soon',
-    boards: 'Set by Cambridge Assessment · Required by Cambridge and Warwick',
+    boards: 'Set by OCR · Typically required by Cambridge and Warwick',
     summary:
-      'The Sixth Term Examination Paper: a three-hour admissions exam of a few long, unfamiliar problems rather than many short ones. Offers from Cambridge and Warwick routinely hang on it.',
+      'The Sixth Term Examination Paper: an admissions exam sat in June, made up of long, unfamiliar problems rather than many short ones. Offers from Cambridge and Warwick often depend on it, so check your course’s requirements.',
     covers: [
       'Pure problems built on A Level content and taken a great deal further',
       'Long, multi-part questions where the method is not handed to you',
       'Mechanics and probability questions sitting on the same paper',
-      'Marks for a complete, well-argued solution — six questions, three hours',
+      'Marks for complete, well-argued solutions',
       'The habit of staying with a problem you cannot immediately see through',
     ],
     prepare: [
-      '[Your words here — how RadixMaths prepares a student for STEP. Worth covering: how the course teaches problem solving rather than method recall, and what worked solutions and feedback look like for a question this open-ended.]',
-      '[Second paragraph — why students holding a Cambridge or Warwick offer should start this early rather than after mocks.]',
+      'STEP rewards thinking through problems you have never seen, so this course will focus on problem solving rather than repeating methods: how to get started, what to try when you’re stuck, and how to write a complete argument.',
+      'A tutor beside every question will give hints one step at a time rather than handing over the solution, and comments from other students will let you compare different approaches to the same problem. Start early: the exam is in June, and these skills take months to build, not weeks.',
     ],
   },
   {
     id: 'tmua',
     name: 'TMUA',
     status: 'soon',
-    boards: 'Sat before your offer · Used by Cambridge, Imperial, LSE, Durham and Warwick',
+    boards: 'Sat in October or January · Used by Cambridge, Oxford, Imperial, LSE, Durham and Warwick',
     summary:
       'The Test of Mathematics for University Admission: two 75-minute multiple-choice papers, one on applying mathematical knowledge and one on mathematical reasoning and logic.',
     covers: [
       'Paper 1 — applying A Level style maths quickly and accurately',
       'Paper 2 — logic and proof: implications, necessary and sufficient conditions, counterexamples',
       'No calculator, and roughly four minutes a question, so speed counts',
-      'Scored 1.0 to 9.0, with offers typically naming a score to hit',
+      'Scored from 1.0 to 9.0, and each university decides how it uses your score',
       'Recognising the wrong answers a question has been built to tempt you into',
     ],
     prepare: [
-      '[Your words here — how RadixMaths prepares a student for the TMUA. Worth covering: timed practice at real exam pace, and how the course drills the reasoning paper, which is unlike anything else a student has sat.]',
-      '[Second paragraph — the score a student should be aiming for and how the course tracks progress towards it.]',
+      'The TMUA is about speed and reasoning, so this course will include timed practice at real exam pace, plus dedicated work on the logic paper, which is unlike anything most students have sat before.',
+      'Tempting wrong answers are part of the test, so worked solutions will explain why the wrong answers are wrong as well as why the right one is right. Check which sitting your university accepts, and leave yourself time to prepare.',
     ],
   },
 ];
 
-const statusLabel = { live: 'Available now', soon: 'Coming soon' } as const;
+const statusInfo = {
+  opening: { label: 'Opens 1 December', tone: 'live', icon: 'bi-calendar-check' },
+  soon: { label: 'Coming soon', tone: 'soon', icon: null },
+} as const;
+
+function StatusTag({ status }: { status: string }) {
+  const { label, tone, icon } = statusInfo[status as keyof typeof statusInfo];
+  return (
+    <span className={`rm-tag rm-tag--${tone}`}>
+      {icon && <i className={`bi ${icon}`} aria-hidden="true" />}
+      {label}
+    </span>
+  );
+}
 
 export default function CoursesPage() {
   return (
@@ -149,8 +164,9 @@ export default function CoursesPage() {
               Everything we <span className="rm-underline">teach</span>
             </h1>
             <p className="rm-lead">
-              A Level Maths is live today; the rest are being built in the order below.
-              Pick a course to read what it covers and how RadixMaths gets you through it.
+              A Level Maths opens first: Year 12 on 1 December, and Year 13 in January.
+              Further Maths, GCSE, STEP and TMUA are on the way. Pick a course to see what
+              it covers and how RadixMaths helps.
             </p>
           </div>
 
@@ -173,12 +189,7 @@ export default function CoursesPage() {
                     </th>
                     <td>{course.boards}</td>
                     <td>
-                      <span className={`rm-tag rm-tag--${course.status}`}>
-                        {course.status === 'live' && (
-                          <i className="bi bi-check-lg" aria-hidden="true" />
-                        )}
-                        {statusLabel[course.status as keyof typeof statusLabel]}
-                      </span>
+                      <StatusTag status={course.status} />
                     </td>
                   </tr>
                 ))}
@@ -198,9 +209,7 @@ export default function CoursesPage() {
           <div className="rm-container">
             <div className="rm-course__head">
               <h2 className="rm-h2">{course.name}</h2>
-              <span className={`rm-tag rm-tag--${course.status}`}>
-                {statusLabel[course.status as keyof typeof statusLabel]}
-              </span>
+              <StatusTag status={course.status} />
             </div>
 
             <p className="rm-lead">{course.summary}</p>
@@ -227,12 +236,16 @@ export default function CoursesPage() {
                   <i className="bi bi-rocket-takeoff-fill" />
                 </span>
                 <h3 className="rm-h3">How RadixMaths gets you ready</h3>
-                {/* Placeholder copy — see the note at the top of this file. */}
                 {course.prepare.map((paragraph) => (
                   <p className="rm-card__body" key={paragraph}>
                     {paragraph}
                   </p>
                 ))}
+                <div className="rm-card__foot">
+                  <Link href="/register" className="rm-btn rm-btn--primary">
+                    Register your interest
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

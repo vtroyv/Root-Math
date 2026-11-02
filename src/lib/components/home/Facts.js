@@ -15,7 +15,7 @@ const pillars = [
   {
     icon: 'bi-lightning-charge-fill',
     tilt: '0.9deg',
-    kicker: 'AI, not appointments',
+    kicker: 'Feedback without the wait',
     title: 'Instant marking',
     body: 'You get the benefits of one-to-one tuition without the waiting or the cost.',
     list: [
@@ -31,7 +31,7 @@ const pillars = [
     tilt: '0.8deg',
     kicker: 'Everything in one place',
     title: 'Content packed',
-    body: 'Lessons, worked examples, topic quizzes and full mock papers sit side by side, so revision never means hunting across six websites again. Sketch a graph, type real maths notation, and keep every note attached to the question it belongs to.',
+    body: 'Lessons, worked examples, topic quizzes and custom papers you won’t find anywhere else sit side by side, so revision never means hunting across six websites again. Sketch a graph, type real maths notation, and keep every note attached to the question it belongs to.',
     href: '/features',
     cta: 'Explore the platform',
   },

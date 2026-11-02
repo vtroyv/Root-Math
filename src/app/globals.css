@@ -33,13 +33,15 @@
   --rm-section-y: clamp(4rem, 8vw, 7rem);
   --rm-gap: clamp(1.25rem, 2.5vw, 2rem);
 
-  /* Hand-drawn geometry — four variants, alternated so repeated cards
-     never look mechanically identical. */
-  --rm-wobble-1: 255px 15px 225px 15px/15px 225px 15px 255px;
-  --rm-wobble-2: 15px 225px 15px 255px/225px 15px 255px 15px;
-  --rm-wobble-3: 200px 20px 180px 30px/25px 190px 20px 220px;
-  --rm-wobble-4: 30px 190px 25px 210px/195px 25px 215px 30px;
-  --rm-pill: 120px 8px 110px 10px/10px 105px 8px 115px;
+  /* Corner shapes: four variants, alternated so repeated cards don't look identical.
+     Deliberately plain, with no elliptical (x/y) curves. Those were the suspected cause
+     of cards and inputs turning dark while scrolling in Chrome, including a gentler
+     version (2 Nov 2026), so check that in Chrome before bringing any back. */
+  --rm-wobble-1: 18px 7px 16px 9px;
+  --rm-wobble-2: 8px 18px 9px 16px;
+  --rm-wobble-3: 16px 8px 18px 7px;
+  --rm-wobble-4: 9px 16px 7px 18px;
+  --rm-pill: 12px 5px 11px 6px;
 
   --rm-lift: 4px 4px 0 var(--rm-ink);
   --rm-lift-sm: 3px 3px 0 var(--rm-ink);
@@ -233,6 +235,59 @@
 .rm-btn--onteal {
   background: #fff;
   color: var(--rm-teal-deep);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rm-btn,
+  .rm-card,
+  .rm-notecard {
+    transition: none;
+  }
+
+  /* Keep the resting tilt, drop only the movement on hover. */
+  .rm-notecard:hover {
+    transform: rotate(var(--rm-tilt, 0deg));
+  }
+}
+
+/* A teal ring that keeps pulsing out from the hero's "See how it works" button. An
+   exception to the no-animation rule, asked for on purpose. It sits on its own layer and
+   only animates opacity and transform, so nothing repaints: past glitches in Chrome
+   came from heavier effects. */
+.rm-btn--pulse {
+  position: relative;
+}
+
+.rm-btn--pulse::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 3px solid var(--rm-teal);
+  border-radius: inherit;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: rm-pulse 1.8s ease-out infinite;
+}
+
+@keyframes rm-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+
+  70%,
+  100% {
+    transform: scale(1.08, 1.3);
+    opacity: 0;
+  }
+}
+
+/* For anyone with motion turned off: a steady teal outline instead. */
+@media (prefers-reduced-motion: reduce) {
+  .rm-btn--pulse::after {
+    animation: none;
+    will-change: auto;
+  }
 }
 
 .rm-btn-row {
@@ -440,7 +495,8 @@
   list-style: none;
   background: var(--rm-paper);
   border: 2px solid var(--rm-ink);
-  border-radius: var(--rm-wobble-2);
+  /* small corners: the card curves are too big for a menu this size, and hover highlights poke out past them */
+  border-radius: 12px 6px 10px 7px;
   box-shadow: var(--rm-lift);
 }
 
@@ -707,9 +763,8 @@
 }
 
 /* --------------------------------------------------------------------------
-   Why RadixMaths — paper-and-grid section carrying the three-doodle journey.
-   Replaces the old flat teal band, which was the one part of the page not
-   using the card language of every other section.
+   Why RadixMaths — teal band holding three pinned notecards, each opening
+   with a sketch of the feature (.rm-why__sketch below).
    -------------------------------------------------------------------------- */
 /* Flat teal, no grid — the colour break is what separates this section from
    the paper above and below it. */
@@ -734,18 +789,13 @@
   border-color: rgba(255, 255, 255, 0.75);
 }
 
-/* .rm-step is the Reveal wrapper and owns layout only. All the visual
-   treatment sits on the inner card, because .rm-reveal resets `transform`
-   to none once it scrolls into view and would otherwise cancel the tilt. */
 /* --------------------------------------------------------------------------
    Pinned-note card — shared shell
    Used by the "Why RadixMaths" notes and the "Reasons students stick with us"
    cards, so the two sections are one definition rather than two copies.
 
-   The shell always lives on an INNER element, never on the .rm-reveal
-   wrapper: .rm-reveal[data-visible="true"] sets `transform: none` once the
-   element scrolls in, which would cancel the tilt. .rm-cardslot is that
-   wrapper and carries layout only.
+   .rm-cardslot is the outer wrapper and carries layout only; the shell lives
+   on the inner element.
 
    The tilt arrives as an inline `--rm-tilt` per card. :hover overrides
    `transform` outright, which an inline custom property cannot fight, so the
@@ -786,50 +836,79 @@
   box-shadow: 9px 9px 0 var(--rm-ink);
 }
 
-/* Centred variant — the Why RadixMaths notes, whose doodle sits above the copy */
-.rm-notecard--center {
-  align-items: center;
-  gap: 0.6rem;
-  text-align: center;
-}
-
-/* Sprite window onto the journey strip. The source PNG is 800x500 with the
-   three doodles sitting side by side in roughly equal thirds and a lot of
-   empty space above and below them. Scaling the image to 300% makes one third
-   exactly one art-box wide; the X offsets pick the third and the shared -43%
-   Y offset centres the drawn area, trimming the empty margins. max-width is
-   capped so the doodles are never upscaled past the source resolution. */
-.rm-step__art {
-  position: relative;
-  width: 100%;
-  max-width: 220px;
-  margin-inline: auto;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
+/* Why RadixMaths sketches: a small drawing of each feature (comment thread,
+   review card, progress bars) at the top of the card. Built from plain
+   elements on the dashed teal "margin" box. Static: no hover, no animation. */
+.rm-why__sketch {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 13rem;
+  padding: 0.9rem;
+  font-size: 0.95rem;
+  line-height: 1.35;
   background: var(--rm-teal-wash);
   border: 2px dashed var(--rm-teal-deep);
   border-radius: var(--rm-wobble-3);
 }
 
-.rm-step__art img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300%;
-  max-width: none;
-  height: auto;
+.rm-why__sketch small {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--rm-ink-faint);
 }
 
-.rm-step__art--start img {
-  transform: translate(-16.67%, -43%);
+.rm-why__chip {
+  padding: 0.4rem 0.7rem;
+  background: var(--rm-paper);
+  border: 1.5px solid var(--rm-ink);
+  border-radius: 12px 4px 12px 4px;
 }
 
-.rm-step__art--middle img {
-  transform: translate(-50%, -43%);
+.rm-why__chip--reply {
+  margin-left: 1.25rem;
 }
 
-.rm-step__art--end img {
-  transform: translate(-83.33%, -43%);
+.rm-why__chip--pinned {
+  border-color: var(--rm-teal-deep);
+}
+
+.rm-why__chip--pinned small {
+  color: var(--rm-teal-deep);
+}
+
+.rm-why__chip--on {
+  color: #fff;
+  background: var(--rm-teal);
+  border-color: var(--rm-teal-deep);
+}
+
+.rm-why__row {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.rm-why__row .rm-why__chip {
+  flex: 1;
+  padding-inline: 0;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.rm-why__bar {
+  height: 0.6rem;
+  margin-top: 0.2rem;
+  overflow: hidden;
+  background: var(--rm-paper);
+  border: 1.5px solid var(--rm-ink);
+  border-radius: 999px;
+}
+
+.rm-why__bar span {
+  display: block;
+  height: 100%;
+  background: var(--rm-teal);
 }
 
 .rm-step__body {
@@ -1284,7 +1363,7 @@
   color: var(--rm-ink);
   background: var(--rm-paper);
   border: 2px solid var(--rm-ink);
-  border-radius: 14px 5px 12px 6px/6px 12px 5px 14px !important;
+  border-radius: 12px 6px 10px 7px !important;
 }
 
 .rm-input::placeholder {
@@ -1384,7 +1463,7 @@
   list-style: none;
   background: var(--rm-paper);
   border: 2px solid var(--rm-ink);
-  border-radius: 14px 5px 12px 6px/6px 12px 5px 14px;
+  border-radius: 12px 6px 10px 7px;
   box-shadow: var(--rm-lift-sm);
 }
 
@@ -1393,7 +1472,7 @@
   font-size: 1rem;
   line-height: 1.35;
   color: var(--rm-ink);
-  border-radius: 10px 4px 9px 5px/5px 9px 4px 10px;
+  border-radius: 8px 4px 7px 5px;
   cursor: pointer;
 }
 
@@ -1410,6 +1489,62 @@
 
 .rm-combo__option[data-active="true"] small {
   color: var(--rm-teal-deep);
+}
+
+/* "Other" stays visible at the foot of the school list, however far it scrolls. */
+.rm-combo__option--other {
+  position: sticky;
+  bottom: -0.35rem;
+  margin-top: 0.35rem;
+  background: var(--rm-paper);
+  border-top: 2px dashed var(--rm-teal-deep);
+  border-radius: 0;
+}
+
+/* Form validation: a colour swap and a line of text, nothing that moves. */
+.rm-input[aria-invalid="true"] {
+  border-color: #b3261e;
+}
+
+.rm-field__error {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: #b3261e;
+}
+
+.rm-form__linkbtn {
+  padding: 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.rm-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--rm-ink);
+}
+
+.rm-consent input {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0.2rem 0 0;
+}
+
+/* What replaces a form once it has been sent. */
+.rm-form--done {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  align-self: start;
 }
 
 .rm-form__foot {
@@ -1724,7 +1859,7 @@
   color: #8f2d20;
   background: #fdecea;
   border: 2px solid #c0392b;
-  border-radius: 14px 5px 12px 6px/6px 12px 5px 14px;
+  border-radius: 12px 6px 10px 7px;
 }
 
 .rm-alert button {
@@ -1824,39 +1959,6 @@
 
 .rm-course__panels {
   margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
-}
-
-/* --------------------------------------------------------------------------
-   Scroll reveal
-   -------------------------------------------------------------------------- */
-.rm-reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.rm-reveal[data-visible="true"] {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .rm-reveal,
-  .rm-btn,
-  .rm-card,
-  .rm-notecard {
-    transition: none;
-  }
-
-  /* Keep the resting tilt, drop only the movement on hover. */
-  .rm-notecard:hover {
-    transform: rotate(var(--rm-tilt, 0deg));
-  }
-
-  .rm-reveal {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 /* --------------------------------------------------------------------------
