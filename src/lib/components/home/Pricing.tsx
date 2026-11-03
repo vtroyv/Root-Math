@@ -279,8 +279,8 @@ export default function Pricing({ today: todayIso }: { today: string }) {
                     Register your interest
                   </Link>
                   <p className="rm-summary__note">
-                    No payment is taken yet — we will email you the moment your course
-                    opens.
+                    No payment is taken yet. Register now to get our early-access price
+                    and a free trial when your course opens.
                   </p>
                 </div>
               </>
