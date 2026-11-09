@@ -1,4 +1,4 @@
-import { COURSES } from '@/lib/forms/registerInterest';
+import { COURSES, PAPER_COURSES } from '@/lib/forms/registerInterest';
 import { SITE_URL, SOCIALS } from '@/lib/socials';
 import { HEADER_IMAGE_ID } from './headerImage';
 
@@ -62,6 +62,18 @@ const layout = (body) => `<!doctype html>
 const socialLinks = () => SOCIALS.map((social) => link(social.href, social.label)).join(' &middot; ');
 const socialLinksText = () => SOCIALS.map((social) => `${social.label}: ${social.href}`).join('\n');
 
+/* The 3 free A Level pure practice papers, sent in the register thank-you. They're linked,
+   not attached: attachments from a new sending domain raise the spam score, and many school
+   email systems strip them. The PDFs are in public/practice-papers and anyone with a link can
+   download them, which is fine: every page carries RadixMaths and the website.
+   Sources and answer checks: the "RadixMaths practice papers" folder on the T7 drive. */
+const PRACTICE_PAPERS = [
+  { name: 'Paper 1', level: 'Standard', file: 'radixmaths-paper-1-standard' },
+  { name: 'Paper 2', level: 'Hard', file: 'radixmaths-paper-2-hard' },
+  { name: 'Paper 3', level: 'Challenge', file: 'radixmaths-paper-3-challenge' },
+];
+const paperUrl = (file) => `${SITE_URL}/practice-papers/${file}.pdf`;
+
 export function registerThankYou({ firstName, courses }) {
   const name = firstNameFor(firstName);
   const chosen = courses.map(({ id, board }) => {
@@ -73,12 +85,40 @@ export function registerThankYou({ firstName, courses }) {
     ? 'Year 12 A Level Maths opens on 1 December, and Year 13 follows in January. We’ll email you when it’s ready, along with your early-access price.'
     : 'We’ll email you the moment your course opens, along with your early-access price.';
   const blog = `${SITE_URL}/blog`;
+  const sendPapers = courses.some((course) => PAPER_COURSES.includes(course.id));
+
+  const papersHtml = sendPapers
+    ? `
+      <p style="margin:0 0 8px;font-size:18px;font-weight:bold;color:#0e7c8e;">Your 3 free practice papers</p>
+      <p style="margin:0 0 12px;">Three A Level pure maths papers, each 2 hours and 100 marks, written to suit every exam board. Each one has a mark scheme with full worked solutions. Try a paper under timed conditions before you look at its mark scheme.</p>
+      ${PRACTICE_PAPERS.map(
+        (paper) =>
+          `<p style="margin:0 0 10px;"><strong>${paper.name} (${paper.level})</strong><br>${link(paperUrl(paper.file), 'Question paper')} &middot; ${link(paperUrl(`${paper.file}-mark-scheme`), 'Mark scheme')}</p>`,
+      ).join('')}
+      <p style="margin:16px 0 16px;">Paper 3 is a challenge paper, much harder than a real exam, so don’t worry if you don’t finish it.</p>`
+    : '';
+  const papersText = sendPapers
+    ? `
+YOUR 3 FREE PRACTICE PAPERS
+Three A Level pure maths papers, each 2 hours and 100 marks, written to suit every exam board. Try a paper under timed conditions before you look at its mark scheme.
+
+${PRACTICE_PAPERS.map(
+  (paper) =>
+    `${paper.name} (${paper.level})\nQuestion paper: ${paperUrl(paper.file)}\nMark scheme: ${paperUrl(`${paper.file}-mark-scheme`)}`,
+).join('\n\n')}
+
+Paper 3 is a challenge paper, much harder than a real exam, so don't worry if you don't finish it.
+`
+    : '';
 
   return {
-    subject: 'Thanks for registering your interest in RadixMaths',
+    subject: sendPapers
+      ? 'Your 3 free A Level practice papers from RadixMaths'
+      : 'Thanks for registering your interest in RadixMaths',
     html: layout(`
       <p style="margin:0 0 16px;">Hi ${escapeHtml(name)},</p>
       <p style="margin:0 0 16px;">Thank you for registering your interest in RadixMaths. You’re on the list for <strong>${chosen.map(escapeHtml).join(', ')}</strong>.</p>
+      ${papersHtml}
       <p style="margin:0 0 16px;">${when}</p>
       <p style="margin:0 0 20px;">In the meantime, have a read of our blog, and stay up to date by following us: ${socialLinks()}.</p>
       <p style="margin:0 0 24px;">${button(blog, 'Read our blog')}</p>
@@ -86,13 +126,43 @@ export function registerThankYou({ firstName, courses }) {
     text: `Hi ${name},
 
 Thank you for registering your interest in RadixMaths. You're on the list for ${chosen.join(', ')}.
-
+${papersText}
 ${when}
 
 In the meantime, check out our blog: ${blog}
 
 Stay up to date by following us:
 ${socialLinksText()}
+
+Thanks,
+The RadixMaths team`,
+  };
+}
+
+// Sent when a parent signs up on the parents' blog post. Can be sent to any address
+// typed into that form, so like registerThankYou it repeats nothing but a plain first name.
+export function parentThankYou({ firstName }) {
+  const name = firstNameFor(firstName);
+  const pricing = `${SITE_URL}/pricing`;
+
+  return {
+    subject: 'Thanks for signing up to RadixMaths updates',
+    html: layout(`
+      <p style="margin:0 0 16px;">Hi ${escapeHtml(name)},</p>
+      <p style="margin:0 0 16px;">Thank you for signing up. Year 12 A Level Maths opens on 1 December, and Year 13 follows in January. We’ll email you when it’s ready, along with the early-access price and a free trial.</p>
+      <p style="margin:0 0 16px;">Until then, we’ll send you a few short emails about how RadixMaths works and how it can help your child. You can unsubscribe at any time.</p>
+      <p style="margin:0 0 24px;">${button(pricing, 'See pricing')}</p>
+      <p style="margin:0 0 16px;">If you have any questions, just reply to this email.</p>
+      <p style="margin:0;">Thanks,<br>The RadixMaths team</p>`),
+    text: `Hi ${name},
+
+Thank you for signing up. Year 12 A Level Maths opens on 1 December, and Year 13 follows in January. We'll email you when it's ready, along with the early-access price and a free trial.
+
+Until then, we'll send you a few short emails about how RadixMaths works and how it can help your child. You can unsubscribe at any time.
+
+See pricing: ${pricing}
+
+If you have any questions, just reply to this email.
 
 Thanks,
 The RadixMaths team`,

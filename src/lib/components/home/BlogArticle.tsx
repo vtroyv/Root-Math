@@ -7,6 +7,7 @@ import React from 'react';
 import Link from 'next/link';
 import BlockRenderer from '@/lib/components/learn/lessons/BlockRenderer';
 import Footer from './Footer';
+import ParentSignup from './ParentSignup';
 
 type Post = {
   slug: string;
@@ -16,6 +17,7 @@ type Post = {
   tag: string;
   excerpt: string;
   blocks: any[];
+  parentSignup?: boolean; // shows the parents' sign-up form under the article
 };
 
 const formatDate = (date: string) =>
@@ -57,6 +59,12 @@ export default function BlogArticle({ post }: { post: Post }) {
           {post.blocks.map((block, index) => (
             <BlockRenderer key={index} block={block} />
           ))}
+
+          {post.parentSignup && (
+            <div style={{ marginTop: '2.5rem' }}>
+              <ParentSignup />
+            </div>
+          )}
 
           <div
             style={{

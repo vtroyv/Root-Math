@@ -67,6 +67,11 @@ export default function Privacy() {
               you’re interested in, and your school.
             </li>
             <li>
+              <strong>When a parent or guardian signs up for updates</strong> on our parents’
+              page: their first name and email address. Students never give us a parent’s
+              details.
+            </li>
+            <li>
               <strong>When you contact us:</strong> your name, email address, mobile number if
               you choose to give it, and your message.
             </li>
@@ -108,7 +113,8 @@ export default function Privacy() {
           <ul>
             <li>
               <strong>To tell you when your course opens</strong> and about early-access
-              pricing, because you asked us to (consent).
+              pricing, because you asked us to (consent). For parents who sign up, this
+              includes a few short emails about how RadixMaths works.
             </li>
             <li>
               <strong>To answer you when you contact us</strong> (legitimate interests).

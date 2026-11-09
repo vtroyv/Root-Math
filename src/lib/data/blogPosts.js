@@ -14,6 +14,99 @@
 
 export const blogPosts = [
   {
+    // Students send this to a parent from the Register Interest thank-you panel.
+    // parentSignup puts the parents' sign-up form under it (see docs/parent-signup.md).
+    slug: 'radixmaths-for-parents',
+    title: 'RadixMaths: a guide for parents',
+    date: '2026-11-08',
+    readingTime: '4 min read',
+    tag: 'For parents',
+    parentSignup: true,
+    excerpt:
+      'If your child has sent you this link, they have registered for RadixMaths. Here is what it is, how it helps them learn A Level Maths, what it costs, and what you can see as a parent.',
+    blocks: [
+      {
+        type: 'paragraph',
+        content:
+          'RadixMaths is an online A Level Maths course, built for the work students do on their own. Most of their learning does not happen in a lesson or a weekly tutoring hour. It happens at home, doing homework and revising, often stuck on a question with nobody to ask. That is the part RadixMaths is designed for.',
+      },
+      { type: 'heading', level: '3', content: 'Why we built it' },
+      {
+        type: 'paragraph',
+        content:
+          'Answers are easier to find than ever. What still decides a grade is whether a student can think a problem through for themselves, from a blank page, under exam conditions. Our aim is to help students learn maths properly and build that kind of thinking, so they understand the method rather than just copying an answer.',
+      },
+      { type: 'heading', level: '3', content: 'How it works' },
+      {
+        type: 'bullet-points',
+        points: [
+          'A course for their exam board, in short steps, with a video for every part.',
+          'Questions inside every lesson that they have to get right before moving on.',
+          'Marking against the mark scheme, part by part, so they can see exactly where marks were lost and what to fix.',
+          'Review cards that bring each topic back just before they would forget it, so what they learn in Year 12 is still there in the summer exams.',
+          'A Progress page that tracks their strengths and weaknesses and sets their targets, so they always know what to work on next.',
+          'A community of students working on the same questions, with answers checked by our team.',
+        ],
+      },
+      { type: 'heading', level: '3', content: 'What you can see as a parent' },
+      {
+        type: 'paragraph',
+        content:
+          'Parents can follow their child’s progress: which topics they are strongest and weakest in, and whether they are keeping up with their targets and reviews. You do not need to know any A Level Maths to see whether they are on track.',
+      },
+      { type: 'heading', level: '3', content: 'What it costs' },
+      {
+        type: 'paragraph',
+        content:
+          'RadixMaths costs £17.99 a month per course. Monthly plans can be cancelled at any time, or you can pay upfront through to 31 July and save 10%. Every course covers both Year 12 and Year 13. For comparison, a private tutor typically costs around £40 an hour.',
+      },
+      {
+        type: 'paragraph',
+        content:
+          'Everyone who registers before launch gets an early-access price and a free trial, so your child can try it before you pay anything.',
+      },
+      { type: 'heading', level: '3', content: 'The A/A* guarantee' },
+      {
+        type: 'paragraph',
+        content:
+          'If your child keeps their progress high in every topic up to their first exam and still falls short of an A or A*, we refund every payment you have made. The exact progress needed will be set out in our full guarantee terms at launch.',
+      },
+      { type: 'heading', level: '3', content: 'When it opens' },
+      {
+        type: 'paragraph',
+        content:
+          'All of Year 12 A Level Maths opens on 1 December, in time for January mocks, and Year 13 follows in January.',
+      },
+      {
+        type: 'accordion',
+        title: 'Does it replace their teacher or a tutor?',
+        children: [
+          {
+            type: 'paragraph',
+            content:
+              'No. It is built to sit alongside school, covering the hours between lessons when students work on their own. If your child already has a tutor they get on well with, RadixMaths gives them structured practice between sessions.',
+          },
+        ],
+      },
+      {
+        type: 'accordion',
+        title: 'How do you look after my child’s data?',
+        children: [
+          {
+            type: 'paragraph',
+            content:
+              'Most of our students are under 18, so our privacy settings are high by default. We never sell data, we do not show adverts, and we do not track students across other websites. Our privacy policy sets out everything we collect and why.',
+          },
+        ],
+      },
+      {
+        type: 'bold-paragraph',
+        content:
+          'Want to know when it opens? Leave your email below and we will send you the launch details, the early-access price and the free trial.',
+      },
+    ],
+  },
+  {
     slug: 'study-techniques-for-maths',
     title: 'Studying maths: the techniques that actually work',
     date: '2026-09-15',

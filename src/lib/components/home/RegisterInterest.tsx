@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Footer from './Footer';
 import { FieldError, Honeypot } from './FormBits';
-import { COURSES, MARKETING_WORDING, validateRegistration } from '@/lib/forms/registerInterest';
+import { COURSES, MARKETING_WORDING, PAPER_COURSES, validateRegistration } from '@/lib/forms/registerInterest';
 import { suggestEmail } from '@/lib/forms/shared';
 
 /* Scribbled-in-the-margin maths, the same idea as the hero: hard-coded
@@ -78,6 +78,83 @@ const fieldIdFor = (key: string) => {
   if (key.startsWith('board.')) return `board-${key.slice('board.'.length)}`;
   return key;
 };
+
+/* "Send to a parent", on the thank-you panel. The student sends the link themselves, from
+   their own phone or email: we never collect a parent's address, because under PECR only
+   the parent can agree to our marketing emails. The post has its own sign-up form for
+   that. See docs/parent-signup.md. */
+const PARENT_POST_PATH = '/blog/radixmaths-for-parents';
+const PARENT_MESSAGE =
+  'I’ve registered for RadixMaths to help with my maths. Here’s a short guide to what it is, if you want a look:';
+
+function SendToParent() {
+  const [useShareSheet, setUseShareSheet] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [link, setLink] = useState(PARENT_POST_PATH);
+
+  // Read in an effect, so the first render matches the server's.
+  useEffect(() => {
+    setLink(`${window.location.origin}${PARENT_POST_PATH}`);
+    // Phones and tablets get their share sheet. Laptops get the buttons below, even when the
+    // browser can share: the Windows and Mac share menus don't offer Gmail or WhatsApp Web,
+    // which is what most students use there. A touchscreen is the test.
+    const touchScreen = window.matchMedia('(pointer: coarse)').matches;
+    setUseShareSheet(touchScreen && typeof navigator.share === 'function');
+  }, []);
+
+  const share = () =>
+    // Rejects if they close the share sheet, which is fine.
+    navigator.share({ title: 'RadixMaths', text: PARENT_MESSAGE, url: link }).catch(() => {});
+
+  const message = `${PARENT_MESSAGE} ${link}`;
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(message);
+      setCopied(true);
+    } catch {
+      setCopied(false); // the link is shown below, so it can still be copied by hand
+    }
+  };
+
+  // Opens WhatsApp Web, or the desktop app if it's installed, with the message typed in.
+  const whatsApp = `https://wa.me/?text=${encodeURIComponent(message)}`;
+  const mailto = `mailto:?subject=${encodeURIComponent('RadixMaths')}&body=${encodeURIComponent(
+    `${PARENT_MESSAGE}\n\n${link}`,
+  )}`;
+
+  return (
+    <>
+      <h3 className="rm-h3" style={{ margin: '0.5rem 0 0' }}>
+        Tell a parent
+      </h3>
+      <p style={{ margin: 0 }}>
+        Send them a short guide to what RadixMaths is and what it costs. It goes from your own
+        phone, WhatsApp or email, not from us.
+      </p>
+      <div className="rm-btn-row">
+        {useShareSheet ? (
+          <button type="button" className="rm-btn rm-btn--primary" onClick={share}>
+            Send to a parent
+          </button>
+        ) : (
+          <>
+            <button type="button" className="rm-btn rm-btn--primary" onClick={copy}>
+              {copied ? 'Message copied' : 'Copy message'}
+            </button>
+            <a className="rm-btn" href={whatsApp} target="_blank" rel="noopener noreferrer">
+              WhatsApp
+            </a>
+            <a className="rm-btn" href={mailto}>
+              Email
+            </a>
+          </>
+        )}
+      </div>
+      {!useShareSheet && <p className="rm-field__hint" style={{ margin: 0 }}>{link}</p>}
+    </>
+  );
+}
 
 export default function RegisterInterest() {
   const [details, setDetails] = useState({ firstName: '', lastName: '', email: '', mobile: '' });
@@ -267,6 +344,10 @@ export default function RegisterInterest() {
               course goes live — along with the early-access price for everyone who
               registers before launch.
             </p>
+            <p className="rm-lead">
+              A Level students also get <strong>3 free practice papers</strong> with full mark
+              schemes, emailed straight away.
+            </p>
           </div>
 
           {done ? (
@@ -276,11 +357,14 @@ export default function RegisterInterest() {
               </span>
               <h2 className="rm-h3">You’re on the list, thank you!</h2>
               <p className="rm-lead">
-                A confirmation email is on its way to {details.email.trim()}. If you can’t
-                see it, check your junk folder. In the meantime, have a read of our blog.
+                {chosenCourses.some((id) => PAPER_COURSES.includes(id))
+                  ? 'Your 3 free practice papers are on their way'
+                  : 'A confirmation email is on its way'}{' '}
+                to {details.email.trim()}. If you can’t see it, check your junk folder.
               </p>
-              <div className="rm-btn-row">
-                <Link href="/blog" className="rm-btn rm-btn--primary">
+              <SendToParent />
+              <div className="rm-btn-row" style={{ marginTop: '1rem' }}>
+                <Link href="/blog" className="rm-btn">
                   Read the blog
                 </Link>
                 <Link href="/" className="rm-btn rm-btn--ghost">

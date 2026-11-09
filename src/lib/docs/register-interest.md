@@ -194,8 +194,18 @@ Written in `registerThankYou()` in [email/templates.js](../email/templates.js). 
 
 - greets them by first name
 - thanks them and lists the courses they chose
+- gives the 3 free practice papers if they chose A Level Maths, Further Maths, STEP or TMUA (subject: "Your 3 free A Level practice papers from RadixMaths"). Students who only chose GCSE get the original email, because the papers are A Level pure.
 - gives the launch dates if they chose A Level Maths ("Year 12 opens on 1 December, Year 13 in January"), otherwise says we'll email when their course opens
 - points them to the blog and the social accounts
+
+### The practice papers
+
+Three A Level pure papers (Standard, Hard and Challenge), each 2 hours and 100 marks, each with a mark scheme and worked solutions. The six PDFs are in [public/practice-papers](../../../public/practice-papers), and the list is `PRACTICE_PAPERS` in [email/templates.js](../email/templates.js).
+
+- **Linked, not attached.** PDF attachments from a new sending domain raise the spam score, and many school email systems strip or quarantine them. Links to our own domain don't have that problem.
+- **Anyone with a link can download them.** That's deliberate: sharing spreads RadixMaths, since every page carries the name and website.
+- **To change a paper,** edit its LaTeX source in the "RadixMaths practice papers" folder on the T7 drive, rerun `verify_answers.py`, rebuild, and copy the PDF over the one in `public/practice-papers` with the same file name. Everyone's link then gets the new version.
+- **People who registered before 9 November 2026** got the old email without the papers. Registering again doesn't resend it (see "One thank-you per address" below).
 
 **Replies** go to `hello@radixmaths.co.uk`, not a dead-end address, because a parent replying with a question is a warm lead.
 

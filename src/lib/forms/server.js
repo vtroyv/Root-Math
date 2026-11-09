@@ -2,12 +2,14 @@ import { createHash } from 'crypto';
 import getMongoClient from '@/lib/mongodb/db';
 
 /*
-Database code for the public forms (server only). Four collections in RootMath:
-registrations (one per email address), enquiries (one per message), teacherRequests
-(one per request) and formRateLimits (short-lived counters that MongoDB deletes itself).
+Database code for the public forms (server only). Five collections in RootMath:
+registrations (one per email address), parentSignups (one per parent's email address),
+enquiries (one per message), teacherRequests (one per request) and formRateLimits
+(short-lived counters that MongoDB deletes itself).
 */
 
 const REGISTRATIONS = 'registrations';
+const PARENT_SIGNUPS = 'parentSignups';
 const ENQUIRIES = 'enquiries';
 const TEACHER_REQUESTS = 'teacherRequests';
 const RATE_LIMITS = 'formRateLimits';
@@ -19,6 +21,7 @@ let indexesReady;
 function ensureIndexes(db) {
   indexesReady ??= Promise.all([
     db.collection(REGISTRATIONS).createIndex({ email: 1 }, { unique: true }),
+    db.collection(PARENT_SIGNUPS).createIndex({ email: 1 }, { unique: true }),
     db.collection(RATE_LIMITS).createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 }),
   ]).catch((error) => {
     indexesReady = undefined;
@@ -84,6 +87,34 @@ export async function saveRegistration({ marketingConsent, ...details }, marketi
 export async function markThankYouSent(email) {
   const db = await getDb();
   await db.collection(REGISTRATIONS).updateOne({ email }, { $set: { thankYouSentAt: new Date() } });
+}
+
+// Same pattern as saveRegistration, in its own collection so parents and students are
+// never mixed up in a mailing.
+export async function saveParentSignup({ consent, ...details }, wording) {
+  const db = await getDb();
+  await ensureIndexes(db);
+  const now = new Date();
+  const before = await upsertWithRetry(() =>
+    db.collection(PARENT_SIGNUPS).findOneAndUpdate(
+      { email: details.email },
+      {
+        $set: {
+          ...details,
+          consent: { given: consent, wording, answeredAt: now },
+          updatedAt: now,
+        },
+        $setOnInsert: { createdAt: now, thankYouSentAt: null },
+      },
+      { upsert: true, returnDocument: 'before' },
+    ),
+  );
+  return { sendThankYou: !before?.thankYouSentAt };
+}
+
+export async function markParentThankYouSent(email) {
+  const db = await getDb();
+  await db.collection(PARENT_SIGNUPS).updateOne({ email }, { $set: { thankYouSentAt: new Date() } });
 }
 
 // Returns the new enquiry's id, for recording which emails went out.

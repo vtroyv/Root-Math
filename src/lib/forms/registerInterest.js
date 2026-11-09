@@ -19,6 +19,10 @@ export const COURSES = [
   { id: 'tmua', name: 'TMUA', boards: null },
 ];
 
+// Courses whose students get the 3 free A Level pure practice papers in their thank-you email.
+// Used by the email and by the page, so the two always agree.
+export const PAPER_COURSES = ['a-level-maths', 'a-level-further-maths', 'step', 'tmua'];
+
 // Stored with each answer, as the record of exactly what the student agreed to.
 export const MARKETING_WORDING = 'Send me revision tips and offers too. I can unsubscribe at any time.';
 
